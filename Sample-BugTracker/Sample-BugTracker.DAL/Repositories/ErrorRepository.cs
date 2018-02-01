@@ -1,50 +1,22 @@
 ﻿using Sample_BugTracker.DAL.EF;
 using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sample_BugTracker.DAL.Repositories
 {
-    public class ErrorRepository : IGenericRepository<Error>
+    public class ErrorRepository : Repository<Error>, IErrorRepository
     {
-        private ApplicationContext db;
-
-        public ErrorRepository(ApplicationContext context)
+        public ErrorRepository(ApplicationDbContext context)
+            : base(context)
         {
-            db = context;
-        }
-        public void Create(Error item)
-        {
-            throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public ApplicationDbContext ApplicationContext
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Error> Find(Func<Error, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Error Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Error> GetAll()
-        {
-            return db.Errors;
-        }
-
-        public void Update(Error item)
-        {
-            throw new NotImplementedException();
+            get
+            {
+                return base.Context as ApplicationDbContext;
+            }
         }
     }
 }

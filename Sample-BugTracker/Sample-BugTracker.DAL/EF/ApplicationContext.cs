@@ -9,25 +9,25 @@ using System.Threading.Tasks;
 
 namespace Sample_BugTracker.DAL.EF
 {
-    public class ApplicationContext: IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext: IdentityDbContext<IdentityUser>
     {
         public DbSet<Error> Errors { get; set; }
-        public DbSet<Project> Progects { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
 
-        public ApplicationContext(string connectionString)
+        public ApplicationDbContext(string connectionString)
             : base(connectionString)
         {
         }
 
-        static ApplicationContext()
+        static ApplicationDbContext()
         {
-            Database.SetInitializer<ApplicationContext>(new StoreDbInitializer());
+            Database.SetInitializer(new StoreDbInitializer());
         }
 
-        public class StoreDbInitializer : DropCreateDatabaseAlways<ApplicationContext>
+        public class StoreDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
         {
-            protected override void Seed(ApplicationContext db)
+            protected override void Seed(ApplicationDbContext db)
             {
                 db.Users.Add(new IdentityUser("Bob"));
                 db.Users.Add(new IdentityUser("Scott"));

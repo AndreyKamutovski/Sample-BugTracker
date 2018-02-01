@@ -14,16 +14,10 @@ namespace Sample_BugTracker.BLL.Controllers
 {
     public class AccountController : ApiController
     {
-        IUnitOfWork Database { get; set; }
-
-        public AccountController()
-        {
-            Database = new EFUnitOfWork("BTContext");
-        }
 
         // POST api/Account/Register
         [AllowAnonymous]
-        public async Task<IHttpActionResult> Register(User userModel)
+        public async Task<IHttpActionResult> Register(UserDTO user)
         {
             if (!ModelState.IsValid)
             {
@@ -40,16 +34,6 @@ namespace Sample_BugTracker.BLL.Controllers
             }
 
             return Ok();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                Database.Dispose();
-            }
-
-            base.Dispose(disposing);
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+using System.Web;
 
-namespace Sample_BugTracker.DAL.Entities
+namespace Sample_BugTracker.BLL.DTO
 {
-    public class User
+    public class UserDTO
     {
         [Required]
         [Display(Name = "User name")]

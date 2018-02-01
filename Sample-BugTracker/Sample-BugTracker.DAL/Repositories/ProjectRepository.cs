@@ -3,48 +3,23 @@ using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sample_BugTracker.DAL.Repositories
 {
-    public class ProjectRepository : IGenericRepository<Project>
+    public class ProjectRepository : Repository<Project>, IProjectRepository
     {
-        private ApplicationContext db;
-
-        public ProjectRepository(ApplicationContext context)
+        
+        public ProjectRepository(ApplicationDbContext context)
+            : base(context)
         {
-            db = context;
-        }
-        public void Create(Project item)
-        {
-            throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public ApplicationDbContext ApplicationContext
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Project> Find(Func<Project, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Project Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Project> GetAll()
-        {
-            return db.Progects;
-        }
-
-        public void Update(Project item)
-        {
-            throw new NotImplementedException();
+            get
+            {
+                return base.Context as ApplicationDbContext;
+            }
         }
     }
 }
