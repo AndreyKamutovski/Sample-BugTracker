@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Sample_BugTracker.BLL.DTO
+namespace Sample_BugTracker.API.DTO
 {
     public class ErrorDTO
     {

@@ -5,7 +5,7 @@ using Sample_BugTracker.DAL.Repositories;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Sample_BugTracker.BLL
+namespace Sample_BugTracker.API
 {
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {

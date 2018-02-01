@@ -6,10 +6,10 @@ using System.Web.Http;
 using Owin;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Owin;
-using Sample_BugTracker.BLL;
+using Sample_BugTracker.API;
 
 [assembly: OwinStartup(typeof(Startup))]
-namespace Sample_BugTracker.BLL
+namespace Sample_BugTracker.API
 {
     public class Startup
     {

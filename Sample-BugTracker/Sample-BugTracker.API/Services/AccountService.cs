@@ -1,23 +1,23 @@
-﻿using Microsoft.AspNet.Identity;
-using Sample_BugTracker.DAL.Entities;
-using Sample_BugTracker.DAL.Interfaces;
+﻿using Sample_BugTracker.API.Intarfaces;
+using Sample_BugTracker.DAL.EF;
 using Sample_BugTracker.DAL.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+using Sample_BugTracker.API.DTO;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace Sample_BugTracker.BLL.Controllers
+namespace Sample_BugTracker.API.Services
 {
-    public class AccountController : ApiController
+    public class AccountService: IDisposable
     {
+        private UnitOfWork _unitOfWork { get; set; }
 
-        // POST api/Account/Register
-        [AllowAnonymous]
-        public async Task<IHttpActionResult> Register(UserDTO user)
+        public AccountService()
+        {
+            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
+        }
+
+        public Task<IHttpActionResult> Register(UserDTO user)
         {
             if (!ModelState.IsValid)
             {
@@ -63,6 +63,11 @@ namespace Sample_BugTracker.BLL.Controllers
             }
 
             return null;
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
         }
     }
 }

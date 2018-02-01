@@ -15,8 +15,8 @@ namespace Sample_BugTracker.DAL.EF
         public DbSet<Project> Projects { get; set; }
 
 
-        public ApplicationDbContext(string connectionString)
-            : base(connectionString)
+        public ApplicationDbContext()
+            : base("BTContext")
         {
         }
 

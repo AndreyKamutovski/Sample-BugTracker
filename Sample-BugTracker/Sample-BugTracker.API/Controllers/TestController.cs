@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Sample_BugTracker.BLL.Controllers
+namespace Sample_BugTracker.API.Controllers
 {
     [Authorize]
     public class TestController : ApiController
