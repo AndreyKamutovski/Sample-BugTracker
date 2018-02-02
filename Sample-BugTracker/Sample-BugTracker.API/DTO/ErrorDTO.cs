@@ -1,13 +1,11 @@
-﻿using Sample_BugTracker.DAL.Enumerations;
+﻿using Sample_BugTracker.BLL.Infrastructure;
+using Sample_BugTracker.DAL.Enumerations;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Sample_BugTracker.API.DTO
 {
-    public class ErrorDTO
+    public class ErrorDTO: DTOValidator
     {
         [Required(ErrorMessage = "Title of error is a required field")]
         [MinLength(3)]

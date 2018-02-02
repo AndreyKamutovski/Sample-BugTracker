@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Sample_BugTracker.BLL.Infrastructure;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sample_BugTracker.API.DTO
 {
-    public class UserDTO
+    public class UserDTO: DTOValidator
     {
         [Required]
         [Display(Name = "User name")]

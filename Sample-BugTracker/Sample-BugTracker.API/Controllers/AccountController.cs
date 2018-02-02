@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
+﻿
 using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.Services;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -7,13 +9,19 @@ namespace Sample_BugTracker.API.Controllers
 {
     public class AccountController : ApiController
     {
-        private AccountController _accountService;
+        private AccountService _accountService; 
+
+        public AccountController()
+        {
+            _accountService = new AccountService();
+        }
+
         // POST api/Account/Register
         [AllowAnonymous]
-        public async Task<IHttpActionResult> Register(UserDTO user)
+        public async Task<HttpResponseMessage> Register(UserDTO user)
         {
-            usin
-            var result = await _accountService
+            var result = await _accountService.Register(user);
+            return result;
         }
     }
 }

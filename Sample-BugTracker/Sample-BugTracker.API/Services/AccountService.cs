@@ -1,73 +1,47 @@
-﻿using Sample_BugTracker.API.Intarfaces;
+﻿using Microsoft.AspNet.Identity;
+using Sample_BugTracker.API.DTO;
 using Sample_BugTracker.DAL.EF;
 using Sample_BugTracker.DAL.Repositories;
-using System;
-using Sample_BugTracker.API.DTO;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web.Http;
 
 namespace Sample_BugTracker.API.Services
 {
-    public class AccountService: IDisposable
+    public class AccountService
     {
-        private UnitOfWork _unitOfWork { get; set; }
+        private readonly UnitOfWork _unitOfWork;
 
         public AccountService()
         {
             _unitOfWork = new UnitOfWork(new ApplicationDbContext());
         }
 
-        public Task<IHttpActionResult> Register(UserDTO user)
+        public async Task<HttpResponseMessage> Register(UserDTO user)
         {
-            if (!ModelState.IsValid)
+            using (_unitOfWork)
             {
-                return BadRequest(ModelState);
-            }
-
-            IdentityResult result = await Database.AuthRepository.RegisterUser(userModel);
-
-            IHttpActionResult errorResult = GetErrorResult(result);
-
-            if (errorResult != null)
-            {
-                return errorResult;
-            }
-
-            return Ok();
-        }
-
-        private IHttpActionResult GetErrorResult(IdentityResult result)
-        {
-            if (result == null)
-            {
-                return InternalServerError();
-            }
-
-            if (!result.Succeeded)
-            {
-                if (result.Errors != null)
+                if (!user.Validate())
                 {
-                    foreach (string error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
+                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
                 }
 
-                if (ModelState.IsValid)
-                {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
-
-                return BadRequest(ModelState);
+                IdentityResult result = await _unitOfWork.Users.Add(user.UserName, user.Password);
+                HttpResponseMessage httpResult = GetHttpResponseMessageForIdentityResult(result);
+                return httpResult;
             }
-
-            return null;
         }
 
-        public void Dispose()
+        private HttpResponseMessage GetHttpResponseMessageForIdentityResult(IdentityResult result)
         {
-            _unitOfWork.Dispose();
+            if (result.Succeeded)
+            {
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            else
+            {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Sample_BugTracker.DAL.EF
             Database.SetInitializer(new StoreDbInitializer());
         }
 
-        public class StoreDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
+        public class StoreDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
         {
             protected override void Seed(ApplicationDbContext db)
             {

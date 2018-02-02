@@ -63,7 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EF\ApplicationContext.cs" />
+    <Compile Include="EF\ApplicationDbContext.cs" />
     <Compile Include="Entities\Error.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Enumerations\Error.cs" />

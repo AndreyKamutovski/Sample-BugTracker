@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security.OAuth;
+using Sample_BugTracker.DAL.EF;
 using Sample_BugTracker.DAL.Interfaces;
 using Sample_BugTracker.DAL.Repositories;
 using System.Security.Claims;
@@ -19,9 +20,9 @@ namespace Sample_BugTracker.API
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            using (IUnitOfWork _repo = new EFUnitOfWork("BTContext"))
+            using (UnitOfWork _repo = new UnitOfWork(new ApplicationDbContext()))
             {
-                IdentityUser user = await _repo.AuthRepository.FindUser(context.UserName, context.Password);
+                IdentityUser user = await _repo.Users.Get(context.UserName, context.Password);
 
                 if (user == null)
                 {
@@ -35,7 +36,6 @@ namespace Sample_BugTracker.API
             identity.AddClaim(new Claim("role", "user"));
 
             context.Validated(identity);
-
         }
     }
 }
