@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 
 namespace Sample_BugTracker.BLL.Infrastructure
 {
     public class DTOValidator
     {
-        public List<ValidationResult> ValidationResults { get; private set; }
+        public List<string> ValidationResults { get; private set; }
 
         public bool Validate()
         {
             var context = new ValidationContext(this);
-            return Validator.TryValidateObject(this, context, ValidationResults);
+            var validationResults = new List<ValidationResult>();
+            var resultValidationFlag = Validator.TryValidateObject(this, context, validationResults, true);
+            ValidationResults = validationResults.Select(errMsg => errMsg.ErrorMessage).ToList();
+            return resultValidationFlag;
         }
     }
 }

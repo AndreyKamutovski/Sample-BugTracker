@@ -4,6 +4,7 @@ using Sample_BugTracker.DAL.EF;
 using Sample_BugTracker.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sample_BugTracker.DAL.Repositories
@@ -12,20 +13,43 @@ namespace Sample_BugTracker.DAL.Repositories
     {
         private ApplicationDbContext _context;
         private UserManager<IdentityUser> _userManager;
+        private RoleManager<IdentityRole> _roleManager;
+
         public UserRepository(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_context));
+            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_context))
+            {
+                PasswordValidator = new PasswordValidator()
+                {
+                    RequiredLength = 6,
+                    RequireNonLetterOrDigit = true,
+                    RequireDigit = true,
+                    RequireLowercase = true,
+                    RequireUppercase = true
+                }
+            };
+
+            _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
+            _roleManager.Create(new IdentityRole("Admin"));
+            _roleManager.Create(new IdentityRole("Moderator"));
+            _roleManager.Create(new IdentityRole("Worker"));
+            _roleManager.Create(new IdentityRole("User"));
         }
 
-        public async Task<IdentityResult> Add(string username, string password)
+        public async Task<IdentityResult> Add(IdentityUser user, string password, string roleName)
         {
-            IdentityUser user = new IdentityUser
+            IdentityResult resultCreation, resultAdditionToRole;
+            resultCreation = await _userManager.CreateAsync(user, password);
+            if(resultCreation.Succeeded)
             {
-                UserName = username
-            };
-            var result = await _userManager.CreateAsync(user, password);
-            return result;
+                resultAdditionToRole = await _userManager.AddToRoleAsync(user.Id, roleName);
+            }
+            else
+            {
+                return resultCreation;
+            }
+            return resultAdditionToRole;
         }
 
         public async Task<IdentityUser> Get(string username, string password)

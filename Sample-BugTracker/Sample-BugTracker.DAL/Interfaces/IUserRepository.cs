@@ -11,7 +11,7 @@ namespace Sample_BugTracker.DAL.Interfaces
         Task<IdentityUser> Get(string username, string password);
         Task<IEnumerable<IdentityUser>> GetAll();
 
-        Task<IdentityResult> Add(string username, string password);
+        Task<IdentityResult> Add(IdentityUser user, string password, string roleName);
 
         Task<IdentityResult> Remove(string username, string password);
 

@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.API.DTO;
 using Sample_BugTracker.DAL.EF;
 using Sample_BugTracker.DAL.Repositories;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -23,10 +26,15 @@ namespace Sample_BugTracker.API.Services
             {
                 if (!user.Validate())
                 {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                    return GetHttpResponseMessage(HttpStatusCode.BadRequest, user.ValidationResults);
                 }
 
-                IdentityResult result = await _unitOfWork.Users.Add(user.UserName, user.Password);
+                IdentityUser appUser = new IdentityUser()
+                {
+                    UserName = user.Email,
+                    Email = user.Email
+                };
+                IdentityResult result = await _unitOfWork.Users.Add(appUser, user.Password, user.RoleName);
                 HttpResponseMessage httpResult = GetHttpResponseMessageForIdentityResult(result);
                 return httpResult;
             }
@@ -40,8 +48,17 @@ namespace Sample_BugTracker.API.Services
             }
             else
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                return GetHttpResponseMessage(HttpStatusCode.InternalServerError, result.Errors);
             }
+        }
+
+        private HttpResponseMessage GetHttpResponseMessage(HttpStatusCode statusCode, IEnumerable<string> errorList)
+        {
+            var httpMsg = new HttpResponseMessage(statusCode)
+            {
+                Content = new StringContent(String.Join("\n", errorList))
+            };
+           return httpMsg;
         }
     }
 }
