@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,28 @@ namespace Sample_BugTracker.DAL.EF
             Database.SetInitializer(new StoreDbInitializer());
         }
 
-        public class StoreDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+        // Инициализация происходит при первом обращении к контексту данных
+        public class StoreDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
         {
-            protected override void Seed(ApplicationDbContext db)
+            protected override void Seed(ApplicationDbContext _context)
             {
-                db.Users.Add(new IdentityUser("Bob"));
-                db.Users.Add(new IdentityUser("Scott"));
-                db.SaveChanges();
+                var _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
+                _roleManager.Create(new IdentityRole("Admin"));
+                _roleManager.Create(new IdentityRole("Moderator"));
+                _roleManager.Create(new IdentityRole("Worker"));
+                _roleManager.Create(new IdentityRole("User"));
+
+                // Addition Admin
+                var _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_context));
+                string adminPassword = "aBcDe20*";
+                IdentityUser admin = new IdentityUser()
+                {
+                    Email = "KVISLAND20@gmail.com",
+                    UserName = "SuperUser"
+                };
+                _userManager.Create(admin, adminPassword);
+                _userManager.AddToRole(admin.Id, "Admin");
+                _context.SaveChanges();
             }
         }
     }

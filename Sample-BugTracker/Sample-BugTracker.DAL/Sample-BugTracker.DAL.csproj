@@ -72,6 +72,11 @@
     <Compile Include="Interfaces\IProjectRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork .cs" />
+    <Compile Include="Migrations\201802051308041_Initialize.cs" />
+    <Compile Include="Migrations\201802051308041_Initialize.Designer.cs">
+      <DependentUpon>201802051308041_Initialize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
@@ -79,7 +84,11 @@
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201802051308041_Initialize.resx">
+      <DependentUpon>201802051308041_Initialize.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

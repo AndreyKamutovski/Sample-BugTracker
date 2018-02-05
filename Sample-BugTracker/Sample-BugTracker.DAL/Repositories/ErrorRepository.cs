@@ -18,5 +18,7 @@ namespace Sample_BugTracker.DAL.Repositories
                 return base.Context as ApplicationDbContext;
             }
         }
+
+
     }
 }

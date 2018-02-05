@@ -8,16 +8,16 @@ namespace Sample_BugTracker.DAL.Enumerations
 {
     public enum Status
     {
-        Open = 1,
-        Decided,
-        Close
+        OPEN = 1,
+        DECIDED,
+        CLOSE
     }
 
     public enum Priority
     {
-        Critical = 1,
-        High,
-        Middle,
-        Low
+        CRITICAL = 1,
+        HIGH,
+        MIDDLE,
+        LOW
     }
 }

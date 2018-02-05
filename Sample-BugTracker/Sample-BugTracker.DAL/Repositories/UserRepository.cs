@@ -29,12 +29,6 @@ namespace Sample_BugTracker.DAL.Repositories
                     RequireUppercase = true
                 }
             };
-
-            _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
-            _roleManager.Create(new IdentityRole("Admin"));
-            _roleManager.Create(new IdentityRole("Moderator"));
-            _roleManager.Create(new IdentityRole("Worker"));
-            _roleManager.Create(new IdentityRole("User"));
         }
 
         public async Task<IdentityResult> Add(IdentityUser user, string password, string roleName)
