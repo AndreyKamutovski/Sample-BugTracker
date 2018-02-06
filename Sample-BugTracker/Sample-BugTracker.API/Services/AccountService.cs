@@ -35,6 +35,9 @@ namespace Sample_BugTracker.API.Services
                     Email = user.Email
                 };
                 IdentityResult result = await _unitOfWork.Users.Add(appUser, user.Password, user.RoleName);
+                /*
+                 * if(result == null) { ... }
+                 */
                 HttpResponseMessage httpResult = GetHttpResponseMessageForIdentityResult(result);
                 return httpResult;
             }
