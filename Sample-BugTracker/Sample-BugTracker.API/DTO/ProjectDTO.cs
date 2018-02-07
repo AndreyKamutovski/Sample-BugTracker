@@ -1,10 +1,9 @@
-﻿using Sample_BugTracker.BLL.Infrastructure;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sample_BugTracker.API.DTO
 {
-    public class ProjectDTO: DTOValidator
+    public class ProjectDTO
     {
         [Required(ErrorMessage = "Title of project is a required field")]
         [MinLength(3)]

@@ -1,9 +1,8 @@
-﻿using Sample_BugTracker.BLL.Infrastructure;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Sample_BugTracker.API.DTO
 {
-    public class UserDTO: DTOValidator
+    public class UserDTO
     {
         [Required]
         [DataType(DataType.EmailAddress)]

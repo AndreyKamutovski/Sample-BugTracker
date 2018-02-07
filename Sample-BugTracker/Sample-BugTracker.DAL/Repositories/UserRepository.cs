@@ -33,7 +33,8 @@ namespace Sample_BugTracker.DAL.Repositories
 
         public async Task<IdentityResult> Add(IdentityUser user, string password, string roleName)
         {
-            IdentityResult resultCreation, resultAdditionToRole;
+            IdentityResult resultCreation;
+            IdentityResult resultAdditionToRole;
             resultCreation = await _userManager.CreateAsync(user, password);
             if(resultCreation.Succeeded)
             {
