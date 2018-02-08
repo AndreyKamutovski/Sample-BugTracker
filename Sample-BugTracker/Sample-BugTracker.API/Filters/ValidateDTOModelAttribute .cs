@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace Sample_BugTracker.BLL.Filters
+namespace Sample_BugTracker.API.Filters
 {
     public class ValidateDTOModelAttribute : ActionFilterAttribute
     {

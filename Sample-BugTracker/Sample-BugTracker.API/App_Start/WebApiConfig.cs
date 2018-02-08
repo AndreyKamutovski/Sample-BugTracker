@@ -1,4 +1,4 @@
-﻿using Sample_BugTracker.BLL.Filters;
+﻿using Sample_BugTracker.API.Filters;
 using System.Web.Http;
 
 namespace Sample_BugTracker.API
@@ -9,7 +9,7 @@ namespace Sample_BugTracker.API
         {
             // Web API configuration and services
             config.Filters.Add(new ValidateDTOModelAttribute());
-            config.Filters.Add(new UserNotRegisteredFilterException());
+            config.Filters.Add(new ApplicationFilterException());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

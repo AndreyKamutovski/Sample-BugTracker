@@ -1,28 +1,20 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.API.DTO;
-using Sample_BugTracker.BLL.Exceptions;
-using Sample_BugTracker.DAL.EF;
+using Sample_BugTracker.API.Exceptions;
 using Sample_BugTracker.DAL.Repositories;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace Sample_BugTracker.API.Services
 {
-    public class AccountService
+    public class AccountService : BaseService
     {
-        private readonly UnitOfWork _unitOfWork;
-
-        public AccountService()
+        public async Task Register([Required]UserDTO user)
         {
-            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
-        }
-
-        public async Task<HttpResponseMessage> Register([Required]UserDTO user)
-        {
-            using (_unitOfWork)
+            using (UnitOfWork)
             {
                 IdentityUser appUser = new IdentityUser()
                 {
@@ -30,11 +22,17 @@ namespace Sample_BugTracker.API.Services
                     Email = user.Email
                 };
 
-                IdentityResult result = await _unitOfWork.Users.Add(appUser, user.Password, user.RoleName);
-                 if(!result.Succeeded) {
-                    throw new UserNotRegisteredException(result.Errors);
-                };
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                IdentityUser userExists = await UnitOfWork.Users.Get(appUser.UserName, user.Password);
+                if(userExists != null)
+                {
+                    throw new IdentityOperationException(string.Format("User with email {0} already exists", appUser.Email), HttpStatusCode.BadRequest);
+                }
+
+                IdentityResult addUserResult = await UnitOfWork.Users.Add(appUser, user.Password, user.RoleName);
+                if (!addUserResult.Succeeded)
+                {
+                    throw new IdentityOperationException (addUserResult.Errors, HttpStatusCode.InternalServerError);
+                }
             }
         }
     }
