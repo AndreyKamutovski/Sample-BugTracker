@@ -14,16 +14,19 @@ var app_component_1 = require('./app.component');
 var forms_1 = require('@angular/forms');
 var login_component_1 = require('./login/login.component');
 var app_routing_1 = require('./app.routing');
+var http_1 = require("@angular/http");
+var auth_service_1 = require("./services/auth.service");
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, app_routing_1.routing],
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routing_1.routing],
             declarations: [
                 app_component_1.AppComponent,
                 login_component_1.LoginComponent
             ],
+            providers: [auth_service_1.AuthService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

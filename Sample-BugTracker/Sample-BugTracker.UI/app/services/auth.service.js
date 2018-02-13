@@ -9,25 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var auth_service_1 = require("../services/auth.service");
-var LoginComponent = (function () {
-    function LoginComponent(authService) {
-        this.authService = authService;
+var http_1 = require('@angular/http');
+var AuthService = (function () {
+    function AuthService(http) {
+        this.http = http;
     }
-    LoginComponent.prototype.login = function () {
-        this.authService.login();
+    AuthService.prototype.login = function (user) {
+        var body = { userName: user.email, password: user.password, grant_type: 'password' };
+        return this.http.post('', get(('user.json')));
     };
-    LoginComponent.prototype.ngOnInit = function () {
-    };
-    LoginComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'app-login',
-            templateUrl: 'login.component.html'
-        }), 
-        __metadata('design:paramtypes', [auth_service_1.AuthService])
-    ], LoginComponent);
-    return LoginComponent;
+    AuthService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], AuthService);
+    return AuthService;
 }());
-exports.LoginComponent = LoginComponent;
-//# sourceMappingURL=login.component.js.map
+exports.AuthService = AuthService;
+//# sourceMappingURL=auth.service.js.map
