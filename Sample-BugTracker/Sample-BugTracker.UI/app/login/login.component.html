@@ -10,11 +10,11 @@
     </div>
   </div>
   <div class="card-body">
-    <form>
+    <form (submit)='login(user);'>
       <div class="form-group">
         <label for="inputEmail">Адрес эл. почты</label>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" id="inputEmail" placeholder="Введите email" autofocus required email>
+          <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Введите email" autofocus required email [(ngModel)]='user.email'>
           <div class="input-group-append">
             <span class="input-group-text">
               <i class="fa fa-envelope"></i>
@@ -25,7 +25,7 @@
       <div class="form-group">
         <label for="inputPassword">Пароль</label>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" id="inputPassword" placeholder="Введите пароль" required>
+          <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Введите пароль" required [(ngModel)]='user.password'>
           <div class="input-group-append">
             <span class="input-group-text">
               <i class="fa fa-key"></i>
@@ -37,3 +37,8 @@
     </form>
   </div>
 </div>
+<button type="button" (click) = 'testMethod();' class="btn btn-primary btn-block">GET</button>
+<p>{{test}}</p>
+
+
+<p>{{test2}}</p>

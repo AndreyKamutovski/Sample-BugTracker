@@ -15,7 +15,6 @@ var forms_1 = require('@angular/forms');
 var login_component_1 = require('./login/login.component');
 var app_routing_1 = require('./app.routing');
 var http_1 = require("@angular/http");
-var auth_service_1 = require("./services/auth.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -26,7 +25,7 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 login_component_1.LoginComponent
             ],
-            providers: [auth_service_1.AuthService],
+            //providers: [AuthService, { provide: REST_URI, useValue: 'http://${location.hostname}:2038/' }],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

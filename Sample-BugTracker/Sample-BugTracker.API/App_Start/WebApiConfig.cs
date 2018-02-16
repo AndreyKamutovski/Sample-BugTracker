@@ -1,5 +1,6 @@
 ﻿using Sample_BugTracker.API.Filters;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Sample_BugTracker.API
 {
@@ -10,6 +11,9 @@ namespace Sample_BugTracker.API
             // Web API configuration and services
             config.Filters.Add(new ValidateDTOModelAttribute());
             config.Filters.Add(new ApplicationFilterException());
+
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
 
             // Web API routes
             config.MapHttpAttributeRoutes();

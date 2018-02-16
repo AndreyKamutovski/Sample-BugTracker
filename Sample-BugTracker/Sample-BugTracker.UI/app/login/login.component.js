@@ -10,12 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var auth_service_1 = require("../services/auth.service");
+var user_model_1 = require("../shared/models/user.model");
 var LoginComponent = (function () {
     function LoginComponent(authService) {
         this.authService = authService;
+        this.user = new user_model_1.User();
     }
     LoginComponent.prototype.login = function () {
-        this.authService.login();
+        var _this = this;
+        this.authService.login(this.user).subscribe(function (data) { return _this.test = data; }, function (err) { return _this.test = err; });
+    };
+    LoginComponent.prototype.testMethod = function () {
+        var _this = this;
+        this.authService.test().subscribe(function (res) { return _this.test2 = res.text(); });
     };
     LoginComponent.prototype.ngOnInit = function () {
     };
@@ -23,7 +30,8 @@ var LoginComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'app-login',
-            templateUrl: 'login.component.html'
+            templateUrl: 'login.component.html',
+            providers: [auth_service_1.AuthService, { provide: auth_service_1.REST_URI, useValue: "http://" + location.hostname + ":2038/" }]
         }), 
         __metadata('design:paramtypes', [auth_service_1.AuthService])
     ], LoginComponent);

@@ -8,19 +8,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+require("rxjs/add/operator/map");
+exports.REST_URI = new core_1.OpaqueToken('REST_URI');
 var AuthService = (function () {
-    function AuthService(http) {
+    function AuthService(http, uri) {
         this.http = http;
+        this.uri = uri;
     }
     AuthService.prototype.login = function (user) {
+        var headersPost = new http_1.Headers();
+        headersPost.set('Content-Type', 'application/x-www-form-urlencoded');
         var body = { userName: user.email, password: user.password, grant_type: 'password' };
-        return this.http.post('', get(('user.json')));
+        return this.http.post(this.uri + 'token', body, { headers: headersPost }).map(function (res) { return res.headers; });
+    };
+    AuthService.prototype.test = function () {
+        return this.http.get(this.uri + 'api/Account/test');
     };
     AuthService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        core_1.Injectable(),
+        __param(1, core_1.Inject(exports.REST_URI)), 
+        __metadata('design:paramtypes', [http_1.Http, String])
     ], AuthService);
     return AuthService;
 }());

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { routing } from './app.routing';
 import { HttpModule } from "@angular/http";
-import { AuthService } from "./services/auth.service";
+import { AuthService, REST_URI } from "./services/auth.service";
 
 @NgModule({
     imports: [BrowserModule, FormsModule, HttpModule, routing],
@@ -13,7 +13,7 @@ import { AuthService } from "./services/auth.service";
         AppComponent,
         LoginComponent
     ],
-    providers: [AuthService],
+    //providers: [AuthService, { provide: REST_URI, useValue: 'http://${location.hostname}:2038/' }],
     bootstrap: [AppComponent]
 })
 export class AppModule {
