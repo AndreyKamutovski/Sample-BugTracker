@@ -23,8 +23,11 @@ var AuthService = (function () {
     AuthService.prototype.login = function (user) {
         var headersPost = new http_1.Headers();
         headersPost.set('Content-Type', 'application/x-www-form-urlencoded');
-        var body = { userName: user.email, password: user.password, grant_type: 'password' };
-        return this.http.post(this.uri + 'token', body, { headers: headersPost }).map(function (res) { return res.headers; });
+        var body = new URLSearchParams();
+        body.set('userName', user.email);
+        body.set('password', user.password);
+        body.set('grant_type', 'password');
+        return this.http.post(this.uri + 'token', body).map(function (res) { return res.headers; });
     };
     AuthService.prototype.test = function () {
         return this.http.get(this.uri + 'api/Account/test');

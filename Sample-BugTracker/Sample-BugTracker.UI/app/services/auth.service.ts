@@ -17,8 +17,11 @@ export class AuthService {
     login(user: User): Observable<any> {
         let headersPost = new Headers();
         headersPost.set('Content-Type', 'application/x-www-form-urlencoded');
-        const body = { userName: user.email, password: user.password, grant_type: 'password' };
-        return this.http.post(this.uri + 'token', body, { headers: headersPost }).map(res => res.headers);
+        let  body = new URLSearchParams();
+        body.set('userName', user.email);
+        body.set('password', user.password);
+        body.set('grant_type', 'password');
+        return this.http.post(this.uri + 'token', body).map(res => res.headers);
     }
 
     test() {
