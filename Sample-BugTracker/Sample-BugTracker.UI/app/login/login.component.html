@@ -14,7 +14,8 @@
       <div class="form-group">
         <label for="inputEmail">Адрес эл. почты</label>
         <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Введите email" autofocus required email [(ngModel)]='user.email'>
+          <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Введите email" autofocus required email
+            [(ngModel)]='user.email'>
           <div class="input-group-append">
             <span class="input-group-text">
               <i class="fa fa-envelope"></i>
@@ -33,12 +34,10 @@
           </div>
         </div>
       </div>
+      <div class="form-group">
+        <app-captcha></app-captcha>
+      </div>
       <button type="submit" class="btn btn-primary btn-block">Войти</button>
     </form>
   </div>
 </div>
-<button type="button" (click) = 'testMethod();' class="btn btn-primary btn-block">GET</button>
-<p>{{test}}</p>
-
-
-<p>{{test2}}</p>

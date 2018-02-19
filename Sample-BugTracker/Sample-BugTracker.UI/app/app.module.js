@@ -15,12 +15,13 @@ var forms_1 = require('@angular/forms');
 var login_component_1 = require('./login/login.component');
 var app_routing_1 = require('./app.routing');
 var http_1 = require("@angular/http");
+var angular2_recaptcha_1 = require('angular2-recaptcha');
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routing_1.routing],
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routing_1.routing, angular2_recaptcha_1.ReCaptchaModule],
             declarations: [
                 app_component_1.AppComponent,
                 login_component_1.LoginComponent

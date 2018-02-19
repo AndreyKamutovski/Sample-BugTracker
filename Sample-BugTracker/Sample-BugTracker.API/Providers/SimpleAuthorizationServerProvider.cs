@@ -18,7 +18,7 @@ namespace Sample_BugTracker.API
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
 
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+            //context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
             using (UnitOfWork _repo = new UnitOfWork(new ApplicationDbContext()))
             {

@@ -11,10 +11,6 @@ namespace Sample_BugTracker.API
             // Web API configuration and services
             config.Filters.Add(new ValidateDTOModelAttribute());
             config.Filters.Add(new ApplicationFilterException());
-
-            var cors = new EnableCorsAttribute(origins: "*", headers: "*", methods: "*");
-            config.EnableCors(cors);
-
             
             // Web API routes
             config.MapHttpAttributeRoutes();

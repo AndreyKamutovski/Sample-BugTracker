@@ -5,7 +5,7 @@
         },
         map: {
             app: 'app',
-
+            'angular2-recaptcha': 'node_modules/angular2-recaptcha',
             '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
             '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
             '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
@@ -22,6 +22,7 @@
                 main: '../main.js',
                 defaultExtension: 'js'
             },
+            'angular2-recaptcha': {defaultExtension: 'js', main:'index'},
             rxjs: {
                 defaultExtension: 'js'
             }

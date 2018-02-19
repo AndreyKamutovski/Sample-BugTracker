@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var http_2 = require('@angular/http');
 require("rxjs/add/operator/map");
 exports.REST_URI = new core_1.OpaqueToken('REST_URI');
 var AuthService = (function () {
@@ -21,16 +22,18 @@ var AuthService = (function () {
         this.uri = uri;
     }
     AuthService.prototype.login = function (user) {
-        var headersPost = new http_1.Headers();
-        headersPost.set('Content-Type', 'application/x-www-form-urlencoded');
-        var body = new URLSearchParams();
+        var body = new http_2.URLSearchParams();
         body.set('userName', user.email);
         body.set('password', user.password);
         body.set('grant_type', 'password');
-        return this.http.post(this.uri + 'token', body).map(function (res) { return res.headers; });
-    };
-    AuthService.prototype.test = function () {
-        return this.http.get(this.uri + 'api/Account/test');
+        return this.http.post(this.uri + 'token', body).map(function (res) {
+            if (res.ok) {
+                localStorage.setItem('token', res.json().access_token);
+                return true;
+            }
+            else
+                return false;
+        });
     };
     AuthService = __decorate([
         core_1.Injectable(),

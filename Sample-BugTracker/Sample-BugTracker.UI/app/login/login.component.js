@@ -11,21 +11,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var auth_service_1 = require("../services/auth.service");
 var user_model_1 = require("../shared/models/user.model");
+var angular2_recaptcha_1 = require('angular2-recaptcha');
+var router_1 = require('@angular/router');
 var LoginComponent = (function () {
-    function LoginComponent(authService) {
+    function LoginComponent(authService, router) {
         this.authService = authService;
+        this.router = router;
         this.user = new user_model_1.User();
+        this.isCaptchaChecked = false;
     }
     LoginComponent.prototype.login = function () {
         var _this = this;
-        this.authService.login(this.user).subscribe(function (data) { return _this.test = data; }, function (err) { return _this.test = err; });
+        if (this.isCaptchaChecked) {
+            this.authService.login(this.user).subscribe(function (isLogin) {
+                if (isLogin) {
+                    _this.router.navigate(['/']);
+                }
+            });
+        }
     };
-    LoginComponent.prototype.testMethod = function () {
-        var _this = this;
-        this.authService.test().subscribe(function (res) { return _this.test2 = res.text(); });
+    LoginComponent.prototype.handleCorrectCaptcha = function (event) {
+        this.isCaptchaChecked = true;
+        this.resGoogle = event;
+    };
+    LoginComponent.prototype.handleExpiredCaptcha = function () {
+        this.captcha.reset();
     };
     LoginComponent.prototype.ngOnInit = function () {
     };
+    __decorate([
+        core_1.ViewChild(angular2_recaptcha_1.ReCaptchaComponent), 
+        __metadata('design:type', angular2_recaptcha_1.ReCaptchaComponent)
+    ], LoginComponent.prototype, "captcha", void 0);
     LoginComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -33,7 +50,7 @@ var LoginComponent = (function () {
             templateUrl: 'login.component.html',
             providers: [auth_service_1.AuthService, { provide: auth_service_1.REST_URI, useValue: "http://" + location.hostname + ":2038/" }]
         }), 
-        __metadata('design:paramtypes', [auth_service_1.AuthService])
+        __metadata('design:paramtypes', [auth_service_1.AuthService, router_1.Router])
     ], LoginComponent);
     return LoginComponent;
 }());

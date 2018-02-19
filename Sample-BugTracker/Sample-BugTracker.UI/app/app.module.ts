@@ -6,16 +6,18 @@ import { LoginComponent } from './login/login.component';
 import { routing } from './app.routing';
 import { HttpModule } from "@angular/http";
 import { AuthService, REST_URI } from "./services/auth.service";
+import { CaptchaComponent } from './captcha/captcha.component'
 
 @NgModule({
     imports: [BrowserModule, FormsModule, HttpModule, routing],
     declarations: [
         AppComponent,
-        LoginComponent
+        LoginComponent,
+        CaptchaComponent
     ],
     //providers: [AuthService, { provide: REST_URI, useValue: 'http://${location.hostname}:2038/' }],
     bootstrap: [AppComponent]
 })
 export class AppModule {
-    
+
 }
