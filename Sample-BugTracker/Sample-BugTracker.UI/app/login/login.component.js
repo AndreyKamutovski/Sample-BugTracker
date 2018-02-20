@@ -11,37 +11,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var auth_service_1 = require("../services/auth.service");
 var user_model_1 = require("../shared/models/user.model");
-var angular2_recaptcha_1 = require('angular2-recaptcha');
 var router_1 = require('@angular/router');
+var captcha_component_1 = require("../captcha/captcha.component");
 var LoginComponent = (function () {
     function LoginComponent(authService, router) {
         this.authService = authService;
         this.router = router;
         this.user = new user_model_1.User();
-        this.isCaptchaChecked = false;
     }
     LoginComponent.prototype.login = function () {
         var _this = this;
-        if (this.isCaptchaChecked) {
+        if (this.captcha.isCaptchaChecked) {
             this.authService.login(this.user).subscribe(function (isLogin) {
                 if (isLogin) {
-                    _this.router.navigate(['/']);
+                    _this.router.navigateByUrl('app/project');
                 }
+            }, function (err) {
             });
         }
-    };
-    LoginComponent.prototype.handleCorrectCaptcha = function (event) {
-        this.isCaptchaChecked = true;
-        this.resGoogle = event;
-    };
-    LoginComponent.prototype.handleExpiredCaptcha = function () {
-        this.captcha.reset();
     };
     LoginComponent.prototype.ngOnInit = function () {
     };
     __decorate([
-        core_1.ViewChild(angular2_recaptcha_1.ReCaptchaComponent), 
-        __metadata('design:type', angular2_recaptcha_1.ReCaptchaComponent)
+        core_1.ViewChild("captcha"), 
+        __metadata('design:type', captcha_component_1.CaptchaComponent)
     ], LoginComponent.prototype, "captcha", void 0);
     LoginComponent = __decorate([
         core_1.Component({

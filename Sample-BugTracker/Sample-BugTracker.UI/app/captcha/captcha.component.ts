@@ -8,18 +8,17 @@ import { ReCaptchaComponent } from 'angular2-recaptcha';
 })
 export class CaptchaComponent {
     @ViewChild(ReCaptchaComponent) private captcha: ReCaptchaComponent;
-    private readonly siteKey: string = "6LcmPUcUAAAAABmaIYVMVfVDlH8KUEf8DDyXaw1i";
     private _isCaptchaChecked: boolean = false;
 
-    public get isCaptchaChecked():boolean {
+    public get isCaptchaChecked(): boolean {
         return this._isCaptchaChecked;
     }
 
-    handleCorrectCaptcha(responseToken: string) {
+    private handleCorrectCaptcha(responseToken: string) {
         this._isCaptchaChecked = true;
     }
 
-    handleExpiredCaptcha() {
+    private handleExpiredCaptcha() {
         this._isCaptchaChecked = false;
         this.captcha.reset();
     }

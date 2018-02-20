@@ -27,7 +27,7 @@ namespace Sample_BugTracker.DAL.EF
         }
 
         // Инициализация происходит при первом обращении к контексту данных
-        public class StoreDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
+        public class StoreDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
         {
             protected override void Seed(ApplicationDbContext _context)
             {
@@ -43,7 +43,7 @@ namespace Sample_BugTracker.DAL.EF
                 IdentityUser admin = new IdentityUser()
                 {
                     Email = "KVISLAND20@gmail.com",
-                    UserName = "SuperUser"
+                    UserName = "KVISLAND20@gmail.com"
                 };
                 _userManager.Create(admin, adminPassword);
                 _userManager.AddToRole(admin.Id, "Admin");

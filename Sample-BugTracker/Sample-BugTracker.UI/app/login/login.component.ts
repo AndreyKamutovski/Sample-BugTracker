@@ -12,7 +12,9 @@ import { CaptchaComponent } from "../captcha/captcha.component";
     providers: [AuthService, { provide: REST_URI, useValue: `http://${location.hostname}:2038/` }]
 })
 export class LoginComponent implements OnInit {
-    @ViewChild(CaptchaComponent) captcha: CaptchaComponent;
+
+    @ViewChild("captcha")
+    private captcha: CaptchaComponent;
     private user: User = new User();
 
     constructor(private authService: AuthService, private router: Router) { }
@@ -21,9 +23,12 @@ export class LoginComponent implements OnInit {
         if (this.captcha.isCaptchaChecked) {
             this.authService.login(this.user).subscribe(isLogin => {
                 if (isLogin) {
-                    this.router.navigate(['/']);
+                    this.router.navigateByUrl('app/project');
                 }
-            });
+            },
+                err => {
+                    
+                });
         }
     }
 
