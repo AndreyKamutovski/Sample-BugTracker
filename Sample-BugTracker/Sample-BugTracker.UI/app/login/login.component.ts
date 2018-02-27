@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { User } from "../shared/models/user.model";
 import { Router } from '@angular/router';
 import { CaptchaComponent } from "../captcha/captcha.component";
+import "rxjs/add/operator/catch";
 
 @Component({
     moduleId: module.id,
@@ -16,18 +17,14 @@ export class LoginComponent implements OnInit {
     @ViewChild("captcha")
     private captcha: CaptchaComponent;
     private user: User = new User();
-
+    
     constructor(private authService: AuthService, private router: Router) { }
 
     login() {
         if (this.captcha.isCaptchaChecked) {
-            this.authService.login(this.user).subscribe(isLogin => {
-                if (isLogin) {
+            this.authService.login(this.user).subscribe(
+                data => {
                     this.router.navigateByUrl('app/project');
-                }
-            },
-                err => {
-                    
                 });
         }
     }

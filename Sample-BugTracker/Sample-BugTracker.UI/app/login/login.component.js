@@ -13,6 +13,7 @@ var auth_service_1 = require("../services/auth.service");
 var user_model_1 = require("../shared/models/user.model");
 var router_1 = require('@angular/router');
 var captcha_component_1 = require("../captcha/captcha.component");
+require("rxjs/add/operator/catch");
 var LoginComponent = (function () {
     function LoginComponent(authService, router) {
         this.authService = authService;
@@ -22,11 +23,8 @@ var LoginComponent = (function () {
     LoginComponent.prototype.login = function () {
         var _this = this;
         if (this.captcha.isCaptchaChecked) {
-            this.authService.login(this.user).subscribe(function (isLogin) {
-                if (isLogin) {
-                    _this.router.navigateByUrl('app/project');
-                }
-            }, function (err) {
+            this.authService.login(this.user).subscribe(function (data) {
+                _this.router.navigateByUrl('app/project');
             });
         }
     };

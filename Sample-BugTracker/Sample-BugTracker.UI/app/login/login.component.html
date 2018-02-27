@@ -37,7 +37,7 @@
       <div class="form-group">
         <app-captcha #captcha></app-captcha>
       </div>
-      <button type="submit" (click)='login(user);' class="btn btn-primary btn-block">Войти</button>
+      <button type="submit" [class.disabled] = "!captcha.isCaptchaChecked" (click)='login(user);' class="btn btn-primary btn-block">Войти</button>
     </form>
   </div>
 </div>

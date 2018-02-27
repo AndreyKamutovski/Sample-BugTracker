@@ -9,9 +9,11 @@ import { AuthService, REST_URI } from "./services/auth.service";
 import { CaptchaComponent } from './captcha/captcha.component';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 import { ProjectComponent } from "./project/project.component";
+import { MessageModule } from "./messages/message.module";
+import { MessageComponent } from "./messages/message.component";
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, HttpModule, routing, ReCaptchaModule],
+    imports: [BrowserModule, FormsModule, HttpModule, routing, ReCaptchaModule, MessageModule],
     declarations: [
         AppComponent,
         LoginComponent,
@@ -19,7 +21,7 @@ import { ProjectComponent } from "./project/project.component";
         ProjectComponent
     ],
     //providers: [AuthService, { provide: REST_URI, useValue: 'http://${location.hostname}:2038/' }],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent, MessageComponent]
 })
 export class AppModule {
 

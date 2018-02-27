@@ -18,12 +18,14 @@ var http_1 = require("@angular/http");
 var captcha_component_1 = require('./captcha/captcha.component');
 var angular2_recaptcha_1 = require('angular2-recaptcha');
 var project_component_1 = require("./project/project.component");
+var message_module_1 = require("./messages/message.module");
+var message_component_1 = require("./messages/message.component");
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routing_1.routing, angular2_recaptcha_1.ReCaptchaModule],
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routing_1.routing, angular2_recaptcha_1.ReCaptchaModule, message_module_1.MessageModule],
             declarations: [
                 app_component_1.AppComponent,
                 login_component_1.LoginComponent,
@@ -31,7 +33,7 @@ var AppModule = (function () {
                 project_component_1.ProjectComponent
             ],
             //providers: [AuthService, { provide: REST_URI, useValue: 'http://${location.hostname}:2038/' }],
-            bootstrap: [app_component_1.AppComponent]
+            bootstrap: [app_component_1.AppComponent, message_component_1.MessageComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

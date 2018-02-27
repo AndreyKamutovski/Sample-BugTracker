@@ -14,7 +14,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var http_2 = require('@angular/http');
+var Observable_1 = require('rxjs/Observable');
 require("rxjs/add/operator/map");
+require("rxjs/add/operator/catch");
+require("rxjs/add/observable/throw");
 exports.REST_URI = new core_1.OpaqueToken('REST_URI');
 var AuthService = (function () {
     function AuthService(http, uri) {
@@ -26,13 +29,14 @@ var AuthService = (function () {
         body.set('userName', user.email);
         body.set('password', user.password);
         body.set('grant_type', 'password');
-        return this.http.post(this.uri + 'token', body).map(function (res) {
-            if (res.ok) {
-                localStorage.setItem('token', res.json().access_token);
-                return true;
+        return this.http.post(this.uri + 'token', body)
+            .map(function (response) {
+            if (response.status == 200) {
+                localStorage.setItem('token', response.json().access_token);
             }
-            else
-                return false;
+            return response;
+        }).catch(function (error) {
+            return Observable_1.Observable.throw('Network Error: ' + error.statusText + ' ' + error.status);
         });
     };
     AuthService = __decorate([
