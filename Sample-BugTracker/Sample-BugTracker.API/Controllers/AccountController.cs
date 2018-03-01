@@ -18,11 +18,5 @@ namespace Sample_BugTracker.API.Controllers
             await _accountService.Register(user);
             return Ok();
         }
-
-        [HttpGet]
-        public string Test()
-        {
-            return "test response to Angular 2";
-        }
     }
 }

@@ -1,6 +1,7 @@
-<span data-toggle="modal" data-target="#lastMessage"></span>
-<div *ngIf="lastMessage" class="modal fade show" id="errorModal" style="display:block; background: rgba(0,0,0,0.6);" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+<div *ngIf="lastMessage" (click)="onContainerClicked($event)" [ngClass]="{'show': visibleAnimate}" style="background: rgba(0,0,0,0.6);"
+    [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}" class="modal fade" id="errorModal"
+    tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="errorModalLabel">Произошла ошибка</h5>

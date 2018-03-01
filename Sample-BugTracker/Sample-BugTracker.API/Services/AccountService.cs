@@ -6,7 +6,6 @@ using Sample_BugTracker.DAL.Repositories;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web.Http;
 
 namespace Sample_BugTracker.API.Services
 {

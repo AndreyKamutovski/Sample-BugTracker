@@ -13,8 +13,25 @@ var message_service_1 = require("./message.service");
 var MessageComponent = (function () {
     function MessageComponent(messageService) {
         var _this = this;
-        messageService.registerMessageHandler(function (m) { return _this.lastMessage = m; });
+        this.visible = false;
+        this.visibleAnimate = false;
+        messageService.registerMessageHandler(function (m) { _this.lastMessage = m; _this.show(); });
     }
+    MessageComponent.prototype.show = function () {
+        var _this = this;
+        this.visible = true;
+        setTimeout(function () { return _this.visibleAnimate = true; }, 100);
+    };
+    MessageComponent.prototype.hide = function () {
+        var _this = this;
+        this.visibleAnimate = false;
+        setTimeout(function () { return _this.visible = false; }, 300);
+    };
+    MessageComponent.prototype.onContainerClicked = function (event) {
+        if (event.currentTarget.classList.contains('modal')) {
+            this.hide();
+        }
+    };
     MessageComponent = __decorate([
         core_1.Component({
             selector: "paMessages",

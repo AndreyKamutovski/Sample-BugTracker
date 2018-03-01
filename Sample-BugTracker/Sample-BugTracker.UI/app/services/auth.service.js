@@ -36,7 +36,7 @@ var AuthService = (function () {
             }
             return response;
         }).catch(function (error) {
-            return Observable_1.Observable.throw('Network Error: ' + error.statusText + ' ' + error.status);
+            return Observable_1.Observable.throw('Error: ' + error.statusText + ' ' + error.status);
         });
     };
     AuthService = __decorate([

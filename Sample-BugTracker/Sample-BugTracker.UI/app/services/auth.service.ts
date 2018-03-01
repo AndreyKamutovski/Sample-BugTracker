@@ -27,8 +27,8 @@ export class AuthService {
                     localStorage.setItem('token', response.json().access_token);
                 }
                 return response;
-            }).catch((error: Response) => {
-                return Observable.throw('Network Error: ' + error.statusText + ' ' + error.status);
+            }).catch((error: any) => {
+                return Observable.throw('Error: ' + error.statusText + ' ' + error.status);
             });
     }
 }
