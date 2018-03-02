@@ -5,12 +5,9 @@ namespace Sample_BugTracker.API.Services
 {
     public class BaseService
     {
-        protected UnitOfWork UnitOfWork
+        protected UnitOfWork CreateUnitOfWork()
         {
-            get
-            {
-                return new UnitOfWork(new ApplicationDbContext());
-            }
+            return new UnitOfWork(new ApplicationDbContext());
         }
     }
 }

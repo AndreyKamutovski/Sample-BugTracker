@@ -11,9 +11,9 @@ namespace Sample_BugTracker.API.Services
 {
     public class AccountService : BaseService
     {
-        public async Task Register([Required]UserDTO user)
+        public async Task Register(UserDTO user)
         {
-            using (UnitOfWork)
+            using (var uow = CreateUnitOfWork())
             {
                 IdentityUser appUser = new IdentityUser()
                 {
@@ -21,13 +21,13 @@ namespace Sample_BugTracker.API.Services
                     Email = user.Email
                 };
 
-                IdentityUser userExists = await UnitOfWork.Users.Get(appUser.UserName, user.Password);
+                IdentityUser userExists = await uow.Users.Get(appUser.UserName, user.Password);
                 if(userExists != null)
                 {
                     throw new IdentityOperationException(string.Format("User with email {0} already exists", appUser.Email), HttpStatusCode.BadRequest);
                 }
 
-                IdentityResult addUserResult = await UnitOfWork.Users.Add(appUser, user.Password, user.RoleName);
+                IdentityResult addUserResult = await uow.Users.Add(appUser, user.Password, user.RoleName);
                 if (!addUserResult.Succeeded)
                 {
                     throw new IdentityOperationException (addUserResult.Errors, HttpStatusCode.InternalServerError);

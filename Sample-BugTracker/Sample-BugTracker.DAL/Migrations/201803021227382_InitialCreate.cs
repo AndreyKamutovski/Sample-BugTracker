@@ -3,7 +3,7 @@ namespace Sample_BugTracker.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initialize : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
@@ -11,12 +11,12 @@ namespace Sample_BugTracker.DAL.Migrations
                 "dbo.Errors",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
                         Title = c.String(),
                         DateCreation = c.DateTime(nullable: false),
                         Status = c.Int(nullable: false),
                         Priority = c.Int(nullable: false),
-                        ProjectId = c.Guid(nullable: false),
+                        ProjectId = c.Int(nullable: false),
                         IdentityUserId = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
@@ -29,7 +29,7 @@ namespace Sample_BugTracker.DAL.Migrations
                 "dbo.Projects",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
                         Title = c.String(),
                         DateStart = c.DateTime(nullable: false),
                         DateEnd = c.DateTime(nullable: false),

@@ -31,4 +31,8 @@ export class AuthService {
                 return Observable.throw('Error: ' + error.statusText + ' ' + error.status);
             });
     }
+
+    getAuthHaders() {
+        
+    }
 }

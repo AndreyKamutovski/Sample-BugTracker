@@ -7,7 +7,7 @@ namespace Sample_BugTracker.DAL.Entities
 {
     public class Error
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public string Title { get; set; }
 
@@ -17,7 +17,7 @@ namespace Sample_BugTracker.DAL.Entities
 
         public Priority Priority { get; set; }
 
-        public Guid ProjectId { get; set; }
+        public int ProjectId { get; set; }
         public Project Project { get; set; }
 
         public string IdentityUserId { get; set; }
