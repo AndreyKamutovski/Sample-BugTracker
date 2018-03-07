@@ -15,6 +15,7 @@ var forms_1 = require('@angular/forms');
 var login_component_1 = require('./login/login.component');
 var app_routing_1 = require('./app.routing');
 var http_1 = require("@angular/http");
+var auth_service_1 = require("./services/auth.service");
 var captcha_component_1 = require('./captcha/captcha.component');
 var angular2_recaptcha_1 = require('angular2-recaptcha');
 var project_component_1 = require("./project/project.component");
@@ -32,7 +33,7 @@ var AppModule = (function () {
                 captcha_component_1.CaptchaComponent,
                 project_component_1.ProjectComponent
             ],
-            //providers: [AuthService, { provide: REST_URI, useValue: 'http://${location.hostname}:2038/' }],
+            providers: [auth_service_1.AuthService, { provide: auth_service_1.REST_URI, useValue: 'http://${location.hostname}:2038/' }],
             bootstrap: [app_component_1.AppComponent, message_component_1.MessageComponent]
         }), 
         __metadata('design:paramtypes', [])

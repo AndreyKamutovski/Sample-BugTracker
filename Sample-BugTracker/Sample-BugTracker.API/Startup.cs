@@ -15,10 +15,11 @@ namespace Sample_BugTracker.API
     {
         public void Configuration(IAppBuilder app)
         {
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             ConfigureOAuth(app);
             HttpConfiguration config = new HttpConfiguration();
             WebApiConfig.Register(config);
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            //
             app.UseWebApi(config);
         }
 

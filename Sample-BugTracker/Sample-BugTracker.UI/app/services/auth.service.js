@@ -39,6 +39,15 @@ var AuthService = (function () {
             return Observable_1.Observable.throw('Error: ' + error.statusText + ' ' + error.status);
         });
     };
+    Object.defineProperty(AuthService.prototype, "authHaders", {
+        get: function () {
+            return new http_1.Headers({
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            });
+        },
+        enumerable: true,
+        configurable: true
+    });
     AuthService = __decorate([
         core_1.Injectable(),
         __param(1, core_1.Inject(exports.REST_URI)), 

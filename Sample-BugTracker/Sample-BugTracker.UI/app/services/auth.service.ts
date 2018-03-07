@@ -32,7 +32,9 @@ export class AuthService {
             });
     }
 
-    getAuthHaders() {
-        
+    get authHaders(): Headers {
+        return new Headers({
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        });
     }
 }

@@ -9,16 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var project_service_1 = require("../services/project.service");
+var auth_service_1 = require('../services/auth.service');
+var auth_service_2 = require("../services/auth.service");
 var ProjectComponent = (function () {
-    function ProjectComponent() {
+    function ProjectComponent(projectService) {
+        this.projectService = projectService;
     }
+    ;
+    ProjectComponent.prototype.getProjects = function () {
+        var prs = [];
+        this.projectService.getProjects().subscribe(function (data) { return prs = data; });
+        return prs;
+    };
+    ;
     ProjectComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'app-project',
-            templateUrl: 'project.component.html'
+            templateUrl: 'project.component.html',
+            providers: [project_service_1.ProjectService, auth_service_1.AuthService, { provide: auth_service_2.REST_URI, useValue: "http://" + location.hostname + ":2038/" }]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [project_service_1.ProjectService])
     ], ProjectComponent);
     return ProjectComponent;
 }());

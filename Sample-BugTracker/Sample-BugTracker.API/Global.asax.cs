@@ -25,6 +25,15 @@ namespace Sample_BugTracker.BLL
             // https://stackoverflow.com/questions/27504256/mvc-web-api-no-access-control-allow-origin-header-is-present-on-the-requested
             // https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/enabling-cross-origin-requests-in-web-api
             // https://medium.com/@levifuller/building-an-angular-application-with-asp-net-core-in-visual-studio-2017-visualized-f4b163830eaa
+            if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
+            {
+                Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                Response.Headers.Add("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token, Authorization");
+                Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+                Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+                Response.Headers.Add("Access-Control-Max-Age", "1728000");
+                Response.End();
+            }
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
