@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Sample_BugTracker.API.DTO;
 using Sample_BugTracker.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System;
 
 namespace Sample_BugTracker.API.Services
 {
@@ -14,7 +14,6 @@ namespace Sample_BugTracker.API.Services
         {
             using(var uow = CreateUnitOfWork())
             {
-                Mapper.Initialize(config => config.CreateMap<Project, ProjectDTO>()); //вынести
                 return Mapper.Map<IEnumerable<Project>, List<ProjectDTO>>(uow.Projects.GetAll());
             }
         }

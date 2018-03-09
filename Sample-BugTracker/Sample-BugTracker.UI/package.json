@@ -1,34 +1,37 @@
 {
-  "name": "Sample-BugTracker.UI",
-  "version": "1.0.0",
+  "name": "sample-bug-tracker.ui",
+  "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
-    "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
-    "lite": "lite-server",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w"
+    "ng": "ng",
+    "start": "ng serve --port=3000 --open",
+    "build": "ng build --prod",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
+  "private": true,
   "dependencies": {
-    "@angular/common": "2.4.0",
-    "@angular/compiler": "2.4.0",
-    "@angular/core": "2.4.0",
-    "@angular/forms": "2.4.0",
-    "@angular/http": "2.4.0",
-    "@angular/platform-browser": "2.4.0",
-    "@angular/platform-browser-dynamic": "2.4.0",
-    "@angular/router": "3.4.0",
+    "@angular/animations": "^5.2.0",
+    "@angular/common": "^5.2.0",
+    "@angular/compiler": "^5.2.0",
+    "@angular/core": "^5.2.0",
+    "@angular/forms": "^5.2.0",
+    "@angular/http": "^5.2.0",
+    "@angular/platform-browser": "^5.2.0",
+    "@angular/platform-browser-dynamic": "^5.2.0",
+    "@angular/router": "^5.2.0",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.5.6",
+    "zone.js": "^0.8.19",
     "angular2-recaptcha": "^0.6.0",
     "bootstrap": "^4.0.0",
-    "core-js": "2.4.1",
-    "font-awesome": "~4.7.0",
-    "rxjs": "5.0.1",
-    "systemjs": "0.19.40",
-    "zone.js": "0.7.4"
+    "font-awesome": "~4.7.0"
   },
   "devDependencies": {
-    "@angular/cli": "^1.6.8",
-    "@types/node": "^6.0.46",
-    "concurrently": "3.1.0",
-    "lite-server": "^2.3.0",
-    "typescript": "2.0.10"
+    "@angular/cli": "~1.7.0",
+    "@angular/compiler-cli": "^5.2.0",
+    "@angular/language-service": "^5.2.0",
+    "typescript": "~2.5.3"
   }
 }

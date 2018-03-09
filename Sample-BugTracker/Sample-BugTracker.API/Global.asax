@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Sample_BugTracker.BLL.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Sample_BugTracker.API.Global" Language="C#" %>

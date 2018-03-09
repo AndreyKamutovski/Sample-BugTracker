@@ -1,4 +1,4 @@
-import { Injectable, OpaqueToken, Inject } from '@angular/core';
+import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { User } from "../shared/models/user.model";
 import { RequestOptionsArgs, URLSearchParams, Response } from '@angular/http';
@@ -8,7 +8,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import "rxjs/add/observable/throw";
 
-export const REST_URI = new OpaqueToken('REST_URI');
+export const REST_URI = new InjectionToken('REST_URI');
 
 @Injectable()
 export class AuthService {

@@ -1,4 +1,4 @@
-import { Injectable, OpaqueToken, Inject } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Project } from "../shared/models/project.model";
 import { Http, Headers, Response, RequestMethod, Request } from '@angular/http';
 import { Observable } from 'rxjs/Observable';

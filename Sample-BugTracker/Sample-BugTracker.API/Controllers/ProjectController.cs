@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Sample_BugTracker.API.DTO;
-using Sample_BugTracker.API.Services;
-using System.ComponentModel.DataAnnotations;
 
 namespace Sample_BugTracker.API.Controllers
 {
