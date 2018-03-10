@@ -1,12 +1,12 @@
-import { Injectable, InjectionToken, Inject } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { User } from "../shared/models/user.model";
-import { RequestOptionsArgs, URLSearchParams, Response } from '@angular/http';
-import { RequestOptions } from '@angular/http/src/base_request_options';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { Headers, Http, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import "rxjs/add/observable/throw";
+
+import { User } from '../shared/models/user.model';
 
 export const REST_URI = new InjectionToken('REST_URI');
 
@@ -32,9 +32,9 @@ export class AuthService {
             });
     }
 
-    get authHaders(): Headers {
-        return new Headers({
+    get authHaders() {
+        return {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
-        });
+        };
     }
 }

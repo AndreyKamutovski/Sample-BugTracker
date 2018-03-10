@@ -1,6 +1,6 @@
 export class Project {
-    title: string;
-    dateStart: Date;
-    dateEnd: Date;
-    description: string;
+    Title: string;
+    DateStart: Date;
+    DateEnd: Date;
+    Description: string;
 }

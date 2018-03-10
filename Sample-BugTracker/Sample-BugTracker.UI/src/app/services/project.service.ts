@@ -1,13 +1,13 @@
-import { Injectable, Inject } from '@angular/core';
-import { Project } from "../shared/models/project.model";
-import { Http, Headers, Response, RequestMethod, Request } from '@angular/http';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+
+import { Inject, Injectable } from '@angular/core';
+import { Http, Request, RequestMethod, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import "rxjs/add/observable/throw";
-import { ProjectComponent } from '../project/project.component';
-import { AuthService } from './auth.service';
-import { REST_URI } from "./auth.service";
+
+import { Project } from '../shared/models/project.model';
+import { AuthService, REST_URI } from './auth.service';
 
 
 @Injectable()
@@ -17,15 +17,19 @@ export class ProjectService {
         @Inject(REST_URI) private uri: string) { }
 
     getProjects(): Observable<Project[]> {
-        return this.sendRequest(RequestMethod.Get, this.uri.concat('api/Project/GetAll'));
+        return this.sendRequest(RequestMethod.Get, 'api/Project/GetAll');
     }
 
-    private sendRequest(verb: RequestMethod, uri: string, body?: Project) {
+    addProject(project: Project): Observable<Project> {
+        return this.sendRequest(RequestMethod.Post, 'api/Project/Add', project, {'Content-Type': 'application/json'});
+    }
+
+    private sendRequest(_method: RequestMethod, _url: string, _body?: Project, _headers?: any) {
         return this.http.request(new Request({
-            method: verb,
-            url: uri,
-            headers: this.authService.authHaders,
-            body: body
+            method: _method,
+            url: this.uri.concat(_url),
+            headers: new Headers({...this.authService.authHaders, ..._headers}),
+            body: _body
         })).map(res => res.json());
     }
 }

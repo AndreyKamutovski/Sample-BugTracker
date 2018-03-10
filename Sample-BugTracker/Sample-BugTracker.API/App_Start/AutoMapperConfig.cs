@@ -15,6 +15,7 @@ namespace Sample_BugTracker.API.App_Start
             Mapper.Initialize(config =>
             {
                 config.CreateMap<Project, ProjectDTO>();
+                config.CreateMap<ProjectDTO, Project>();
             });
         }
     }

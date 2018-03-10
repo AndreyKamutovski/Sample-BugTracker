@@ -11,14 +11,27 @@ import { Project } from '../shared/models/project.model';
 })
 export class ProjectComponent implements OnInit {
 
-    private _projects: Project[];
+    projects: Project[] = [];
+    project: Project = new Project();
+
     constructor(private projectService: ProjectService) { };
 
-    public get Projects(): Project[] {
-        return this._projects;
+    getProjects() {
+        return this.projects;
+    }
+
+    addProject() {
+        this.projectService.addProject(this.project).subscribe(
+            res => {
+                this.projects.push(res)
+            }
+        );
     }
 
     ngOnInit() {
-        this.projectService.getProjects().subscribe((projects: Project[]) => this._projects = projects);
+        this.projectService.getProjects().subscribe(projects => this.projects = projects);
     }
+
 }
+
+//https://www.npmjs.com/package/ng2-date-picker

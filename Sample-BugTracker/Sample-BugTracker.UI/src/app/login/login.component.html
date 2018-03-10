@@ -1,8 +1,8 @@
-<div class="card w-75 border-dark mx-auto mt-5">
-  <div class="card-header">
+<div class="card w-75 bg-light border-success mx-auto mt-5">
+  <div class="card-header border-success">
     <div class="row">
       <div class="col d-flex align-items-center">
-        <span class="align-middle h5">Вход в систему</span>
+        <span class="align-middle h5 card-title">Вход в систему</span>
       </div>
       <div class="col-5 col-md-2 col-lg-2 col-xl-1">
         <img src="../../assets/logo.png" class="img-fluid" alt="Bug Tracker Logo">
@@ -37,7 +37,7 @@
       <div class="form-group">
         <app-captcha #captcha></app-captcha>
       </div>
-      <button type="submit" [class.disabled] = "!captcha.isCaptchaChecked" (click)='login(user);' class="btn btn-primary btn-block">Войти</button>
+      <button type="submit" [class.disabled] = "!captcha.isCaptchaChecked" (click)='login(user);' class="btn btn-primary btn-raised btn-block">Войти</button>
     </form>
   </div>
 </div>

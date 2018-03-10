@@ -24,8 +24,8 @@ namespace Sample_BugTracker.API
         {
             if (Request.Headers.AllKeys.Contains("Access-Control-Request-Headers") && Request.Headers.AllKeys.Contains("Access-Control-Request-Method") && Request.HttpMethod == "OPTIONS")
             {
-                Response.Headers.Add("Access-Control-Allow-Headers", "authorization");
-                Response.Headers.Add("Access-Control-Allow-Methods", "GET");
+                Response.Headers.Add("Access-Control-Allow-Headers", "authorization, content-type");
+                Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST");
                 Response.End();
             }
         }

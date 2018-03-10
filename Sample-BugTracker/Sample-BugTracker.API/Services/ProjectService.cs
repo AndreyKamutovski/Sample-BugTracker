@@ -22,14 +22,14 @@ namespace Sample_BugTracker.API.Services
         {
             using(var uow = CreateUnitOfWork())
             {
-                Project project = new Project()
-                {
-                    Title = _project.Title,
-                    DateStart = _project.DateStart,
-                    DateEnd = _project.DateEnd,
-                    Description = _project.Description
-                };
-
+                //Project project = new Project()
+                //{
+                //    Title = _project.Title,
+                //    DateStart = _project.DateStart,
+                //    DateEnd = _project.DateEnd,
+                //    Description = _project.Description
+                //};
+                Project project = Mapper.Map<ProjectDTO, Project>(_project);
                 uow.Projects.Add(project);
                 uow.Complete();
             }
