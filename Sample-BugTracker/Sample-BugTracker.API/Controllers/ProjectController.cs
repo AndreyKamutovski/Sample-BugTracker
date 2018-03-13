@@ -22,9 +22,9 @@ namespace Sample_BugTracker.API.Controllers
         }
 
         [HttpPost]
-        public void Add([Required] ProjectDTO project)
+        public ProjectDTO Add([Required] ProjectDTO project)
         {
-            _projectService.Add(project);
+            return _projectService.Add(project);
         }
     }
 }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReCaptchaModule } from 'angular2-recaptcha';
@@ -16,7 +16,7 @@ import { AuthService, REST_URI } from './services/auth.service';
 import { ProjectService } from './services/project.service';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, HttpModule, routing, ReCaptchaModule, MessageModule, DpDatePickerModule],
+    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing, ReCaptchaModule, MessageModule, DpDatePickerModule],
     declarations: [
         AppComponent,
         LoginComponent,

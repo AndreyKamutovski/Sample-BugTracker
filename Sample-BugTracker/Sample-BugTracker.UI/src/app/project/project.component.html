@@ -26,24 +26,26 @@
 </div>
 <div class="collapse" id="collapseNewProject">
     <div class="card card-body bg-light">
-        <form>
+        <form [formGroup]='addProjectForm' (ngSubmit)="addProject()" novalidate>
             <div class="form-group">
                 <label for="projectNameInput">Название проекта</label>
-                <input type="text" name="projectName" class="form-control" id="projectNameInput" placeholder="Введите название проекта" required [(ngModel)]="project.Title">
+                <input type="text" name="projectName" class="form-control" id="projectNameInput" placeholder="Введите название проекта" required
+                    minlength='3' formControlName='title'>
             </div>
             <div class="form-group">
                 <label for="projectNameInput">Дата начала</label>
-                <dp-date-picker name="projectStartDate" placeholder="День начала" [(ngModel)]="project.DateStart"></dp-date-picker>
+                <dp-date-picker name="projectStartDate" placeholder="День начала" required formControlName='dateStart'></dp-date-picker>
             </div>
             <div class="form-group">
                 <label for="projectNameInput">Дата окончания</label>
-                <dp-date-picker name="projectEndDate" placeholder="День окончания" [(ngModel)]="project.DateEnd"></dp-date-picker>
+                <dp-date-picker name="projectEndDate" placeholder="День окончания" required formControlName='dateEnd'></dp-date-picker>
             </div>
             <div class="form-group">
                 <label for="descriptionProjectTextarea">Описание проекта</label>
-                <textarea class="form-control" name="projectDesc" id="descriptionProjectTextarea" rows="5" placeholder="Введите описание проекта" [(ngModel)]="project.Description"></textarea>
+                <textarea class="form-control" name="projectDesc" id="descriptionProjectTextarea" rows="5" placeholder="Введите описание проекта"
+                    required minlength='10' formControlName='description'></textarea>
             </div>
-            <button type="submit" (click)="addProject()" class="btn btn-raised btn-success">Добавить проект</button>
+            <button type="submit" class="btn btn-raised btn-success">Добавить проект</button>
             <button type="reset" data-toggle="collapse" data-target="#collapseNewProject" class="btn btn-raised btn-warning ml-3">Отмена</button>
         </form>
     </div>
