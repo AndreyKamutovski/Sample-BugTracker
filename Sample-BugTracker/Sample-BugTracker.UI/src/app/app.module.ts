@@ -16,15 +16,31 @@ import { AuthService, REST_URI } from './services/auth.service';
 import { ProjectService } from './services/project.service';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing, ReCaptchaModule, MessageModule, DpDatePickerModule],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpModule,
+        routing,
+        ReCaptchaModule,
+        MessageModule,
+        DpDatePickerModule
+    ],
     declarations: [
         AppComponent,
         LoginComponent,
         CaptchaComponent,
         ProjectComponent
     ],
-    providers: [AuthService, ProjectService, { provide: REST_URI, useValue: 'http://localhost:2038/' }],
-    bootstrap: [AppComponent, MessageComponent]
+    providers: [
+        AuthService,
+        ProjectService,
+        { provide: REST_URI, useValue: 'http://localhost:2038/' }
+    ],
+    bootstrap: [
+        AppComponent,
+        MessageComponent
+    ]
 })
 export class AppModule {
 

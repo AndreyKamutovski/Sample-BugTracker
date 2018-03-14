@@ -1,6 +1,7 @@
-import { ErrorHandler, Injectable } from "@angular/core";
-import { MessageService } from "./message.service";
-import { Message } from "./message.model";
+import { ErrorHandler, Injectable } from '@angular/core';
+
+import { Message } from './message.model';
+import { MessageService } from './message.service';
 
 @Injectable()
 export class MessageErrorHandler implements ErrorHandler {
