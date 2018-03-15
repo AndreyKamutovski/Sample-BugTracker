@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light sticky-top h4" style="background-color: #e3f2fd;">
+<!-- <nav class="navbar navbar-expand-lg navbar-light sticky-top h4" style="background-color: #e3f2fd;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBugTracker" aria-controls="navbarBugTracker"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -16,8 +16,93 @@
             </li>
         </ul>
     </div>
-</nav>
-<div class="row mt-3">
+</nav> -->
+
+<form [formGroup]='addProjectForm' (ngSubmit)="addProject()" novalidate>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Новый проект
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    
+        <mat-form-field>
+            <input matInput type="text" name="projectName" id="projectNameInput" placeholder="Введите название проекта" required minlength='3'
+                formControlName='title'>
+            <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
+                <div *ngIf="title.errors.required">
+                    Обязательно введите название проекта
+                </div>
+                <div *ngIf="title.errors.minlength">
+                    Название проекта должно быть больше {{ title.errors.minlength.requiredLength }} символов
+                </div>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field formGroupName="datepickerGroup">
+            <mat-form-field>
+                <input [matDatepicker]="myDatepicker" placeholder="Дата начала">
+                <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker></mat-datepicker>
+                <div *ngIf="dateStart.invalid && (dateStart.dirty || dateStart.touched)" class="text-danger">
+                    <div *ngIf="dateStart.errors.required">
+                        Обязательно введите дату начала проекта
+                    </div>
+                </div>
+            </mat-form-field>
+            <mat-form-field>
+                <input [matDatepicker]="myDatepicker" placeholder="Дата окончания">
+                <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker></mat-datepicker>
+                <div *ngIf="dateStart.invalid && (dateStart.dirty || dateStart.touched)" class="text-danger">
+                    <div *ngIf="dateStart.errors.required">
+                        Обязательно введите дату начала проекта
+                    </div>
+                </div>
+            </mat-form-field>
+            <div *ngIf="datepickerGroup.invalid && (datepickerGroup.dirty || datepickerGroup.touched)" class="text-danger">
+                <div *ngIf="datepickerGroup.errors.date">
+                    date {{datepickerGroup.errors.date.messageError}}}
+                </div>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <textarea matInput class="form-control" name="projectDesc" id="descriptionProjectTextarea" rows="5" placeholder="Введите описание проекта"
+                required minlength='10' formControlName='description'></textarea>
+            <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger">
+                <div *ngIf="description.errors.required">
+                    Обязательно введите описание проекта
+                </div>
+                <div *ngIf="description.errors.minlength">
+                    Описание проекта должно быть больше {{ description.errors.minlength.requiredLength }} символов
+                </div>
+            </div>
+        </mat-form-field>
+
+
+
+        <div class="form-group">
+            <label for="descriptionProjectTextarea">Описание проекта</label>
+
+        </div>
+        <button type="submit" class="btn btn-raised btn-success">Добавить проект</button>
+        <button type="reset" data-toggle="collapse" data-target="#collapseNewProject" class="btn btn-raised btn-warning ml-3">Отмена</button>
+        <mat-action-row>
+            <button mat-button type="submit">Добавить проект</button>
+        </mat-action-row>
+
+        <mat-action-row>
+            <button mat-button type="reset">Отмена</button>
+        </mat-action-row>
+   
+
+
+</mat-expansion-panel>
+ </form>
+
+<!-- <div class="row mt-3">
     <div class="col">
         <button type="button" data-toggle="collapse" data-target="#collapseNewProject" class="btn btn-raised btn-primary btn-block">
             Новый проект
@@ -27,10 +112,9 @@
 <div class="collapse" id="collapseNewProject">
     <div class="card card-body bg-light">
         <form [formGroup]='addProjectForm' (ngSubmit)="addProject()" novalidate>
-            <div class="form-group">
-                <label for="projectNameInput">Название проекта</label>
-                <input type="text" name="projectName" class="form-control" id="projectNameInput" placeholder="Введите название проекта" required
-                    minlength='3' formControlName='title'>
+            <mat-form-field>
+                <input matInput type="text" name="projectName" id="projectNameInput" placeholder="Введите название проекта" required minlength='3'
+                    formControlName='title'>
                 <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
                     <div *ngIf="title.errors.required">
                         Обязательно введите название проекта
@@ -39,11 +123,13 @@
                         Название проекта должно быть больше {{ title.errors.minlength.requiredLength }} символов
                     </div>
                 </div>
-            </div>
+            </mat-form-field>
             <div class="form-group form-row" formGroupName="datepickerGroup">
                 <div class="form-group col">
                     <label for="projectNameInput">Дата начала</label>
-                    <dp-date-picker name="projectStartDate" placeholder="День начала" required formControlName='dateStart'></dp-date-picker>
+                    <input [matDatepicker]="myDatepicker">
+                    <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #myDatepicker></mat-datepicker>
                     <div *ngIf="dateStart.invalid && (dateStart.dirty || dateStart.touched)" class="text-danger">
                         <div *ngIf="dateStart.errors.required">
                             Обязательно введите дату начала проекта
@@ -52,7 +138,7 @@
                 </div>
                 <div class="form-group col">
                     <label for="projectNameInput">Дата окончания</label>
-                    <dp-date-picker name="projectEndDate" placeholder="День окончания" required formControlName='dateEnd'></dp-date-picker>
+
                 </div>
                 <div *ngIf="datepickerGroup.invalid && (datepickerGroup.dirty || datepickerGroup.touched)" class="text-danger">
                     <div *ngIf="datepickerGroup.errors.date">
@@ -78,7 +164,7 @@
             <button type="reset" data-toggle="collapse" data-target="#collapseNewProject" class="btn btn-raised btn-warning ml-3">Отмена</button>
         </form>
     </div>
-</div>
+</div> -->
 <div class="row my-3">
     <div class="col">
         <table class="table table-borderless text-center">

@@ -3,7 +3,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReCaptchaModule } from 'angular2-recaptcha';
-import { DpDatePickerModule } from 'ng2-date-picker';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
@@ -14,6 +13,8 @@ import { MessageModule } from './messages/message.module';
 import { ProjectComponent } from './project/project.component';
 import { AuthService, REST_URI } from './services/auth.service';
 import { ProjectService } from './services/project.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialDesignModule } from "./angular-material-design/angular-material-design.module";
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { ProjectService } from './services/project.service';
         routing,
         ReCaptchaModule,
         MessageModule,
-        DpDatePickerModule
+        BrowserAnimationsModule,
+        AngularMaterialDesignModule
     ],
     declarations: [
         AppComponent,

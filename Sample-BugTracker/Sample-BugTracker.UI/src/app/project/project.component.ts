@@ -63,4 +63,4 @@ export class ProjectComponent implements OnInit {
 
 }
 
-//https://www.npmjs.com/package/ng2-date-picker
+// https://ng-bootstrap.github.io/#/components/datepicker/examples
