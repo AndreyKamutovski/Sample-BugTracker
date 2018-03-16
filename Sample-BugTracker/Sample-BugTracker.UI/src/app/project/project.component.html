@@ -1,32 +1,64 @@
-<!-- <nav class="navbar navbar-expand-lg navbar-light sticky-top h4" style="background-color: #e3f2fd;">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBugTracker" aria-controls="navbarBugTracker"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+<mat-toolbar class="mat-toolbar-single-row" color="primary">
+    <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
     </button>
-    <a class="navbar-brand" href="#">
-        <img src="../../assets/logo.png" class="img-fluid" width="60" height="60" alt="Bug Tracker Reference Logo">
-    </a>
-    <div class="collapse navbar-collapse" id="navbarBugTracker">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Главная</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Проекты</a>
-            </li>
-        </ul>
-    </div>
-</nav> -->
+    <span style="flex: 1 1 auto;">Проекты</span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+            <mat-icon>add</mat-icon>
+            <span>Добавить проект</span>
+        </button>
+    </mat-menu>
+    <!-- <img mat-card-image src="../../assets/logo.png" alt="Bug Tracker Logo" height="40" width="60"> -->
+</mat-toolbar>
 
-<form [formGroup]='addProjectForm' (ngSubmit)="addProject()" novalidate>
-<mat-expansion-panel>
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            Новый проект
-        </mat-panel-title>
-    </mat-expansion-panel-header>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="over">Sidenav content</mat-sidenav>
+    <mat-sidenav-content style="padding: 10px;">
+        <mat-card>
+            <mat-card-content>
+                <mat-table [dataSource]=dataSource>
+                    <ng-container matColumnDef="title">
+                        <mat-header-cell *matHeaderCellDef> Название проекта </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{ project.Title }} </mat-cell>
+                    </ng-container>
 
-    
+                    <ng-container matColumnDef="countError">
+                        <mat-header-cell *matHeaderCellDef> Ошибки </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{ 1 }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dateStart">
+                        <mat-header-cell *matHeaderCellDef> Дата начала </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{ project.DateStart | date:"dd/MM/yyyy" }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dateEnd">
+                        <mat-header-cell *matHeaderCellDef> Дата окончания </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{ project.DateEnd | date:"dd/MM/yyyy" }} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let projectRowData; columns: displayedColumns"></mat-row>
+                </mat-table>
+            </mat-card-content>
+        </mat-card>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<!-- <form [formGroup]='addProjectForm' (ngSubmit)="addProject()" novalidate>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Новый проект
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+
         <mat-form-field>
             <input matInput type="text" name="projectName" id="projectNameInput" placeholder="Введите название проекта" required minlength='3'
                 formControlName='title'>
@@ -96,11 +128,11 @@
         <mat-action-row>
             <button mat-button type="reset">Отмена</button>
         </mat-action-row>
-   
 
 
-</mat-expansion-panel>
- </form>
+
+    </mat-expansion-panel>
+</form> -->
 
 <!-- <div class="row mt-3">
     <div class="col">
@@ -165,26 +197,3 @@
         </form>
     </div>
 </div> -->
-<div class="row my-3">
-    <div class="col">
-        <table class="table table-borderless text-center">
-            <thead class="thead-dark font-weight-normal">
-                <tr>
-                    <th scope="col">Название проекта</th>
-                    <th scope="col">Ошибки</th>
-                    <th scope="col">Дата начала</th>
-                    <th scope="col">Дата окончания</th>
-                </tr>
-            </thead>
-            <tbody *ngIf="projects.length > 0">
-                <tr *ngFor="let item of projects">
-                    <td>{{item.Title}}</td>
-                    <td>count errors</td>
-                    <td>{{item.DateStart | date:"dd/MM/yyyy"}}</td>
-                    <td>{{item.DateEnd | date:"dd/MM/yyyy"}}</td>
-                </tr>
-            </tbody>
-            <h2 *ngIf="projects.length === 0"> Не создано ни одного проекта. Нажмите кнопку "Новый проект" для создания проекта. </h2>
-        </table>
-    </div>
-</div>

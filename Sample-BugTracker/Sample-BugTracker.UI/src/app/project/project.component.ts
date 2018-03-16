@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ProjectService } from '../services/project.service';
 import { Project } from '../shared/models/project.model';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
     moduleId: module.id,
@@ -12,7 +13,9 @@ import { Project } from '../shared/models/project.model';
 })
 export class ProjectComponent implements OnInit {
 
-    projects: Project[] = [];
+    displayedColumns = ['title', 'countError', 'dateStart', 'dateEnd'];
+    dataSource: MatTableDataSource<Project> = new MatTableDataSource<Project>();
+
     project: Project = new Project();
     addProjectForm: FormGroup;
 
@@ -32,17 +35,13 @@ export class ProjectComponent implements OnInit {
     get datepickerGroup() { return this.addProjectForm.get('datepickerGroup'); }
     get dateStart() { return this.addProjectForm.get('datepickerGroup.dateStart'); }
     get dateEnd() { return this.addProjectForm.get('datepickerGroup.dateEnd'); }
-    
 
-    get Projects(): Project[] {
-        return this.projects;
-    }
 
     addProject(): void {
         if (this.addProjectForm.valid) {
             this.projectService.addProject(this.addProjectForm.value).subscribe(
                 res => {
-                    this.projects.push(res);
+                    this.dataSource.data.push(res);
                     this.addProjectForm.reset();
                 }
             );
@@ -58,9 +57,8 @@ export class ProjectComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.projectService.getProjects().subscribe(projects => this.projects = projects);
+        this.projectService.getProjects().subscribe(projects => this.dataSource.data = projects);
     }
-
 }
 
 // https://ng-bootstrap.github.io/#/components/datepicker/examples

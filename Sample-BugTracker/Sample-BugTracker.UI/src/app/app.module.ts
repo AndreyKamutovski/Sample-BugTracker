@@ -13,8 +13,8 @@ import { MessageModule } from './messages/message.module';
 import { ProjectComponent } from './project/project.component';
 import { AuthService, REST_URI } from './services/auth.service';
 import { ProjectService } from './services/project.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialDesignModule } from "./angular-material-design/angular-material-design.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
@@ -25,8 +25,8 @@ import { AngularMaterialDesignModule } from "./angular-material-design/angular-m
         routing,
         ReCaptchaModule,
         MessageModule,
-        BrowserAnimationsModule,
-        AngularMaterialDesignModule
+        AngularMaterialDesignModule,
+        BrowserAnimationsModule
     ],
     declarations: [
         AppComponent,
