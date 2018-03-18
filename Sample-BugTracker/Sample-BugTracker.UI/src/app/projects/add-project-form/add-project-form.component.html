@@ -1,0 +1,75 @@
+<h2 mat-dialog-title>Добавить проект</h2>
+<mat-dialog-content>
+    <form [formGroup]='addProjectForm' (ngSubmit)="addProject()" novalidate>
+        <mat-form-field>
+            <input matInput type="text" name="projectName" placeholder="Введите название проекта" required minlength='3'
+                formControlName='title'>
+            <!-- <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
+                <div *ngIf="title.errors.required">
+                    Обязательно введите название проекта
+                </div>
+                <div *ngIf="title.errors.minlength">
+                    Название проекта должно быть больше {{ title.errors.minlength.requiredLength }} символов
+                </div>
+            </div> -->
+        </mat-form-field>
+
+        <div formGroupName="datepickerGroup">
+            <mat-form-field>
+                <input [matDatepicker]="startDatepicker" placeholder="Дата начала">
+                <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatepicker></mat-datepicker>
+                <!-- <div *ngIf="dateStart.invalid && (dateStart.dirty || dateStart.touched)" class="text-danger">
+                    <div *ngIf="dateStart.errors.required">
+                        Обязательно введите дату начала проекта
+                    </div>
+                </div> -->
+            </mat-form-field>
+
+            <mat-form-field>
+                <input [matDatepicker]="myDatepicker" placeholder="Дата окончания">
+                <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker></mat-datepicker>
+                <!-- <div *ngIf="dateStart.invalid && (dateStart.dirty || dateStart.touched)" class="text-danger">
+                    <div *ngIf="dateStart.errors.required">
+                        Обязательно введите дату начала проекта
+                    </div>
+                </div> -->
+            </mat-form-field>
+            <!-- <div *ngIf="datepickerGroup.invalid && (datepickerGroup.dirty || datepickerGroup.touched)" class="text-danger">
+                <div *ngIf="datepickerGroup.errors.date">
+                    date {{datepickerGroup.errors.date.messageError}}}
+                </div>
+            </div> -->
+        </div>
+
+        <mat-form-field>
+            <textarea matInput class="form-control" name="projectDesc" id="descriptionProjectTextarea" rows="5" placeholder="Введите описание проекта"
+                required minlength='10' formControlName='description'></textarea>
+            <!-- <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger">
+                <div *ngIf="description.errors.required">
+                    Обязательно введите описание проекта
+                </div>
+                <div *ngIf="description.errors.minlength">
+                    Описание проекта должно быть больше {{ description.errors.minlength.requiredLength }} символов
+                </div>
+            </div> -->
+        </mat-form-field>
+       <mat-action-row>
+            <button mat-button type="submit">Добавить проект</button>
+        </mat-action-row>
+
+        <mat-action-row>
+            <button mat-button type="reset">Отмена</button>
+        </mat-action-row>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Отмена</button>
+</mat-dialog-actions>
+<!-- <mat-dialog-content>
+    <mat-form-field>
+        <input matInput placeholder="Input">
+    </mat-form-field>
+</mat-dialog-content> -->

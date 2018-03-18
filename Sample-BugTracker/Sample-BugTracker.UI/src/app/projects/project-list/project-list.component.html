@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-content>
+      <mat-table [dataSource]=dataSource>
+          <ng-container matColumnDef="title">
+              <mat-header-cell *matHeaderCellDef> Название проекта </mat-header-cell>
+              <mat-cell *matCellDef="let project"> {{ project.Title }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="countError">
+              <mat-header-cell *matHeaderCellDef> Ошибки </mat-header-cell>
+              <mat-cell *matCellDef="let project"> {{ 1 }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="dateStart">
+              <mat-header-cell *matHeaderCellDef> Дата начала </mat-header-cell>
+              <mat-cell *matCellDef="let project"> {{ project.DateStart | date:"dd/MM/yyyy" }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="dateEnd">
+              <mat-header-cell *matHeaderCellDef> Дата окончания </mat-header-cell>
+              <mat-cell *matCellDef="let project"> {{ project.DateEnd | date:"dd/MM/yyyy" }} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let projectRowData; columns: displayedColumns"></mat-row>
+      </mat-table>
+  </mat-card-content>
+</mat-card>

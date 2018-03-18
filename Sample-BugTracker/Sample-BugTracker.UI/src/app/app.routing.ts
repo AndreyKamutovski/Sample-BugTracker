@@ -1,10 +1,10 @@
-import { Routes, RouterModule } from "@angular/router";
-import { LoginComponent } from "./login/login.component";
-import { ProjectComponent } from "./project/project.component";
+import { RouterModule, Routes } from '@angular/router';
+
+import { LoginComponent } from './login/login.component';
+
 
 const routes: Routes = [
-    {path: "", component: LoginComponent},
-    {path: "app/project", component: ProjectComponent}
+    { path: "", component: LoginComponent }
 ]
 
 export const routing = RouterModule.forRoot(routes);

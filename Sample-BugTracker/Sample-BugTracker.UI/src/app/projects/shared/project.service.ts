@@ -6,8 +6,8 @@ import { Inject, Injectable } from '@angular/core';
 import { Http, Request, RequestMethod, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Project } from '../shared/models/project.model';
-import { AuthService, REST_URI } from './auth.service';
+import { AuthService, REST_URI } from '../../services/auth.service';
+import { Project } from './project.model';
 
 
 @Injectable()
