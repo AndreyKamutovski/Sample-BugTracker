@@ -21,13 +21,13 @@ export class AddProjectFormComponent implements OnInit {
       'datepickerGroup': formBuilder.group({
         'dateStart': [this.project.DateStart, Validators.required],
         'dateEnd': [this.project.DateEnd, Validators.required]
-      }, { validator: this.dateValidator })
+      }, { validator: dateValidator })
     });
   };
 
   get title() { return this.addProjectForm.get('title'); }
   get description() { return this.addProjectForm.get('description'); }
-  get datepickerGroup() { return this.addProjectForm.get('datepickerGroup'); }
+  // get datepickerGroup() { return this.addProjectForm..get('datepickerGroup'); }
   get dateStart() { return this.addProjectForm.get('datepickerGroup.dateStart'); }
   get dateEnd() { return this.addProjectForm.get('datepickerGroup.dateEnd'); }
 
@@ -44,13 +44,15 @@ export class AddProjectFormComponent implements OnInit {
     }
   }
 
-  dateValidator({ value }: FormGroup): { [key: string]: any } {
-    let { dateStart, dateEnd } = value;
-    let valid = (dateEnd >= dateStart) ? true : false;
-    return valid ? null : { 'messageError': 'Дата окончания проекта не может быть раньше даты начала проекта.' };
-  }
+
 
   ngOnInit() {
   }
 
 }
+
+function   dateValidator({ value }: FormGroup): { [key: string]: any } {
+    let { dateStart, dateEnd } = value;
+    let valid = (dateEnd >= dateStart) ? true : false;
+    return valid ? null : { 'messageError': 'Дата окончания проекта не может быть раньше даты начала проекта.' };
+  }

@@ -26,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProjectsComponent,
     ProjectListComponent,
     AddProjectFormComponent
+
   ],
   providers: [ProjectService]
 })

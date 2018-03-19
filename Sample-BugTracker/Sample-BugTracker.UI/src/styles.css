@@ -4,3 +4,24 @@
 body {
     background-image: url(./assets/bg-striped.png);
 }
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container > * {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.horizontal-flex-container-for-two-datepicker {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.horizontal-flex-container-for-two-datepicker > * {
+    width: 48%;
+}
