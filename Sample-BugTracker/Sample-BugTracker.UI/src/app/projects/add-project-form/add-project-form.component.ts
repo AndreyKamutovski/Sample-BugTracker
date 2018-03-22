@@ -10,7 +10,7 @@ import { dateValidator } from '../shared/date-validator';
   selector: 'app-add-project-form',
   templateUrl: './add-project-form.component.html',
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'ru' }
+    { provide: MAT_DATE_LOCALE, useValue: 'ja-JP' }
   ],
   styles: []
 })
@@ -22,7 +22,12 @@ export class AddProjectFormComponent implements OnInit {
 
   constructor(private projectService: ProjectService, private formBuilder: FormBuilder) {
     this.addProjectForm = this.formBuilder.group({
-      'title': [this.project.Title, [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern("^[а-яА-Я0-9_-]{3, 100}$")]],
+      'title': [this.project.Title, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(100),
+        Validators.pattern("^[А-Яа-я0-9 _-]*$")
+      ]],
       'description': [this.project.Description, [Validators.required, Validators.minLength(10)]],
       'datepickerGroup': formBuilder.group({
         'dateStart': [this.project.DateStart, Validators.required],

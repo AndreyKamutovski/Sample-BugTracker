@@ -14,8 +14,8 @@
                 Название проекта должно быть меньше {{title.errors.maxlength.requiredLength }} символов
             </mat-error>
             <mat-error *ngIf="title.hasError('pattern') && !title.hasError('required')">
-                Название проекта содержит недопустимые символы. Допустимы только такие 
-                символы:
+                Название проекта содержит недопустимые символы. Допустимы буквы от А до Я (строчные и прописные), цифры от 0 до 9, знак тире
+                (-), подчёркивания (_) и пробела
             </mat-error>
         </mat-form-field>
 
@@ -60,5 +60,5 @@
 
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Отмена</button>
-    <button mat-button type="submit">Добавить проект</button>
+    <button mat-raised-button color="primary" [disabled]="!addProjectForm.valid" type="submit">Добавить проект</button>
 </mat-dialog-actions>
