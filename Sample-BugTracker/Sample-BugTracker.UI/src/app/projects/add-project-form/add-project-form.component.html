@@ -3,60 +3,56 @@
     <form [formGroup]='addProjectForm' (ngSubmit)="addProject()" novalidate class="form-container">
         <mat-form-field>
             <input matInput type="text" name="projectName" placeholder="Название проекта" required minlength='3' formControlName='title'>
-            <mat-error *ngIf="title.invalid && (title.dirty || title.touched)">
-                <span *ngIf="title.hasError('required')">
-                    Обязательно введите название проекта
-                </span>
-                <span *ngIf="title.hasError('minlength')">
-                    Название проекта должно быть больше {{ title.errors.minlength.requiredLength }} символов. Вы ввели {{ title.errors.minlength.actualLength }} символа
-                </span>
+            <mat-error *ngIf="title.hasError('required')">
+                Обязательно введите название проекта
+            </mat-error>
+            <mat-error *ngIf="title.hasError('minlength') && !title.hasError('required')">
+                Название проекта должно быть больше {{ title.errors.minlength.requiredLength }} символов. Вы ввели {{ title.errors.minlength.actualLength
+                }} символа
+            </mat-error>
+            <mat-error *ngIf="title.hasError('maxlength') && !title.hasError('required')">
+                Название проекта должно быть меньше {{title.errors.maxlength.requiredLength }} символов
+            </mat-error>
+            <mat-error *ngIf="title.hasError('pattern') && !title.hasError('required')">
+                Название проекта содержит недопустимые символы. Допустимы только такие 
+                символы:
             </mat-error>
         </mat-form-field>
 
         <div formGroupName="datepickerGroup" class="horizontal-flex-container-for-two-datepicker">
             <mat-form-field>
-                <input matInput [matDatepicker]="startDatepicker" placeholder="Дата начала" formControlName='dateStart'>
+                <input matInput [matDatepicker]="startDatepicker" placeholder="Дата начала" formControlName='dateStart' required>
                 <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #startDatepicker></mat-datepicker>
-                <mat-error *ngIf="dateStart.invalid && (dateStart.dirty || dateStart.touched)">
-                    <span *ngIf="dateStart.hasError('required')">
-                        Обязательно введите дату начала проекта
-                    </span>
+                <mat-error *ngIf="dateStart.hasError('required')">
+                    Обязательно введите дату начала проекта
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput [matDatepicker]="endDatepicker" placeholder="Дата окончания" formControlName='dateEnd'>
+                <input matInput [matDatepicker]="endDatepicker" placeholder="Дата окончания" formControlName='dateEnd' required>
                 <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #endDatepicker></mat-datepicker>
-                <mat-error *ngIf="dateEnd.invalid && (dateEnd.dirty || dateEnd.touched)">
-                    <span *ngIf="dateEnd.hasError('required')">
-                        Обязательно введите запланированную дату окончания проекта
-                    </span>
+                <mat-error *ngIf="dateEnd.hasError('required')">
+                    Обязательно введите запланированную дату окончания проекта
                 </mat-error>
             </mat-form-field>
 
-        </div>
 
-        <div *ngIf="addProjectForm.hasError('date', 'datepickerGroup')">
-            date invalid
-            
-            <!-- <span *ngIf="datepickerGroup.hasError('date')">
-                date logic error
-                {{datepickerGroup.errors.date.messageError}}}
-            </span> -->
         </div>
+        <mat-error *ngIf="datepickerGroup.hasError('date')">
+            {{datepickerGroup.errors.date.errorMsg}}
+        </mat-error>
 
         <mat-form-field>
-            <textarea matInput class="form-control" name="projectDesc" id="descriptionProjectTextarea" rows="5" placeholder="Описание проекта"
-                required minlength='10' formControlName='description'></textarea>
-            <mat-error *ngIf="description.invalid && (description.dirty || description.touched)">
-                <span *ngIf="description.hasError('required')">
-                    Обязательно введите описание проекта
-                </span>
-                <span *ngIf="description.hasError('minlength')">
-                    Описание проекта должно быть больше {{ description.errors.minlength.requiredLength }} символов. Вы ввели {{ description.errors.minlength.actualLength }} символа
-                </span>
+            <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" class="form-control" name="projectDesc"
+                id="descriptionProjectTextarea" rows="5" placeholder="Описание проекта" required minlength='10' formControlName='description'></textarea>
+            <mat-error *ngIf="description.hasError('required')">
+                Обязательно введите описание проекта
+            </mat-error>
+            <mat-error *ngIf="description.hasError('minlength') && !description.hasError('required')">
+                Описание проекта должно быть больше {{ description.errors.minlength.requiredLength }} символов. Вы ввели {{ description.errors.minlength.actualLength
+                }} символа
             </mat-error>
         </mat-form-field>
     </form>

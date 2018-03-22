@@ -14,6 +14,7 @@ import { MessageComponent } from './messages/message.component';
 import { MessageModule } from './messages/message.module';
 import { ProjectsModule } from './projects/projects.module';
 import { AuthService, REST_URI } from './services/auth.service';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { AuthService, REST_URI } from './services/auth.service';
     ],
     providers: [
         AuthService,
-        { provide: REST_URI, useValue: 'http://localhost:2038/' }
+        { provide: REST_URI, useValue: 'http://localhost:2038/' },
+        {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
     ],
     bootstrap: [
         AppComponent,
