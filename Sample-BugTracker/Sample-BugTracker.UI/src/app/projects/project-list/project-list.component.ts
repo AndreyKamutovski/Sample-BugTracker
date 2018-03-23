@@ -12,7 +12,7 @@ import { ProjectService } from '../shared/project.service';
 export class ProjectListComponent implements OnInit {
 
   displayedColumns = ['title', 'countError', 'dateStart', 'dateEnd'];
-  dataSource: MatTableDataSource<Project> = new MatTableDataSource<Project>();
+  public dataSource: MatTableDataSource<Project> = new MatTableDataSource<Project>();
 
   constructor(private projectService: ProjectService) { }
 

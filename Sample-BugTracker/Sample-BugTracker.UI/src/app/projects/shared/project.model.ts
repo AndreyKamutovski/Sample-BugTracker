@@ -1,6 +1,12 @@
 export class Project {
-    Title: string;
-    DateStart: Date;
-    DateEnd: Date;
-    Description: string;
+
+    public Title: string;
+    public DateStart: Date;
+    public DateEnd: Date;
+    public Description: string;
+
+    constructor(init?: Partial<Project>) {
+        Object.assign(this, init);
+    }
+
 }

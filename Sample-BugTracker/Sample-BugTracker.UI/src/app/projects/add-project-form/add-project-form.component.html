@@ -6,43 +6,49 @@
             <mat-error *ngIf="title.hasError('required')">
                 Обязательно введите название проекта
             </mat-error>
-            <mat-error *ngIf="title.hasError('minlength') && !title.hasError('required')">
+            <mat-error *ngIf="title.hasError('minlength')">
                 Название проекта должно быть больше {{ title.errors.minlength.requiredLength }} символов. Вы ввели {{ title.errors.minlength.actualLength
                 }} символа
             </mat-error>
-            <mat-error *ngIf="title.hasError('maxlength') && !title.hasError('required')">
+            <mat-error *ngIf="title.hasError('maxlength')">
                 Название проекта должно быть меньше {{title.errors.maxlength.requiredLength }} символов
             </mat-error>
-            <mat-error *ngIf="title.hasError('pattern') && !title.hasError('required')">
+            <mat-error *ngIf="title.hasError('pattern')">
                 Название проекта содержит недопустимые символы. Допустимы буквы от А до Я (строчные и прописные), цифры от 0 до 9, знак тире
                 (-), подчёркивания (_) и пробела
             </mat-error>
         </mat-form-field>
 
+
         <div formGroupName="datepickerGroup" class="horizontal-flex-container-for-two-datepicker">
             <mat-form-field>
-                <input matInput [matDatepicker]="startDatepicker" placeholder="Дата начала" formControlName='dateStart' required>
+                <input matInput [matDatepicker]="startDatepicker" placeholder="Дата начала" formControlName='dateStart' required (dateChange)="dateChangeEvent($event)">
                 <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #startDatepicker></mat-datepicker>
-                <mat-error *ngIf="dateStart.hasError('required')">
+                <mat-error *ngIf="dateStart.hasError('required') && !dateStart.hasError('matDatepickerParse')">
                     Обязательно введите дату начала проекта
+                </mat-error>
+                <mat-error *ngIf="dateStart.hasError('matDatepickerParse')">
+                    Неправильная дата
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput [matDatepicker]="endDatepicker" placeholder="Дата окончания" formControlName='dateEnd' required>
+                <input matInput [matDatepicker]="endDatepicker" placeholder="Дата окончания" formControlName='dateEnd' required (dateChange)="dateChangeEvent($event)">
                 <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #endDatepicker></mat-datepicker>
-                <mat-error *ngIf="dateEnd.hasError('required')">
-                    Обязательно введите запланированную дату окончания проекта
+                <mat-error *ngIf="dateEnd.hasError('required') && !dateEnd.hasError('matDatepickerParse')">
+                    Обязательно введите дату начала проекта
+                </mat-error>
+                <mat-error *ngIf="dateEnd.hasError('matDatepickerParse')">
+                    Неправильная дата
                 </mat-error>
             </mat-form-field>
-
-
         </div>
-        <mat-error *ngIf="datepickerGroup.hasError('date')">
-            {{datepickerGroup.errors.date.errorMsg}}
+        <mat-error *ngIf="datepickerGroup.hasError('groupdate')">
+            {{datepickerGroup.errors.groupdate.errorMsg}}
         </mat-error>
+
 
         <mat-form-field>
             <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" class="form-control" name="projectDesc"
@@ -54,11 +60,16 @@
                 Описание проекта должно быть больше {{ description.errors.minlength.requiredLength }} символов. Вы ввели {{ description.errors.minlength.actualLength
                 }} символа
             </mat-error>
+            <mat-error *ngIf="description.hasError('pattern')">
+                Описание проекта содержит недопустимые символы. Допустимы буквы от А до Я (строчные и прописные), цифры от 0 до 9, знак тире
+                (-), подчёркивания (_), запятой и пробела
+            </mat-error>
         </mat-form-field>
     </form>
 </mat-dialog-content>
 
+
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Отмена</button>
-    <button mat-raised-button color="primary" [disabled]="!addProjectForm.valid" type="submit">Добавить проект</button>
+    <button mat-raised-button color="primary" [disabled]="!addProjectForm.valid" (click)="addProject()" type="submit">Добавить проект</button>
 </mat-dialog-actions>
