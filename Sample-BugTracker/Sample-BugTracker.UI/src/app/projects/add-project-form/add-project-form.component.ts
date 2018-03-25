@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDatepickerInputEvent, MatDialogRef } from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
-import { ProjectService } from '../shared/project.service';
+import { BUGTRACKER_DATE_FORMATS, groupDateValidator } from '../shared/date-validators';
 import { Project } from '../shared/project.model';
-import { MatDatepickerInputEvent, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS, MatDialogRef } from '@angular/material';
-import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import { groupDateValidator, BUGTRACKER_DATE_FORMATS } from '../shared/date-validators';
-import * as _moment from 'moment';
+import { ProjectService } from '../shared/project.service';
 
 @Component({
   selector: 'app-add-project-form',
@@ -24,7 +23,7 @@ export class AddProjectFormComponent implements OnInit {
   project: Project = new Project();
 
 
-  constructor(private projectService: ProjectService, private formBuilder: FormBuilder, public dialogRef: MatDialogRef<AddProjectFormComponent>) {
+  constructor(private formBuilder: FormBuilder, public dialogRef: MatDialogRef<AddProjectFormComponent>) {
     this.addProjectForm = this.formBuilder.group({
       'title': [this.project.Title, [
         Validators.required,
@@ -35,7 +34,7 @@ export class AddProjectFormComponent implements OnInit {
       'description': [this.project.Description, [
         Validators.required,
         Validators.minLength(10),
-        Validators.pattern("^[А-Яа-я0-9, _-]*$")
+        Validators.pattern("^[А-Яа-я0-9,.! _-]*$")
       ]],
       'datepickerGroup': formBuilder.group({
         'dateStart': [this.project.DateStart],
@@ -58,26 +57,22 @@ export class AddProjectFormComponent implements OnInit {
 
   addProject(): void {
     if (this.addProjectForm.valid) {
+
       let newProject = new Project({
         Title: this.title.value,
         DateStart: this.dateStart.value,
         DateEnd: this.dateEnd.value,
         Description: this.description.value
       });
-      this.projectService.addProject(newProject).subscribe(
-        res => {
-          //this.dataSource.data.push(res);
-          this.addProjectForm.reset();
-          this.dialogRef.close({ 'isSuccessfull': true, 'data': res });
-        }
-      );
+
+      this.dialogRef.close({ 'projectData': newProject });
+
     } else {
       throw new Error("Проект не создан. Проверьте правильность ввода данных.")
     }
   }
 
   ngOnInit() {
-
   }
 
 }

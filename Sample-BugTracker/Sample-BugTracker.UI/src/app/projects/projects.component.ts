@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
+
 import { AddProjectFormComponent } from './add-project-form/add-project-form.component';
 import { ProjectListComponent } from './project-list/project-list.component';
+import { ProjectService } from './shared/project.service';
 
 @Component({
   selector: 'app-projects',
@@ -10,7 +12,7 @@ import { ProjectListComponent } from './project-list/project-list.component';
 })
 export class ProjectsComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private projectService: ProjectService, public dialog: MatDialog) { }
   @ViewChild("projectList") private projectList: ProjectListComponent;
 
   openAddProjectDialog(): void {
@@ -20,8 +22,12 @@ export class ProjectsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(res => {
-      if (res.isSuccessfull && res.data != null) {
-        this.projectList.dataSource.data.push(res.data);
+      if (res != null) {
+        if (res.projectData != null) {
+          this.projectService.addProject(res.projectData).subscribe(res => {
+            this.projectList.dataSource.data.push(res);
+          });
+        }
       }
     });
   }

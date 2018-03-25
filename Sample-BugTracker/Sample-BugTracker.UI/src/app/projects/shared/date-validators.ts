@@ -19,11 +19,19 @@ export function groupDateValidator(fg: FormGroup): { [key: string]: any } {
   let dateEnd = fg.get('dateEnd');
   if (dateEnd != null && dateStart != null) {
     if (dateEnd.value != null && dateStart.value != null) {
-      return (dateEnd.value >= dateStart.value) ? null : {
-        'groupdate': {
-          'errorMsg': 'Дата окончания проекта не может быть раньше даты начала проекта.'
-        }
-      };
+      if (dateEnd.value >= dateStart.value) {
+        return null;
+      }
+      else {
+        dateEnd.setErrors({
+          'endDateError': true
+        });
+        return {
+          'groupdate': {
+            'errorMsg': 'Дата окончания проекта не может быть раньше даты начала проекта.'
+          }
+        };
+      }
     }
   }
   else return null;

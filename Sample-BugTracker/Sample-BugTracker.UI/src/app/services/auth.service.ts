@@ -13,8 +13,17 @@ export const REST_URI = new InjectionToken('REST_URI');
 @Injectable()
 export class AuthService {
 
+    private _isLoggedIn: boolean;
+
     constructor(private http: Http,
-        @Inject(REST_URI) private uri: string) { }
+        @Inject(REST_URI) private uri: string) {
+        this._isLoggedIn = false;
+    }
+
+
+    get isLoggedIn(): boolean {
+        return this._isLoggedIn;
+    }
 
     login(user: User) {
         let body = new URLSearchParams();
@@ -25,11 +34,16 @@ export class AuthService {
             .map(response => {
                 if (response.status == 200) {
                     localStorage.setItem('token', response.json().access_token);
+                    this._isLoggedIn = true;
                 }
                 return response;
             }).catch((error: any) => {
                 return Observable.throw('Error: ' + error.statusText + ' ' + error.status);
             });
+    }
+
+    logout(): void {
+        this._isLoggedIn = false;
     }
 
     get authHaders() {

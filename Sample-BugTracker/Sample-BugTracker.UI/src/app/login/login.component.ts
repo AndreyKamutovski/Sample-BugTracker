@@ -2,6 +2,7 @@ import 'rxjs/add/operator/catch';
 
 import { Component, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { CaptchaComponent } from '../captcha/captcha.component';
@@ -15,15 +16,23 @@ import { User } from '../shared/models/user.model';
 })
 export class LoginComponent implements OnInit {
 
-    @ViewChild("captcha")
-    private captcha: CaptchaComponent;
-    private user: User = new User();
+    @ViewChild("captcha") captcha: CaptchaComponent;
+    loginForm: FormGroup;
 
-    constructor(private authService: AuthService, private router: Router) { }
+    constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+        this.loginForm = this.formBuilder.group({
+            'email': ['', [Validators.required, Validators.email]],
+            'password': ['', Validators.required]
+        })
+    }
+
+    get email() { return this.loginForm.get('email'); }
+    get password() { return this.loginForm.get('password'); }
+
 
     login() {
-        if (this.captcha.isCaptchaChecked) {
-            this.authService.login(this.user).subscribe(
+        if (this.loginForm.valid && this.captcha.isCaptchaChecked) {
+            this.authService.login(this.loginForm.value).subscribe(
                 data => {
                     this.router.navigateByUrl('app/project');
                 });

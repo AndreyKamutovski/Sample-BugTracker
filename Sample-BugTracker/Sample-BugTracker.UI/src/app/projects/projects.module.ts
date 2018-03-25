@@ -8,13 +8,14 @@ import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectsComponent } from './projects.component';
 import { ProjectService } from './shared/project.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthGuardLoginService } from '../services/auth-guard-login.service';
 
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild([
-      { path: "app/project", component: ProjectsComponent }
+      { path: "app/project", component: ProjectsComponent, canActivate: [AuthGuardLoginService] }
     ]),
     ReactiveFormsModule,
     AngularMaterialDesignModule
@@ -28,6 +29,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     AddProjectFormComponent
 
   ],
-  providers: [ProjectService]
+  providers: [
+    ProjectService,
+    AuthGuardLoginService
+  ]
 })
 export class ProjectsModule { }

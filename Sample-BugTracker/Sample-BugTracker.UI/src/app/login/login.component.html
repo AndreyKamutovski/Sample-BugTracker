@@ -1,43 +1,33 @@
-<div class="card w-75 bg-light border-success mx-auto mt-5">
-  <div class="card-header border-success">
-    <div class="row">
-      <div class="col d-flex align-items-center">
-        <span class="align-middle h5 card-title">Вход в систему</span>
-      </div>
-      <div class="col-5 col-md-2 col-lg-2 col-xl-1">
-        <img src="../../assets/logo.png" class="img-fluid" alt="Bug Tracker Logo">
-      </div>
-    </div>
-  </div>
-  <div class="card-body">
-    <form>
-      <div class="form-group">
-        <label for="inputEmail">Адрес эл. почты</label>
-        <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Введите email" autofocus required email
-            [(ngModel)]='user.email'>
-          <div class="input-group-append">
-            <span class="input-group-text">
-              <i class="fa fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="inputPassword">Пароль</label>
-        <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Введите пароль" required [(ngModel)]='user.password'>
-          <div class="input-group-append">
-            <span class="input-group-text">
-              <i class="fa fa-key"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <app-captcha #captcha></app-captcha>
-      </div>
-      <button type="submit" [class.disabled] = "!captcha.isCaptchaChecked" (click)='login(user);' class="btn btn-primary btn-raised btn-block">Войти</button>
-    </form>
-  </div>
-</div>
+<form [formGroup]='loginForm' (ngSubmit)="login()" novalidate style="width: 50%; margin: auto;">
+  <mat-card>
+    <mat-card-header style="justify-content: space-between;">
+      <img src="../../assets/logo.png" alt="Bug Tracker Logo" class="logo-img">
+      <mat-card-title>
+        <h3>Вход в систему</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="form-field-container" style="margin-top: 10px;">
+      <mat-form-field>
+        <input matInput type="email" placeholder="Адрес эл. почты" required formControlName='email'>
+        <mat-error *ngIf="email.hasError('required')">
+          Обязательно введите адрес электронной почты
+        </mat-error>
+        <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+          Неверный формат адреса электронной почты
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Пароль" required formControlName='password'>
+        <mat-error *ngIf="password.hasError('required')">
+          Обязательно введите пароль
+        </mat-error>
+      </mat-form-field>
+      <app-captcha #captcha></app-captcha>
+    </mat-card-content>
+
+    <mat-card-actions align="start">
+      <button mat-raised-button color="primary" [disabled]="!(this.loginForm.valid && this.captcha.isCaptchaChecked)" type="submit">Войти</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

@@ -1,16 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+html, body {
+   height: 100%; 
+}
 body {
     background-image: url(./assets/bg-striped.png);
 }
 
-.form-container {
+.form-field-container {
   display: flex;
   flex-direction: column;
 }
 
-.form-container > * {
+.form-field-container > * {
     width: 100%;
     margin-bottom: 20px;
 }
@@ -24,4 +27,8 @@ body {
 
 .horizontal-flex-container-for-two-datepicker > * {
     width: 48%;
+}
+.logo-img {
+    width: 80px;
+    height: 40px;
 }

@@ -37,7 +37,8 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
     providers: [
         AuthService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
-        {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
+        {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},
+        
     ],
     bootstrap: [
         AppComponent,

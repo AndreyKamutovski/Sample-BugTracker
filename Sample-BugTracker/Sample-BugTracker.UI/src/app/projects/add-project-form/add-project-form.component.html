@@ -1,6 +1,9 @@
-<h2 mat-dialog-title>Добавить проект</h2>
-<mat-dialog-content>
-    <form [formGroup]='addProjectForm' (ngSubmit)="addProject()" novalidate class="form-container">
+<form [formGroup]='addProjectForm' (ngSubmit)="addProject()" novalidate>
+    <h2 mat-dialog-title>Добавить проект</h2>
+
+
+
+    <mat-dialog-content class="form-field-container">
         <mat-form-field>
             <input matInput type="text" name="projectName" placeholder="Название проекта" required minlength='3' formControlName='title'>
             <mat-error *ngIf="title.hasError('required')">
@@ -34,7 +37,8 @@
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput [matDatepicker]="endDatepicker" placeholder="Дата окончания" formControlName='dateEnd' required (dateChange)="dateChangeEvent($event)">
+                <input matInput [matDatepicker]="endDatepicker" placeholder="Дата окончания" formControlName='dateEnd' [min]="dateStart.value"
+                    required (dateChange)="dateChangeEvent($event)">
                 <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #endDatepicker></mat-datepicker>
                 <mat-error *ngIf="dateEnd.hasError('required') && !dateEnd.hasError('matDatepickerParse')">
@@ -42,6 +46,9 @@
                 </mat-error>
                 <mat-error *ngIf="dateEnd.hasError('matDatepickerParse')">
                     Неправильная дата
+                </mat-error>
+                <mat-error *ngIf="dateEnd.hasError('endDateError')">
+                    Установите дату большую или равную даты начала
                 </mat-error>
             </mat-form-field>
         </div>
@@ -65,11 +72,12 @@
                 (-), подчёркивания (_), запятой и пробела
             </mat-error>
         </mat-form-field>
-    </form>
-</mat-dialog-content>
+    </mat-dialog-content>
 
 
-<mat-dialog-actions>
-    <button mat-button mat-dialog-close>Отмена</button>
-    <button mat-raised-button color="primary" [disabled]="!addProjectForm.valid" (click)="addProject()" type="submit">Добавить проект</button>
-</mat-dialog-actions>
+
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close>Отмена</button>
+        <button mat-raised-button color="primary" [disabled]="!addProjectForm.valid" type="submit">Добавить проект</button>
+    </mat-dialog-actions>
+</form>
