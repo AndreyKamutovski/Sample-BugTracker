@@ -1,6 +1,7 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReCaptchaModule } from 'angular2-recaptcha';
@@ -14,7 +15,7 @@ import { MessageComponent } from './messages/message.component';
 import { MessageModule } from './messages/message.module';
 import { ProjectsModule } from './projects/projects.module';
 import { AuthService, REST_URI } from './services/auth.service';
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
+import { AuthGuardLoginService } from './services/auth-guard-login.service';
 
 
 
@@ -38,6 +39,7 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
     ],
     providers: [
         AuthService,
+        AuthGuardLoginService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
         { provide: LOCALE_ID, useValue: 'ru' }

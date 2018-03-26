@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AngularMaterialDesignModule } from '../angular-material-design/angular-material-design.module';
+import { AuthGuardLoginService } from '../services/auth-guard-login.service';
 import { AddProjectFormComponent } from './add-project-form/add-project-form.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectsComponent } from './projects.component';
-import { ProjectService } from './shared/project.service';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AuthGuardLoginService } from '../services/auth-guard-login.service';
 import { SelectedProjectPageComponent } from './selected-project-page/selected-project-page.component';
+import { ProjectService } from './shared/project.service';
 
 
 @NgModule({
@@ -19,7 +19,8 @@ import { SelectedProjectPageComponent } from './selected-project-page/selected-p
       { path: "app/project", component: ProjectsComponent, canActivate: [AuthGuardLoginService] }
     ]),
     ReactiveFormsModule,
-    AngularMaterialDesignModule
+    AngularMaterialDesignModule,
+    
   ],
   entryComponents: [
     AddProjectFormComponent
@@ -33,7 +34,6 @@ import { SelectedProjectPageComponent } from './selected-project-page/selected-p
   ],
   providers: [
     ProjectService,
-    AuthGuardLoginService
   ]
 })
 export class ProjectsModule { }

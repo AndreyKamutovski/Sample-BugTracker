@@ -49,10 +49,8 @@
             </mat-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns" style="font-size: 30px;"></mat-header-row>
-        <mat-row *matRowDef="let projectRowData; columns: displayedColumns"
-         (click)=""
-         ></mat-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let projectRowData; columns: displayedColumns"></mat-row>
     </mat-table>
 
     <mat-paginator #projectPaginator [length]="this.dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"
