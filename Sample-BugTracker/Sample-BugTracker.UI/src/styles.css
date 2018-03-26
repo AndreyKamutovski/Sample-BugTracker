@@ -4,7 +4,8 @@
 html, body {
    height: 100%; 
 }
-body {
+
+body, .app-background {
     background-image: url(./assets/bg-striped.png);
 }
 

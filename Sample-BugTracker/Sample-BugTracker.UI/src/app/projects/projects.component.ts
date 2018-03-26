@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { AddProjectFormComponent } from './add-project-form/add-project-form.component';
 import { ProjectListComponent } from './project-list/project-list.component';
@@ -12,7 +12,7 @@ import { ProjectService } from './shared/project.service';
 })
 export class ProjectsComponent implements OnInit {
 
-  constructor(private projectService: ProjectService, public dialog: MatDialog) { }
+  constructor(private projectService: ProjectService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
   @ViewChild("projectList") private projectList: ProjectListComponent;
 
   openAddProjectDialog(): void {
@@ -21,11 +21,14 @@ export class ProjectsComponent implements OnInit {
       data: {}
     });
 
-    dialogRef.afterClosed().subscribe(res => {
-      if (res != null) {
-        if (res.projectData != null) {
-          this.projectService.addProject(res.projectData).subscribe(res => {
-            this.projectList.dataSource.data.push(res);
+    dialogRef.afterClosed().subscribe(resDialog => {
+      if (resDialog != null) {
+        if (resDialog.projectData != null) {
+          this.projectService.addProject(resDialog.projectData).subscribe(newProject => {
+            this.projectList.addRow(newProject);
+            this.snackBar.open('Проект успешно создан', '', {
+              duration: 2000,
+            });
           });
         }
       }

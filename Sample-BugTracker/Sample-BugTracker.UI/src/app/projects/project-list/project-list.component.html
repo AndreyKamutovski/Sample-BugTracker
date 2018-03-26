@@ -1,28 +1,61 @@
-<mat-card>
-  <mat-card-content>
-      <mat-table [dataSource]=dataSource>
-          <ng-container matColumnDef="title">
-              <mat-header-cell *matHeaderCellDef> Название проекта </mat-header-cell>
-              <mat-cell *matCellDef="let project"> {{ project.Title }} </mat-cell>
-          </ng-container>
+<div class="mat-elevation-z5">
+    <mat-table [dataSource]="dataSource" matSort #projectsTable class="mat-typography">
+        <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <h3>Название проекта</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let project"> {{ project.Title }} </mat-cell>
+        </ng-container>
 
-          <ng-container matColumnDef="countError">
-              <mat-header-cell *matHeaderCellDef> Ошибки </mat-header-cell>
-              <mat-cell *matCellDef="let project"> {{ 1 }} </mat-cell>
-          </ng-container>
+        <ng-container matColumnDef="countError">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <h3>Ошибки</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let project"> {{ 1 }} </mat-cell>
+        </ng-container>
 
-          <ng-container matColumnDef="dateStart">
-              <mat-header-cell *matHeaderCellDef> Дата начала </mat-header-cell>
-              <mat-cell *matCellDef="let project"> {{ project.DateStart | date:"dd/MM/yyyy" }} </mat-cell>
-          </ng-container>
+        <ng-container matColumnDef="dateStart">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <h3>Дата начала</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let project"> {{ project.DateStart | date:'longDate' }} </mat-cell>
+        </ng-container>
 
-          <ng-container matColumnDef="dateEnd">
-              <mat-header-cell *matHeaderCellDef> Дата окончания </mat-header-cell>
-              <mat-cell *matCellDef="let project"> {{ project.DateEnd | date:"dd/MM/yyyy" }} </mat-cell>
-          </ng-container>
+        <ng-container matColumnDef="dateEnd">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <h3>Дата окончания</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let project"> {{ project.DateEnd | date:'longDate' }} </mat-cell>
+        </ng-container>
 
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let projectRowData; columns: displayedColumns"></mat-row>
-      </mat-table>
-  </mat-card-content>
-</mat-card>
+        <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef>
+                <!-- Действие -->
+            </mat-header-cell>
+            <mat-cell *matCellDef="let project">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu>
+                    <button mat-menu-item>
+                        <mat-icon>edit</mat-icon>
+                        <span>Редактировать</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>delete</mat-icon>
+                        <span>Удалить</span>
+                    </button>
+                </mat-menu>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns" style="font-size: 30px;"></mat-header-row>
+        <mat-row *matRowDef="let projectRowData; columns: displayedColumns"
+         (click)=""
+         ></mat-row>
+    </mat-table>
+
+    <mat-paginator #projectPaginator [length]="this.dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"
+        [pageIndex]="0">
+    </mat-paginator>
+</div>

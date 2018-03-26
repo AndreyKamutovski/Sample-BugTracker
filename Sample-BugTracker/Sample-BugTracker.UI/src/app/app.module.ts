@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,6 +15,8 @@ import { MessageModule } from './messages/message.module';
 import { ProjectsModule } from './projects/projects.module';
 import { AuthService, REST_URI } from './services/auth.service';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
+
+
 
 @NgModule({
     imports: [
@@ -37,8 +39,8 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
     providers: [
         AuthService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
-        {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},
-        
+        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+        { provide: LOCALE_ID, useValue: 'ru' }
     ],
     bootstrap: [
         AppComponent,

@@ -9,6 +9,7 @@ import { ProjectsComponent } from './projects.component';
 import { ProjectService } from './shared/project.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuardLoginService } from '../services/auth-guard-login.service';
+import { SelectedProjectPageComponent } from './selected-project-page/selected-project-page.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { AuthGuardLoginService } from '../services/auth-guard-login.service';
   declarations: [
     ProjectsComponent,
     ProjectListComponent,
-    AddProjectFormComponent
+    AddProjectFormComponent,
+    SelectedProjectPageComponent
 
   ],
   providers: [

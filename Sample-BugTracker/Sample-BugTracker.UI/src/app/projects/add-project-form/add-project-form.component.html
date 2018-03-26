@@ -48,7 +48,7 @@
                     Неправильная дата
                 </mat-error>
                 <mat-error *ngIf="dateEnd.hasError('endDateError')">
-                    Установите дату большую или равную даты начала
+                    Установите дату большую или равную {{dateStart.value | date:'longDate'}}
                 </mat-error>
             </mat-form-field>
         </div>

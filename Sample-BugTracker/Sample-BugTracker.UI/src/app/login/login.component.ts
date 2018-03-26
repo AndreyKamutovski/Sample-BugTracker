@@ -16,8 +16,8 @@ import { User } from '../shared/models/user.model';
 })
 export class LoginComponent implements OnInit {
 
-    @ViewChild("captcha") captcha: CaptchaComponent;
-    loginForm: FormGroup;
+    @ViewChild("captcha") private captcha: CaptchaComponent;
+    private loginForm: FormGroup;
 
     constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
         this.loginForm = this.formBuilder.group({
