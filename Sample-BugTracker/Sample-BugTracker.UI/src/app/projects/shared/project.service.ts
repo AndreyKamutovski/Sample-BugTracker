@@ -24,6 +24,10 @@ export class ProjectService {
         return this.sendRequest(RequestMethod.Post, 'api/Project/Add', project, {'Content-Type': 'application/json'});
     }
 
+    getProjectById(id: number): Observable<Project> {
+        return this.sendRequest(RequestMethod.Get, 'api/Project/GetById?id=' + id)
+    }
+
     private sendRequest(_method: RequestMethod, _url: string, _body?: Project, _headers?: any) {
         return this.http.request(new Request({
             method: _method,

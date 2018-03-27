@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTable, MatPaginator, MatPaginatorIntl, MatSort } from '@angular/material';
+import { MatPaginator, MatPaginatorIntl, MatSort, MatTable, MatTableDataSource } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Project } from '../shared/project.model';
 import { ProjectService } from '../shared/project.service';
-import { Observable } from 'rxjs/Observable';
-import { DataSource } from '@angular/cdk/table';
-import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-project-list',
@@ -18,13 +16,16 @@ export class ProjectListComponent implements OnInit {
   @ViewChild('projectPaginator') private projectPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  private displayedColumns = ['title', 'countError', 'dateStart', 'dateEnd', 'select'] ;
+  private displayedColumns = ['title', 'countError', 'dateStart', 'dateEnd', 'select'];
   private dataSource: MatTableDataSource<Project> = new MatTableDataSource<Project>();
   private russianMatPaginatorIntl: MatPaginatorIntl = new MatPaginatorIntl();
   // private selection = new SelectionModel<Project>(false, []);
 
 
-  constructor(private projectService: ProjectService) {
+  constructor(
+    private projectService: ProjectService,
+    private _router: Router,
+    private _route: ActivatedRoute) {
     this.russianMatPaginatorIntl.firstPageLabel = "Первая страница";
     this.russianMatPaginatorIntl.lastPageLabel = "Последняя страница";
 
@@ -64,5 +65,13 @@ export class ProjectListComponent implements OnInit {
   public addRow(row: Project): void {
     this.dataSource.data.push(row);
     this.projectsTable.renderRows();
+  }
+
+  private onClickRow(projectID: number) {
+    this._router.navigate(['description', projectID], { relativeTo: this._route });
+  }
+
+  private onClickMatMenuBtn(event: Event) {
+    event.stopPropagation();
   }
 }

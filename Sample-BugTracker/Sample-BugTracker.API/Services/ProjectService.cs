@@ -28,5 +28,13 @@ namespace Sample_BugTracker.API.Services
             }
             return _project;
         }
+
+        public ProjectDTO GetById(int id)
+        {
+            using(var uow = CreateUnitOfWork())
+            {
+                return Mapper.Map<Project, ProjectDTO>(uow.Projects.Get(id));
+            }
+        }
     }
 }

@@ -13,9 +13,10 @@ import { CaptchaComponent } from './captcha/captcha.component';
 import { LoginComponent } from './login/login.component';
 import { MessageComponent } from './messages/message.component';
 import { MessageModule } from './messages/message.module';
+import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsModule } from './projects/projects.module';
-import { AuthService, REST_URI } from './services/auth.service';
 import { AuthGuardLoginService } from './services/auth-guard-login.service';
+import { AuthService, REST_URI } from './services/auth.service';
 
 
 
@@ -35,7 +36,8 @@ import { AuthGuardLoginService } from './services/auth-guard-login.service';
     declarations: [
         AppComponent,
         LoginComponent,
-        CaptchaComponent
+        CaptchaComponent,
+        NavbarComponent,
     ],
     providers: [
         AuthService,

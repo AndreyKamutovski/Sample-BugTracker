@@ -1,3 +1,13 @@
-<p>
-  selected-project-page works!
-</p>
+<mat-sidenav-container class="mat-elevation-z5 app-background" style="height: 200px;">
+  <mat-sidenav #sidenav mode="side" opened="true">
+    <mat-list>
+      <mat-list-item> Информационная панель </mat-list-item>
+      <mat-list-item> Ошибки </mat-list-item>
+      <mat-list-item> Пользователи </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="mat-typography">
+    <h2></h2>
+    {{prID}}
+  </mat-sidenav-content>
+</mat-sidenav-container>

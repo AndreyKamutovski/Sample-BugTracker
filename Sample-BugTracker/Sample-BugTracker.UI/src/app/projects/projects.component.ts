@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
-import { MessageService } from '../messages/message.service';
 import { AddProjectFormComponent } from './add-project-form/add-project-form.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectService } from './shared/project.service';
@@ -13,8 +13,12 @@ import { ProjectService } from './shared/project.service';
 })
 export class ProjectsComponent implements OnInit {
 
-  constructor(private projectService: ProjectService, public dialog: MatDialog, private snackBar: MatSnackBar) { }
-  @ViewChild("projectList") private projectList: ProjectListComponent;
+  constructor(
+    private projectService: ProjectService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private _router: Router) { }
+  @ViewChild(ProjectListComponent) private projectList: ProjectListComponent;
 
   openAddProjectDialog(): void {
     let dialogRef = this.dialog.open(AddProjectFormComponent, {

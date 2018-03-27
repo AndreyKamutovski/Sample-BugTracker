@@ -1,0 +1,23 @@
+<mat-toolbar class="mat-toolbar-single-row" color="primary">
+
+  <span style="flex: 1 1 auto;">
+    <a mat-button [routerLink]="['/']" title="Главная">
+      <img mat-card-image src="../../assets/logo.png" alt="Bug Tracker Logo" height="26" width="26">
+      <span class="mat-title">{{titleApp}}</span>
+    </a>
+    <a mat-button *ngFor="let link of navbarElements" [routerLink]="link.routerLink" [title]="link.tooltipTitle">
+      <span class="mat-title">{{link.title}}</span>
+    </a>
+  </span>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-menu #menu>
+  <button mat-menu-item (click)="openAddProjectDialog()">
+    <mat-icon>add</mat-icon>
+    <span>Добавить проект</span>
+  </button>
+</mat-menu>
+<!-- https://stackoverflow.com/questions/38209713/how-to-make-a-responsive-nav-bar-using-angular-material-2 -->

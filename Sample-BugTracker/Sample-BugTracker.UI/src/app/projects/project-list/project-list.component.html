@@ -33,7 +33,7 @@
                 <!-- Действие -->
             </mat-header-cell>
             <mat-cell *matCellDef="let project">
-                <button mat-icon-button [matMenuTriggerFor]="menu">
+                <button mat-icon-button [matMenuTriggerFor]="menu" (click)='onClickMatMenuBtn($event)'> 
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu>
@@ -50,7 +50,7 @@
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let projectRowData; columns: displayedColumns"></mat-row>
+        <mat-row *matRowDef="let projectRowData; columns: displayedColumns" (click)="onClickRow(projectRowData.id)"></mat-row>
     </mat-table>
 
     <mat-paginator #projectPaginator [length]="this.dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"

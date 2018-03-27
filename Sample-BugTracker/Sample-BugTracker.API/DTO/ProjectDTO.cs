@@ -5,6 +5,8 @@ namespace Sample_BugTracker.API.DTO
 {
     public class ProjectDTO
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Title of project is a required field")]
         [MinLength(3)]
         [MaxLength(100)]

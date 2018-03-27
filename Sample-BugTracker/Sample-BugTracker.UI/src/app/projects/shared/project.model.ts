@@ -1,5 +1,6 @@
 export class Project {
 
+    public id?: number;
     public Title: string;
     public DateStart: Date;
     public DateEnd: Date;
