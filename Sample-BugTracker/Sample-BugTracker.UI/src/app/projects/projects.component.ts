@@ -13,31 +13,7 @@ import { ProjectService } from './shared/project.service';
 })
 export class ProjectsComponent implements OnInit {
 
-  constructor(
-    private projectService: ProjectService,
-    public dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private _router: Router) { }
-  @ViewChild(ProjectListComponent) private projectList: ProjectListComponent;
-
-  openAddProjectDialog(): void {
-    let dialogRef = this.dialog.open(AddProjectFormComponent, {
-      width: '50%',
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(resDialog => {
-      if (resDialog != null) {
-        if (resDialog.projectData != null) {
-          this.projectService.addProject(resDialog.projectData).subscribe(newProject => {
-            this.projectList.addRow(newProject);
-            this.snackBar.open("Проект успешно создан", '', { duration: 2000 });
-            // this.messageService.reportSnackBarMessage("Проект успешно создан");
-          });
-        }
-      }
-    });
-  }
+  constructor() { }
 
   ngOnInit() {
   }

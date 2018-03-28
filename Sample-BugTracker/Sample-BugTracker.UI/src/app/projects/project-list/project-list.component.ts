@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorIntl, MatSort, MatTable, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatPaginatorIntl, MatSort, MatTable, MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Project } from '../shared/project.model';
 import { ProjectService } from '../shared/project.service';
+import { AddProjectFormComponent } from '../add-project-form/add-project-form.component';
 
 @Component({
   selector: 'app-project-list',
@@ -25,7 +26,9 @@ export class ProjectListComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private _router: Router,
-    private _route: ActivatedRoute) {
+    private _route: ActivatedRoute,
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar) {
     this.russianMatPaginatorIntl.firstPageLabel = "Первая страница";
     this.russianMatPaginatorIntl.lastPageLabel = "Последняя страница";
 
@@ -62,10 +65,10 @@ export class ProjectListComponent implements OnInit {
   }
 
   /** Add row in table and update its */
-  public addRow(row: Project): void {
-    this.dataSource.data.push(row);
-    this.projectsTable.renderRows();
-  }
+  // public addRow(row: Project): void {
+  //   this.dataSource.data.push(row);
+  //   this.projectsTable.renderRows();
+  // }
 
   private onClickRow(projectID: number) {
     this._router.navigate(['description', projectID], { relativeTo: this._route });
@@ -74,4 +77,25 @@ export class ProjectListComponent implements OnInit {
   private onClickMatMenuBtn(event: Event) {
     event.stopPropagation();
   }
+
+  openAddProjectDialog(): void {
+    let dialogRef = this.dialog.open(AddProjectFormComponent, {
+      width: '50%',
+      data: {}
+    });
+
+
+    dialogRef.afterClosed().subscribe(resDialog => {
+      if (resDialog != null) {
+        if (resDialog.projectData != null) {
+          this.projectService.addProject(resDialog.projectData).subscribe(newProject => {
+            this.dataSource.data.push(newProject);
+            this.projectsTable.renderRows();
+            this.snackBar.open("Проект успешно создан", '', { duration: 2000 });
+            // this.messageService.reportSnackBarMessage("Проект успешно создан");
+          });
+        }
+      }
+    });
+  };
 }

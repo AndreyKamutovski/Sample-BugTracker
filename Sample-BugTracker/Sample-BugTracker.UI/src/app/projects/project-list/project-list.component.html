@@ -1,4 +1,4 @@
-<div class="mat-elevation-z5">
+<div class="mat-elevation-z5" style="margin: 0 100px;">
     <mat-table [dataSource]="dataSource" matSort #projectsTable class="mat-typography">
         <ng-container matColumnDef="title">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -50,10 +50,14 @@
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let projectRowData; columns: displayedColumns" (click)="onClickRow(projectRowData.id)"></mat-row>
+        <mat-row *matRowDef="let projectRowData; columns: displayedColumns" (click)="onClickRow(projectRowData.Id)"></mat-row>
     </mat-table>
 
     <mat-paginator #projectPaginator [length]="this.dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"
         [pageIndex]="0">
     </mat-paginator>
+
+    <button mat-fab class="mat-fab-buttom-right" (click)="openAddProjectDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
 </div>

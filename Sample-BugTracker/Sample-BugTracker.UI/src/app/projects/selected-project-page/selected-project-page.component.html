@@ -1,13 +1,17 @@
 <mat-sidenav-container class="mat-elevation-z5 app-background" style="height: 200px;">
   <mat-sidenav #sidenav mode="side" opened="true">
-    <mat-list>
-      <mat-list-item> Информационная панель </mat-list-item>
-      <mat-list-item> Ошибки </mat-list-item>
-      <mat-list-item> Пользователи </mat-list-item>
-    </mat-list>
+    <mat-nav-list>
+      <mat-list-item *ngFor="let link of sidenavElements">
+        <mat-icon matListIcon>{{link.matIcon}}</mat-icon>
+        <h3>{{link.title}}</h3>
+      </mat-list-item>
+    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="mat-typography">
-    <h2></h2>
-    {{prID}}
+    <h2> {{project.Id}}</h2>
+    <h2> {{project.Title}}</h2>
+    <h2> {{project.DateStart}}</h2>
+    <h2> {{project.Description}}</h2>
+
   </mat-sidenav-content>
 </mat-sidenav-container>

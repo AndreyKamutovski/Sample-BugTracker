@@ -15,7 +15,6 @@ namespace Sample_BugTracker.API.Controllers
     {
         private ProjectService _projectService = new ProjectService();
 
-        [HttpGet]
         public IEnumerable<ProjectDTO> GetAll()
         {
             return _projectService.GetAll();
@@ -27,7 +26,6 @@ namespace Sample_BugTracker.API.Controllers
             return _projectService.Add(project);
         }
 
-        [HttpGet]
         public ProjectDTO GetById([Required] int id)
         {
             return _projectService.GetById(id);

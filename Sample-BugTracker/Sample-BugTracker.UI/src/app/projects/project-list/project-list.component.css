@@ -6,3 +6,11 @@ mat-row:hover {
     cursor: pointer;
     /* background-color: snow; */
 }
+
+.mat-fab-buttom-right {
+    top: auto !important;
+    right: 20px !important;
+    bottom: 10px !important;
+    left: auto !important;
+    position: fixed !important;
+}

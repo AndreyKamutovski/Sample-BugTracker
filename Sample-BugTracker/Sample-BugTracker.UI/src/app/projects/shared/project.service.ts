@@ -25,7 +25,7 @@ export class ProjectService {
     }
 
     getProjectById(id: number): Observable<Project> {
-        return this.sendRequest(RequestMethod.Get, 'api/Project/GetById?id=' + id)
+        return this.sendRequest(RequestMethod.Get, 'api/Project/GetById/' + id);
     }
 
     private sendRequest(_method: RequestMethod, _url: string, _body?: Project, _headers?: any) {
