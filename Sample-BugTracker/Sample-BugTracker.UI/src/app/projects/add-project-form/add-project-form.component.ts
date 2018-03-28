@@ -6,6 +6,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { BUGTRACKER_DATE_FORMATS, groupDateValidator } from '../shared/date-validators';
 import { Project } from '../shared/project.model';
 import { ProjectService } from '../shared/project.service';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'app-add-project-form',
@@ -43,10 +45,14 @@ export class AddProjectFormComponent implements OnInit {
     });
   };
 
+  endDateIncrement: Moment;
+
   dateChangeEvent(event: MatDatepickerInputEvent<Date>) {
     if (event.value != null) {
       event.target.value = event.value
     }
+
+    this.endDateIncrement = moment(this.dateStart.value).add(1, 'd');
   }
 
   get title() { return this.addProjectForm.get('title'); }

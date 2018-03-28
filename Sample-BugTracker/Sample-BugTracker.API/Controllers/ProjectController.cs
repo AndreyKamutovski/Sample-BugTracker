@@ -20,15 +20,16 @@ namespace Sample_BugTracker.API.Controllers
             return _projectService.GetAll();
         }
 
+        public ProjectDTO GetById([Required] int id)
+        {
+            return _projectService.GetById(id);
+        }
+
         [HttpPost]
         public ProjectDTO Add([Required] ProjectDTO project)
         {
             return _projectService.Add(project);
         }
 
-        public ProjectDTO GetById([Required] int id)
-        {
-            return _projectService.GetById(id);
-        }
     }
 }

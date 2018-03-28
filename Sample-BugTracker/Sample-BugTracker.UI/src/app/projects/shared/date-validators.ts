@@ -19,7 +19,7 @@ export function groupDateValidator(fg: FormGroup): { [key: string]: any } {
   let dateEnd = fg.get('dateEnd');
   if (dateEnd != null && dateStart != null) {
     if (dateEnd.value != null && dateStart.value != null) {
-      if (dateEnd.value >= dateStart.value) {
+      if (dateEnd.value > dateStart.value) {
         return null;
       }
       else {

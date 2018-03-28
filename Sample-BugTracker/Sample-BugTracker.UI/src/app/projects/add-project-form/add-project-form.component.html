@@ -2,7 +2,7 @@
     <h2 mat-dialog-title>Добавить проект</h2>
 
 
-
+<h3>{{myDate}}</h3>
     <mat-dialog-content class="form-field-container">
         <mat-form-field>
             <input matInput type="text" name="projectName" placeholder="Название проекта" required minlength='3' formControlName='title'>
@@ -25,7 +25,8 @@
 
         <div formGroupName="datepickerGroup" class="horizontal-flex-container-for-two-datepicker">
             <mat-form-field>
-                <input matInput [matDatepicker]="startDatepicker" placeholder="Дата начала" formControlName='dateStart' required (dateChange)="dateChangeEvent($event)">
+                <input matInput [matDatepicker]="startDatepicker" placeholder="Дата начала" formControlName='dateStart' required
+                    (dateChange)="dateChangeEvent($event)">
                 <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #startDatepicker></mat-datepicker>
                 <mat-error *ngIf="dateStart.hasError('required') && !dateStart.hasError('matDatepickerParse')">
@@ -37,7 +38,7 @@
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput [matDatepicker]="endDatepicker" placeholder="Дата окончания" formControlName='dateEnd' [min]="dateStart.value"
+                <input matInput [matDatepicker]="endDatepicker" placeholder="Дата окончания" formControlName='dateEnd' [min]="endDateIncrement"
                     required (dateChange)="dateChangeEvent($event)">
                 <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #endDatepicker></mat-datepicker>

@@ -17,15 +17,15 @@ export class ProjectService {
         @Inject(REST_URI) private uri: string) { }
 
     getProjects(): Observable<Project[]> {
-        return this.sendRequest(RequestMethod.Get, 'api/Project/GetAll');
+        return this.sendRequest(RequestMethod.Get, 'api/Project');
     }
 
     addProject(project: Project): Observable<Project> {
-        return this.sendRequest(RequestMethod.Post, 'api/Project/Add', project, {'Content-Type': 'application/json'});
+        return this.sendRequest(RequestMethod.Post, 'api/Project', project, {'Content-Type': 'application/json'});
     }
 
     getProjectById(id: number): Observable<Project> {
-        return this.sendRequest(RequestMethod.Get, 'api/Project/GetById/' + id);
+        return this.sendRequest(RequestMethod.Get, `api/Project/${id}`);
     }
 
     private sendRequest(_method: RequestMethod, _url: string, _body?: Project, _headers?: any) {

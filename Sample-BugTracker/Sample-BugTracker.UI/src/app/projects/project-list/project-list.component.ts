@@ -13,7 +13,7 @@ import { AddProjectFormComponent } from '../add-project-form/add-project-form.co
 })
 export class ProjectListComponent implements OnInit {
 
-  @ViewChild('projectsTable') private projectsTable: MatTable<Project>;
+  @ViewChild('projectTable') private projectTable: MatTable<Project>;
   @ViewChild('projectPaginator') private projectPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -84,13 +84,12 @@ export class ProjectListComponent implements OnInit {
       data: {}
     });
 
-
     dialogRef.afterClosed().subscribe(resDialog => {
       if (resDialog != null) {
         if (resDialog.projectData != null) {
           this.projectService.addProject(resDialog.projectData).subscribe(newProject => {
             this.dataSource.data.push(newProject);
-            this.projectsTable.renderRows();
+            this.projectTable.renderRows();
             this.snackBar.open("Проект успешно создан", '', { duration: 2000 });
             // this.messageService.reportSnackBarMessage("Проект успешно создан");
           });
