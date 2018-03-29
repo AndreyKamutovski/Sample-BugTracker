@@ -12,7 +12,7 @@ namespace Sample_BugTracker.API.Controllers
         private AccountService _accountService = new AccountService();
 
         // POST api/Account/Register
-        [AllowAnonymous]                    // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")] // [AllowAnonymous]
         public async Task<IHttpActionResult> Register([Required]UserDTO user)
         {
             await _accountService.Register(user);

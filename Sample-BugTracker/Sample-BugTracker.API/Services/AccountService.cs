@@ -25,7 +25,7 @@ namespace Sample_BugTracker.API.Services
                 AppUser userExists = await uow.Users.Get(appUser.UserName, user.Password);
                 if(userExists != null)
                 {
-                    throw new IdentityOperationException(string.Format("User with email {0} already exists", appUser.Email), HttpStatusCode.BadRequest);
+                    throw new IdentityOperationException(string.Format("User with email {0} already exists", appUser.Email), HttpStatusCode.Conflict);
                 }
 
                 IdentityResult addUserResult = await uow.Users.Add(appUser, user.Password, user.RoleName);

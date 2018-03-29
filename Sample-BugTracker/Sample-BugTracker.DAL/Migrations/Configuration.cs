@@ -10,7 +10,6 @@ namespace Sample_BugTracker.DAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Sample_BugTracker.DAL.EF.ApplicationDbContext";
         }
 
         protected override void Seed(Sample_BugTracker.DAL.EF.ApplicationDbContext context)

@@ -9,6 +9,6 @@ namespace Sample_BugTracker.DAL.Entities
         public ICollection<Portal> Portals { get; set; }
         public ICollection<Error> Errors { get; set; }
 
-        public string avatarPath { get; set; }
+        public string Avatar { get; set; }
     }
 }

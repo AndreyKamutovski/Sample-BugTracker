@@ -3,7 +3,7 @@ namespace Sample_BugTracker.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Init : DbMigration
     {
         public override void Up()
         {
@@ -17,13 +17,13 @@ namespace Sample_BugTracker.DAL.Migrations
                         Status = c.Int(nullable: false),
                         Priority = c.Int(nullable: false),
                         ProjectId = c.Int(nullable: false),
-                        AppUserId = c.String(maxLength: 128),
+                        WorkerId = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.AppUserId)
+                .ForeignKey("dbo.AspNetUsers", t => t.WorkerId)
                 .Index(t => t.ProjectId)
-                .Index(t => t.AppUserId);
+                .Index(t => t.WorkerId);
             
             CreateTable(
                 "dbo.Projects",
@@ -42,6 +42,7 @@ namespace Sample_BugTracker.DAL.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        Avatar = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -83,6 +84,18 @@ namespace Sample_BugTracker.DAL.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
+                "dbo.Portals",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Title = c.String(),
+                        OwnerId = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.OwnerId)
+                .Index(t => t.OwnerId);
+            
+            CreateTable(
                 "dbo.AspNetUserRoles",
                 c => new
                     {
@@ -105,26 +118,47 @@ namespace Sample_BugTracker.DAL.Migrations
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
+            CreateTable(
+                "dbo.AppUserProjects",
+                c => new
+                    {
+                        AppUser_Id = c.String(nullable: false, maxLength: 128),
+                        Project_Id = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.AppUser_Id, t.Project_Id })
+                .ForeignKey("dbo.AspNetUsers", t => t.AppUser_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Projects", t => t.Project_Id, cascadeDelete: true)
+                .Index(t => t.AppUser_Id)
+                .Index(t => t.Project_Id);
+            
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Errors", "AppUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AppUserProjects", "Project_Id", "dbo.Projects");
+            DropForeignKey("dbo.AppUserProjects", "AppUser_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Portals", "OwnerId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Errors", "WorkerId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Errors", "ProjectId", "dbo.Projects");
+            DropIndex("dbo.AppUserProjects", new[] { "Project_Id" });
+            DropIndex("dbo.AppUserProjects", new[] { "AppUser_Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.Portals", new[] { "OwnerId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Errors", new[] { "AppUserId" });
+            DropIndex("dbo.Errors", new[] { "WorkerId" });
             DropIndex("dbo.Errors", new[] { "ProjectId" });
+            DropTable("dbo.AppUserProjects");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.Portals");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");

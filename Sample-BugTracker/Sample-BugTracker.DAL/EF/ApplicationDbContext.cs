@@ -14,7 +14,6 @@ namespace Sample_BugTracker.DAL.EF
     {
         public DbSet<Error> Errors { get; set; }
         public DbSet<Project> Projects { get; set; }
-
         public DbSet<Portal> Portals { get; set; }
 
         public ApplicationDbContext()
@@ -51,5 +50,7 @@ namespace Sample_BugTracker.DAL.EF
                 _context.SaveChanges();
             }
         }
+
+        public System.Data.Entity.DbSet<Sample_BugTracker.DAL.Entities.AppUser> AppUsers { get; set; }
     }
 }

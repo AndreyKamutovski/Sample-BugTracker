@@ -75,13 +75,9 @@
     <Compile Include="Interfaces\IProjectRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork .cs" />
-    <Compile Include="Migrations\201803021227382_InitialCreate.cs" />
-    <Compile Include="Migrations\201803021227382_InitialCreate.Designer.cs">
-      <DependentUpon>201803021227382_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803291408575_AddPortalsAndCreateAppUser.cs" />
-    <Compile Include="Migrations\201803291408575_AddPortalsAndCreateAppUser.Designer.cs">
-      <DependentUpon>201803291408575_AddPortalsAndCreateAppUser.cs</DependentUpon>
+    <Compile Include="Migrations\201803291855107_Init.cs" />
+    <Compile Include="Migrations\201803291855107_Init.Designer.cs">
+      <DependentUpon>201803291855107_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,11 +93,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803021227382_InitialCreate.resx">
-      <DependentUpon>201803021227382_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803291408575_AddPortalsAndCreateAppUser.resx">
-      <DependentUpon>201803291408575_AddPortalsAndCreateAppUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803291855107_Init.resx">
+      <DependentUpon>201803291855107_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
