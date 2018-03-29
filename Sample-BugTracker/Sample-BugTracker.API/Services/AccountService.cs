@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.API.DTO;
 using Sample_BugTracker.API.Exceptions;
+using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Repositories;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
@@ -15,13 +16,13 @@ namespace Sample_BugTracker.API.Services
         {
             using (var uow = CreateUnitOfWork())
             {
-                IdentityUser appUser = new IdentityUser()
+                AppUser appUser = new AppUser()
                 {
                     UserName = user.Email,
                     Email = user.Email
                 };
 
-                IdentityUser userExists = await uow.Users.Get(appUser.UserName, user.Password);
+                AppUser userExists = await uow.Users.Get(appUser.UserName, user.Password);
                 if(userExists != null)
                 {
                     throw new IdentityOperationException(string.Format("User with email {0} already exists", appUser.Email), HttpStatusCode.BadRequest);

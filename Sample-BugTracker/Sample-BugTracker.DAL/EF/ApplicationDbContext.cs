@@ -10,11 +10,12 @@ using System.Threading.Tasks;
 
 namespace Sample_BugTracker.DAL.EF
 {
-    public class ApplicationDbContext: IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext: IdentityDbContext<AppUser>
     {
         public DbSet<Error> Errors { get; set; }
         public DbSet<Project> Projects { get; set; }
 
+        public DbSet<Portal> Portals { get; set; }
 
         public ApplicationDbContext()
             : base("BTContext")
@@ -38,9 +39,9 @@ namespace Sample_BugTracker.DAL.EF
                 _roleManager.Create(new IdentityRole("User"));
 
                 // Addition Admin
-                var _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_context));
+                var _userManager = new UserManager<AppUser>(new UserStore<AppUser>(_context));
                 string adminPassword = "aBcDe20*";
-                IdentityUser admin = new IdentityUser()
+                AppUser admin = new AppUser()
                 {
                     Email = "KVISLAND20@gmail.com",
                     UserName = "KVISLAND20@gmail.com"

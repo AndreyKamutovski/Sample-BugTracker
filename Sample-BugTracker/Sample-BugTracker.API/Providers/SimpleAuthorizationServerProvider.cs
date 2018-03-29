@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security.OAuth;
 using Sample_BugTracker.DAL.EF;
+using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Interfaces;
 using Sample_BugTracker.DAL.Repositories;
 using System.Security.Claims;
@@ -22,7 +23,7 @@ namespace Sample_BugTracker.API
 
             using (UnitOfWork _repo = new UnitOfWork(new ApplicationDbContext()))
             {
-                IdentityUser user = await _repo.Users.Get(context.UserName, context.Password);
+                AppUser user = await _repo.Users.Get(context.UserName, context.Password);
 
                 if (user == null)
                 {

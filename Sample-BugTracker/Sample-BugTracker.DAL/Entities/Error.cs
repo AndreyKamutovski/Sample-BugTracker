@@ -20,7 +20,7 @@ namespace Sample_BugTracker.DAL.Entities
         public int ProjectId { get; set; }
         public Project Project { get; set; }
 
-        public string IdentityUserId { get; set; }
-        public IdentityUser Worker { get; set; }
+        public string WorkerId { get; set; }
+        public AppUser Worker { get; set; }
     }
 }

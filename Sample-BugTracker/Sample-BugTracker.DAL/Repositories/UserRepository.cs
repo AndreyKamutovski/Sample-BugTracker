@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.DAL.EF;
+using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sample_BugTracker.DAL.Repositories
@@ -12,13 +12,13 @@ namespace Sample_BugTracker.DAL.Repositories
     public class UserRepository: IUserRepository
     {
         private ApplicationDbContext _context;
-        private UserManager<IdentityUser> _userManager;
+        private UserManager<AppUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
 
         public UserRepository(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_context))
+            _userManager = new UserManager<AppUser>(new UserStore<AppUser>(_context))
             {
                 PasswordValidator = new PasswordValidator()
                 {
@@ -31,7 +31,7 @@ namespace Sample_BugTracker.DAL.Repositories
             };
         }
 
-        public async Task<IdentityResult> Add(IdentityUser user, string password, string roleName)
+        public async Task<IdentityResult> Add(AppUser user, string password, string roleName)
         {
             IdentityResult resultCreation;
             IdentityResult resultAdditionToRole;
@@ -47,13 +47,13 @@ namespace Sample_BugTracker.DAL.Repositories
             return resultAdditionToRole;
         }
 
-        public async Task<IdentityUser> Get(string username, string password)
+        public async Task<AppUser> Get(string username, string password)
         {
-            IdentityUser user = await _userManager.FindAsync(username, password);
+            AppUser user = await _userManager.FindAsync(username, password);
             return user;
         }
 
-        public async Task<IEnumerable<IdentityUser>> GetAll()
+        public async Task<IEnumerable<AppUser>> GetAll()
         {
             var users = await _userManager.Users.ToListAsync();
             return users;

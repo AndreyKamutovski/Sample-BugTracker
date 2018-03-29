@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 
 namespace Sample_BugTracker.DAL.Entities
@@ -16,5 +17,7 @@ namespace Sample_BugTracker.DAL.Entities
         public string Description { get; set; }
 
         public ICollection<Error> Errors { get; set; }
+
+        public ICollection<AppUser> Workers { get; set; }
     }
 }

@@ -17,13 +17,13 @@ namespace Sample_BugTracker.DAL.Migrations
                         Status = c.Int(nullable: false),
                         Priority = c.Int(nullable: false),
                         ProjectId = c.Int(nullable: false),
-                        IdentityUserId = c.String(maxLength: 128),
+                        AppUserId = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.IdentityUserId)
+                .ForeignKey("dbo.AspNetUsers", t => t.AppUserId)
                 .Index(t => t.ProjectId)
-                .Index(t => t.IdentityUserId);
+                .Index(t => t.AppUserId);
             
             CreateTable(
                 "dbo.Projects",
@@ -110,7 +110,7 @@ namespace Sample_BugTracker.DAL.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Errors", "IdentityUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Errors", "AppUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
@@ -121,7 +121,7 @@ namespace Sample_BugTracker.DAL.Migrations
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Errors", new[] { "IdentityUserId" });
+            DropIndex("dbo.Errors", new[] { "AppUserId" });
             DropIndex("dbo.Errors", new[] { "ProjectId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
