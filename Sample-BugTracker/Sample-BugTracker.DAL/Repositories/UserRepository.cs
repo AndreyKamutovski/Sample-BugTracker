@@ -6,14 +6,15 @@ using Sample_BugTracker.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System;
 
 namespace Sample_BugTracker.DAL.Repositories
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository : IUserRepository
     {
         private ApplicationDbContext _context;
         private UserManager<AppUser> _userManager;
-        private RoleManager<IdentityRole> _roleManager;
+        //private RoleManager<IdentityRole> _roleManager;
 
         public UserRepository(ApplicationDbContext context)
         {
@@ -36,7 +37,7 @@ namespace Sample_BugTracker.DAL.Repositories
             IdentityResult resultCreation;
             IdentityResult resultAdditionToRole;
             resultCreation = await _userManager.CreateAsync(user, password);
-            if(resultCreation.Succeeded)
+            if (resultCreation.Succeeded)
             {
                 resultAdditionToRole = await _userManager.AddToRoleAsync(user.Id, roleName);
             }
@@ -47,12 +48,23 @@ namespace Sample_BugTracker.DAL.Repositories
             return resultAdditionToRole;
         }
 
-        public async Task<AppUser> Get(string username, string password)
+        public async Task<AppUser> GetByEmail(string email)
         {
-            AppUser user = await _userManager.FindAsync(username, password);
+            AppUser user = await _userManager.FindByEmailAsync(email);
             return user;
         }
 
+        public async Task<AppUser> GetByUserName(string userName)
+        {
+            AppUser user = await _userManager.FindByNameAsync(userName);
+            return user;
+        }
+
+        public async Task<AppUser> GetByEmailAndPassword(string email, string password)
+        {
+            AppUser user = await _userManager.FindAsync(email, password);  // userName == Email
+            return user;
+        }
         public async Task<IEnumerable<AppUser>> GetAll()
         {
             var users = await _userManager.Users.ToListAsync();

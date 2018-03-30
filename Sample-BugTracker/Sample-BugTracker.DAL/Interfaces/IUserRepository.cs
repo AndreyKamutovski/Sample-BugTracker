@@ -9,7 +9,12 @@ namespace Sample_BugTracker.DAL.Interfaces
     public interface IUserRepository
     {
       
-        Task<AppUser> Get(string username, string password);
+        Task<AppUser> GetByEmail(string email);
+
+        Task<AppUser> GetByUserName(string userName);
+
+        Task<AppUser> GetByEmailAndPassword(string email, string password);
+
         Task<IEnumerable<AppUser>> GetAll();
 
         Task<IdentityResult> Add(AppUser user, string password, string roleName);

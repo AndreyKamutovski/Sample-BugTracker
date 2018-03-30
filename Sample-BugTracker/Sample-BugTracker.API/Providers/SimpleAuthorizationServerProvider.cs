@@ -23,7 +23,7 @@ namespace Sample_BugTracker.API
 
             using (UnitOfWork _repo = new UnitOfWork(new ApplicationDbContext()))
             {
-                AppUser user = await _repo.Users.Get(context.UserName, context.Password);
+                AppUser user = await _repo.Users.GetByUserName(context.UserName);
 
                 if (user == null)
                 {
@@ -38,5 +38,7 @@ namespace Sample_BugTracker.API
 
             context.Validated(identity);
         }
+
+       
     }
 }

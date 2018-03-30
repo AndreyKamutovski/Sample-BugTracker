@@ -1,5 +1,4 @@
-﻿using Sample_BugTracker.DAL.Entities;
-using System;
+﻿using System;
 
 namespace Sample_BugTracker.DAL.Interfaces
 {

@@ -10,9 +10,9 @@ namespace Sample_BugTracker.API.Filters
     {
         public override void OnException(HttpActionExecutedContext context)
         {
-            if (context.Exception is IdentityOperationException)
+            if (context.Exception is ApplicationOperationException)
             {
-                var rs = new HttpResponseMessage((context.Exception as IdentityOperationException).StatusCode)
+                var rs = new HttpResponseMessage((context.Exception as ApplicationOperationException).StatusCode)
                 {
                     Content = new StringContent(context.Exception.Message)
                 };

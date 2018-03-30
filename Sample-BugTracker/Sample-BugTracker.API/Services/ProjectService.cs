@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.Exceptions;
 using Sample_BugTracker.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace Sample_BugTracker.API.Services
 {
@@ -33,7 +35,12 @@ namespace Sample_BugTracker.API.Services
         {
             using(var uow = CreateUnitOfWork())
             {
-                return Mapper.Map<Project, ProjectDTO>(uow.Projects.Get(id));
+                Project project = uow.Projects.Get(id);
+                if(project == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+                return Mapper.Map<Project, ProjectDTO>(project);
             }
         }
     }

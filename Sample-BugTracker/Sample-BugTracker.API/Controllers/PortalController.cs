@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Sample_BugTracker.API.Controllers
@@ -16,9 +17,9 @@ namespace Sample_BugTracker.API.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public void Add([Required] PortalDTO portal)
+        public async Task Create([Required] PortalDTO portal)
         {
-            _portalService.Add(portal);
+            await _portalService.Create(portal);
         }
     }
 }

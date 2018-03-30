@@ -50,7 +50,5 @@ namespace Sample_BugTracker.DAL.EF
                 _context.SaveChanges();
             }
         }
-
-        public System.Data.Entity.DbSet<Sample_BugTracker.DAL.Entities.AppUser> AppUsers { get; set; }
     }
 }
