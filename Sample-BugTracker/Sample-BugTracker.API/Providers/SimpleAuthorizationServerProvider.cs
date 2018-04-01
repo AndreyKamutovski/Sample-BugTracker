@@ -23,7 +23,7 @@ namespace Sample_BugTracker.API
 
             using (UnitOfWork _repo = new UnitOfWork(new ApplicationDbContext()))
             {
-                AppUser user = await _repo.Users.GetByUserName(context.UserName);
+                AppUser user = await _repo.Users.GetByUserNameAsync(context.UserName);
 
                 if (user == null)
                 {

@@ -1,10 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorIntl, MatSort, MatTable, MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
+import {
+  MatDialog,
+  MatPaginator,
+  MatPaginatorIntl,
+  MatSnackBar,
+  MatSort,
+  MatTable,
+  MatTableDataSource,
+} from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { AddProjectFormComponent } from '../add-project-form/add-project-form.component';
 import { Project } from '../shared/project.model';
 import { ProjectService } from '../shared/project.service';
-import { AddProjectFormComponent } from '../add-project-form/add-project-form.component';
 
 @Component({
   selector: 'app-project-list',
@@ -29,29 +37,7 @@ export class ProjectListComponent implements OnInit {
     private _route: ActivatedRoute,
     public dialog: MatDialog,
     public snackBar: MatSnackBar) {
-    this.russianMatPaginatorIntl.firstPageLabel = "Первая страница";
-    this.russianMatPaginatorIntl.lastPageLabel = "Последняя страница";
-
-    this.russianMatPaginatorIntl.previousPageLabel = "Предыдущая страница";
-    this.russianMatPaginatorIntl.nextPageLabel = "Следующая страница";
-
-    this.russianMatPaginatorIntl.itemsPerPageLabel = "Количество строк на страницу:";
-
-    this.russianMatPaginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
-      let totalPage = Math.ceil(length / pageSize);
-      let fromPage = -1;
-      let toPage = -1;
-      if ((page + 1) < totalPage) {
-        fromPage = page * pageSize + 1;
-        toPage = pageSize * (page + 1);
-      }
-      if ((page + 1) === totalPage) {
-        let shank = length % pageSize;
-        fromPage = page * pageSize + 1;
-        toPage = page * pageSize + shank;
-      }
-      return fromPage + ' - ' + toPage + ' из ' + length;
-    }
+    this.setRussianLabelToPaginator();
   }
 
   ngOnInit() {
@@ -76,6 +62,29 @@ export class ProjectListComponent implements OnInit {
 
   private onClickMatMenuBtn(event: Event) {
     event.stopPropagation();
+  }
+
+  private setRussianLabelToPaginator(): void {
+    this.russianMatPaginatorIntl.firstPageLabel = "Первая страница";
+    this.russianMatPaginatorIntl.lastPageLabel = "Последняя страница";
+    this.russianMatPaginatorIntl.previousPageLabel = "Предыдущая страница";
+    this.russianMatPaginatorIntl.nextPageLabel = "Следующая страница";
+    this.russianMatPaginatorIntl.itemsPerPageLabel = "Количество строк на страницу:";
+    this.russianMatPaginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+      let totalPage = Math.ceil(length / pageSize);
+      let fromPage = -1;
+      let toPage = -1;
+      if ((page + 1) < totalPage) {
+        fromPage = page * pageSize + 1;
+        toPage = pageSize * (page + 1);
+      }
+      if ((page + 1) === totalPage) {
+        let shank = length % pageSize;
+        fromPage = page * pageSize + 1;
+        toPage = page * pageSize + shank;
+      }
+      return fromPage + ' - ' + toPage + ' из ' + length;
+    }
   }
 
   openAddProjectDialog(): void {

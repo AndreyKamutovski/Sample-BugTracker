@@ -15,7 +15,7 @@ body, .app-background {
   flex-direction: column;
 }
 
-.form-field-container > * {
+.form-field-container mat-form-field {
     width: 100%;
     margin-bottom: 20px;
 }
@@ -33,4 +33,8 @@ body, .app-background {
 .logo-img {
     width: 80px;
     height: 40px;
+}
+
+.pointerCursor:hover {
+    cursor: pointer;
 }

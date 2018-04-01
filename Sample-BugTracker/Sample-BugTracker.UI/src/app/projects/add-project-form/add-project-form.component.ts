@@ -25,24 +25,11 @@ export class AddProjectFormComponent implements OnInit {
   project: Project = new Project();
 
 
-  constructor(private formBuilder: FormBuilder, public dialogRef: MatDialogRef<AddProjectFormComponent>) {
-    this.addProjectForm = this.formBuilder.group({
-      'title': [this.project.Title, [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(100),
-        Validators.pattern("^[А-Яа-я0-9 _-]*$")
-      ]],
-      'description': [this.project.Description, [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.pattern("^[А-Яа-я0-9,.! _-]*$")
-      ]],
-      'datepickerGroup': formBuilder.group({
-        'dateStart': [this.project.DateStart],
-        'dateEnd': [this.project.DateEnd]
-      }, { 'validator': groupDateValidator })
-    });
+  constructor(
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<AddProjectFormComponent>
+  ) {
+    this.createForm();
   };
 
   endDateIncrement: Moment;
@@ -76,6 +63,26 @@ export class AddProjectFormComponent implements OnInit {
     } else {
       throw new Error("Проект не создан. Проверьте правильность ввода данных.")
     }
+  }
+
+  private createForm(): void {
+    this.addProjectForm = this.formBuilder.group({
+      'title': [this.project.Title, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(100),
+        Validators.pattern("^[А-Яа-я0-9 _-]*$")
+      ]],
+      'description': [this.project.Description, [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.pattern("^[А-Яа-я0-9,.! _-]*$")
+      ]],
+      'datepickerGroup': this.formBuilder.group({
+        'dateStart': [this.project.DateStart],
+        'dateEnd': [this.project.DateEnd]
+      }, { 'validator': groupDateValidator })
+    });
   }
 
   ngOnInit() {

@@ -17,7 +17,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsModule } from './projects/projects.module';
 import { AuthGuardLoginService } from './services/auth-guard-login.service';
 import { AuthService, REST_URI } from './services/auth.service';
-
+import { PortalModule } from './portal/portal.module';
 
 
 @NgModule({
@@ -31,7 +31,8 @@ import { AuthService, REST_URI } from './services/auth.service';
         MessageModule,
         AngularMaterialDesignModule,
         BrowserAnimationsModule,
-        ProjectsModule
+        ProjectsModule,
+        PortalModule
     ],
     declarations: [
         AppComponent,

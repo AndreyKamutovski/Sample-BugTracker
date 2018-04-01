@@ -87,13 +87,12 @@ namespace Sample_BugTracker.DAL.Migrations
                 "dbo.Portals",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.String(nullable: false, maxLength: 128),
                         Title = c.String(),
-                        OwnerId = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.OwnerId)
-                .Index(t => t.OwnerId);
+                .ForeignKey("dbo.AspNetUsers", t => t.Id)
+                .Index(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetUserRoles",
@@ -139,7 +138,7 @@ namespace Sample_BugTracker.DAL.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AppUserProjects", "Project_Id", "dbo.Projects");
             DropForeignKey("dbo.AppUserProjects", "AppUser_Id", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Portals", "OwnerId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Portals", "Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Errors", "WorkerId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
@@ -149,7 +148,7 @@ namespace Sample_BugTracker.DAL.Migrations
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
-            DropIndex("dbo.Portals", new[] { "OwnerId" });
+            DropIndex("dbo.Portals", new[] { "Id" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");

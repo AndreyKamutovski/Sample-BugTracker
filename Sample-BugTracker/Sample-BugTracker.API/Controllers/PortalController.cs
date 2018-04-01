@@ -15,11 +15,18 @@ namespace Sample_BugTracker.API.Controllers
     {
         private PortalService _portalService = new PortalService();
 
-        [AllowAnonymous]
         [HttpPost]
-        public async Task Create([Required] PortalDTO portal)
+        [AllowAnonymous]
+        public void Create([Required] PortalDTO portal)
         {
-            await _portalService.Create(portal);
+             _portalService.Create(portal);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public bool CheckPortalTitleNotTaken([Required] string title)
+        {
+            return _portalService.CheckPortalTitleNotTaken(title);
         }
     }
 }

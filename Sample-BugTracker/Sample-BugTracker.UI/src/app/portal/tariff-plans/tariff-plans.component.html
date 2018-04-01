@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>{{header}}</h1>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <h3>{{subheader}}</h3>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-grid-list cols="4" rowHeight="200px" gutterSize="20px">
+      <mat-grid-tile *ngFor="let tile of tiles" [colspan]="1" [rowspan]="1" class="mat-elevation-z5">
+        <mat-grid-tile-header>
+          <h2>{{tile.title}}</h2>
+        </mat-grid-tile-header>
+        <button mat-raised-button color="primary" (click)="openAddPortalDialog()"><h3>{{tile.amount}}</h3></button>
+        <mat-grid-tile-footer style="flex-flow: column wrap;">
+          <div>
+            <strong [innerHTML]="tile.projectLimit"></strong>&nbsp;|&nbsp;
+            <span [innerHTML]="tile.storageLimit"></span>&nbsp;Хранилище
+          </div>
+          <div>
+            <span [innerHTML]="tile.userLimit"></span>&nbsp;Пользователей
+          </div>
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

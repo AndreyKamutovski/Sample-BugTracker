@@ -32,14 +32,41 @@ namespace Sample_BugTracker.DAL.Repositories
             };
         }
 
-        public async Task<IdentityResult> Add(AppUser user, string password, string roleName)
+        // Async
+        public async Task<IEnumerable<AppUser>> GetAllAsync()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return users;
+        }
+
+        public async Task<AppUser> GetByUserNameAsync(string userName)
+        {
+            AppUser user = await _userManager.FindByNameAsync(userName);
+            return user;
+        }
+
+        public async Task<IdentityResult> RemoveAsync(string username, string password)
+        {
+            var result = await _userManager.DeleteAsync(await _userManager.FindAsync(username, password));
+            return result;
+        }
+
+
+        // Sync
+        public AppUser GetByEmail(string email)
+        {
+            AppUser user = _userManager.FindByEmail(email);
+            return user;
+        }
+
+        public IdentityResult Add(AppUser user, string password, string roleName)
         {
             IdentityResult resultCreation;
             IdentityResult resultAdditionToRole;
-            resultCreation = await _userManager.CreateAsync(user, password);
+            resultCreation = _userManager.Create(user, password);
             if (resultCreation.Succeeded)
             {
-                resultAdditionToRole = await _userManager.AddToRoleAsync(user.Id, roleName);
+                resultAdditionToRole = _userManager.AddToRole(user.Id, roleName);
             }
             else
             {
@@ -48,33 +75,5 @@ namespace Sample_BugTracker.DAL.Repositories
             return resultAdditionToRole;
         }
 
-        public async Task<AppUser> GetByEmail(string email)
-        {
-            AppUser user = await _userManager.FindByEmailAsync(email);
-            return user;
-        }
-
-        public async Task<AppUser> GetByUserName(string userName)
-        {
-            AppUser user = await _userManager.FindByNameAsync(userName);
-            return user;
-        }
-
-        public async Task<AppUser> GetByEmailAndPassword(string email, string password)
-        {
-            AppUser user = await _userManager.FindAsync(email, password);  // userName == Email
-            return user;
-        }
-        public async Task<IEnumerable<AppUser>> GetAll()
-        {
-            var users = await _userManager.Users.ToListAsync();
-            return users;
-        }
-
-        public async Task<IdentityResult> Remove(string username, string password)
-        {
-            var result = await _userManager.DeleteAsync(await _userManager.FindAsync(username, password));
-            return result;
-        }
     }
 }

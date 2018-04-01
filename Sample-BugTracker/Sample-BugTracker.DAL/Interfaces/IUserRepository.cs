@@ -8,19 +8,18 @@ namespace Sample_BugTracker.DAL.Interfaces
 {
     public interface IUserRepository
     {
-      
-        Task<AppUser> GetByEmail(string email);
+        // Async
+        Task<IEnumerable<AppUser>> GetAllAsync();
 
-        Task<AppUser> GetByUserName(string userName);
+        Task<AppUser> GetByUserNameAsync(string userName);
 
-        Task<AppUser> GetByEmailAndPassword(string email, string password);
+        Task<IdentityResult> RemoveAsync(string username, string password);
 
-        Task<IEnumerable<AppUser>> GetAll();
 
-        Task<IdentityResult> Add(AppUser user, string password, string roleName);
+        // Sync
+        AppUser GetByEmail(string email);
 
-        Task<IdentityResult> Remove(string username, string password);
+        IdentityResult Add(AppUser user, string password, string roleName);
 
-        // по ходу ещё добавится поведение
     }
 }
