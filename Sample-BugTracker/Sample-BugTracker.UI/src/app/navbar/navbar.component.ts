@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 interface NavbarElement {
   title: string,
@@ -18,11 +19,14 @@ export class NavbarComponent implements OnInit {
     { title: "Проекты", tooltipTitle: "Проекты", routerLink: "app/project" }
   ];
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
-
+  private logout(): void {
+    this.authService.logout();
+  }
 
   ngOnInit() {
+
   }
 
 }

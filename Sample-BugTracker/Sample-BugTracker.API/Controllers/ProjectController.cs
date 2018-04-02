@@ -16,7 +16,7 @@ namespace Sample_BugTracker.API.Controllers
     {
         private ProjectService _projectService = new ProjectService();
 
-        public IEnumerable<ProjectDTO> GetAll()
+          public IEnumerable<ProjectDTO> GetAll()
         {
             return _projectService.GetAll();
         }
@@ -29,10 +29,7 @@ namespace Sample_BugTracker.API.Controllers
         [HttpPost]
         public ProjectDTO Add([Required] ProjectDTO project)
         {
-            var userName1 = ClaimsPrincipal.Current.Identity.Name;
-            var userName  = RequestContext.Principal.Identity.Name;
-            return _projectService.Add(project, userName);
+            return _projectService.Add(project);
         }
-
     }
 }

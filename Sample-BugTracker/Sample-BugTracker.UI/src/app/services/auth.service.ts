@@ -7,16 +7,25 @@ import { Headers, Http, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../shared/models/user.model';
+import { Router } from '@angular/router';
 
 export const REST_URI = new InjectionToken('REST_URI');
+
+interface appUser {
+    email: string;
+    role: string;
+}
 
 @Injectable()
 export class AuthService {
 
     private _isLoggedIn: boolean;
+    private _currentUser: appUser;
 
     constructor(private http: Http,
-        @Inject(REST_URI) private uri: string) {
+        @Inject(REST_URI) private uri: string,
+        private router: Router
+    ) {
         this._isLoggedIn = false;
         console.log('ctor AuthService');
     }
@@ -24,6 +33,10 @@ export class AuthService {
 
     get isLoggedIn(): boolean {
         return this._isLoggedIn;
+    }
+
+    get currentUser(): appUser {
+        return this._currentUser;
     }
 
     login(user: User) {
@@ -34,8 +47,9 @@ export class AuthService {
         return this.http.post(this.uri + 'token', body)
             .map(response => {
                 if (response.status == 200) {
-                    localStorage.setItem('token', response.json().access_token);
+                    sessionStorage.setItem('token', response.json().access_token);
                     this._isLoggedIn = true;
+                    this._currentUser = { email: user.email, role: "" };
                 }
                 return response;
             }).catch((error: any) => {
@@ -44,12 +58,15 @@ export class AuthService {
     }
 
     logout(): void {
+        sessionStorage.removeItem('token');
         this._isLoggedIn = false;
+        this._currentUser = null;
+        this.router.navigateByUrl('/');
     }
 
     get authHaders() {
         return {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
         };
     }
 }

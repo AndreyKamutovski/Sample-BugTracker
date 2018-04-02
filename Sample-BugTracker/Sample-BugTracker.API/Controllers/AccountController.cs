@@ -20,5 +20,7 @@ namespace Sample_BugTracker.API.Controllers
         {
             return _accountService.CheckEmailNotTaken(email);
         }
+
+
     }
 }

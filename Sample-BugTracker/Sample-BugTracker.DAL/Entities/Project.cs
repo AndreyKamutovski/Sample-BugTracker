@@ -19,5 +19,11 @@ namespace Sample_BugTracker.DAL.Entities
         public ICollection<Error> Errors { get; set; }
 
         public ICollection<AppUser> Workers { get; set; }
+
+        public Project()
+        {
+            Workers = new List<AppUser>();
+            Errors = new List<Error>();
+        }
     }
 }

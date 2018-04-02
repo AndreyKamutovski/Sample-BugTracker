@@ -1,7 +1,7 @@
 <mat-toolbar class="mat-toolbar-single-row mat-elevation-z5 app-navbar" color="primary">
 
   <span style="flex: 1 1 auto;">
-    <a mat-button [routerLink]="['/']" title="Главная">
+    <a mat-button routerLink="/" title="Главная">
       <img src="../../assets/logo.png" alt="Bug Tracker Logo" height="26" width="50">
       <span class="mat-title">{{titleApp}}</span>
     </a>
@@ -9,15 +9,28 @@
       <span class="mat-title">{{link.title}}</span>
     </a>
   </span>
-
-  <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
+  <button mat-icon-button [matMenuTriggerFor]="accountMenu" [matMenuTriggerData]="authService.currentUser" [title]="authService.currentUser.email">
+    <mat-icon>person</mat-icon>
   </button>
 </mat-toolbar>
-<mat-menu #menu>
-  <button mat-menu-item (click)="openAddProjectDialog()">
-    <mat-icon>add</mat-icon>
-    <span>Добавить проект</span>
-  </button>
-</mat-menu> -->
+
+<mat-menu #accountMenu [overlapTrigger]="false">
+  <ng-template matMenuContent let-email="email">
+    <mat-card class="mat-elevation-z0">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>person</mat-icon>
+        <!-- <div mat-card-avatar class="example-header-image"><mat-icon>person</mat-icon></div> -->
+        <mat-card-title>{{email}}</mat-card-title>
+        <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+      </mat-card-header>
+      <mat-card-content>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button>Мои порталы</button>
+        <button mat-raised-button color="primary" (click)="logout()">Выйти</button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-template>
+</mat-menu>
+
 <!-- https://stackoverflow.com/questions/38209713/how-to-make-a-responsive-nav-bar-using-angular-material-2 -->

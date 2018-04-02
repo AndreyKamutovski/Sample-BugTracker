@@ -6,27 +6,28 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Security.Claims;
 
 namespace Sample_BugTracker.API.Services
 {
 
-    public class ProjectService: BaseService
+    public class ProjectService : BaseService
     {
         public IEnumerable<ProjectDTO> GetAll()
         {
-            using(var uow = CreateUnitOfWork())
+            using (var uow = CreateUnitOfWork())
             {
-                return Mapper.Map<IEnumerable<Project>, List<ProjectDTO>>(uow.Projects.GetAll());
+                var domainProjects = uow.Projects.Find(project => project.Workers.Contains(CurrentUser));
+                return Mapper.Map<IEnumerable<Project>, List<ProjectDTO>>(domainProjects);
             }
         }
 
-        public ProjectDTO Add(ProjectDTO _project, string userName)
+        public ProjectDTO Add(ProjectDTO _project)
         {
-            using(var uow = CreateUnitOfWork())
+            using (var uow = CreateUnitOfWork())
             {
                 Project project = Mapper.Map<ProjectDTO, Project>(_project);
-                AppUser user = uow.Users.GetByUserName(userName);
-                project.Workers.Add(user);
+                project.Workers.Add(CurrentUser);
                 uow.Projects.Add(project);
                 uow.Complete();
             }
@@ -35,10 +36,10 @@ namespace Sample_BugTracker.API.Services
 
         public ProjectDTO GetById(int id)
         {
-            using(var uow = CreateUnitOfWork())
+            using (var uow = CreateUnitOfWork())
             {
                 Project project = uow.Projects.Get(id);
-                if(project == null)
+                if (project == null)
                 {
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
                 }
