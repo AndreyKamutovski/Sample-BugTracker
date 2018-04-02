@@ -38,3 +38,8 @@ body, .app-background {
 .pointerCursor:hover {
     cursor: pointer;
 }
+
+
+#tariff-header .mat-card-header-text {
+     width: 100%;
+    }

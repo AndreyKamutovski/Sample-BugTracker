@@ -1,7 +1,8 @@
 <mat-card>
-  <mat-card-header>
+  <mat-card-header id="tariff-header">
     <mat-card-title>
-      <h1>{{header}}</h1>
+      <span class="mat-headline" style="margin: 0;">{{header}}</span>
+      <a mat-button routerLink="/">Войти</a>
     </mat-card-title>
     <mat-card-subtitle>
       <h3>{{subheader}}</h3>
@@ -13,7 +14,9 @@
         <mat-grid-tile-header>
           <h2>{{tile.title}}</h2>
         </mat-grid-tile-header>
-        <button mat-raised-button color="primary" (click)="openAddPortalDialog()"><h3>{{tile.amount}}</h3></button>
+        <button mat-raised-button color="primary" (click)="openAddPortalDialog()">
+          <h3>{{tile.amount}}</h3>
+        </button>
         <mat-grid-tile-footer style="flex-flow: column wrap;">
           <div>
             <strong [innerHTML]="tile.projectLimit"></strong>&nbsp;|&nbsp;

@@ -3,17 +3,21 @@ import { MatDialog } from '@angular/material';
 
 import { AddPortalFormComponent } from '../add-portal-form/add-portal-form.component';
 import { PortalService } from '../portal.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-tariff-plans',
   templateUrl: './tariff-plans.component.html',
-  styles: []
+  styles: [`mat-card-title {display: flex; justify-content: space-between; align-items: center;}`]
 })
 export class TariffPlansComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private portalService: PortalService
+    private portalService: PortalService,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   header = `Тарифные планы`;
@@ -34,8 +38,11 @@ export class TariffPlansComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        this.portalService.createPortal(result.portalData).subscribe(res => { }
-
+        this.portalService.createPortal(result.portalData).subscribe(res => {
+          this.authService.login(result.portalData.Owner).subscribe(res => {
+            this.router.navigateByUrl('app/project');
+          })
+        }
         );
       }
     });

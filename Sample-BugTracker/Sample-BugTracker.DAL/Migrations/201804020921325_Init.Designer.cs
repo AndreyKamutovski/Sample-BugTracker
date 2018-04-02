@@ -13,7 +13,7 @@ namespace Sample_BugTracker.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201803302109065_Init"; }
+            get { return "201804020921325_Init"; }
         }
         
         string IMigrationMetadata.Source

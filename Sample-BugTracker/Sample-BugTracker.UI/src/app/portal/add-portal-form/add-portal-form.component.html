@@ -8,7 +8,7 @@
         Обязательно введите название портала
       </mat-error>
       <mat-error *ngIf="title.hasError('pattern')">
-        Название портала содержит недопустимые символы. Допустимы буквы от А до Я (строчные и прописные), цифры от 0 до 9, знак тире
+        Название портала содержит недопустимые символы. Допустимы буквы от А до Я и от A-Z (строчные и прописные), цифры от 0 до 9, знак тире
         (-), подчёркивания (_) и пробела
       </mat-error>
       <mat-error *ngIf="title.hasError('minlength') && !title.hasError('pattern')">
@@ -38,15 +38,34 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field hintLabel="Длина пароля должна быть не менее 6 символов, включая цифры, латинские буквы в верхнем и нежнем регистре, а также не буквенно-цифровые символы">
         <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Пароль" formControlName='password' required>
         <mat-icon matSuffix (click)="hidePassword = !hidePassword" class="pointerCursor">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
         <mat-error *ngIf="password.hasError('required')">
           Обязательно введите пароль
         </mat-error>
+        <mat-error *ngIf="password.hasError('minlength')">
+          Длина пароля должна быть не менее {{ password.errors.minlength.requiredLength }} символов. Вы ввели {{ password.errors.minlength.actualLength
+          }} символа
+        </mat-error>
+        <mat-error *ngIf="password.hasError('nonLetterOrDigit')">
+          {{password.errors.nonLetterOrDigit}}
+        </mat-error>
+        <mat-error *ngIf="password.hasError('requireDigit')">
+          {{password.errors.requireDigit}}
+        </mat-error>
+        <mat-error *ngIf="password.hasError('requireLowercase')">
+          {{password.errors.requireLowercase}}
+        </mat-error>
+        <mat-error *ngIf="password.hasError('requireUppercase')">
+          {{password.errors.requireUppercase}}
+        </mat-error>
+        <mat-error *ngIf="password.hasError('pattern')">
+          В пароле допускаются только латинские буквы
+        </mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field style="margin-top: 35px;">
         <input matInput [type]="hidePConfirm ? 'password' : 'text'" placeholder="Подтвердите пароль" formControlName='confirmPassword'
           required>
         <mat-icon matSuffix (click)="hidePConfirm = !hidePConfirm" class="pointerCursor">{{hidePConfirm ? 'visibility' : 'visibility_off'}}</mat-icon>

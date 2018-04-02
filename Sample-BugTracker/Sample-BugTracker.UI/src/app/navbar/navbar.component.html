@@ -2,7 +2,7 @@
 
   <span style="flex: 1 1 auto;">
     <a mat-button [routerLink]="['/']" title="Главная">
-      <img mat-card-image src="../../assets/logo.png" alt="Bug Tracker Logo" height="26" width="26">
+      <img src="../../assets/logo.png" alt="Bug Tracker Logo" height="26" width="50">
       <span class="mat-title">{{titleApp}}</span>
     </a>
     <a mat-button *ngFor="let link of navbarElements" [routerLink]="link.routerLink" [title]="link.tooltipTitle">

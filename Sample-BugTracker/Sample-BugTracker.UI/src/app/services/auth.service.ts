@@ -18,6 +18,7 @@ export class AuthService {
     constructor(private http: Http,
         @Inject(REST_URI) private uri: string) {
         this._isLoggedIn = false;
+        console.log('ctor AuthService');
     }
 
 

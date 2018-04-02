@@ -39,17 +39,18 @@ namespace Sample_BugTracker.DAL.Repositories
             return users;
         }
 
+        public async Task<IdentityResult> RemoveAsync(string username, string password)
+        {
+            var result = await _userManager.DeleteAsync(await _userManager.FindAsync(username, password));
+            return result;
+        }
+
         public async Task<AppUser> GetByUserNameAsync(string userName)
         {
             AppUser user = await _userManager.FindByNameAsync(userName);
             return user;
         }
 
-        public async Task<IdentityResult> RemoveAsync(string username, string password)
-        {
-            var result = await _userManager.DeleteAsync(await _userManager.FindAsync(username, password));
-            return result;
-        }
 
 
         // Sync
@@ -73,6 +74,12 @@ namespace Sample_BugTracker.DAL.Repositories
                 return resultCreation;
             }
             return resultAdditionToRole;
+        }
+
+        public AppUser GetByUserName(string userName)
+        {
+            AppUser user =  _userManager.FindByName(userName);
+            return user;
         }
 
     }

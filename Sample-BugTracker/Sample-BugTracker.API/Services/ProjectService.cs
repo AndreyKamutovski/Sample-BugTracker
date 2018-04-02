@@ -20,11 +20,13 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-        public ProjectDTO Add(ProjectDTO _project)
+        public ProjectDTO Add(ProjectDTO _project, string userName)
         {
             using(var uow = CreateUnitOfWork())
             {
                 Project project = Mapper.Map<ProjectDTO, Project>(_project);
+                AppUser user = uow.Users.GetByUserName(userName);
+                project.Workers.Add(user);
                 uow.Projects.Add(project);
                 uow.Complete();
             }

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace Sample_BugTracker.API.Controllers
@@ -28,7 +29,9 @@ namespace Sample_BugTracker.API.Controllers
         [HttpPost]
         public ProjectDTO Add([Required] ProjectDTO project)
         {
-            return _projectService.Add(project);
+            var userName1 = ClaimsPrincipal.Current.Identity.Name;
+            var userName  = RequestContext.Principal.Identity.Name;
+            return _projectService.Add(project, userName);
         }
 
     }

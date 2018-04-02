@@ -11,13 +11,14 @@ namespace Sample_BugTracker.DAL.Interfaces
         // Async
         Task<IEnumerable<AppUser>> GetAllAsync();
 
-        Task<AppUser> GetByUserNameAsync(string userName);
-
         Task<IdentityResult> RemoveAsync(string username, string password);
 
+        Task<AppUser> GetByUserNameAsync(string userName);
 
         // Sync
         AppUser GetByEmail(string email);
+
+        AppUser GetByUserName(string userName);
 
         IdentityResult Add(AppUser user, string password, string roleName);
 

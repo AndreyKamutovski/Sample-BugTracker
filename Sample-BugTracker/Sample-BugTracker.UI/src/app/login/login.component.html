@@ -1,4 +1,4 @@
-<form [formGroup]='loginForm' (ngSubmit)="login()" novalidate style="width: 50%; margin: auto;">
+<form [formGroup]='loginForm' (ngSubmit)="login()" novalidate>
   <mat-card>
     <mat-card-header style="justify-content: space-between;">
       <img src="../../assets/logo.png" alt="Bug Tracker Logo" class="logo-img">
@@ -9,7 +9,7 @@
     <mat-divider></mat-divider>
     <mat-card-content class="form-field-container" style="margin-top: 10px;">
       <mat-form-field>
-        <input matInput type="email" placeholder="Адрес эл. почты" required formControlName='email'>
+        <input matInput type="email" placeholder="Адрес эл. почты" required formControlName='email' autofocus>
         <mat-error *ngIf="email.hasError('required')">
           Обязательно введите адрес электронной почты
         </mat-error>
@@ -23,11 +23,11 @@
           Обязательно введите пароль
         </mat-error>
       </mat-form-field>
-      <app-captcha #captcha></app-captcha>
+      <!-- <app-captcha #captcha></app-captcha> -->
     </mat-card-content>
 
-    <mat-card-actions align="start">
-        <button mat-raised-button color="primary" [disabled]="!(this.loginForm.valid && this.captcha.isCaptchaChecked)" type="submit">Войти</button>
+    <mat-card-actions align="start"> 
+        <button mat-raised-button color="primary" [disabled]="!(this.loginForm.valid)" type="submit">Войти</button>  <!--  && this.captcha.isCaptchaChecked -->
         <a mat-button routerLink="app/tariff-plans">Создать портал</a>
       </mat-card-actions>
   </mat-card>

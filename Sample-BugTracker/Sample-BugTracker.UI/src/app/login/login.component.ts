@@ -12,7 +12,8 @@ import { User } from '../shared/models/user.model';
 @Component({
     moduleId: module.id,
     selector: 'app-login',
-    templateUrl: 'login.component.html'
+    templateUrl: 'login.component.html',
+    styles: ['form {width: 50%; margin: 5% auto;}']
 })
 export class LoginComponent implements OnInit {
 
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
 
 
     login() {
-        if (this.loginForm.valid && this.captcha.isCaptchaChecked) {
+        if (this.loginForm.valid) { //  && this.captcha.isCaptchaChecked
             this.authService.login(this.loginForm.value).subscribe(
                 data => {
                     this.router.navigateByUrl('app/project');

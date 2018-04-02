@@ -7,12 +7,15 @@ import { SignupService } from '../services/signup.service';
 import { AddPortalFormComponent } from './add-portal-form/add-portal-form.component';
 import { PortalService } from './portal.service';
 import { TariffPlansComponent } from './tariff-plans/tariff-plans.component';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     AngularMaterialDesignModule,
+    RouterModule
   ],
   entryComponents: [
     AddPortalFormComponent
