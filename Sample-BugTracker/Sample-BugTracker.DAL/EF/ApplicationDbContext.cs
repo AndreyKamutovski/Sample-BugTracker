@@ -15,6 +15,7 @@ namespace Sample_BugTracker.DAL.EF
         public DbSet<Error> Errors { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Portal> Portals { get; set; }
+        public DbSet<UserProject> UserProjects { get; set; }
 
         public ApplicationDbContext()
             : base("BTContext")
@@ -27,7 +28,7 @@ namespace Sample_BugTracker.DAL.EF
         }
 
         // Инициализация происходит при первом обращении к контексту данных
-        public class StoreDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+        public class StoreDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
         {
             protected override void Seed(ApplicationDbContext _context)
             {
@@ -49,6 +50,12 @@ namespace Sample_BugTracker.DAL.EF
                 _userManager.AddToRole(admin.Id, "Admin");
                 _context.SaveChanges();
             }
+        }
+
+        // Fluent API
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

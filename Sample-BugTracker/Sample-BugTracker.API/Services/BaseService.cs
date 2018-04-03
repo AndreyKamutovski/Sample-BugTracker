@@ -7,22 +7,19 @@ namespace Sample_BugTracker.API.Services
 {
     public class BaseService
     {
-        protected static AppUser CurrentUser;
-        protected UnitOfWork Uow;
+        protected AppUser CurrentUser;
+        protected UnitOfWork UoW;
 
-        protected UnitOfWork CreateUnitOfWork()
-        {
-            return new UnitOfWork(new ApplicationDbContext());
-        }
+        //protected UnitOfWork CreateUnitOfWork()
+        //{
+        //    return new UnitOfWork(new ApplicationDbContext());
+        //}
 
         public BaseService()
         {
-            Uow = CreateUnitOfWork();
+            UoW = new UnitOfWork(new ApplicationDbContext());
             var identity = ClaimsPrincipal.Current.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-            CurrentUser = Uow.Users.GetByUserName(identity.Name);
-            //uow.Context.Entry(CurrentUser).Reference("Portal").Load();
-            //uow.Context.Entry(CurrentUser).Collection("Projects").Load();
-            //uow.Context.Entry(CurrentUser).Collection("Errors").Load();
+            CurrentUser = UoW.Users.GetByUserName(identity.Name);
         }
     }
 }

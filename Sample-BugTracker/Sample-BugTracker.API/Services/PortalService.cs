@@ -15,32 +15,32 @@ namespace Sample_BugTracker.API.Services
     {
         public void Create(PortalDTO _portal)
         {
-            using (var uow = CreateUnitOfWork())
+            using (UoW)
             {
-                AppUser userExists = uow.Users.GetByEmail(_portal.Owner.Email);
+                AppUser userExists = UoW.Users.GetByEmail(_portal.Owner.Email);
                 if (userExists != null)
                 {
                     throw new ApplicationOperationException(string.Format("User with email {0} already exists", _portal.Owner.Email), HttpStatusCode.Conflict);
                 }
 
-                if (uow.Portals.Find(prl => prl.Title == _portal.Title).Count<Portal>() > 0)
+                if (UoW.Portals.Find(prl => prl.Title == _portal.Title).Count<Portal>() > 0)
                 {
                     throw new ApplicationOperationException(string.Format("Portal with name {0} already exists", _portal.Title), HttpStatusCode.Conflict);
                 }
 
                 AppUser user = Mapper.Map<AppUser>(_portal.Owner);
-                uow.Users.Add(user, _portal.Owner.Password, "Admin");
+                UoW.Users.Add(user, _portal.Owner.Password, "Admin");
                 Portal portal = new Portal() { Id = user.Id, Title = _portal.Title };
-                uow.Portals.Add(portal);
-                uow.Complete();
+                UoW.Portals.Add(portal);
+                UoW.Complete();
             }
         }
 
         public bool CheckPortalTitleNotTaken(string title)
         {
-            using (var uow = CreateUnitOfWork())
+            using (UoW)
             {
-                int count = uow.Portals.Find(prt => prt.Title == title).Count();
+                int count = UoW.Portals.Find(prt => prt.Title == title).Count();
                 return count > 0 ? false : true;
             }
         }

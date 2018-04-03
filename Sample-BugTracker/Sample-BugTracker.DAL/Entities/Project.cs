@@ -17,14 +17,14 @@ namespace Sample_BugTracker.DAL.Entities
 
         public virtual ICollection<Error> Errors { get; set; }
 
-        public virtual ICollection<AppUser> Workers { get; set; }
+        public virtual ICollection<UserProject> UserProjects { get; set; }
 
         public string PortalId { get; set; }
         public virtual Portal Portal { get; set; }
 
         public Project()
         {
-            Workers = new List<AppUser>();
+            UserProjects = new List<UserProject>();
             Errors = new List<Error>();
         }
     }

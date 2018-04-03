@@ -18,19 +18,17 @@ namespace Sample_BugTracker.API.Services
     {
         public IEnumerable<ProjectDTO> GetAll()
         {
-            using (Uow)
+            using (UoW)
             {
-                //uow.Context.Entry(CurrentUser).Collection("Projects").Load
-                //var domainProjects = uow.Users.GetByUserName(CurrentUser.UserName).Projects;
-                return Mapper.Map<IEnumerable<Project>, List<ProjectDTO>>(CurrentUser.Projects);
+                return Mapper.Map<IEnumerable<Project>, List<ProjectDTO>>(CurrentUser.UserProjects.Select(up => up.Project));
             }
         }
 
         public ProjectDTO GetById(int id)
         {
-            using (var uow = CreateUnitOfWork())
+            using (UoW)
             {
-                Project project = uow.Projects.Get(id);
+                Project project = UoW.Projects.Get(id);
                 if (project == null)
                 {
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
@@ -41,17 +39,14 @@ namespace Sample_BugTracker.API.Services
 
         public ProjectDTO Add(ProjectDTO _project)  
         {
-            using (Uow)
+            using (UoW)
             {
                 Project project = Mapper.Map<Project>(_project);
-                // uow.Context.Users.At
-                //uow.Context.Entry(CurrentUser).Reference("Portal").Load();
-                //project.Portal = uow.Users.GetByUserName(CurrentUser.UserName).Portal;
                 project.Portal = CurrentUser.Portal;
-                Uow.Projects.Add(project);
-                CurrentUser.Projects.Add(project);
-                Uow.Context.Entry(CurrentUser).State = EntityState.Modified;
-                Uow.Complete();
+                UoW.Projects.Add(project);
+                var userProject = new UserProject() { Project = project, Worker = CurrentUser, Role = "Admin" };
+                UoW.UserProjects.Add(userProject);
+                UoW.Complete();
                 return Mapper.Map<ProjectDTO>(project);
             }
         }

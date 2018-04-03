@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.DAL.Enumerations;
 using System;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sample_BugTracker.DAL.Entities
 {

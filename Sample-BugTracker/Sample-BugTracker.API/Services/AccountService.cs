@@ -10,9 +10,9 @@ namespace Sample_BugTracker.API.Services
     {
         public bool CheckEmailNotTaken(string email)
         {
-            using (var uow = CreateUnitOfWork())
+            using (UoW)
             {
-                AppUser user = uow.Users.GetByEmail(email);
+                AppUser user = UoW.Users.GetByEmail(email);
                 return user == null ? true : false;
             }
         }
