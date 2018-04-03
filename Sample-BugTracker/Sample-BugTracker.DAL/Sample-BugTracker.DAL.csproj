@@ -79,6 +79,14 @@
     <Compile Include="Migrations\201804020921325_Init.Designer.cs">
       <DependentUpon>201804020921325_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804031150507_lazy loading.cs" />
+    <Compile Include="Migrations\201804031150507_lazy loading.Designer.cs">
+      <DependentUpon>201804031150507_lazy loading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804031327355_Add one-to-many for Portal-Projects.cs" />
+    <Compile Include="Migrations\201804031327355_Add one-to-many for Portal-Projects.Designer.cs">
+      <DependentUpon>201804031327355_Add one-to-many for Portal-Projects.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\PortalRepository.cs" />
@@ -95,6 +103,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201804020921325_Init.resx">
       <DependentUpon>201804020921325_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804031150507_lazy loading.resx">
+      <DependentUpon>201804031150507_lazy loading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804031327355_Add one-to-many for Portal-Projects.resx">
+      <DependentUpon>201804031327355_Add one-to-many for Portal-Projects.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

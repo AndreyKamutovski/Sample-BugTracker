@@ -55,5 +55,10 @@ namespace Sample_BugTracker.DAL.Repositories
         {
             _context.Dispose();
         }
+
+        public ApplicationDbContext Context
+        {
+            get { return _context; }
+        }
     }
 }

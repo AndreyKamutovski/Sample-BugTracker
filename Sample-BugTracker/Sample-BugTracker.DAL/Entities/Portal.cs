@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,6 +13,8 @@ namespace Sample_BugTracker.DAL.Entities
 
         public string Title { get; set; }
 
-        public AppUser Owner { get; set; }
+        public virtual AppUser Owner { get; set; }
+
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

@@ -81,6 +81,5 @@ namespace Sample_BugTracker.DAL.Repositories
             AppUser user =  _userManager.FindByName(userName);
             return user;
         }
-
     }
 }

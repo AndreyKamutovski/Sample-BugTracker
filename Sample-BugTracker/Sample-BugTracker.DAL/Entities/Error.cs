@@ -18,9 +18,9 @@ namespace Sample_BugTracker.DAL.Entities
         public Priority Priority { get; set; }
 
         public int ProjectId { get; set; }
-        public Project Project { get; set; }
+        public virtual Project Project { get; set; }
 
         public string WorkerId { get; set; }
-        public AppUser Worker { get; set; }
+        public virtual AppUser Worker { get; set; }
     }
 }

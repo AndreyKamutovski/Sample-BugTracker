@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Sample_BugTracker.DAL.Entities
@@ -16,9 +15,12 @@ namespace Sample_BugTracker.DAL.Entities
 
         public string Description { get; set; }
 
-        public ICollection<Error> Errors { get; set; }
+        public virtual ICollection<Error> Errors { get; set; }
 
-        public ICollection<AppUser> Workers { get; set; }
+        public virtual ICollection<AppUser> Workers { get; set; }
+
+        public string PortalId { get; set; }
+        public virtual Portal Portal { get; set; }
 
         public Project()
         {
