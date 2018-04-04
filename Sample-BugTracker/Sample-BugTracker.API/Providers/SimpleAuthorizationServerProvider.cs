@@ -21,9 +21,9 @@ namespace Sample_BugTracker.API
 
             //context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            using (UnitOfWork _repo = new UnitOfWork(new ApplicationDbContext()))
+            using (var UoW = new UnitOfWork(new ApplicationDbContext()))
             {
-                AppUser user = await _repo.Users.GetByUserNameAsync(context.UserName);
+                AppUser user = await UoW.Users.GetByUserNameAndPasswordAsync(context.UserName, context.Password);
 
                 if (user == null)
                 {

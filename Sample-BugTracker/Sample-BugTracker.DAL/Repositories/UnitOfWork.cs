@@ -21,6 +21,7 @@ namespace Sample_BugTracker.DAL.Repositories
             Projects = new ProjectRepository(_context);
             Portals = new PortalRepository(_context);
             UserProjects = new UserProjectRepository(_context);
+            Roles = new RoleRepository(_context);
         }
 
         public IUserRepository Users
@@ -29,6 +30,11 @@ namespace Sample_BugTracker.DAL.Repositories
             private set;
         }
 
+        public IRoleRepository Roles
+        {
+            get;
+            private set;
+        }
         public IErrorRepository Errors
         {
             get;

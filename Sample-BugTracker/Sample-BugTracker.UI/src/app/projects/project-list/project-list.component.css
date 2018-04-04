@@ -14,3 +14,7 @@ mat-row:hover {
     left: auto !important;
     position: fixed !important;
 }
+
+:host {
+    margin: 0 300px;
+}

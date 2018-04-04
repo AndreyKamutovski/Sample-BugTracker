@@ -9,7 +9,7 @@
     <mat-divider></mat-divider>
     <mat-card-content class="form-field-container" style="margin-top: 10px;">
       <mat-form-field>
-        <input matInput type="email" placeholder="Адрес эл. почты" required formControlName='email' autofocus>
+        <input matInput type="email" placeholder="Адрес эл. почты" required formControlName='email' inputAutofocus>
         <mat-error *ngIf="email.hasError('required')">
           Обязательно введите адрес электронной почты
         </mat-error>
@@ -18,7 +18,8 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Пароль" required formControlName='password'>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Пароль" required formControlName='password'>
+        <mat-icon matSuffix (click)="hidePassword = !hidePassword" class="pointerCursor">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
         <mat-error *ngIf="password.hasError('required')">
           Обязательно введите пароль
         </mat-error>

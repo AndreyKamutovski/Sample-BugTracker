@@ -14,7 +14,6 @@ namespace Sample_BugTracker.DAL.Repositories
     {
         private ApplicationDbContext _context;
         private UserManager<AppUser> _userManager;
-        //private RoleManager<IdentityRole> _roleManager;
 
         public UserRepository(ApplicationDbContext context)
         {
@@ -51,7 +50,11 @@ namespace Sample_BugTracker.DAL.Repositories
             return user;
         }
 
-
+        public async Task<AppUser> GetByUserNameAndPasswordAsync(string userName, string password)
+        {
+            AppUser user = await _userManager.FindAsync(userName, password);
+            return user;
+        }
 
         // Sync
         public AppUser GetByEmail(string email)
@@ -78,7 +81,7 @@ namespace Sample_BugTracker.DAL.Repositories
 
         public AppUser GetByUserName(string userName)
         {
-            AppUser user =  _userManager.FindByName(userName);
+            AppUser user = _userManager.FindByName(userName);
             return user;
         }
     }

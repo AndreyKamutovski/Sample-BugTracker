@@ -14,10 +14,11 @@ import { LoginComponent } from './login/login.component';
 import { MessageComponent } from './messages/message.component';
 import { MessageModule } from './messages/message.module';
 import { NavbarComponent } from './navbar/navbar.component';
+import { PortalModule } from './portal/portal.module';
 import { ProjectsModule } from './projects/projects.module';
 import { AuthGuardLoginService } from './services/auth-guard-login.service';
 import { AuthService, REST_URI } from './services/auth.service';
-import { PortalModule } from './portal/portal.module';
+import { InputAutofocusDirective } from './shared/directives/input-autofocus.directive';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { PortalModule } from './portal/portal.module';
         LoginComponent,
         CaptchaComponent,
         NavbarComponent,
+        InputAutofocusDirective
     ],
     providers: [
         AuthService,

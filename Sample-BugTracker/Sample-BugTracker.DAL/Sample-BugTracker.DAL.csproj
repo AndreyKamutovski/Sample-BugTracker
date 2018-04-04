@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EF\ApplicationDbContext.cs" />
+    <Compile Include="Entities\AppRole.cs" />
     <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Entities\Error.cs" />
     <Compile Include="Entities\Portal.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Entities\UserProject.cs" />
     <Compile Include="Enumerations\Error.cs" />
     <Compile Include="Interfaces\IPortalRepository.cs" />
+    <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\IUserProjectRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IErrorRepository.cs" />
@@ -93,9 +95,14 @@
     <Compile Include="Migrations\201804032127580_Many-to-many custom join table.Designer.cs">
       <DependentUpon>201804032127580_Many-to-many custom join table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804041020349_Add foreign key to UserProject Model.cs" />
+    <Compile Include="Migrations\201804041020349_Add foreign key to UserProject Model.Designer.cs">
+      <DependentUpon>201804041020349_Add foreign key to UserProject Model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\PortalRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\UserProjectRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
@@ -119,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804032127580_Many-to-many custom join table.resx">
       <DependentUpon>201804032127580_Many-to-many custom join table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804041020349_Add foreign key to UserProject Model.resx">
+      <DependentUpon>201804041020349_Add foreign key to UserProject Model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

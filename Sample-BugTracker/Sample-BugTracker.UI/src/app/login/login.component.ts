@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
 
     @ViewChild("captcha") private captcha: CaptchaComponent;
     private loginForm: FormGroup;
+    private hidePassword: boolean = true;
 
     constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
         this.loginForm = this.formBuilder.group({
@@ -34,8 +35,10 @@ export class LoginComponent implements OnInit {
     login() {
         if (this.loginForm.valid) { //  && this.captcha.isCaptchaChecked
             this.authService.login(this.loginForm.value).subscribe(
-                data => {
-                    this.router.navigateByUrl('app/project');
+                res => {
+                    if (this.authService.isLoggedIn) {
+                        this.router.navigateByUrl('app/project');
+                    }
                 });
         }
     }

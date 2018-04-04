@@ -15,7 +15,8 @@ namespace Sample_BugTracker.DAL.Entities
         public virtual Project Project { get; set; }
         public virtual AppUser Worker { get; set; }
 
-        public string Role { get; set; }
+        public string RoleId { get; set; }
+        public virtual AppRole Role { get; set; }
     }
 }
 

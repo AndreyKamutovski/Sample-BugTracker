@@ -15,6 +15,10 @@ namespace Sample_BugTracker.DAL.Interfaces
 
         Task<AppUser> GetByUserNameAsync(string userName);
 
+        Task<AppUser> GetByUserNameAndPasswordAsync(string userName, string password);
+
+
+
         // Sync
         AppUser GetByEmail(string email);
 

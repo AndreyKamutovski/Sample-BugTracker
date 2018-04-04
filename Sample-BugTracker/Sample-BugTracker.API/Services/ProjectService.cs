@@ -44,7 +44,7 @@ namespace Sample_BugTracker.API.Services
                 Project project = Mapper.Map<Project>(_project);
                 project.Portal = CurrentUser.Portal;
                 UoW.Projects.Add(project);
-                var userProject = new UserProject() { Project = project, Worker = CurrentUser, Role = "Admin" };
+                var userProject = new UserProject() { Project = project, Worker = CurrentUser, Role = UoW.Roles.GetByName("Admin") };
                 UoW.UserProjects.Add(userProject);
                 UoW.Complete();
                 return Mapper.Map<ProjectDTO>(project);

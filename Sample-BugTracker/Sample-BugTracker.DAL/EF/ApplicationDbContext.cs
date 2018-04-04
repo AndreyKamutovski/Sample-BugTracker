@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.DAL.Entities;
+using Sample_BugTracker.DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Sample_BugTracker.DAL.EF
 {
-    public class ApplicationDbContext: IdentityDbContext<AppUser>
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Error> Errors { get; set; }
         public DbSet<Project> Projects { get; set; }
@@ -32,23 +33,20 @@ namespace Sample_BugTracker.DAL.EF
         {
             protected override void Seed(ApplicationDbContext _context)
             {
-                var _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
-                _roleManager.Create(new IdentityRole("Admin"));
-                _roleManager.Create(new IdentityRole("Moderator"));
-                _roleManager.Create(new IdentityRole("Worker"));
-                _roleManager.Create(new IdentityRole("User"));
+                var UoW = new UnitOfWork(_context);
+                UoW.Roles.Add("Admin");
+                UoW.Roles.Add("Moderator");
+                UoW.Roles.Add("Worker");
+                UoW.Roles.Add("User");
 
                 // Addition Admin
-                var _userManager = new UserManager<AppUser>(new UserStore<AppUser>(_context));
-                string adminPassword = "aBcDe20*";
                 AppUser admin = new AppUser()
                 {
                     Email = "KVISLAND20@gmail.com",
                     UserName = "KVISLAND20@gmail.com"
                 };
-                _userManager.Create(admin, adminPassword);
-                _userManager.AddToRole(admin.Id, "Admin");
-                _context.SaveChanges();
+                UoW.Users.Add(admin, "aBcDe20*", "Admin");
+                UoW.Complete();
             }
         }
 

@@ -45,13 +45,13 @@ export class AuthService {
         body.set('password', user.password);
         body.set('grant_type', 'password');
         return this.http.post(this.uri + 'token', body)
-            .map(response => {
-                if (response.status == 200) {
-                    sessionStorage.setItem('token', response.json().access_token);
+            .map(res => {
+                if (res.status == 200) {
+                    sessionStorage.setItem('token', res.json().access_token);
                     this._isLoggedIn = true;
                     this._currentUser = { email: user.email, role: "" };
-                }
-                return response;
+                } 
+                return res;
             }).catch((error: any) => {
                 return Observable.throw('Error: ' + error.statusText + ' ' + error.status);
             });
