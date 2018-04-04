@@ -1,17 +1,28 @@
-<mat-sidenav-container class="mat-elevation-z5 app-background" style="height: 200px;">
-  <mat-sidenav #sidenav mode="side" opened="true">
+<mat-sidenav-container class="app-background">
+  <mat-sidenav #sidenav mode="side" opened="true" fixedInViewport="true" fixedTopGap="64">
     <mat-nav-list>
-      <mat-list-item *ngFor="let link of sidenavElements">
-        <mat-icon matListIcon>{{link.matIcon}}</mat-icon>
-        <h3>{{link.title}}</h3>
+      <mat-list-item *ngFor="let element of sidenavNavElements">
+        <mat-icon matListIcon>{{element.matIcon}}</mat-icon>
+        <a matLine [routerLink]="element.link">
+          <h3>{{element.title}}</h3>
+        </a>
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
+
   <mat-sidenav-content class="mat-typography">
-    <h2> {{project.Id}}</h2>
-    <h2> {{project.Title}}</h2>
-    <h2> {{project.DateStart}}</h2>
-    <h2> {{project.Description}}</h2>
+       <button mat-raised-button color="accent" [title]="sidenav.opened ? 'Свернуть' : 'Развернуть'" (click)="sidenav.toggle()"
+      class="toggle-sidenav-container">
+      <mat-icon>{{sidenav.opened ? 'arrow_back' : 'arrow_forward'}}</mat-icon>
+    </button>
+    <router-outlet></router-outlet>
+
+   
+
+    <!-- <h2> {{project.Id}}</h2> -->
+    <!-- <h2> {{project.Title}}</h2>
+    <h4> Владелец: </h4>
+    <h2> {{project.Description}}</h2> -->
 
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -57,7 +57,7 @@ export class ProjectListComponent implements OnInit {
   // }
 
   private onClickRow(projectID: number) {
-    this._router.navigate(['description', projectID], { relativeTo: this._route });
+    this._router.navigate([projectID, 'dashboard'], { relativeTo: this._route });
   }
 
   private onClickMatMenuBtn(event: Event) {

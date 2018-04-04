@@ -9,6 +9,9 @@ import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectsComponent } from './projects.component';
 import { SelectedProjectPageComponent } from './selected-project-page/selected-project-page.component';
 import { ProjectService } from './shared/project.service';
+import { UserListComponent } from './user-list/user-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ErrorsComponent } from './errors/errors.component';
 
 
 @NgModule({
@@ -26,6 +29,9 @@ import { ProjectService } from './shared/project.service';
     ProjectListComponent,
     AddProjectFormComponent,
     SelectedProjectPageComponent,
+    UserListComponent,
+    DashboardComponent,
+    ErrorsComponent,
 
   ],
   providers: [

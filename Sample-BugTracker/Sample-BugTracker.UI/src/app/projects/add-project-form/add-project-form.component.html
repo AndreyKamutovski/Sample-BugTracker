@@ -3,7 +3,7 @@
 
     <mat-dialog-content class="form-field-container">
         <mat-form-field>
-            <input matInput type="text" name="projectName" placeholder="Название проекта" required minlength='3' formControlName='title'>
+            <input matInput type="text" name="projectName" placeholder="Название проекта" required minlength='3' formControlName='title' appInputAutofocus>
             <mat-error *ngIf="title.hasError('required')">
                 Обязательно введите название проекта
             </mat-error>

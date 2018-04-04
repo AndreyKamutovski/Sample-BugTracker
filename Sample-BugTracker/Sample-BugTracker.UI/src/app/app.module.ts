@@ -40,7 +40,7 @@ import { InputAutofocusDirective } from './shared/directives/input-autofocus.dir
         LoginComponent,
         CaptchaComponent,
         NavbarComponent,
-        InputAutofocusDirective
+        InputAutofocusDirective,
     ],
     providers: [
         AuthService,

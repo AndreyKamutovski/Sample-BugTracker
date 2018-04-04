@@ -33,7 +33,7 @@ namespace Sample_BugTracker.API.Services
                 {
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
                 }
-                return Mapper.Map<Project, ProjectDTO>(project);
+                return Mapper.Map<ProjectDTO>(project);
             }
         }
 

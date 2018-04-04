@@ -1,15 +1,13 @@
-import { Directive, ElementRef, AfterViewInit } from '@angular/core';
-import { MatInput } from '@angular/material';
+import { AfterViewInit, Directive, ElementRef } from '@angular/core';
 
 @Directive({
-    selector: 'input[inputAutofocus]'
+  selector: '[appInputAutofocus]'
 })
 export class InputAutofocusDirective implements AfterViewInit {
 
-    constructor(private elementRef: ElementRef) {};
+  constructor(private elementRef: ElementRef) { }
 
-    ngAfterViewInit(): void {
-       // this.elementRef as MatInput;
-        //this.elementRef.nativeElement.focus();
-    }
+  ngAfterViewInit() {
+    this.elementRef.nativeElement.focus();
+}
 }
