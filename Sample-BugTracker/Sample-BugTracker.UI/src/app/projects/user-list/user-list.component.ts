@@ -8,7 +8,7 @@ import { UsersService } from '../services/users.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styles: [] 
+  styles: []
 })
 export class UserListComponent implements OnInit {
   private users: User[];
@@ -24,7 +24,7 @@ export class UserListComponent implements OnInit {
       width: '50%',
       data: {}
     });
-    dialogRef.afterClosed().subscribe(this.afterClosedDialog);
+    dialogRef.afterClosed().toPromise().then(this.afterClosedDialog);
   }
 
   private afterClosedDialog(res: any): void {

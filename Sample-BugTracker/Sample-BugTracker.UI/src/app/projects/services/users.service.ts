@@ -3,14 +3,14 @@ import { RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../shared/models/user.model';
-import { RequestService } from '../../shared/services/request.service';
+import { HttpClientService } from '../../shared/services/httpClient.service';
 
 @Injectable()
 export class UsersService {
 
-  constructor(private requestService: RequestService) { }
+  constructor(private HttpClientService: HttpClientService) { }
 
   getProjectUsers(projectId: string): Observable<User[]> {
-    return this.requestService.sendRequest(RequestMethod.Get, "api/User", { 'projectId': projectId })
+    return this.HttpClientService.sendRequest(RequestMethod.Get, "api/User", { 'projectId': projectId })
   }
 }

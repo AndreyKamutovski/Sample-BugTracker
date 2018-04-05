@@ -11,18 +11,10 @@
   </mat-sidenav>
 
   <mat-sidenav-content class="mat-typography">
-       <button mat-raised-button color="accent" [title]="sidenav.opened ? 'Свернуть' : 'Развернуть'" (click)="sidenav.toggle()"
+       <!-- <button mat-raised-button color="accent" [title]="sidenav.opened ? 'Свернуть' : 'Развернуть'" (click)="sidenav.toggle()"
       class="toggle-sidenav-container">
       <mat-icon>{{sidenav.opened ? 'arrow_back' : 'arrow_forward'}}</mat-icon>
-    </button>
+    </button> -->
     <router-outlet></router-outlet>
-
-   
-
-    <!-- <h2> {{project.Id}}</h2> -->
-    <!-- <h2> {{project.Title}}</h2>
-    <h4> Владелец: </h4>
-    <h2> {{project.Description}}</h2> -->
-
   </mat-sidenav-content>
 </mat-sidenav-container>

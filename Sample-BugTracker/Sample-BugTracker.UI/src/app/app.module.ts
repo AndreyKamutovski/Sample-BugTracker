@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule, ErrorHandler } from '@angular/core';
+import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
@@ -10,17 +10,15 @@ import { AngularMaterialDesignModule } from './angular-material-design/angular-m
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { CaptchaComponent } from './captcha/captcha.component';
+import { GlobalErrorHandlerComponent } from './global-error-handler/global-error-handler.component';
+import { GlobalErrorHandlerService } from './global-error-handler/global-error-handler.service';
 import { LoginComponent } from './login/login.component';
-import { MessageComponent } from './messages/message.component';
-import { MessageModule } from './messages/message.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PortalModule } from './portal/portal.module';
 import { ProjectsModule } from './projects/projects.module';
 import { AuthGuardLoginService } from './services/auth-guard-login.service';
 import { AuthService, REST_URI } from './services/auth.service';
-import { InputAutofocusDirective } from './shared/directives/input-autofocus.directive';
-import { RequestService } from './shared/services/request.service';
-import { MessageErrorHandler } from './messages/errorHandler';
+import { HttpClientService } from './shared/services/httpClient.service';
 
 
 @NgModule({
@@ -31,7 +29,6 @@ import { MessageErrorHandler } from './messages/errorHandler';
         HttpModule,
         routing,
         ReCaptchaModule,
-        MessageModule,
         AngularMaterialDesignModule,
         BrowserAnimationsModule,
         ProjectsModule,
@@ -42,20 +39,22 @@ import { MessageErrorHandler } from './messages/errorHandler';
         LoginComponent,
         CaptchaComponent,
         NavbarComponent,
-        InputAutofocusDirective,
+        GlobalErrorHandlerComponent,
+    ],
+    entryComponents: [
+        GlobalErrorHandlerComponent
     ],
     providers: [
         AuthService,
         AuthGuardLoginService,
-        RequestService,
+        HttpClientService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
         { provide: LOCALE_ID, useValue: 'ru' },
-        { provide: ErrorHandler, useClass: MessageErrorHandler }
+        { provide: ErrorHandler, useClass: GlobalErrorHandlerService }
     ],
     bootstrap: [
-        AppComponent,
-        MessageComponent
+        AppComponent
     ]
 })
 export class AppModule {

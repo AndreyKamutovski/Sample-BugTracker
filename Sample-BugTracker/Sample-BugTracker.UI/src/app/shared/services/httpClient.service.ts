@@ -4,7 +4,7 @@ import { Headers, Http, RequestMethod } from '@angular/http';
 import { AuthService, REST_URI } from '../../services/auth.service';
 
 @Injectable()
-export class RequestService {
+export class HttpClientService {
 
   constructor(private http: Http, private authService: AuthService,
     @Inject(REST_URI) private uri: string) { }

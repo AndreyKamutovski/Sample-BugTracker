@@ -3,18 +3,18 @@ import { RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Portal } from '../shared/models/portal.model';
-import { RequestService } from '../shared/services/request.service';
+import { HttpClientService } from '../shared/services/httpClient.service';
 
 @Injectable()
 export class PortalService {
 
-  constructor(private requestService: RequestService) { }
+  constructor(private HttpClientService: HttpClientService) { }
 
   public createPortal(portal: Portal): Observable<void> {
-    return this.requestService.sendRequest(RequestMethod.Post, 'api/Portal', null, { 'Content-Type': 'application/json' }, portal);
+    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Portal', null, { 'Content-Type': 'application/json' }, portal);
   }
 
   public CheckPortalTitleNotTaken(title: string): Observable<boolean> {
-    return this.requestService.sendRequest(RequestMethod.Get, 'api/Portal', { 'title': title });
+    return this.HttpClientService.sendRequest(RequestMethod.Get, 'api/Portal', { 'title': title });
   }
 }
