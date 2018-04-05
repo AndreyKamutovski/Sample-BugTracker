@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Project } from '../shared/project.model';
-import { ProjectService } from '../shared/project.service';
+import { ProjectService } from '../services/project.service';
 
 interface sidenavNavElement {
   title: string;
@@ -28,6 +28,9 @@ export class SelectedProjectPageComponent implements OnInit {
 
   ngOnInit() {
     let projectID = this._route.snapshot.params['id'];
-    this.projectService.getProjectById(projectID).subscribe(res => this.project = res);
+    sessionStorage.setItem('projectID', projectID);
+    this.projectService.getProjectById(projectID).subscribe(res => {
+      this.project = res;
+    });
   }
 }

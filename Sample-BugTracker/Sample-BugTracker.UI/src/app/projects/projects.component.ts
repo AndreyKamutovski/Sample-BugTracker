@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { AddProjectFormComponent } from './add-project-form/add-project-form.component';
 import { ProjectListComponent } from './project-list/project-list.component';
-import { ProjectService } from './shared/project.service';
+import { ProjectService } from './services/project.service';
 
 @Component({
   selector: 'app-projects',

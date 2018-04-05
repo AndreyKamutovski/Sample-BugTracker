@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
@@ -19,6 +19,8 @@ import { ProjectsModule } from './projects/projects.module';
 import { AuthGuardLoginService } from './services/auth-guard-login.service';
 import { AuthService, REST_URI } from './services/auth.service';
 import { InputAutofocusDirective } from './shared/directives/input-autofocus.directive';
+import { RequestService } from './shared/services/request.service';
+import { MessageErrorHandler } from './messages/errorHandler';
 
 
 @NgModule({
@@ -45,9 +47,11 @@ import { InputAutofocusDirective } from './shared/directives/input-autofocus.dir
     providers: [
         AuthService,
         AuthGuardLoginService,
+        RequestService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
-        { provide: LOCALE_ID, useValue: 'ru' }
+        { provide: LOCALE_ID, useValue: 'ru' },
+        { provide: ErrorHandler, useClass: MessageErrorHandler }
     ],
     bootstrap: [
         AppComponent,

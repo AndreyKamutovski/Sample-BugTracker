@@ -1,34 +1,45 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { MessageService } from "./message.service";
 import { Message } from "./message.model";
+import { MatDialog, MAT_DIALOG_DATA } from "@angular/material";
 @Component({
     selector: "paMessages",
     moduleId: module.id,
-    templateUrl: "message.component.html",
+    template: ''
 })
 export class MessageComponent {
     lastMessage: Message;
-    
-    constructor(messageService: MessageService) {
-        messageService.registerMessageHandler(m => { this.lastMessage = m; this.show(); });
+    private isOpenDialog: boolean = false;
+
+    constructor(messageService: MessageService, private dialog: MatDialog) {
+        messageService.registerMessageHandler(m => {
+            this.lastMessage = m;
+            if (!this.isOpenDialog) {
+                this.isOpenDialog = true;
+                console.log('modal');
+                this.openDialog();
+            }
+        });
     }
 
-    public visible = false;
-    public visibleAnimate = false;
+    openDialog(): void {
+        let dialogRef = this.dialog.open(ErrorDialog, {
+            width: '50%',
+            data: { lastMsg: this.lastMessage }
+        });
 
-    public show(): void {
-        this.visible = true;
-        setTimeout(() => this.visibleAnimate = true, 100);
+        dialogRef.afterClosed().subscribe(result => {
+            this.isOpenDialog = false;
+        });
     }
+}
 
-    public hide(): void {
-        this.visibleAnimate = false;
-        setTimeout(() => this.visible = false, 300);
-    }
 
-    public onContainerClicked(event: MouseEvent): void {
-        if ((<HTMLElement>event.currentTarget).classList.contains('modal')) {
-            this.hide();
-        }
-    }
+@Component({
+    selector: 'app-error-dialog',
+    templateUrl: './app-error-dialog.component.html'
+})
+export class ErrorDialog {
+
+    constructor( @Inject(MAT_DIALOG_DATA) public data: Message) { }
 }

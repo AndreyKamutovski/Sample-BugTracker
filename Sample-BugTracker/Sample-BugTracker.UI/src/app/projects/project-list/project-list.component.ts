@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AddProjectFormComponent } from '../add-project-form/add-project-form.component';
 import { Project } from '../shared/project.model';
-import { ProjectService } from '../shared/project.service';
+import { ProjectService } from '../shared/../services/project.service';
 
 @Component({
   selector: 'app-project-list',

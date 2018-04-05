@@ -1,3 +1,34 @@
-<p>
-  user-list works!
-</p>
+<span class="mat-headline" style="margin: 0;"> Пользователи</span>
+
+
+<mat-grid-list cols="4" rowHeight="2:1" gutterSize="20px">
+  <mat-grid-tile *ngFor="let user of users" [colspan]="1" [rowspan]="1">
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>person</mat-icon>
+        <!-- <div  class="example-header-image"></div> -->
+        <mat-card-title>{{user.Email}}</mat-card-title>
+        <mat-card-subtitle>{{user.RoleName}}</mat-card-subtitle>
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </mat-card-header>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-menu #menu>
+  <button mat-menu-item>
+    <mat-icon>edit</mat-icon>
+    <span>Редактировать</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>delete</mat-icon>
+    <span>Удалить</span>
+  </button>
+
+</mat-menu>
+
+<button mat-fab class="mat-fab-buttom-right" (click)="openAddUserDialog()">
+  <mat-icon>add</mat-icon>
+</button>

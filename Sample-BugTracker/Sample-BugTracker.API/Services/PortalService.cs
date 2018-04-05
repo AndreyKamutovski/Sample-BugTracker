@@ -29,7 +29,7 @@ namespace Sample_BugTracker.API.Services
                 }
 
                 AppUser user = Mapper.Map<AppUser>(_portal.Owner);
-                UoW.Users.Add(user, _portal.Owner.Password, "Admin");
+                UoW.Users.Add(user, _portal.Owner.Password, _portal.Owner.RoleName);
                 Portal portal = new Portal() { Id = user.Id, Title = _portal.Title };
                 UoW.Portals.Add(portal);
                 UoW.Complete();

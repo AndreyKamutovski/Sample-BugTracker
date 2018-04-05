@@ -1,15 +1,23 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { MessageErrorHandler } from './errorHandler';
-import { MessageComponent } from './message.component';
+import { AngularMaterialDesignModule } from '../angular-material-design/angular-material-design.module';
+import { ErrorDialog, MessageComponent } from './message.component';
 import { MessageService } from './message.service';
 
 @NgModule({
-    imports: [BrowserModule],
-    declarations: [MessageComponent],
+    imports: [
+        BrowserModule,
+        AngularMaterialDesignModule,
+    ],
+    declarations: [
+        MessageComponent,
+        ErrorDialog
+    ],
     exports: [MessageComponent],
-    providers: [MessageService,
-        { provide: ErrorHandler, useClass: MessageErrorHandler }]
+    entryComponents: [
+        ErrorDialog,
+    ],
+    providers: [MessageService]
 })
 export class MessageModule { }

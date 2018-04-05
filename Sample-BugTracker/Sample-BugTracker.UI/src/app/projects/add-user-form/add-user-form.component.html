@@ -1,0 +1,21 @@
+<form [formGroup]='addUserForm' (ngSubmit)="addProjectUser()" novalidate>
+  <h2 mat-dialog-title>Добавить пользователя к проекту</h2>
+
+  <mat-dialog-content class="form-field-container">
+    <mat-form-field>
+      <input matInput type="email" placeholder="Адрес эл. почты" formControlName='email' required>
+      <mat-error *ngIf="email.hasError('required')">
+        Обязательно введите адрес эл. почты
+      </mat-error>
+      <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+        Неверный адрес эл. почты
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Отмена</button>
+    <button mat-raised-button color="primary" [disabled]="!addUserForm.valid" type="submit">Добавить</button>
+  </mat-dialog-actions>
+</form>

@@ -5,7 +5,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import { BUGTRACKER_DATE_FORMATS, groupDateValidator } from '../shared/date-validators';
 import { Project } from '../shared/project.model';
-import { ProjectService } from '../shared/project.service';
+import { ProjectService } from '../services/project.service';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 
@@ -24,6 +24,11 @@ export class AddProjectFormComponent implements OnInit {
   addProjectForm: FormGroup;
   project: Project = new Project();
 
+  get title() { return this.addProjectForm.get('title'); }
+  get description() { return this.addProjectForm.get('description'); }
+  get datepickerGroup() { return this.addProjectForm.get('datepickerGroup'); }
+  get dateStart() { return this.addProjectForm.get('datepickerGroup.dateStart'); }
+  get dateEnd() { return this.addProjectForm.get('datepickerGroup.dateEnd'); }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,12 +46,6 @@ export class AddProjectFormComponent implements OnInit {
 
     this.endDateIncrement = moment(this.dateStart.value).add(1, 'd');
   }
-
-  get title() { return this.addProjectForm.get('title'); }
-  get description() { return this.addProjectForm.get('description'); }
-  get datepickerGroup() { return this.addProjectForm.get('datepickerGroup'); }
-  get dateStart() { return this.addProjectForm.get('datepickerGroup.dateStart'); }
-  get dateEnd() { return this.addProjectForm.get('datepickerGroup.dateEnd'); }
 
   addProject(): void {
     if (this.addProjectForm.valid) {

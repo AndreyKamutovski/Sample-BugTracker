@@ -3,11 +3,11 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { Headers, Http, URLSearchParams } from '@angular/http';
+import { Http, URLSearchParams } from '@angular/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../shared/models/user.model';
-import { Router } from '@angular/router';
 
 export const REST_URI = new InjectionToken('REST_URI');
 
@@ -50,7 +50,7 @@ export class AuthService {
                     sessionStorage.setItem('token', res.json().access_token);
                     this._isLoggedIn = true;
                     this._currentUser = { email: user.email, role: "" };
-                } 
+                }
                 return res;
             }).catch((error: any) => {
                 return Observable.throw('Error: ' + error.statusText + ' ' + error.status);
@@ -66,7 +66,7 @@ export class AuthService {
 
     get authHaders() {
         return {
-            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         };
     }
 }
