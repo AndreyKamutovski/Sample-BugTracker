@@ -10,6 +10,7 @@ namespace Sample_BugTracker.DAL.Interfaces
 {
     public interface IRoleRepository
     {
+        IEnumerable<AppRole> GetAll();
         AppRole GetByName(string roleName);
 
         IdentityResult Add(string roleName);

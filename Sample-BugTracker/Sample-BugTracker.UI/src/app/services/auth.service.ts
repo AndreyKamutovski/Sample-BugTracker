@@ -12,7 +12,7 @@ import { User } from '../shared/models/user.model';
 export const REST_URI = new InjectionToken('REST_URI');
 
 interface appUser {
-    email: string;
+    Email: string;
     role: string;
 }
 
@@ -41,15 +41,15 @@ export class AuthService {
 
     login(user: User) {
         let body = new URLSearchParams();
-        body.set('userName', user.email);
-        body.set('password', user.password);
+        body.set('userName', user.Email);
+        body.set('password', user.Password);
         body.set('grant_type', 'password');
         return this.http.post(this.uri + 'token', body)
             .map(res => {
                 if (res.status == 200) {
                     sessionStorage.setItem('token', res.json().access_token);
                     this._isLoggedIn = true;
-                    this._currentUser = { email: user.email, role: "" };
+                    this._currentUser = { Email: user.Email, role: "" };
                 }
                 return res;
             }).catch((error: any) => {

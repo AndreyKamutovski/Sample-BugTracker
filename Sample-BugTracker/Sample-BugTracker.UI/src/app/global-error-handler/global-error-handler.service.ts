@@ -19,6 +19,6 @@ export class GlobalErrorHandlerService implements ErrorHandler {
         data: { errorMsg: msg }
       });
     }
-    // throw error;
+    throw error;
   }
 }

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { HttpClientService } from '../../shared/services/httpClient.service';
 import { Project } from '../shared/project.model';
+import { AttachableUser } from '../shared/attachable-user.model';
 
 
 @Injectable()
@@ -25,5 +26,9 @@ export class ProjectService {
 
     getProjectById(id: number): Observable<Project> {
         return this.HttpClientService.sendRequest(RequestMethod.Get, `api/Project/${id}`);
+    }
+
+    attachUser(attachUser: AttachableUser): Observable<boolean> {
+        return this.HttpClientService.sendRequest(RequestMethod.Post, "api/Project/AttachUser", null, { 'Content-Type': 'application/json' }, attachUser);
     }
 }

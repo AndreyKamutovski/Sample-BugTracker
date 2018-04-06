@@ -23,13 +23,13 @@ export class LoginComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
         this.loginForm = this.formBuilder.group({
-            'email': ['', [Validators.required, Validators.email]],
-            'password': ['', Validators.required]
+            'Email': ['', [Validators.required, Validators.email]],
+            'Password': ['', Validators.required]
         })
     }
 
-    get email() { return this.loginForm.get('email'); }
-    get password() { return this.loginForm.get('password'); }
+    get Email() { return this.loginForm.get('Email'); }
+    get Password() { return this.loginForm.get('Password'); }
 
 
     login() {

@@ -13,4 +13,8 @@ export class UsersService {
   getProjectUsers(projectId: string): Observable<User[]> {
     return this.HttpClientService.sendRequest(RequestMethod.Get, "api/User", { 'projectId': projectId })
   }
+
+  getAll(): Observable<User[]> {
+    return this.HttpClientService.sendRequest(RequestMethod.Get, "api/User");
+  }
 }

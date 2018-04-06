@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { User } from '../../shared/models/user.model';
 import { AddUserFormComponent } from '../add-user-form/add-user-form.component';
+import { ProjectService } from '../services/project.service';
 import { UsersService } from '../services/users.service';
 
 @Component({
@@ -13,7 +14,11 @@ import { UsersService } from '../services/users.service';
 export class UserListComponent implements OnInit {
   private users: User[];
 
-  constructor(private userService: UsersService, private dialog: MatDialog) { }
+  constructor(
+    private userService: UsersService,
+    private projectService: ProjectService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.userService.getProjectUsers(sessionStorage.getItem('projectID')).subscribe(res => this.users = res);
@@ -24,14 +29,14 @@ export class UserListComponent implements OnInit {
       width: '50%',
       data: {}
     });
-    dialogRef.afterClosed().toPromise().then(this.afterClosedDialog);
-  }
-
-  private afterClosedDialog(res: any): void {
-    if (res != null) {
-      if (res.projectData != null) {
-        // this.messageService.reportSnackBarMessage("Проект успешно создан");
+    dialogRef.afterClosed().subscribe(res => {
+      if(res != undefined) {
+           this.projectService.attachUser(res.userData).toPromise().then(res => {
+        if (res) {
+          this.snackBar.open("Пользователь успешно добавлен к проекту", '', { duration: 2000 });
+        }
+      });
       }
-    }
+    })
   }
 }

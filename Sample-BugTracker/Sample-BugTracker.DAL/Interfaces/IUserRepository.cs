@@ -20,6 +20,7 @@ namespace Sample_BugTracker.DAL.Interfaces
 
 
         // Sync
+        IEnumerable<AppUser> GetAll();
         AppUser GetByEmail(string email);
 
         AppUser GetByUserName(string userName);

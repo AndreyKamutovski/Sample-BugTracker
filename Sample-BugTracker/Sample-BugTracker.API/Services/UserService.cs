@@ -4,6 +4,7 @@ using Sample_BugTracker.API.Exceptions;
 using Sample_BugTracker.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -33,5 +34,29 @@ namespace Sample_BugTracker.API.Services
                 return Mapper.Map<List<UserDTO>>(project.UserProjects);
             }
         }
+
+        public IEnumerable<UserDTO> GetAll()
+        {
+            using (UoW)
+            {
+                return Mapper.Map<List<UserDTO>>(UoW.Users.GetAll());
+            }
+        }
+
+        public IEnumerable<UserDTO> GetAttachableUsersForProject(int projectId)
+        {
+            using (UoW)
+            {
+                Project project = UoW.Projects.Get(projectId);
+                if (project == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", projectId), HttpStatusCode.NotFound);
+                }
+                var attachedUsers = project.UserProjects.Select(up => up.Worker);
+                var attachableUsers = UoW.Users.GetAll().Where(user => !attachedUsers.Contains(user));
+                return Mapper.Map<List<UserDTO>>(attachableUsers);
+            }
+        }
+
     }
 }

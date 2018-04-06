@@ -57,6 +57,10 @@ namespace Sample_BugTracker.DAL.Repositories
         }
 
         // Sync
+        public IEnumerable<AppUser> GetAll()
+        {
+            return _userManager.Users;
+        }
         public AppUser GetByEmail(string email)
         {
             AppUser user = _userManager.FindByEmail(email);

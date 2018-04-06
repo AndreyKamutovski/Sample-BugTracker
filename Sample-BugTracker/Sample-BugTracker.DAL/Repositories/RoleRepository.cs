@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.DAL.EF;
@@ -28,11 +29,14 @@ namespace Sample_BugTracker.DAL.Repositories
             return new IdentityResult(string.Format("Role with name {0} already exists", roleName));
         }
 
+        public IEnumerable<AppRole> GetAll()
+        {
+            return _roleManager.Roles;
+        }
+
         public AppRole GetByName(string roleName)
         {
             return _roleManager.FindByName(roleName);
         }
-
-
     }
 }

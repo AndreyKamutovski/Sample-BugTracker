@@ -17,7 +17,7 @@ namespace Sample_BugTracker.API.Controllers
     {
         private ProjectService _projectService = new ProjectService();
 
-          public IEnumerable<ProjectDTO> GetAll()
+        public IEnumerable<ProjectDTO> GetAll()
         {
             return _projectService.GetAll();
         }
@@ -31,6 +31,13 @@ namespace Sample_BugTracker.API.Controllers
         public ProjectDTO Add([Required] ProjectDTO project)
         {
             return _projectService.Add(project);
+        }
+
+        [HttpPost]
+        [Route("api/Project/AttachUser")]
+        public bool AttachUser([Required] AttachUserDTO attachUser)
+        {
+            return _projectService.AttachUser(attachUser);
         }
     }
 }

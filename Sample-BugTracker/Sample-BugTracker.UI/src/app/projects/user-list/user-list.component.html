@@ -1,8 +1,8 @@
 <span class="mat-headline" style="margin: 0;"> Пользователи</span>
 
 
-<mat-grid-list cols="4" rowHeight="2:1" gutterSize="20px" class="mat-elevation-z5">
-  <mat-grid-tile *ngFor="let user of users" [colspan]="1" [rowspan]="1" class="mat-elevation-z5">
+<mat-grid-list cols="4" rowHeight="2:1" gutterSize="20px">
+  <mat-grid-tile *ngFor="let user of users" [colspan]="1" [rowspan]="1">
     <mat-card>
       <mat-card-header>
         <mat-icon mat-card-avatar>person</mat-icon>
@@ -26,7 +26,6 @@
     <mat-icon>delete</mat-icon>
     <span>Удалить</span>
   </button>
-
 </mat-menu>
 
 <button mat-fab class="mat-fab-buttom-right" (click)="openAddUserDialog()">
