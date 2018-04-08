@@ -14,6 +14,9 @@ import { SelectedProjectPageComponent } from './selected-project-page/selected-p
 import { ProjectService } from './services/project.service';
 import { UsersService } from './services/users.service';
 import { UserListComponent } from './user-list/user-list.component';
+import { NavbarModule } from '../navbar/navbar.module';
+import { ProjectListResolverService } from './project-list/project-list-resolver.service';
+import { ProjectDataSourceService } from './services/project-data-source.service';
 
 
 @NgModule({
@@ -22,6 +25,7 @@ import { UserListComponent } from './user-list/user-list.component';
     ReactiveFormsModule,
     AngularMaterialDesignModule,
     RouterModule,
+    NavbarModule
   ],
   entryComponents: [
     AddProjectFormComponent,
@@ -40,7 +44,9 @@ import { UserListComponent } from './user-list/user-list.component';
   ],
   providers: [
     ProjectService,
-    UsersService
+    ProjectDataSourceService,
+    ProjectListResolverService,
+    UsersService,
   ]
 })
 export class ProjectsModule { }

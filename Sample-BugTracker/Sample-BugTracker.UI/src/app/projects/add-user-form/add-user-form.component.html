@@ -13,7 +13,7 @@
       <mat-error *ngIf="Email.hasError('required')">
         Обязательно введите адрес эл. почты
       </mat-error>
-      <mat-error *ngIf="Email.hasError('Email') && !Email.hasError('required')">
+      <mat-error *ngIf="Email.hasError('email') && !Email.hasError('required')">
         Неверный адрес эл. почты
       </mat-error>
     </mat-form-field>
@@ -31,7 +31,7 @@
 
 
   <mat-dialog-actions>
-    <button mat-button mat-dialog-close>Отмена</button>
+    <button mat-button mat-dialog-close type="reset">Отмена</button>
     <button mat-raised-button color="primary" [disabled]="!addUserForm.valid" type="submit">Добавить</button>
   </mat-dialog-actions>
 </form>

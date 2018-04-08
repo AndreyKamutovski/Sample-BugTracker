@@ -46,6 +46,8 @@ namespace Sample_BugTracker.DAL.EF
                     UserName = "KVISLAND20@gmail.com"
                 };
                 UoW.Users.Add(admin, "aBcDe20*", "Admin");
+                Portal portal = new Portal() { Id = admin.Id, Title = "Admin's portal" };
+                UoW.Portals.Add(portal);
                 UoW.Complete();
             }
         }

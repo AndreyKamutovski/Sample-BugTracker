@@ -44,5 +44,15 @@ namespace Sample_BugTracker.API.Services
                 return count > 0 ? false : true;
             }
         }
+
+        public IEnumerable<PortalDTO> GetUserPortals()
+        {
+            using (UoW)
+            {
+                var portals = CurrentUser.UserProjects.Select(up => up.Project.Portal).ToList();
+                portals.Add(CurrentUser.Portal);
+                return Mapper.Map<List<PortalDTO>>(portals.Distinct());
+            }
+        }
     }
 }

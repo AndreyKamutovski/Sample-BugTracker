@@ -13,12 +13,14 @@ import { CaptchaComponent } from './captcha/captcha.component';
 import { GlobalErrorHandlerComponent } from './global-error-handler/global-error-handler.component';
 import { GlobalErrorHandlerService } from './global-error-handler/global-error-handler.service';
 import { LoginComponent } from './login/login.component';
-import { NavbarComponent } from './navbar/navbar.component';
 import { PortalModule } from './portal/portal.module';
 import { ProjectsModule } from './projects/projects.module';
 import { AuthGuardLoginService } from './services/auth-guard-login.service';
-import { AuthService, REST_URI } from './services/auth.service';
-import { HttpClientService } from './shared/services/httpClient.service';
+import { AuthService } from './services/auth.service';
+import { HttpClientService, REST_URI } from './shared/services/httpClient.service';
+import { NavbarModule } from './navbar/navbar.module';
+import { LoaderModule } from './loader/loader.module';
+import { LoaderComponent } from './loader/loader.component';
 
 
 @NgModule({
@@ -32,13 +34,13 @@ import { HttpClientService } from './shared/services/httpClient.service';
         AngularMaterialDesignModule,
         BrowserAnimationsModule,
         ProjectsModule,
-        PortalModule
+        PortalModule,
+        LoaderModule
     ],
     declarations: [
         AppComponent,
         LoginComponent,
         CaptchaComponent,
-        NavbarComponent,
         GlobalErrorHandlerComponent,
     ],
     entryComponents: [
@@ -54,7 +56,8 @@ import { HttpClientService } from './shared/services/httpClient.service';
         { provide: ErrorHandler, useClass: GlobalErrorHandlerService }
     ],
     bootstrap: [
-        AppComponent
+        AppComponent,
+        LoaderComponent
     ]
 })
 export class AppModule {

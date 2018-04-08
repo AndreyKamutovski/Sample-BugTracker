@@ -54,7 +54,7 @@ export class AddUserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getAll().toPromise().then(res => {
+    this.userService.getAttachableUsers(sessionStorage.getItem('projectID')).toPromise().then(res => {
       this.existsUser = res;
       this.filteredUserEmails = this.Email.valueChanges
         .pipe(

@@ -21,11 +21,11 @@ export class ProjectService {
     }
 
     addProject(project: Project): Observable<Project> {
-        return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Project', null, { 'Content-Type': 'application/json' }, project);
+        return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Project/Add', null, { 'Content-Type': 'application/json' }, project);
     }
 
-    getProjectById(id: number): Observable<Project> {
-        return this.HttpClientService.sendRequest(RequestMethod.Get, `api/Project/${id}`);
+    getProjectById(projectId: number): Observable<Project> {
+        return this.HttpClientService.sendRequest(RequestMethod.Get, `api/Project`, { 'projectId': projectId });
     }
 
     attachUser(attachUser: AttachableUser): Observable<boolean> {

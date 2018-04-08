@@ -43,7 +43,12 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-        public IEnumerable<UserDTO> GetAttachableUsersForProject(int projectId)
+        public UserDTO GetCurrentUser()
+        {
+            return Mapper.Map<UserDTO>(CurrentUser);
+        }
+
+        public IEnumerable<UserDTO> GetAttachableUsers(int projectId)
         {
             using (UoW)
             {
@@ -52,11 +57,10 @@ namespace Sample_BugTracker.API.Services
                 {
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", projectId), HttpStatusCode.NotFound);
                 }
-                var attachedUsers = project.UserProjects.Select(up => up.Worker);
-                var attachableUsers = UoW.Users.GetAll().Where(user => !attachedUsers.Contains(user));
+                var attachedUsers = project.UserProjects.Select(up => up.Worker).ToList();
+                var attachableUsers = UoW.Users.GetAll().Except(attachedUsers);
                 return Mapper.Map<List<UserDTO>>(attachableUsers);
             }
         }
-
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import {
   MatDialog,
   MatPaginator,
@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AddProjectFormComponent } from '../add-project-form/add-project-form.component';
 import { Project } from '../shared/project.model';
 import { ProjectService } from '../shared/../services/project.service';
+import { ProjectDataSourceService } from '../services/project-data-source.service';
 
 @Component({
   selector: 'app-project-list',
@@ -25,7 +26,7 @@ export class ProjectListComponent implements OnInit {
   @ViewChild('projectPaginator') private projectPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  private displayedColumns = ['title', 'countError', 'dateStart', 'dateEnd', 'select'];
+  private displayedColumns = ['Title', 'countError', 'DateStart', 'DateEnd', 'select'];
   private dataSource: MatTableDataSource<Project> = new MatTableDataSource<Project>();
   private russianMatPaginatorIntl: MatPaginatorIntl = new MatPaginatorIntl();
   // private selection = new SelectionModel<Project>(false, []);
@@ -33,15 +34,18 @@ export class ProjectListComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
+    private projectDataSource: ProjectDataSourceService,
     private _router: Router,
     private _route: ActivatedRoute,
     public dialog: MatDialog,
+    private changeDetectorRefs: ChangeDetectorRef,
     public snackBar: MatSnackBar) {
     this.setRussianLabelToPaginator();
   }
 
   ngOnInit() {
-    this.projectService.getProjects().subscribe(projects => this.dataSource.data = projects);
+    // this.projectService.getProjects().subscribe(projects => this.dataSource.data = projects);
+    this.dataSource.data = this.projectDataSource.Projects;
     this.projectPaginator._intl = this.russianMatPaginatorIntl;
   }
 
@@ -49,12 +53,6 @@ export class ProjectListComponent implements OnInit {
     this.dataSource.paginator = this.projectPaginator;
     this.dataSource.sort = this.sort;
   }
-
-  /** Add row in table and update its */
-  // public addRow(row: Project): void {
-  //   this.dataSource.data.push(row);
-  //   this.projectsTable.renderRows();
-  // }
 
   private onClickRow(projectID: number) {
     this._router.navigate([projectID, 'dashboard'], { relativeTo: this._route });
@@ -93,17 +91,19 @@ export class ProjectListComponent implements OnInit {
       data: {}
     });
 
-    dialogRef.afterClosed().subscribe(resDialog => {
-      if (resDialog != null) {
-        if (resDialog.projectData != null) {
-          this.projectService.addProject(resDialog.projectData).subscribe(newProject => {
-            this.dataSource.data.push(newProject);
-            this.projectTable.renderRows();
-            this.snackBar.open("Проект успешно создан", '', { duration: 2000 });
-            // this.messageService.reportSnackBarMessage("Проект успешно создан");
-          });
-        }
-      }
-    });
+    dialogRef.afterClosed().subscribe(this.afterClosedAddProjectDialog.bind(this));
   };
+
+  private afterClosedAddProjectDialog(res: any) {
+    if (res != undefined && res != null) {
+      if (res.hasOwnProperty('projectData')) {
+        this.projectService.addProject(res.projectData).toPromise().then(newProject => {
+          this.dataSource.data.push(newProject);
+          this.projectTable.renderRows();
+          this.dataSource.paginator = this.projectPaginator;
+          this.snackBar.open("Проект успешно создан", '', { duration: 2000 });
+        });
+      }
+    }
+  }
 }

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { CaptchaComponent } from '../captcha/captcha.component';
 import { AuthService } from '../services/auth.service';
 import { User } from '../shared/models/user.model';
+import { PortalService } from '../portal/portal.service';
 
 @Component({
     moduleId: module.id,
@@ -21,7 +22,11 @@ export class LoginComponent implements OnInit {
     private loginForm: FormGroup;
     private hidePassword: boolean = true;
 
-    constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+    constructor(
+        private formBuilder: FormBuilder,
+        private authService: AuthService,
+        private portalService: PortalService,
+        private router: Router) {
         this.loginForm = this.formBuilder.group({
             'Email': ['', [Validators.required, Validators.email]],
             'Password': ['', Validators.required]
@@ -34,10 +39,19 @@ export class LoginComponent implements OnInit {
 
     login() {
         if (this.loginForm.valid) { //  && this.captcha.isCaptchaChecked
-            this.authService.login(this.loginForm.value).subscribe(
+            this.authService.login(this.loginForm.value).then(
                 res => {
                     if (this.authService.isLoggedIn) {
-                        this.router.navigateByUrl('app/project');
+                        this.portalService.getUserPortals().toPromise().then(res => {
+                            if (res.length > 1) {
+                                this.router.navigateByUrl('app/portals');
+                            }
+                            if (res.length === 1) {
+                                sessionStorage.setItem('portalID', res[0].Id);
+                                this.router.navigateByUrl('app/project');
+                            }
+                        });
+
                     }
                 });
         }

@@ -24,14 +24,14 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-        public ProjectDTO GetById(int id)
+        public ProjectDTO GetById(int projectId)
         {
             using (UoW)
             {
-                Project project = UoW.Projects.Get(id);
+                Project project = UoW.Projects.Get(projectId);
                 if (project == null)
                 {
-                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", projectId), HttpStatusCode.NotFound);
                 }
                 return Mapper.Map<ProjectDTO>(project);
             }

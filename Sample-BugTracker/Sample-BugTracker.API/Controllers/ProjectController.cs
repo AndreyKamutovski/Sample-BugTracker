@@ -22,9 +22,9 @@ namespace Sample_BugTracker.API.Controllers
             return _projectService.GetAll();
         }
 
-        public ProjectDTO GetById([Required] int id)
+        public ProjectDTO GetById([Required] int projectId)
         {
-            return _projectService.GetById(id);
+            return _projectService.GetById(projectId);
         }
 
         [HttpPost]
@@ -34,7 +34,6 @@ namespace Sample_BugTracker.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/Project/AttachUser")]
         public bool AttachUser([Required] AttachUserDTO attachUser)
         {
             return _projectService.AttachUser(attachUser);

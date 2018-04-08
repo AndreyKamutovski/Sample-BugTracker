@@ -34,10 +34,14 @@ namespace Sample_BugTracker.API.Controllers
             return _userService.GetAll();
         }
 
-        [Route("api/User/AttachableUsers")]
-        public IEnumerable<UserDTO> GetAttachableUsersForProject([Required] int projectId)
+        public UserDTO GetCurrentUser()
         {
-            return _userService.GetAttachableUsersForProject(projectId);
+            return _userService.GetCurrentUser();
+        }
+
+        public IEnumerable<UserDTO> GetAttachableUsers([Required] int projectId)
+        {
+            return _userService.GetAttachableUsers(projectId);
         }
     }
 }

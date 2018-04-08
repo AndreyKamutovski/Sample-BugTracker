@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AddProjectFormComponent } from './add-project-form/add-project-form.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectService } from './services/project.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-projects',
@@ -13,7 +14,7 @@ import { ProjectService } from './services/project.service';
 })
 export class ProjectsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }

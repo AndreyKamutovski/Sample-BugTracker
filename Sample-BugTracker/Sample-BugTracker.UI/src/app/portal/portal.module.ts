@@ -8,6 +8,9 @@ import { AddPortalFormComponent } from './add-portal-form/add-portal-form.compon
 import { PortalService } from './portal.service';
 import { TariffPlansComponent } from './tariff-plans/tariff-plans.component';
 import { RouterModule } from '@angular/router';
+import { PortalListComponent } from './portal-list/portal-list.component';
+import { PortalDataSourceService } from './portal-data-source.service';
+import { PortalListResolverService } from './portal-list-resolver.service';
 
 
 @NgModule({
@@ -20,7 +23,7 @@ import { RouterModule } from '@angular/router';
   entryComponents: [
     AddPortalFormComponent
   ],
-  declarations: [TariffPlansComponent, AddPortalFormComponent],
-  providers: [SignupService, PortalService]
+  declarations: [TariffPlansComponent, AddPortalFormComponent, PortalListComponent],
+  providers: [SignupService, PortalService, PortalListResolverService, PortalDataSourceService]
 })
 export class PortalModule { }

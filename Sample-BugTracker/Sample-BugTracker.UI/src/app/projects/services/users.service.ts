@@ -11,10 +11,18 @@ export class UsersService {
   constructor(private HttpClientService: HttpClientService) { }
 
   getProjectUsers(projectId: string): Observable<User[]> {
-    return this.HttpClientService.sendRequest(RequestMethod.Get, "api/User", { 'projectId': projectId })
+    return this.HttpClientService.sendRequest(RequestMethod.Get, "api/User/GetProjectUsers", { 'projectId': projectId })
+  }
+
+  getAttachableUsers(projectId: string): Observable<User[]> {
+    return this.HttpClientService.sendRequest(RequestMethod.Get, "api/User/GetAttachableUsers", { 'projectId': projectId });
   }
 
   getAll(): Observable<User[]> {
     return this.HttpClientService.sendRequest(RequestMethod.Get, "api/User");
+  }
+
+  getCurrentUser(): Observable<User> {
+    return this.HttpClientService.sendRequest(RequestMethod.Get, "api/User/GetCurrentUser");
   }
 }

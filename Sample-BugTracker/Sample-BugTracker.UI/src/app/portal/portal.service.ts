@@ -17,4 +17,8 @@ export class PortalService {
   public CheckPortalTitleNotTaken(title: string): Observable<boolean> {
     return this.HttpClientService.sendRequest(RequestMethod.Get, 'api/Portal', { 'title': title });
   }
+
+  public getUserPortals(): Observable<Portal[]> {
+    return this.HttpClientService.sendRequest(RequestMethod.Get, 'api/Portal');
+  }
 }
