@@ -40,6 +40,8 @@ body, .app-background {
     align-items: center;
 }
 
+
+
 .pointerCursor:hover, .hover-tile:hover {
     cursor: pointer;
 }

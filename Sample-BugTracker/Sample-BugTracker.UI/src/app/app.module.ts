@@ -63,3 +63,7 @@ import { LoaderComponent } from './loader/loader.component';
 export class AppModule {
 
 }
+
+
+// https://valor-software.com/ng2-charts/#pieChart
+// https://www.froala.com/wysiwyg-editor/examples/code-mirror

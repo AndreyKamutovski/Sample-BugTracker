@@ -30,10 +30,10 @@ export class AddPortalFormComponent implements OnInit {
   };
 
 
-  get title() { return this.addPortalForm.get('title'); }
-  get email() { return this.addPortalForm.get('Owner.email'); }
-  get password() { return this.addPortalForm.get('Owner.password'); }
-  get confirmPassword() { return this.addPortalForm.get('Owner.confirmPassword'); }
+  get title() { return this.addPortalForm.get('Title'); }
+  get email() { return this.addPortalForm.get('Owner.Email'); }
+  get password() { return this.addPortalForm.get('Owner.Password'); }
+  get confirmPassword() { return this.addPortalForm.get('Owner.ConfirmPassword'); }
   get owner() { return this.addPortalForm.get('Owner'); }
 
   private hidePassword: boolean = true;
@@ -41,15 +41,15 @@ export class AddPortalFormComponent implements OnInit {
 
   private createForm(): void {
     this.addPortalForm = this.formBuilder.group({
-      'title': ['', [
+      'Title': ['', [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(100),
         Validators.pattern("^[А-Яа-яёA-Za-z0-9 _-]*$")
       ], portalTitleNotTakenValidator.bind(this)],
       'Owner': this.formBuilder.group({
-        'email': ['', [Validators.required, Validators.email], emailNotTakenValidator.bind(this)],
-        'password': ['', [
+        'Email': ['', [Validators.required, Validators.email], emailNotTakenValidator.bind(this)],
+        'Password': ['', [
           Validators.required,
           Validators.minLength(6),
           Validators.pattern("[^А-Яа-я]+"),
@@ -58,8 +58,8 @@ export class AddPortalFormComponent implements OnInit {
           requireLowercasePasswordValidator,
           requireUppercasePasswordValidator
         ]],
-        'confirmPassword': ['', [Validators.required, Validators.minLength(6)]],
-        'roleName': ["Admin"]
+        'ConfirmPassword': ['', [Validators.required, Validators.minLength(6)]],
+        'RoleName': ["Admin"]
       }, { validator: equalPasswordValidator })
     });
   }

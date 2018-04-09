@@ -1,4 +1,8 @@
-<div class="mat-elevation-z5">
+<div *ngIf="dataSource.data.length === 0" style="margin: 10% 0;">
+    <span class="mat-h1">В Ваше портале отсутствуют проекты. Нажмите кнопку для создания первого проекта</span>&nbsp;
+    <button mat-raised-button color="accent" (click)="openAddProjectDialog()">Создать проект</button>
+</div>
+<div class="mat-elevation-z5" [hidden]="!(dataSource.data.length > 0)">
     <mat-table [dataSource]="dataSource" matSort #projectTable class="mat-typography">
         <ng-container matColumnDef="Title">
             <mat-header-cell *matHeaderCellDef mat-sort-header>

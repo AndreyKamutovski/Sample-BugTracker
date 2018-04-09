@@ -16,6 +16,8 @@ namespace Sample_BugTracker.API.Services
 
     public class ProjectService : BaseService
     {
+        private MailService _mailService = new MailService();
+
         public IEnumerable<ProjectDTO> GetAll()
         {
             using (UoW)
@@ -55,16 +57,18 @@ namespace Sample_BugTracker.API.Services
         {
             using (UoW)
             {
-                AppUser user = UoW.Users.GetByEmail(attachUser.Email);
-                if (user == null)
-                {
-                    throw new ApplicationOperationException(string.Format("User with email {0} not found", attachUser.Email), HttpStatusCode.NotFound);
-                }
                 Project project = UoW.Projects.Get(attachUser.ProjectId);
                 if (project == null)
                 {
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", attachUser.ProjectId), HttpStatusCode.NotFound);
                 }
+                AppUser user = UoW.Users.GetByEmail(attachUser.Email);
+                if (user == null)
+                {
+                    _mailService.Send(attachUser.Email, string.Format("Bug Tracker. Участие в проекте {0}", project.Title), "Вы приглашены к участию в проекте");
+                    //throw new ApplicationOperationException(string.Format("User with email {0} not found", attachUser.Email), HttpStatusCode.NotFound);
+                }
+
                 AppRole role = UoW.Roles.GetByName(attachUser.RoleName);
                 if (role == null)
                 {
@@ -75,6 +79,7 @@ namespace Sample_BugTracker.API.Services
                 {
                     throw new ApplicationOperationException(string.Format("User with email {0} already attach to project {1}", user.Email, project.Title), HttpStatusCode.Conflict);
                 }
+
                 UserProject userProject = new UserProject() { Project = project, Worker = user, Role = role };
                 UoW.UserProjects.Add(userProject);
                 UoW.Complete();

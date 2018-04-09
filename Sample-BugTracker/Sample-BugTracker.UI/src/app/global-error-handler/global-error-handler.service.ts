@@ -12,7 +12,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
   }
 
   handleError(error: any): void {
-    let msg = error instanceof Error ? error.message : error.toString();
+    let msg = error instanceof Error ? error.message : error.toString();  
     if (this.dialog != undefined) {
       let dialogRef = this.dialog.open(GlobalErrorHandlerComponent, {
         width: '50%',

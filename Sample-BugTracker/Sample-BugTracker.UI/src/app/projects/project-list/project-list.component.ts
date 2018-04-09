@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {
   MatDialog,
   MatPaginator,
@@ -11,9 +11,9 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AddProjectFormComponent } from '../add-project-form/add-project-form.component';
-import { Project } from '../shared/project.model';
-import { ProjectService } from '../shared/../services/project.service';
 import { ProjectDataSourceService } from '../services/project-data-source.service';
+import { ProjectService } from '../shared/../services/project.service';
+import { Project } from '../shared/project.model';
 
 @Component({
   selector: 'app-project-list',
@@ -46,12 +46,15 @@ export class ProjectListComponent implements OnInit {
   ngOnInit() {
     // this.projectService.getProjects().subscribe(projects => this.dataSource.data = projects);
     this.dataSource.data = this.projectDataSource.Projects;
-    this.projectPaginator._intl = this.russianMatPaginatorIntl;
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.projectPaginator;
-    this.dataSource.sort = this.sort;
+    if (this.dataSource.data.length > 0) {
+      this.dataSource.paginator = this.projectPaginator;
+      this.projectPaginator._intl = this.russianMatPaginatorIntl;
+      this.dataSource.sort = this.sort;
+    }
+
   }
 
   private onClickRow(projectID: number) {
