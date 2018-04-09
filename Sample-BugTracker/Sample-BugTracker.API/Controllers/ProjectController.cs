@@ -34,9 +34,16 @@ namespace Sample_BugTracker.API.Controllers
         }
 
         [HttpPost]
-        public bool AttachUser([Required] AttachUserDTO attachUser)
+        public void AttachUser([Required] AttachUserDTO attachUser, [Required, FromUri] string enterPasswordFormUri)
         {
-            return _projectService.AttachUser(attachUser);
+            _projectService.AttachUser(attachUser, enterPasswordFormUri);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public void AttachUserConfirmPassword([Required] UserDTO attachUser, [Required, FromUri] int projectId)
+        {
+            _projectService.AttachUserConfirmPassword(attachUser, projectId);
         }
     }
 }

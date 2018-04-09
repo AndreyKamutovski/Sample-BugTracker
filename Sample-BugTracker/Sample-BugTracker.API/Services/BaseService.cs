@@ -10,14 +10,14 @@ namespace Sample_BugTracker.API.Services
         protected AppUser CurrentUser;
         protected UnitOfWork UoW;
 
-        //protected UnitOfWork CreateUnitOfWork()
-        //{
-        //    return new UnitOfWork(new ApplicationDbContext());
-        //}
+        protected UnitOfWork CreateUnitOfWork()
+        {
+            return new UnitOfWork(new ApplicationDbContext());
+        }
 
         public BaseService()
         {
-            UoW = new UnitOfWork(new ApplicationDbContext());
+            UoW = CreateUnitOfWork();
             var identity = ClaimsPrincipal.Current.Identity as ClaimsIdentity ?? new ClaimsIdentity();
             CurrentUser = UoW.Users.GetByUserName(identity.Name);
         }

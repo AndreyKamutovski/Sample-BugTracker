@@ -21,6 +21,8 @@ import { HttpClientService, REST_URI } from './shared/services/httpClient.servic
 import { NavbarModule } from './navbar/navbar.module';
 import { LoaderModule } from './loader/loader.module';
 import { LoaderComponent } from './loader/loader.component';
+import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
+import { ConfirmPasswordFormComponent } from './confirm-password/confirm-password-form/confirm-password-form.component';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import { LoaderComponent } from './loader/loader.component';
         LoginComponent,
         CaptchaComponent,
         GlobalErrorHandlerComponent,
+        ConfirmPasswordComponent,
+        ConfirmPasswordFormComponent,
     ],
     entryComponents: [
         GlobalErrorHandlerComponent

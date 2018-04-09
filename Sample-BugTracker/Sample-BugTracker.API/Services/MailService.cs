@@ -10,7 +10,7 @@ namespace Sample_BugTracker.API.Services
     public class MailService
     {
         private const string smtpHost = "smtp.gmail.com";
-        private const int smtpPort = 587;  // 587 465
+        private const int smtpPort = 587;  // 587 465 25
         private const string senderEmail = "kvisland20@gmail.com";
         private const string senderDisplayName = "Andrew";
         private const string senderPassword = "praia_dodoma";
@@ -23,9 +23,8 @@ namespace Sample_BugTracker.API.Services
             MailMessage message = new MailMessage(sender, recipient)
             {
                 Subject = subjectMsg,
-                Body = bodyMsg,
                 IsBodyHtml = isBodyHtml,
-
+                Body = bodyMsg,
             };
             SmtpClient smtp = new SmtpClient(smtpHost, smtpPort)
             {

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 
+import { AuthService } from '../../services/auth.service';
 import { AddPortalFormComponent } from '../add-portal-form/add-portal-form.component';
 import { PortalService } from '../portal.service';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-tariff-plans',
