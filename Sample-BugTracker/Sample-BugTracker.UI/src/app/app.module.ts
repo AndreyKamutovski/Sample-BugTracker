@@ -48,7 +48,8 @@ import { ConfirmPasswordFormComponent } from './confirm-password/confirm-passwor
         ConfirmPasswordFormComponent,
     ],
     entryComponents: [
-        GlobalErrorHandlerComponent
+        GlobalErrorHandlerComponent,
+        ConfirmPasswordFormComponent
     ],
     providers: [
         AuthService,

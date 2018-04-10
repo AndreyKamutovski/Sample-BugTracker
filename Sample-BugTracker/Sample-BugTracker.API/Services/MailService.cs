@@ -9,9 +9,9 @@ namespace Sample_BugTracker.API.Services
 {
     public class MailService
     {
-        private const string smtpHost = "smtp.mail.ru";//"smtp.gmail.com";
-        private const int smtpPort = 465;  // 587 465 25
-        private const string senderEmail = "kv_island@mail.ru";//"kvisland20@gmail.com";
+        private const string smtpHost = "smtp.gmail.com";
+        private const int smtpPort = 587;  // 587 465 25
+        private const string senderEmail = "kvisland20@gmail.com";
         private const string senderDisplayName = "Andrew";
         private const string senderPassword = "praia_dodoma";
 
@@ -32,7 +32,6 @@ namespace Sample_BugTracker.API.Services
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 Credentials = new NetworkCredential(senderEmail, senderPassword),
                 EnableSsl = true
-                
             };
             smtp.Send(message);
         }

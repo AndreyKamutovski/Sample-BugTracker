@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
                 res => {
                     if (this.authService.isLoggedIn) {
                         this.portalService.getUserPortals().toPromise().then(res => {
+                            console.log('res.length', res.length);
+                            console.log('res', res);
                             if (res.length > 1) {
                                 this.router.navigateByUrl('app/portals');
                             }

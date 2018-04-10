@@ -21,9 +21,7 @@ export class ConfirmPasswordComponent implements OnInit {
     private router: Router
   ) {
     this.dataDialog = {
-      Email: this._route.snapshot.params['Email'],
-      projectId: this._route.snapshot.params['projectId'],
-      Role: this._route.snapshot.params['RoleName']
+      Guid: this._route.snapshot.queryParams['id'],
     };
     this.openAddPortalDialog();
   };
@@ -36,10 +34,10 @@ export class ConfirmPasswordComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        // this.signupService.createPortal(result.confirmData).subscribe(res => {
-        //     this.router.navigateByUrl('app/project');
-        // }
-        // );
+        this.signupService.confirmAttachmentUser(result.confirmData).subscribe(res => {
+          this.router.navigateByUrl('app/project');
+        }
+        );
       }
     });
   }

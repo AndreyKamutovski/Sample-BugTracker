@@ -188,6 +188,7 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\test.cs" />
     <Compile Include="DTO\AttachUserDTO.cs" />
+    <Compile Include="DTO\ConfirmAttachmentUserDTO.cs" />
     <Compile Include="DTO\ErrorDTO.cs" />
     <Compile Include="DTO\PortalDTO.cs" />
     <Compile Include="DTO\ProjectDTO.cs" />

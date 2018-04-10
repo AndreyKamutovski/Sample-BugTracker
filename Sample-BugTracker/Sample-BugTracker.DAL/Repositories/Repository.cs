@@ -36,6 +36,11 @@ namespace Sample_BugTracker.DAL.Repositories
             return Context.Set<TEntity>().Find(id);
         }
 
+        public TEntity Get(Guid guid)
+        {
+            return Context.Set<TEntity>().Find(guid);
+        }
+
         public IEnumerable<TEntity> GetAll()
         {
             return Context.Set<TEntity>().ToList();

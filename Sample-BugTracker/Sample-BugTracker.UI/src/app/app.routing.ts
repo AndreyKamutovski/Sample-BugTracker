@@ -12,6 +12,7 @@ import { SelectedProjectPageComponent } from './projects/selected-project-page/s
 import { UserListComponent } from './projects/user-list/user-list.component';
 import { AuthGuardLoginService } from './services/auth-guard-login.service';
 import { ProjectListResolverService } from './projects/project-list/project-list-resolver.service';
+import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
 
 
 
@@ -32,7 +33,8 @@ const routes: Routes = [
         ]
     },
     { path: "app/tariff-plans", component: TariffPlansComponent },
-    { path: "app/portals", component: PortalListComponent, canActivate: [AuthGuardLoginService], resolve: {portals: PortalListResolverService} },    
+    { path: "app/portals", component: PortalListComponent, canActivate: [AuthGuardLoginService], resolve: {portals: PortalListResolverService} }, 
+    {path: "app/confirmUser", component: ConfirmPasswordComponent}
 ]
 
 export const routing = RouterModule.forRoot(routes);

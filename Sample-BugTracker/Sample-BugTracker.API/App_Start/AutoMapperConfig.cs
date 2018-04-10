@@ -22,6 +22,7 @@ namespace Sample_BugTracker.API.App_Start
                                                         .ForMember(dest => dest.RoleName, dest => dest.MapFrom(src => src.Role.Name));
                 config.CreateMap<AppUser, UserDTO>();
                 config.CreateMap<AttachUserDTO, UserDTO>();
+                config.CreateMap<AttachUserDTO, AppUser>();
             });
         }
     }

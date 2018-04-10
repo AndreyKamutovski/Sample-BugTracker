@@ -24,13 +24,14 @@ export class ConfirmPasswordFormComponent implements OnInit {
   ) {
     this.createForm();
   };
+  private hidePassword: boolean = true;
+  private hidePConfirm: boolean = true;
 
   get password() { return this.confirmPasswordForm.get('Password'); }
   get confirmPassword() { return this.confirmPasswordForm.get('ConfirmPassword'); }
 
   private createForm(): void {
     this.confirmPasswordForm = this.formBuilder.group({
-      'Email': [this.data.Email],
       'Password': ['', [
         Validators.required,
         Validators.minLength(6),
@@ -41,7 +42,7 @@ export class ConfirmPasswordFormComponent implements OnInit {
         requireUppercasePasswordValidator
       ]],
       'ConfirmPassword': ['', [Validators.required, Validators.minLength(6)]],
-      'RoleName': [this.data.Role]
+      'guid': [this.data.Guid]
     }, { validator: equalPasswordValidator });
   }
 
@@ -49,7 +50,7 @@ export class ConfirmPasswordFormComponent implements OnInit {
     if (this.confirmPasswordForm.valid) {
       this.dialogRef.close({ 'confirmData': this.confirmPasswordForm.value });
     } else {
-      throw new Error("Пароль не подтверждён. Проверьте правильность ввода данных и перейдите по ссылке в сообщении ещё раз.")
+      throw new Error("Пароль не подтверждён. Проверьте правильность ввода данных и перейдите по ссылке в электронном сообщении ещё раз.")
     }
   }
 

@@ -50,7 +50,11 @@ namespace Sample_BugTracker.API.Services
             using (UoW)
             {
                 var portals = CurrentUser.UserProjects.Select(up => up.Project.Portal).ToList();
+                if(CurrentUser.Portal != null)  // т.к. его могут прикрепить к проекту и он не имеет собственного портала
+                {
                 portals.Add(CurrentUser.Portal);
+
+                }
                 return Mapper.Map<List<PortalDTO>>(portals.Distinct());
             }
         }

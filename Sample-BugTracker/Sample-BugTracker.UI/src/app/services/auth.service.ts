@@ -42,7 +42,6 @@ export class AuthService {
             sessionStorage.setItem('token', res.access_token);
             this._isLoggedIn = true;
             return this.userService.getCurrentUser().toPromise().then(user => {
-                console.log('get user');
                 this._currentUser = user;
             });
         });
