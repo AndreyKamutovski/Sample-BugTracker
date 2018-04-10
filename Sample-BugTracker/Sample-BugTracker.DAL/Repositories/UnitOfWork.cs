@@ -22,6 +22,7 @@ namespace Sample_BugTracker.DAL.Repositories
             Portals = new PortalRepository(_context);
             UserProjects = new UserProjectRepository(_context);
             Roles = new RoleRepository(_context);
+            AwaitingAttachmentUsers = new AwaitingAttachmentUserRepository(_context);
         }
 
         public IUserRepository Users
@@ -59,6 +60,11 @@ namespace Sample_BugTracker.DAL.Repositories
             private set;
         }
 
+        public IAwaitingAttachmentUser AwaitingAttachmentUsers
+        {
+            get;
+            private set;
+        }
 
         public int Complete()
         {

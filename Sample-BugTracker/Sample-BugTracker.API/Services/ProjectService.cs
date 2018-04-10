@@ -53,23 +53,33 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-        public void AttachUser(AttachUserDTO attachUser, string enterPasswordFormUri)
+        public void AttachUser(AttachUserDTO attachUser)
         {
             using (UoW)
             {
                 AppUser user = UoW.Users.GetByEmail(attachUser.Email);
-                Project project = UoW.Projects.Get(attachUser.ProjectId);
-                if (user == null && project != null)
+                if (user == null) // значит в системе нет но к поекту надо прикрепить
                 {
-                    //"<span>Здравствуйте, уважаемый {0}. Вы приглашены к участию в проекте &laquo;{1}&raquo; Перейдите по <a href='{2}'>ссылке</a> для подтверждения пароля.</span>",
-                    var uriBuilder = new UriBuilder(enterPasswordFormUri);
+                    Project project = UoW.Projects.Get(attachUser.ProjectId);
+                    AppRole role = UoW.Roles.GetByName(attachUser.RoleName);
+                    var guid_id = new Guid();
+                    var attachmentUser = new AwaitingAttachmentUser()
+                    {
+                        Id = guid_id,
+                        Email = attachUser.Email,
+                        Project = project,
+                        Role = role
+                    };
+                    UoW.AwaitingAttachmentUsers.Add(attachmentUser);
+                    UoW.Complete();
+                    var uriBuilder = new UriBuilder("http");
                     var parameters = HttpUtility.ParseQueryString(string.Empty);
-                    parameters["Email"] = attachUser.Email;
-                    parameters["projectId"] = attachUser.ProjectId.ToString();
-                    parameters["RoleName"] = attachUser.RoleName;
+                    //parameters["Email"] = attachUser.Email;
+                    //parameters["projectId"] = attachUser.ProjectId.ToString();
+                    //parameters["RoleName"] = attachUser.RoleName;
                     uriBuilder.Query = parameters.ToString();
                     Uri finalUrl = uriBuilder.Uri;
-                    
+
                     string bodyMsg = string.Format(
                         "<span>Здравствуйте, уважаемый <strong>{0}</strong>! Вы приглашены к участию в проекте &laquo;{1}&raquo; Перейдите по <a href=\"{2}\">ссылке</a> для подтверждения пароля.</span>",
                         attachUser.Email.Substring(0, attachUser.Email.IndexOf("@")),
@@ -83,7 +93,7 @@ namespace Sample_BugTracker.API.Services
                         true
                        );
                 }
-                else
+                if (user != null)
                 {
                     AttachUserToProject(Mapper.Map<UserDTO>(attachUser), attachUser.ProjectId);
                 }

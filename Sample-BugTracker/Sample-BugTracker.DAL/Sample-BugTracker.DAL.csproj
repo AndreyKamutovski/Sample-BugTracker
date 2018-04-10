@@ -66,11 +66,13 @@
     <Compile Include="EF\ApplicationDbContext.cs" />
     <Compile Include="Entities\AppRole.cs" />
     <Compile Include="Entities\AppUser.cs" />
+    <Compile Include="Entities\AwaitingAttachmentUser.cs" />
     <Compile Include="Entities\Error.cs" />
     <Compile Include="Entities\Portal.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\UserProject.cs" />
     <Compile Include="Enumerations\Error.cs" />
+    <Compile Include="Interfaces\IAwaitingAttachmentUser.cs" />
     <Compile Include="Interfaces\IPortalRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\IUserProjectRepository.cs" />
@@ -99,8 +101,13 @@
     <Compile Include="Migrations\201804041020349_Add foreign key to UserProject Model.Designer.cs">
       <DependentUpon>201804041020349_Add foreign key to UserProject Model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804101310404_Addition AwaitingAttachmentUser.cs" />
+    <Compile Include="Migrations\201804101310404_Addition AwaitingAttachmentUser.Designer.cs">
+      <DependentUpon>201804101310404_Addition AwaitingAttachmentUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AwaitingAttachmentUserRepository.cs" />
     <Compile Include="Repositories\PortalRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\UserProjectRepository.cs" />
@@ -129,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804041020349_Add foreign key to UserProject Model.resx">
       <DependentUpon>201804041020349_Add foreign key to UserProject Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804101310404_Addition AwaitingAttachmentUser.resx">
+      <DependentUpon>201804101310404_Addition AwaitingAttachmentUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

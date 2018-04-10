@@ -3,7 +3,8 @@
 
     <mat-dialog-content class="form-field-container">
         <mat-form-field>
-            <input matInput type="text" name="projectName" placeholder="Название проекта" required minlength='3' formControlName='title' appInputAutofocus>
+            <input matInput type="text" name="projectName" placeholder="Название проекта" required minlength='3' formControlName='title'
+                appInputAutofocus>
             <mat-error *ngIf="title.hasError('required')">
                 Обязательно введите название проекта
             </mat-error>
@@ -55,13 +56,28 @@
             {{datepickerGroup.errors.groupdate.errorMsg}}
         </mat-error>
 
+        <quill-editor formControlName='description' placeholder="Введите описание проекта" [minLength]="10" [required]="true" [style]="{height: '250px'}" (onContentChanged)="contentChange($event);" [modules]="modules"></quill-editor>
+        <mat-error *ngIf="description.hasError('required')">
+            Обязательно введите описание проекта
+        </mat-error>
+        <mat-error *ngIf="textContent.length-1 < 10 && !description.hasError('required')">
+            <!-- {{ description.errors.minlength.requiredLength }} -->
+            <!-- {{ description.errors.minlength.actualLength }} -->
+           
+            Описание проекта должно должно содержать не менее 10 символов. Вы ввели {{textContent.length-1}}  символа 
+        </mat-error>
+        {{textContent}}
+        <!-- <mat-error *ngIf="description.hasError('pattern')">
+            Описание проекта содержит недопустимые символы. Допустимы буквы от А до Я (строчные и прописные), цифры от 0 до 9, знак тире
+            (-), подчёркивания (_), запятой и пробела
+        </mat-error> -->
 
-        <mat-form-field>
+        <!-- <mat-form-field>
             <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" class="form-control" name="projectDesc"
                 id="descriptionProjectTextarea" rows="5" placeholder="Описание проекта" required minlength='10' formControlName='description'></textarea>
-            <mat-error *ngIf="description.hasError('required')">
+                        <mat-error *ngIf="description.hasError('required')">
                 Обязательно введите описание проекта
-            </mat-error>
+            </mat-error> 
             <mat-error *ngIf="description.hasError('minlength') && !description.hasError('required')">
                 Описание проекта должно быть больше {{ description.errors.minlength.requiredLength }} символов. Вы ввели {{ description.errors.minlength.actualLength
                 }} символа
@@ -70,7 +86,7 @@
                 Описание проекта содержит недопустимые символы. Допустимы буквы от А до Я (строчные и прописные), цифры от 0 до 9, знак тире
                 (-), подчёркивания (_), запятой и пробела
             </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
     </mat-dialog-content>
 
 

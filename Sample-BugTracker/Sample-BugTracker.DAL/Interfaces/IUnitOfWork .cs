@@ -11,6 +11,8 @@ namespace Sample_BugTracker.DAL.Interfaces
         IProjectRepository Projects { get; }
         IPortalRepository Portals { get; }
         IUserProjectRepository UserProjects { get; }
+        IAwaitingAttachmentUser AwaitingAttachmentUsers { get; }
+
         int Complete();
     }
 }

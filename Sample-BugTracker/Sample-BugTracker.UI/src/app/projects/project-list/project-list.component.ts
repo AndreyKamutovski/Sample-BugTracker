@@ -91,7 +91,7 @@ export class ProjectListComponent implements OnInit {
   openAddProjectDialog(): void {
     let dialogRef = this.dialog.open(AddProjectFormComponent, {
       width: '50%',
-      data: {}
+     data: {}
     });
 
     dialogRef.afterClosed().subscribe(this.afterClosedAddProjectDialog.bind(this));

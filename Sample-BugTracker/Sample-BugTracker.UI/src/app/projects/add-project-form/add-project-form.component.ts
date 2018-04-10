@@ -9,6 +9,7 @@ import { ProjectService } from '../services/project.service';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 
+
 @Component({
   selector: 'app-add-project-form',
   templateUrl: './add-project-form.component.html',
@@ -23,6 +24,7 @@ export class AddProjectFormComponent implements OnInit {
 
   addProjectForm: FormGroup;
   project: Project = new Project();
+  private modules = {};
 
   get title() { return this.addProjectForm.get('title'); }
   get description() { return this.addProjectForm.get('description'); }
@@ -35,9 +37,29 @@ export class AddProjectFormComponent implements OnInit {
     public dialogRef: MatDialogRef<AddProjectFormComponent>
   ) {
     this.createForm();
+    this.modules = {
+      toolbar: [
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'script': 'sub' }, { 'script': 'super' }],
+        [{ 'indent': '-1' }, { 'indent': '+1' }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'color': [] }, { 'background': [] }],
+        // [{ 'font': ['Roboto'] }],
+        [{ 'align': [] }],
+        ['clean', 'link'],
+        // ['link', 'image']
+      ]
+    };
   };
-
+  textContent: string = '';
   endDateIncrement: Moment;
+
+  contentChange(event: any) {
+    this.textContent = event.text;
+  }
 
   dateChangeEvent(event: MatDatepickerInputEvent<Date>) {
     if (event.value != null) {
@@ -75,7 +97,7 @@ export class AddProjectFormComponent implements OnInit {
       'description': [this.project.Description, [
         Validators.required,
         Validators.minLength(10),
-        Validators.pattern("^[А-Яа-я0-9,.! _-]*$")
+        // Validators.pattern("^[А-Яа-я0-9,.! _-]*$")
       ]],
       'datepickerGroup': this.formBuilder.group({
         'dateStart': [this.project.DateStart],

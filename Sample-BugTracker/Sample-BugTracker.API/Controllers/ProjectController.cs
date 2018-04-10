@@ -36,7 +36,7 @@ namespace Sample_BugTracker.API.Controllers
         [HttpPost]
         public void AttachUser([Required] AttachUserDTO attachUser, [Required, FromUri] string enterPasswordFormUri)
         {
-            _projectService.AttachUser(attachUser, enterPasswordFormUri);
+            _projectService.AttachUser(attachUser);
         }
 
         [HttpPost]

@@ -1,5 +1,8 @@
-<span class="mat-headline" style="margin: 0;"> Пользователи</span>
+<span class="mat-headline" style="margin: 0;"> Пользователи проекта</span>
 
+     <!-- <button mat-raised-button color="accent" [title]="sidenav.opened ? 'Свернуть' : 'Развернуть'" (click)="sidenav.toggle()">
+      <mat-icon>{{sidenav.opened ? 'arrow_back' : 'arrow_forward'}}</mat-icon>
+    </button> -->
 
 <mat-grid-list cols="3" rowHeight="2:1" gutterSize="20px">
   <mat-grid-tile *ngFor="let user of users" [colspan]="1" [rowspan]="1">

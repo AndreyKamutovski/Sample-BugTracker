@@ -22,7 +22,7 @@ import { NavbarModule } from './navbar/navbar.module';
 import { LoaderModule } from './loader/loader.module';
 import { LoaderComponent } from './loader/loader.component';
 import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
-import { ConfirmPasswordFormComponent } from './confirm-password/confirm-password-form/confirm-password-form.component';
+import { ConfirmPasswordFormComponent } from './confirm-password/confirm-password-form.component';
 
 
 @NgModule({
@@ -70,4 +70,4 @@ export class AppModule {
 
 
 // https://valor-software.com/ng2-charts/#pieChart
-// https://www.froala.com/wysiwyg-editor/examples/code-mirror
+// https://github.com/KillerCodeMonkey/ngx-quill

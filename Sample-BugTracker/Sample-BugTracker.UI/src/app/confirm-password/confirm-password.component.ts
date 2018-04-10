@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AddPortalFormComponent } from '../portal/add-portal-form/add-portal-form.component';
 import { SignupService } from '../services/signup.service';
+import { ConfirmPasswordFormComponent } from './confirm-password-form.component';
 
 @Component({
   selector: 'app-confirm-password',
+  template: '',
   styles: []
 })
 export class ConfirmPasswordComponent implements OnInit {
 
-  private confirmPasswordForm: FormGroup;
   private dataDialog: any;
 
   constructor(
@@ -30,17 +29,17 @@ export class ConfirmPasswordComponent implements OnInit {
   };
 
   openAddPortalDialog(): void {
-    let dialogRef = this.dialog.open(AddPortalFormComponent, {
+    let dialogRef = this.dialog.open(ConfirmPasswordFormComponent, {
       width: '50%',
       data: this.dataDialog
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        this.signupService.createPortal(result.confirmData).subscribe(res => {
-            this.router.navigateByUrl('app/project');
-        }
-        );
+        // this.signupService.createPortal(result.confirmData).subscribe(res => {
+        //     this.router.navigateByUrl('app/project');
+        // }
+        // );
       }
     });
   }

@@ -14,7 +14,7 @@ export class SignupService {
     return this.HttpClientService.sendRequest(RequestMethod.Get, 'api/User', { 'email': email });
   }
 
-  public confirmPassword(user: User, projectId: number) {
-    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/User', { 'email': email });
-  }
+  // public confirmPassword(user: User, projectId: number) {
+  //   return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/User', { 'email': email });
+  // }
 }
