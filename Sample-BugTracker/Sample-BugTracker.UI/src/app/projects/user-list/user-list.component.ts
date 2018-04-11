@@ -32,6 +32,7 @@ export class UserListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (res != undefined && res != null) {
         if (res.hasOwnProperty('userData')) {
+          this.users.push(res.userData);
           this.projectService.attachUser(res.userData).toPromise().then(res => {
             if (res) {
               this.snackBar.open("Пользователь успешно добавлен к проекту", '', { duration: 2000 });

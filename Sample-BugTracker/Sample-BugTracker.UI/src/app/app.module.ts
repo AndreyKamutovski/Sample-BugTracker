@@ -72,3 +72,8 @@ export class AppModule {
 
 // https://valor-software.com/ng2-charts/#pieChart
 // https://github.com/KillerCodeMonkey/ngx-quill
+// https://developer.mozilla.org/ru/docs/Web/API/FileReader
+// https://nehalist.io/uploading-files-in-angular2/
+// https://aberezkin.github.io/ng2-image-upload/#/readme
+// https://developer.mozilla.org/ru/docs/Web/API/FileReader/readAsDataURL
+// https://medium.com/@jh3y/how-to-creating-a-css-overlay-for-a-circular-image-5e168f9c0895

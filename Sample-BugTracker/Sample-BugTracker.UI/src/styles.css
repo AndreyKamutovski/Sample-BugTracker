@@ -178,3 +178,8 @@ background-color: lightgrey;
         bottom: 0;
         right: 0;
       }
+
+      
+  .mat-menu-avatar-panel {
+    max-width: 1000px !important;
+}

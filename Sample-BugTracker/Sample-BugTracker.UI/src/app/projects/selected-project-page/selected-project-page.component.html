@@ -11,10 +11,9 @@
   </mat-sidenav>
 
   <mat-sidenav-content class="mat-typography">
-       <!-- <button mat-raised-button color="accent" [title]="sidenav.opened ? 'Свернуть' : 'Развернуть'" (click)="sidenav.toggle()"
-      class="toggle-sidenav-container">
+    <button mat-mini-fab color="accent" [matTooltip]="sidenav.opened ? 'Свернуть' : 'Развернуть'" (click)="sidenav.toggle()">
       <mat-icon>{{sidenav.opened ? 'arrow_back' : 'arrow_forward'}}</mat-icon>
-    </button> -->
+    </button>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
