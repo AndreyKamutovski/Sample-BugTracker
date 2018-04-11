@@ -200,6 +200,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\AvatarStreamProvider .cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Services\MailService.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -222,6 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Avatars\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sample-BugTracker.DAL\Sample-BugTracker.DAL.csproj">

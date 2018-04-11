@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -42,6 +43,12 @@ namespace Sample_BugTracker.API.Controllers
         public IEnumerable<UserDTO> GetAttachableUsers([Required] int projectId)
         {
             return _userService.GetAttachableUsers(projectId);
+        }
+
+        [HttpPost]
+        public async Task<HttpResponseMessage> UploadUserAvatar()
+        {
+            return await _userService.UploadUserAvatar(Request);
         }
     }
 }

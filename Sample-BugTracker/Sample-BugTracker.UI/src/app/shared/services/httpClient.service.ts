@@ -3,13 +3,15 @@ import { Headers, Http, RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 export const REST_URI = new InjectionToken('REST_URI');
-
+export const AUTH_HEADER = new InjectionToken('AUTH_HEADER');
 
 @Injectable()
 export class HttpClientService {
 
   constructor(private http: Http,
-    @Inject(REST_URI) private uri: string) { }
+    @Inject(REST_URI) private uri: string,
+    @Inject(AUTH_HEADER) private auth_header: string,    
+  ) { }
 
   public sendRequest(
     _method: RequestMethod,
@@ -17,7 +19,7 @@ export class HttpClientService {
     _params?: { [key: string]: any },
     _headers?: any,
     _body?: any) {
-    let authHeaders = { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+    let authHeaders = { 'Authorization': this.auth_header };
     return this.http.request(this.uri.concat(_url), {
       method: _method,
       params: _params,

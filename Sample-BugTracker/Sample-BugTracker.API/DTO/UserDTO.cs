@@ -24,5 +24,7 @@ namespace Sample_BugTracker.API.DTO
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and its confirmation do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string Avatar { get; set; }
     }
 }

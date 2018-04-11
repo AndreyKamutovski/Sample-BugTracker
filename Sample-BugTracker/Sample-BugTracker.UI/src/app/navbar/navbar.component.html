@@ -1,6 +1,6 @@
 <mat-toolbar class="mat-toolbar-single-row mat-elevation-z5 app-navbar" color="primary">
 
-  <span style="flex: 1 1 auto;">
+  <span style="flex: 1 1 50%;">
     <a mat-button routerLink="/" matTooltip="Главная">
       <img src="../../assets/logo.png" alt="Bug Tracker Logo" height="26" width="50">
       <span class="mat-title">{{titleApp}}</span>
@@ -9,8 +9,8 @@
       <span class="mat-title">{{link.title}}</span>
     </a>
   </span>
-  <button mat-icon-button [matMenuTriggerFor]="accountMenu" [matMenuTriggerData]="authService.currentUser" [title]="authService.currentUser.Email"
-    class="avatar-button">
+  <button mat-icon-button [matMenuTriggerFor]="accountMenu" [matMenuTriggerData]="authService.currentUser" [matTooltip]="authService.currentUser.Email"
+    class="avatar-button" matTooltipPosition="left">
   </button>
 </mat-toolbar>
 
@@ -18,12 +18,15 @@
   <ng-template matMenuContent let-Email="Email">
     <mat-card class="mat-elevation-z0">
       <mat-card-header>
-        <div mat-card-avatar class="avatar-button avatar-menu-circle">
+        <div mat-card-avatar class="avatar-button avatar-menu-circle" (click)="openUploadUserPhotoDialog()">
           <div class="img__overlay">Изменить</div>
         </div>
-
-        <mat-card-title><h2>{{Email | slice:0:Email.indexOf('@')}}</h2></mat-card-title>
-        <mat-card-subtitle><h3>{{Email}}</h3></mat-card-subtitle>
+        <mat-card-title>
+          <h2>{{Email | slice:0:Email.indexOf('@')}}</h2>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <h3>{{Email}}</h3>
+        </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
       </mat-card-content>
