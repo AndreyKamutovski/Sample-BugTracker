@@ -75,40 +75,32 @@ namespace Sample_BugTracker.API.Services
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
 
-            var t = HttpContext.Current.Request;
-            if(CurrentUser.Avatar != null)
-            {
-                string deletedAvatarPath = HttpContext.Current.Server.MapPath(string.Format("~/{0}", CurrentUser.Avatar));
-                if (System.IO.File.Exists(deletedAvatarPath))
-                {
-                    // Use a try block to catch IOExceptions, to
-                    // handle the case of the file already being
-                    // opened by another process.
-                    try
-                    {
-                        System.IO.File.Delete(deletedAvatarPath);
-                    }
-                    catch (System.IO.IOException e)
-                    {
-                        return request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
-                    }
-                }
-            }
-            string rootAvatarFolder = HttpContext.Current.Server.MapPath("~/Avatars");
-            var provider = new AvatarStreamProvider(rootAvatarFolder);
-
             try
             {
+                if (CurrentUser.Avatar != null)
+                {
+                    string deletedAvatarPath = HttpContext.Current.Server.MapPath(string.Format("~/{0}", CurrentUser.Avatar));
+                    if (System.IO.File.Exists(deletedAvatarPath))
+                    {
+                        // Use a try block to catch IOExceptions, to
+                        // handle the case of the file already being
+                        // opened by another process.
+                        System.IO.File.Delete(deletedAvatarPath);
+                    }
+                }
+                string rootAvatarFolder = HttpContext.Current.Server.MapPath("~/Avatars");
+                var provider = new AvatarStreamProvider(rootAvatarFolder);
+
                 // Read the form data.
                 await request.Content.ReadAsMultipartAsync(provider);
                 using (UoW)
                 {
                     var file = provider.FileData.FirstOrDefault();
-                    if(file != null)
+                    if (file != null)
                     {
                         AppUser user = UoW.Users.GetByEmail(CurrentUser.Email);
                         var fileName = file.LocalFileName.Substring(file.LocalFileName.LastIndexOf('\\') + 1);
-                        user.Avatar = string.Concat("Avatars/", fileName); 
+                        user.Avatar = string.Concat("Avatars/", fileName);
                         UoW.Complete();
                     }
                     else

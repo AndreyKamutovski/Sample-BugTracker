@@ -25,4 +25,8 @@ export class UsersService {
   getCurrentUser(): Observable<User> {
     return this.HttpClientService.sendRequest(RequestMethod.Get, "api/User/GetCurrentUser");
   }
+
+  uploadAvatar(formData: FormData): Observable<any> {
+    return this.HttpClientService.sendRequest(RequestMethod.Post, "api/User", null, null, formData);  // { 'Content-Type': 'multipart/form-data' }
+  }
 }

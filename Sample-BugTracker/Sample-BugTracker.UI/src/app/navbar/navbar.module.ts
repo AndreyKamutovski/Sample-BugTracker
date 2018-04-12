@@ -1,19 +1,29 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
-import { NavbarComponent } from './navbar.component';
-import { AngularMaterialDesignModule } from '../angular-material-design/angular-material-design.module';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ImageUploadModule } from 'angular2-image-upload';
+
+import { AngularMaterialDesignModule } from '../angular-material-design/angular-material-design.module';
+import { UsersService } from '../projects/services/users.service';
+import { NavbarComponent } from './navbar.component';
+import { UploadUserPhotoFormComponent } from './upload-user-photo-form/upload-user-photo-form.component';
 
 @NgModule({
   imports: [
     CommonModule,
     AngularMaterialDesignModule,
     RouterModule,
-    
+    ImageUploadModule.forRoot(),
   ],
-  declarations: [NavbarComponent],
+  declarations: [
+    NavbarComponent,
+    UploadUserPhotoFormComponent,
+  ],
   exports: [NavbarComponent],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  entryComponents: [
+    UploadUserPhotoFormComponent
+  ],
+  providers: [UsersService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NavbarModule { }

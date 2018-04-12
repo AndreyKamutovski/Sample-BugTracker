@@ -4,7 +4,6 @@ import { HttpModule } from '@angular/http';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ImageUploadModule } from 'angular2-image-upload';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 
 import { AngularMaterialDesignModule } from './angular-material-design/angular-material-design.module';
@@ -22,8 +21,7 @@ import { PortalModule } from './portal/portal.module';
 import { ProjectsModule } from './projects/projects.module';
 import { AuthGuardLoginService } from './services/auth-guard-login.service';
 import { AuthService } from './services/auth.service';
-import { HttpClientService, REST_URI, AUTH_HEADER } from './shared/services/httpClient.service';
-import { UploadUserPhotoFormComponent } from './upload-user-photo-form/upload-user-photo-form.component';
+import { AUTH_HEADER, HttpClientService, REST_URI } from './shared/services/httpClient.service';
 
 @NgModule({
     imports: [
@@ -38,7 +36,6 @@ import { UploadUserPhotoFormComponent } from './upload-user-photo-form/upload-us
         ProjectsModule,
         PortalModule,
         LoaderModule,
-        ImageUploadModule.forRoot(),
     ],
     declarations: [
         AppComponent,
@@ -47,19 +44,17 @@ import { UploadUserPhotoFormComponent } from './upload-user-photo-form/upload-us
         GlobalErrorHandlerComponent,
         ConfirmPasswordComponent,
         ConfirmPasswordFormComponent,
-        UploadUserPhotoFormComponent,
     ],
     entryComponents: [
         GlobalErrorHandlerComponent,
-        ConfirmPasswordFormComponent,
-        UploadUserPhotoFormComponent
+        ConfirmPasswordFormComponent
     ],
     providers: [
         AuthService,
         AuthGuardLoginService,
         HttpClientService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
-        {provide: AUTH_HEADER, useValue: `Bearer ${sessionStorage.getItem('token')}`},
+        { provide: AUTH_HEADER, useValue: `Bearer ${sessionStorage.getItem('token')}` },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
         { provide: LOCALE_ID, useValue: 'ru' },
         { provide: ErrorHandler, useClass: GlobalErrorHandlerService }

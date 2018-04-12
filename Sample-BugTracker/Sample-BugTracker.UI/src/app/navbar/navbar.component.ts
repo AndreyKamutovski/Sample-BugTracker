@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { AuthService } from '../services/auth.service';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { UploadUserPhotoFormComponent } from '../upload-user-photo-form/upload-user-photo-form.component';
+import { UploadUserPhotoFormComponent } from './upload-user-photo-form/upload-user-photo-form.component';
+import { UsersService } from '../projects/services/users.service';
 
 interface NavbarElement {
   title: string,
@@ -25,7 +26,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     private authService: AuthService,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private userService: UsersService
   ) { }
 
   private logout(): void {
@@ -38,19 +40,20 @@ export class NavbarComponent implements OnInit {
       data: {}
     });
 
-    dialogRef.afterClosed().subscribe(this.afterClosedUploadUserPhotoDialog.bind(this));
+    dialogRef.afterClosed().subscribe(this.afterClosedUploadAvatarDialog.bind(this));
   }
 
-  private afterClosedUploadUserPhotoDialog(isUploadSuccsess: boolean) {
-    console.log('isUploadSuccsess', isUploadSuccsess);
-    if (isUploadSuccsess) {
-      this.snackBar.open("Аватар успешно изменён", '', { duration: 2000 });
-    };
+  private afterClosedUploadAvatarDialog(avatarContent: any) {
+    console.log('avatarContent',avatarContent);
+    if (avatarContent != null) {
+      this.userService.uploadAvatar(avatarContent).toPromise().then(res => {
+        
+        this.snackBar.open("Аватар успешно изменён", '', { duration: 2000 });
+      });
+    }
   }
-
 
   ngOnInit() {
 
   }
-
 }

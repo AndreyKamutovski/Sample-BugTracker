@@ -1,7 +1,0 @@
-<h2 mat-dialog-title>Изменить аватар</h2>
-<image-upload [url]="uploadUrl" [headers]="uploadAvatarHeaders" [style]="customUploadStyle" [max]="1" buttonCaption="Выбрать аватар"
-  dropBoxMessage="Перетащите Ваш аватар сюда" clearButtonCaption="Очистить" (uploadFinished)="onUploadFinished($event)" (uploadStateChanged)="onUploadStateChanged($event)"></image-upload>
-
-<mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="isUploadSuccess">Ок</button>
-</mat-dialog-actions>
