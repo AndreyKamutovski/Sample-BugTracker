@@ -56,8 +56,8 @@
             {{datepickerGroup.errors.groupdate.errorMsg}}
         </mat-error>
 
-        <quill-editor formControlName='description' placeholder="Введите описание проекта" [minLength]="10" [required]="true" [style]="{height: '250px'}" (onContentChanged)="contentChange($event);" [modules]="modules"></quill-editor>
-        <mat-error *ngIf="description.hasError('required')">
+        <quill-editor formControlName='description' placeholder="Введите описание проекта" [minLength]="10" [required]="true" [style]="{height: '200px'}" (onContentChanged)="contentChange($event);" [modules]="modules"></quill-editor>
+        <mat-error *ngIf="description.hasError('required') && description.touched">
             Обязательно введите описание проекта
         </mat-error>
         <mat-error *ngIf="textContent.length-1 < 10 && !description.hasError('required')">

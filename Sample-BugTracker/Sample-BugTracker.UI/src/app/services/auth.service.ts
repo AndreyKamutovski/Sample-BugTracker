@@ -30,6 +30,9 @@ export class AuthService {
     }
 
     get currentUser(): User {
+        this.userService.getCurrentUser().toPromise().then(user => {
+            this._currentUser = user;
+        });
         return this._currentUser;
     }
 

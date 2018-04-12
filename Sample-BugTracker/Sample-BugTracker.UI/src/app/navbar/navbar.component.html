@@ -10,7 +10,7 @@
     </a>
   </span>
   <button mat-icon-button [matMenuTriggerFor]="accountMenu" [matMenuTriggerData]="authService.currentUser" [matTooltip]="authService.currentUser.Email"
-    class="avatar-button" matTooltipPosition="left">
+    class="avatar-button" matTooltipPosition="left" [style.background-image]="getUriAvatar">
   </button>
 </mat-toolbar>
 
@@ -18,7 +18,7 @@
   <ng-template matMenuContent let-Email="Email">
     <mat-card class="mat-elevation-z0">
       <mat-card-header>
-        <div mat-card-avatar class="avatar-button avatar-menu-circle" (click)="openUploadUserPhotoDialog()">
+        <div mat-card-avatar class="avatar-button avatar-menu-circle" [style.background-image]="getUriAvatar" (click)="openUploadUserPhotoDialog()">          
           <div class="img__overlay">Изменить</div>
         </div>
         <mat-card-title>

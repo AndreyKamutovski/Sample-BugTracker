@@ -67,12 +67,12 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-        public async Task<HttpResponseMessage> UploadUserAvatar(HttpRequestMessage request)
+        public async Task<string> UploadUserAvatar(HttpRequestMessage request)
         {
             // Check if the request contains multipart/form-data.
             if (!request.Content.IsMimeMultipartContent())
             {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+                throw new ApplicationOperationException("", HttpStatusCode.UnsupportedMediaType);
             }
 
             try
@@ -93,6 +93,7 @@ namespace Sample_BugTracker.API.Services
 
                 // Read the form data.
                 await request.Content.ReadAsMultipartAsync(provider);
+                string returningPath = string.Empty;
                 using (UoW)
                 {
                     var file = provider.FileData.FirstOrDefault();
@@ -100,19 +101,19 @@ namespace Sample_BugTracker.API.Services
                     {
                         AppUser user = UoW.Users.GetByEmail(CurrentUser.Email);
                         var fileName = file.LocalFileName.Substring(file.LocalFileName.LastIndexOf('\\') + 1);
-                        user.Avatar = string.Concat("Avatars/", fileName);
+                        user.Avatar = returningPath = string.Concat("Avatars/", fileName);
                         UoW.Complete();
                     }
                     else
                     {
-                        return request.CreateErrorResponse(HttpStatusCode.BadRequest, "For an avatar you need one image");
+                        throw new ApplicationOperationException("For an avatar you need one image", HttpStatusCode.BadRequest);
                     }
                 }
-                return request.CreateResponse(HttpStatusCode.OK);
+                return returningPath;
             }
             catch (System.Exception e)
             {
-                return request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+                throw new ApplicationOperationException(e.Message, HttpStatusCode.InternalServerError);
             }
         }
     }

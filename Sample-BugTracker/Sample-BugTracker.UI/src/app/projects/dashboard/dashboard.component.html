@@ -1,3 +1,11 @@
-<p>
-  dashboard works!
-</p>
+<span>
+  <span class="mat-h1">
+    {{projectDSource.currentProject.Title}}
+  </span>
+  <br>
+  <span class="mat-h3">
+    Владелец проекта: {{authService.currentUser.Email}}
+  </span>
+</span>
+<h2>Описание проекта</h2>
+<quill-editor [(ngModel)]="projectDSource.currentProject.Description" [style]="{height: '300px'}" style="background-color:white" [modules]="{toolbar: false}"></quill-editor>

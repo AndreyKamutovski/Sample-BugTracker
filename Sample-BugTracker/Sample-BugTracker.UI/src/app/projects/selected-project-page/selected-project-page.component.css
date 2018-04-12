@@ -6,3 +6,8 @@ mat-sidenav-container {
     height: 100%;
 overflow-y: hidden;    
 }
+
+.toggle-sidenav-button {
+    margin-right: 15px;
+    float: left;
+}

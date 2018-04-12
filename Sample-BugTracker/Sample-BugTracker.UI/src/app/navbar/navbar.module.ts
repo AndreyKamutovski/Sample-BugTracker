@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ImageUploadModule } from 'angular2-image-upload';
 
@@ -23,7 +24,9 @@ import { UploadUserPhotoFormComponent } from './upload-user-photo-form/upload-us
   entryComponents: [
     UploadUserPhotoFormComponent
   ],
-  providers: [UsersService],
+  providers: [
+    UsersService
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NavbarModule { }

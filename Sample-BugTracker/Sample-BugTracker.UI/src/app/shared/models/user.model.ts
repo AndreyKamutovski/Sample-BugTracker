@@ -3,4 +3,5 @@ export class User {
     Password: string;
     ConfirmPassword: string;
     RoleName: string;
+    Avatar?: string;
 }

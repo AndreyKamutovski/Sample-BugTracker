@@ -46,9 +46,9 @@ namespace Sample_BugTracker.API.Controllers
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> UploadUserAvatar()
+        public async Task<string> UploadUserAvatar()
         {
-            return await _userService.UploadUserAvatar(Request);
+            return  await _userService.UploadUserAvatar(Request);
         }
     }
 }

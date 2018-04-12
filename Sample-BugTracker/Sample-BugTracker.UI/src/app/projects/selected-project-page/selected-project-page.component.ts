@@ -29,8 +29,8 @@ export class SelectedProjectPageComponent implements OnInit {
   ngOnInit() {
     let projectID = this._route.snapshot.params['id'];
     sessionStorage.setItem('projectID', projectID);
-    this.projectService.getProjectById(projectID).subscribe(res => {
-      this.project = res;
-    });
+    // this.projectService.getProjectById(projectID).subscribe(res => {
+    //   this.project = res;
+    // });
   }
 }

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
-
-import { UsersService } from '../../projects/services/users.service';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-upload-user-photo-form',
@@ -20,7 +18,6 @@ export class UploadUserPhotoFormComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<UploadUserPhotoFormComponent>,
-
   ) { }
 
   ngOnInit() {

@@ -71,7 +71,7 @@ export class AddProjectFormComponent implements OnInit {
 
   addProject(): void {
     if (this.addProjectForm.valid) {
-
+this.description.touched
       let newProject = new Project({
         Title: this.title.value,
         DateStart: this.dateStart.value,
