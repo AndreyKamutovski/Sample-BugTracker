@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 import { UploadUserPhotoFormComponent } from './upload-user-photo-form/upload-user-photo-form.component';
 import { REST_URI } from '../shared/services/httpClient.service';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 interface NavbarElement {
   title: string,
@@ -32,11 +33,12 @@ export class NavbarComponent implements OnInit {
     public snackBar: MatSnackBar,
     private userService: UsersService,
     private _sanitizer: DomSanitizer,
+    private router: Router,
     @Inject(REST_URI) private uri: string,
   ) { }
 
   private logout(): void {
-    this.authService.logout();
+    this.router.navigateByUrl('/');
   }
 
   openUploadUserPhotoDialog() {
@@ -59,15 +61,13 @@ export class NavbarComponent implements OnInit {
   }
 
   private get getUriAvatar(): SafeStyle {
-    if(this.authService.currentUser.Avatar != null) {
-          return this._sanitizer.bypassSecurityTrustStyle(`url('${this.uri}${this.authService.currentUser.Avatar}')`);
+    let uriAvatar = `url('../../assets/person.png')`;
+    if (this.authService.currentUser.Avatar != null) {
+      uriAvatar = `url('${this.uri}${this.authService.currentUser.Avatar}')`;
     }
-    else {
-      return this._sanitizer.bypassSecurityTrustStyle(`url('../../assets/person.png')`);
-    }
+    return this._sanitizer.bypassSecurityTrustStyle(uriAvatar);
   }
 
   ngOnInit() {
-    console.log(this.authService.currentUser.Avatar);
   }
 }

@@ -2,6 +2,8 @@
 using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Repositories;
 using System.Security.Claims;
+using System.Threading;
+using System.Web;
 
 namespace Sample_BugTracker.API.Services
 {

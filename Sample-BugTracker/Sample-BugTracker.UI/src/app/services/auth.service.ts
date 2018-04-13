@@ -13,15 +13,13 @@ import { HttpClientService } from '../shared/services/httpClient.service';
 @Injectable()
 export class AuthService {
 
-    private _isLoggedIn: boolean;
+    private _isLoggedIn: boolean = false;
     private _currentUser: User = new User();
 
     constructor(
         private HttpClientService: HttpClientService,
         private userService: UsersService,
-        private router: Router
     ) {
-        this._isLoggedIn = false;
     }
 
 
@@ -30,9 +28,6 @@ export class AuthService {
     }
 
     get currentUser(): User {
-        this.userService.getCurrentUser().toPromise().then(user => {
-            this._currentUser = user;
-        });
         return this._currentUser;
     }
 
@@ -54,6 +49,5 @@ export class AuthService {
         sessionStorage.removeItem('token');
         this._isLoggedIn = false;
         this._currentUser = null;
-        this.router.navigateByUrl('/');
     }
 }

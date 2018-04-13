@@ -9,8 +9,7 @@ export const AUTH_HEADER = new InjectionToken('AUTH_HEADER');
 export class HttpClientService {
 
   constructor(private http: Http,
-    @Inject(REST_URI) private uri: string,
-    @Inject(AUTH_HEADER) private auth_header: string,    
+    @Inject(REST_URI) private uri: string,  
   ) { }
 
   public sendRequest(
@@ -19,7 +18,7 @@ export class HttpClientService {
     _params?: { [key: string]: any },
     _headers?: any,
     _body?: any) {
-    let authHeaders = { 'Authorization': this.auth_header };
+    let authHeaders = { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
     return this.http.request(this.uri.concat(_url), {
       method: _method,
       params: _params,
