@@ -1,19 +1,18 @@
-<span class="mat-headline" style="margin: 0;"> Пользователи проекта</span>
-<mat-grid-list cols="3" rowHeight="2:1" gutterSize="20px">
-  <mat-grid-tile *ngFor="let user of users" [colspan]="1" [rowspan]="1">
-    <mat-card>
-      <mat-card-header>
-        <mat-icon mat-card-avatar>person</mat-icon>
-        <!-- <div  class="example-header-image"></div> -->
-        <mat-card-title>{{user.Email}}</mat-card-title>
-        <mat-card-subtitle>{{user.RoleName}}</mat-card-subtitle>
-        <button mat-button [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      </mat-card-header>
-    </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
+<h1>
+  Пользователи проекта
+</h1>
+<mat-list>
+  <mat-list-item *ngFor="let user of users">
+    <img matListAvatar [src]="(user.Avatar != null) ? uri + user.Avatar : '../../../../../assets/person.png'">
+    <strong matLine> {{user.Email}} </strong>
+    <span matLine> {{user.RoleName |  getRoleName }} </span>
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
+
 
 <mat-menu #menu>
   <button mat-menu-item>
@@ -26,6 +25,6 @@
   </button>
 </mat-menu>
 
-<button mat-fab class="mat-fab-buttom-right" (click)="openAddUserDialog()">
+<button *ngIf="authService.isPortalOwner" mat-fab class="mat-fab-buttom-right" (click)="openAddUserDialog()">
   <mat-icon>add</mat-icon>
 </button>

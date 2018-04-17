@@ -1,12 +1,13 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoaderComponent } from './loader.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material';
+
+import { SharedModule } from './../shared/shared.module';
+import { LoaderComponent } from './loader.component';
 import { LoaderService } from './loader.service';
 
 @NgModule({
   imports: [
-    CommonModule,
+    SharedModule,
     MatProgressSpinnerModule
   ],
   declarations: [LoaderComponent],

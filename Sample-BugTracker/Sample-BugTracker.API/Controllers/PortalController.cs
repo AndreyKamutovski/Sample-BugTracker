@@ -33,5 +33,12 @@ namespace Sample_BugTracker.API.Controllers
         {
             return _portalService.GetUserPortals();
         }
+
+        [Authorize]
+        [HttpGet]
+        public bool IsPortalOwner([Required] string portalId)
+        {
+            return _portalService.IsPortalOwner(portalId);
+        }
     }
 }

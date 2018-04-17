@@ -40,6 +40,11 @@ namespace Sample_BugTracker.API.Controllers
             return _userService.GetCurrentUser();
         }
 
+        public UserDTO GetProjectOwner([Required] int projectId)
+        {
+            return _userService.GetProjectOwner(projectId);
+        }
+
         public IEnumerable<UserDTO> GetAttachableUsers([Required] int projectId)
         {
             return _userService.GetAttachableUsers(projectId);

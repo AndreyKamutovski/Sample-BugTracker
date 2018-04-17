@@ -183,3 +183,5 @@ background-color: lightgrey;
   .mat-menu-avatar-panel {
     max-width: 1000px !important;
 }
+
+div.mat-card-header-text {width: 100%;}

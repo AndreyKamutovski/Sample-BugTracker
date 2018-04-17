@@ -8,6 +8,7 @@ namespace Sample_BugTracker.DAL.Interfaces
     {
         TEntity Get(int id);
         TEntity Get(Guid guid);
+        TEntity Get(string id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 

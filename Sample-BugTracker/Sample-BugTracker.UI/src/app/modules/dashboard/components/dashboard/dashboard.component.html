@@ -1,0 +1,13 @@
+<h1>
+    {{_project.Title}}
+    <h3>Владелец проекта:&nbsp;{{_projectOwner.Email}}</h3>
+</h1>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Описание проекта
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <quill-editor [(ngModel)]="_project.Description" [readOnly]="true" [style]="{'height': '300px', 'background-color':'white'}"
+        style="background-color:white" [modules]="{toolbar: false}"></quill-editor>
+</mat-expansion-panel>

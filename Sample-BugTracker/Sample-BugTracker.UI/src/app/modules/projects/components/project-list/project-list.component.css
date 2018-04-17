@@ -1,0 +1,12 @@
+.mat-typography mat-header-cell h3 {
+    margin: 0;
+}
+
+mat-row:hover {
+    cursor: pointer;
+    /* background-color: snow; */
+}
+
+.table-container {
+     margin: 0 7%;
+    }

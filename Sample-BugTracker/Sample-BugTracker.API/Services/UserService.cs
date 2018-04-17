@@ -52,6 +52,15 @@ namespace Sample_BugTracker.API.Services
             return Mapper.Map<UserDTO>(CurrentUser);
         }
 
+        public UserDTO GetProjectOwner(int projectId)
+        {
+            using (UoW)
+            {
+                AppUser owner = UoW.Projects.Get(projectId).Portal.Owner;
+                return Mapper.Map<UserDTO>(owner);
+            }
+        }
+
         public IEnumerable<UserDTO> GetAttachableUsers(int projectId)
         {
             using (UoW)

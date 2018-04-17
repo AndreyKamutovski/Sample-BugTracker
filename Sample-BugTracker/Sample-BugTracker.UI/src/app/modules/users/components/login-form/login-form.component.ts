@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { CaptchaComponent } from '../../../../shared/components/captcha/captcha.component';
+import { AuthService } from '../../../../shared/services/auth.service';
+import { PortalService } from '../../../portal/services/portal.service';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
-  styles: []
+  styles: [':host {display: flex; padding-top: 100px;} :host form {margin: 0 auto;}']
 })
 export class LoginFormComponent implements OnInit {
 
@@ -37,7 +43,7 @@ export class LoginFormComponent implements OnInit {
                           }
                           if (res.length === 1) {
                               sessionStorage.setItem('portalID', res[0].Id);
-                              this.router.navigateByUrl('app/project');
+                              this.router.navigateByUrl('app/projects');
                           }
                       });
 

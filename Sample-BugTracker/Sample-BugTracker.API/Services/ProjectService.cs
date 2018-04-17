@@ -18,14 +18,6 @@ namespace Sample_BugTracker.API.Services
     {
         private MailService _mailService = new MailService();
 
-        public IEnumerable<ProjectDTO> GetAll()
-        {
-            using (UoW)
-            {
-                return Mapper.Map<List<ProjectDTO>>(CurrentUser.UserProjects.Select(up => up.Project));
-            }
-        }
-
         public ProjectDTO GetById(int projectId)
         {
             using (UoW)
@@ -36,6 +28,28 @@ namespace Sample_BugTracker.API.Services
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", projectId), HttpStatusCode.NotFound);
                 }
                 return Mapper.Map<ProjectDTO>(project);
+            }
+        }
+
+
+        public IEnumerable<ProjectDTO> GetPortalProjects(string portalId)
+        {
+            using (UoW)
+            {
+                //Guid portalGuid;
+                //if(!Guid.TryParse(portalId, out portalGuid))
+                //{
+                //    throw new ApplicationOperationException(string.Format("Portal GUID: {0} is invalid", portalId), HttpStatusCode.BadRequest);
+                //}
+
+                //var portal = UoW.Portals.Get(portalId.);
+                var portal = UoW.Portals.Get(portalId);
+                if (portal == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Portal with id {0} not found", portalId), HttpStatusCode.NotFound);
+                }
+                var projects = CurrentUser.UserProjects.Select(up => up.Project).Where(p => p.PortalId == portal.Id).ToList();
+                return Mapper.Map<List<ProjectDTO>>(projects);
             }
         }
 

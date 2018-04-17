@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators/map';
+import { startWith } from 'rxjs/operators/startWith';
+
+import { User } from '../../models/user.model';
+import { UsersService } from '../../users.service';
 
 @Component({
   selector: 'app-add-user-form',
@@ -20,7 +28,7 @@ export class AddUserFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<AddPortalFormComponent>,
+    private dialogRef: MatDialogRef<AddUserFormComponent>,
     private userService: UsersService
   ) {
     this.createForm();
@@ -57,4 +65,5 @@ export class AddUserFormComponent implements OnInit {
     return this.existsUser.filter(user => {
       return user.Email.toLowerCase().indexOf(val.toLowerCase()) >= 0
     }).map(user => user.Email);
-  }}
+  }
+}

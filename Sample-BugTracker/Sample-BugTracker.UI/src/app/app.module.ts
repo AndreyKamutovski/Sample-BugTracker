@@ -1,64 +1,60 @@
 import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 
-import { AngularMaterialDesignModule } from './angular-material-design/angular-material-design.module';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
-import { CaptchaComponent } from './captcha/captcha.component';
-import { ConfirmPasswordFormComponent } from './confirm-password/confirm-password-form.component';
-import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
-import { ErrorsModule } from './errors/errors.module';
-import { GlobalErrorHandlerComponent } from './global-error-handler/global-error-handler.component';
-import { GlobalErrorHandlerService } from './global-error-handler/global-error-handler.service';
-import { LoaderComponent } from './loader/loader.component';
-import { LoaderModule } from './loader/loader.module';
-import { LoginComponent } from './login/login.component';
-import { PortalModule } from './portal/portal.module';
-import { ProjectsModule } from './projects/projects.module';
-import { AuthGuardLoginService } from './services/auth-guard-login.service';
-import { AuthGuardLogoutService } from './services/auth-guard-logout.service';
-import { AuthService } from './services/auth.service';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { ErrorsModule } from './modules/errors/errors.module';
+import { LoaderComponent } from './modules/loader/loader.component';
+import { LoaderModule } from './modules/loader/loader.module';
+import { PortalModule } from './modules/portal/portal.module';
+import { AuthGuardLoginService } from './modules/projects/guards/auth-guard-login.service';
+import { ProjectsModule } from './modules/projects/projects.module';
+import { SharedModule } from './modules/shared/shared.module';
+import { AuthGuardLogoutService } from './modules/users/guards/auth-guard-logout.service';
+import { UsersModule } from './modules/users/users.module';
+import { CaptchaComponent } from './shared/components/captcha/captcha.component';
+import { GlobalErrorHandlerComponent } from './shared/components/global-error-handler/global-error-handler.component';
+import { GlobalErrorHandlerService } from './shared/components/global-error-handler/global-error-handler.service';
+import { AuthService } from './shared/services/auth.service';
 import { HttpClientService, REST_URI } from './shared/services/httpClient.service';
-import { LoaderComponent } from './shared/components/loader/loader.component';
+import { InternationalizationService } from './shared/services/internationalization.service';
+import { QuillEditorConfigurationService } from './shared/services/quill-editor-configuration.service';
+
+// import { CaptchaComponent } from './captcha/captcha.component';
 
 @NgModule({
     imports: [
         BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
+        SharedModule,
         HttpModule,
         routing,
         ReCaptchaModule,
-        AngularMaterialDesignModule,
-        BrowserAnimationsModule,
         ProjectsModule,
         PortalModule,
         LoaderModule,
-        ErrorsModule
+        ErrorsModule,
+        DashboardModule,
+        UsersModule
     ],
     declarations: [
         AppComponent,
-        LoginComponent,
         CaptchaComponent,
         GlobalErrorHandlerComponent,
-        ConfirmPasswordComponent,
-        ConfirmPasswordFormComponent,
-        LoaderComponent,
     ],
     entryComponents: [
         GlobalErrorHandlerComponent,
-        ConfirmPasswordFormComponent
     ],
     providers: [
         AuthService,
         AuthGuardLoginService,
         AuthGuardLogoutService,
         HttpClientService,
+        InternationalizationService,
+        QuillEditorConfigurationService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
         { provide: LOCALE_ID, useValue: 'ru' },
@@ -66,7 +62,7 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
     ],
     bootstrap: [
         AppComponent,
-        LoaderComponent
+        LoaderComponent,
     ]
 })
 export class AppModule {

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ReCaptchaComponent } from 'angular2-recaptcha';
 
 @Component({
   selector: 'app-captcha',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class CaptchaComponent implements OnInit {
+    ngOnInit(): void {
+    }
 
   @ViewChild(ReCaptchaComponent) private captcha: ReCaptchaComponent;
   private _isCaptchaChecked: boolean = false;

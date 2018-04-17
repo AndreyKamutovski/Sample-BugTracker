@@ -33,7 +33,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatTableDataSource
+  MatTableDataSource,
 } from '@angular/material';
 
 @NgModule({

@@ -11,16 +11,25 @@ namespace Sample_BugTracker.DAL.Entities
 
         public string Title { get; set; }
 
-        public DateTime DateCreation { get; set; }
+        public string Description { get; set; }
+
+        public DateTime? DateCreation { get; set; }
+
+        public DateTime? Deadline { get; set; }
 
         public Status Status { get; set; }
 
         public Priority Priority { get; set; }
 
+        public Classification Classification { get; set; }
+
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
 
-        public string WorkerId { get; set; }
-        public virtual AppUser Worker { get; set; }
+        public string ErrorAuthorId { get; set; }
+        public virtual AppUser ErrorAuthor { get; set; }
+
+        public string ErrorResponsibleId { get; set; }
+        public virtual AppUser ErrorResponsible { get; set; }
     }
 }

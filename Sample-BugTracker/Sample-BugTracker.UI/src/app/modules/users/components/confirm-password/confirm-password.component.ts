@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { UsersService } from '../../users.service';
+import { ConfirmPasswordFormComponent } from '../confirm-password-form/confirm-password-form.component';
 
 @Component({
   selector: 'app-confirm-password',
@@ -11,7 +16,7 @@ export class ConfirmPasswordComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private signupService: SignupService,
+    private userService: UsersService,
     private _route: ActivatedRoute,
     private router: Router
   ) {
@@ -29,8 +34,8 @@ export class ConfirmPasswordComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        this.signupService.confirmAttachmentUser(result.confirmData).subscribe(res => {
-          this.router.navigateByUrl('app/project');
+        this.userService.confirmAttachmentUser(result.confirmData).subscribe(res => {
+          this.router.navigateByUrl('app/projects');
         }
         );
       }

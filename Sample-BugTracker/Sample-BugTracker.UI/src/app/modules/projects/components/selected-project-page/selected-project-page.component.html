@@ -1,0 +1,18 @@
+<app-navbar *ngIf="authService.isLoggedIn" [sidenav]="sidenavSelectProject" titleApp="BugTracker"></app-navbar>
+
+<mat-sidenav-container class="app-background">
+  <mat-sidenav #sidenavSelectProject mode="side" opened="true" fixedInViewport="true" fixedTopGap="64">
+    <mat-nav-list>
+      <mat-list-item *ngFor="let element of sidenavNavElements" routerLinkActive="active-sidenav-link">
+        <mat-icon matListIcon>{{element.matIcon}}</mat-icon>
+        <a matLine [routerLink]="element.link">
+          <h3>{{element.title}}</h3>
+        </a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="mat-typography">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

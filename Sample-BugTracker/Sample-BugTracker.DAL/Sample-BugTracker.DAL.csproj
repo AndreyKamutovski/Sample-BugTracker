@@ -105,6 +105,18 @@
     <Compile Include="Migrations\201804101310404_Addition AwaitingAttachmentUser.Designer.cs">
       <DependentUpon>201804101310404_Addition AwaitingAttachmentUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804161656285_Add fields to error domen model.cs" />
+    <Compile Include="Migrations\201804161656285_Add fields to error domen model.Designer.cs">
+      <DependentUpon>201804161656285_Add fields to error domen model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804171804014_Add Desc field to Error domen model.cs" />
+    <Compile Include="Migrations\201804171804014_Add Desc field to Error domen model.Designer.cs">
+      <DependentUpon>201804171804014_Add Desc field to Error domen model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804172139003_Fix problem SqlDateTime.MinValue and DateTime.MinValue.cs" />
+    <Compile Include="Migrations\201804172139003_Fix problem SqlDateTime.MinValue and DateTime.MinValue.Designer.cs">
+      <DependentUpon>201804172139003_Fix problem SqlDateTime.MinValue and DateTime.MinValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AwaitingAttachmentUserRepository.cs" />
@@ -139,6 +151,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804101310404_Addition AwaitingAttachmentUser.resx">
       <DependentUpon>201804101310404_Addition AwaitingAttachmentUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804161656285_Add fields to error domen model.resx">
+      <DependentUpon>201804161656285_Add fields to error domen model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804171804014_Add Desc field to Error domen model.resx">
+      <DependentUpon>201804171804014_Add Desc field to Error domen model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804172139003_Fix problem SqlDateTime.MinValue and DateTime.MinValue.resx">
+      <DependentUpon>201804172139003_Fix problem SqlDateTime.MinValue and DateTime.MinValue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

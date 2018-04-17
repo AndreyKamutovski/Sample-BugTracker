@@ -20,7 +20,7 @@
     <mat-form-field>
       <mat-select placeholder="Роль пользователя" formControlName='RoleName' required>
         <mat-option *ngFor="let RoleName of roles" [value]="RoleName.value">
-          {{ RoleName.viewValue }}
+          {{ RoleName.value | getRoleName }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="RoleName.hasError('required')">

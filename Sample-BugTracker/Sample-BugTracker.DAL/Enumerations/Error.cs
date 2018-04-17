@@ -10,7 +10,8 @@ namespace Sample_BugTracker.DAL.Enumerations
     {
         OPEN = 1,
         DECIDED,
-        CLOSE
+        NECESSARYTEST,
+        CLOSED
     }
 
     public enum Priority
@@ -19,5 +20,15 @@ namespace Sample_BugTracker.DAL.Enumerations
         HIGH,
         MIDDLE,
         LOW
+    }
+
+    public enum Classification
+    {
+        SECURITY = 1,
+        CRASHORHANG,
+        DATALOSS,
+        PERFORMANCE,
+        UI,
+        OTHERERROR
     }
 }

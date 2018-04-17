@@ -1,0 +1,32 @@
+mat-sidenav-content {
+    padding: 30px;
+}
+
+mat-sidenav-container {
+    height: 100%;
+overflow-y: hidden;    
+}
+
+.toggle-sidenav-button {
+    margin-right: 15px;
+    float: left;
+}
+
+.active-sidenav-link {
+    background-color: rgb(199, 199, 199);
+}
+
+.sidenav-content-header {
+    display: flex;
+    align-items: center;
+}
+
+.sidenav-content-header-text {
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.sidenav-content-header-text .sidenav-content-header-owner {
+    font-size: 13px;
+    font-weight: 400;
+}

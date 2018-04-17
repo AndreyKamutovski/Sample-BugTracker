@@ -1,0 +1,93 @@
+<div *ngIf="dataSource.data.length === 0" style="margin: 10% 0;">
+  <span class="mat-h1">В проекте отсутствуют ошибки. Нажмите кнопку 'Добавить ошибку' для добавления ошибки</span>&nbsp;
+  <button mat-raised-button color="accent" (click)="openAdderrorDialog()">Добавить ошибку</button>
+</div>
+<div class="mat-elevation-z5 table-container" [hidden]="!(dataSource.data.length > 0)">
+  <mat-table [dataSource]="dataSource" matSort #errorTable class="mat-typography">
+    <ng-container matColumnDef="Title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <h3>Ошибка</h3>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let error"> {{ error.Title }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="EmailErrorAuthor">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <h3>Автор ошибки</h3>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let error"> {{ error.EmailErrorAuthor | getUserNameFromEmail }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="DateCreation">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <h3>Дата создания</h3>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let error"> {{ error.DateCreation | date:'longDate' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="EmailErrorResponsible">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <h3>Ответственный</h3>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let error"> {{ error.EmailErrorResponsible | getUserNameFromEmail }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Deadline">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <h3>Срок решения</h3>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let error"> {{ error.Deadline | date:'longDate' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <h3>Статус</h3>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let error">
+        <mat-select [value]="error.Status">
+          <mat-option *ngFor="let status of errorService.status" [value]="status.value">
+            {{status.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Priority">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <h3>Приоритет</h3>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let error">
+        <mat-select [value]="error.Priority">
+          <mat-option *ngFor="let priority of errorService.priorities" [value]="priority.value">
+            {{priority.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Classification">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <h3>Классификация</h3>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let error">
+        <mat-select [value]="error.Classification">
+          <mat-option *ngFor="let classification of errorService.classification" [value]="classification.value">
+            {{classification.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let errorRowData; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator #errorPaginator [length]="this.dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"
+    [pageIndex]="0">
+  </mat-paginator>
+
+  <button *ngIf="authService.isPortalOwner" mat-fab class="mat-fab-buttom-right" (click)="openAddErrorDialog()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

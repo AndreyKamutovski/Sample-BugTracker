@@ -58,5 +58,14 @@ namespace Sample_BugTracker.API.Services
                 return Mapper.Map<List<PortalDTO>>(portals.Distinct());
             }
         }
+
+        public bool IsPortalOwner(string portalId)
+        {
+            using (UoW)
+            {
+                var portal = UoW.Portals.Get(portalId);
+                return portal.Owner.Id == CurrentUser.Id;
+            }
+        }
     }
 }

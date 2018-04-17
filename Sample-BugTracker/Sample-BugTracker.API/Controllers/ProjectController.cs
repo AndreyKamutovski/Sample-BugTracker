@@ -17,14 +17,14 @@ namespace Sample_BugTracker.API.Controllers
     {
         private ProjectService _projectService = new ProjectService();
 
-        public IEnumerable<ProjectDTO> GetAll()
-        {
-            return _projectService.GetAll();
-        }
-
         public ProjectDTO GetById([Required] int projectId)
         {
             return _projectService.GetById(projectId);
+        }
+
+        public IEnumerable<ProjectDTO> GetPortalProjects([Required] string portalId)
+        {
+            return _projectService.GetPortalProjects(portalId);
         }
 
         [HttpPost]
