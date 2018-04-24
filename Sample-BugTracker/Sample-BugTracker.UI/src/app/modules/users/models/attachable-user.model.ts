@@ -1,5 +1,7 @@
 export class AttachableUser {
-    Email: string;
-    RoleName: string;
-    ProjectId: number;
+    constructor(
+        public Email: string,
+        public RoleName: string,
+        public ProjectId: number
+    ) { }
 }

@@ -1,0 +1,154 @@
+<form [formGroup]='errorForm' novalidate>
+  <div mat-dialog-title class="error-dialog-header">
+    <mat-form-field style="width: 100%;">
+      <input matInput type="text" (change)="updateError('Название ошибки')" placeholder="Название ошибки" required minlength='3'
+        maxlength='100' formControlName='Title' appInputAutofocus>
+      <mat-error *ngIf="title.hasError('required')">
+        Обязательно введите название ошибки
+      </mat-error>
+      <mat-error *ngIf="title.hasError('pattern')">
+        Название ошибки содержит недопустимые символы. Допустимы буквы от А до Я (строчные и прописные), цифры от 0 до 9, знак тире
+        (-), подчёркивания (_) и пробела
+      </mat-error>
+      <mat-error *ngIf="title.hasError('minlength') && !title.hasError('pattern')">
+        Название ошибки должно быть больше {{ title.errors.minlength.requiredLength }} символов. Вы ввели {{ title.errors.minlength.actualLength
+        }} символа
+      </mat-error>
+      <mat-error *ngIf="title.hasError('maxlength') && !title.hasError('pattern')">
+        Название ошибки должно быть меньше {{title.errors.maxlength.requiredLength }} символов
+      </mat-error>
+    </mat-form-field>
+    <span class="dialog-title-text">Создана пользователем
+      <b>{{error.EmailErrorAuthor}} {{error.DateCreation | date:'longDate'}}</b>
+    </span>
+    <br>
+    <span class="dialog-title-text" [matTooltip]="project.Title">Проект:
+      <b>{{project.Title}}</b>
+    </span>
+    <button mat-icon-button [mat-dialog-close]="error" class="error-dialog-close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content class="form-field-container">
+
+    <mat-accordion>
+      <mat-expansion-panel (closed)="quillEditorIsActive = false">
+        <mat-expansion-panel-header style="background-color: gainsboro;">
+          <mat-panel-title>
+            Описание ошибки
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <quill-editor *ngIf="isShowQuillEditor" formControlName="Description" placeholder="Введите описание ошибки" [style]="{'height': '200px', 'margin-bottom':'15px'}"
+          (onContentChanged)="contentChange($event);" [readOnly]="!quillEditorIsActive" [modules]="quillEditorConfig.getToolbarConfig">
+        </quill-editor>
+        <mat-error *ngIf="quillEditorTextContent.length-1 > 5000 && (description.touched && description.dirty)">
+          Описание ошибки должно содержать не более 5000 символов. Вы ввели {{quillEditorTextContent.length-1}} символа
+        </mat-error>
+
+        <button mat-raised-button color="primary" *ngIf="quillEditorIsActive" (click)="updateError('Описание ошибки'); quillEditorIsActive = false;">Сохранить</button>
+        <button mat-raised-button *ngIf="quillEditorIsActive" (click)="quillEditorIsActive = false; description.setValue(error.Description);">Отмена</button>
+        <mat-action-row>
+          <button mat-icon-button *ngIf="description.value == '' && !quillEditorIsActive" matTooltip="Добавить описание" (click)="quillEditorIsActive = true; isShowQuillEditor = true">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="description.value != '' && !quillEditorIsActive" matTooltip="Редактировать описание" (click)="quillEditorIsActive = true;">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header style="background-color: gainsboro;">
+          <mat-panel-title>
+            Сведения об ошибке
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="info-error-flex-container">
+          <div style="width: 48%" class="form-field-container">
+            <mat-form-field>
+                <mat-select placeholder="Ответственный за ошибку" formControlName="EmailErrorResponsible" (selectionChange)="updateError('Ответственный за ошибку')">
+                    <mat-option value=""> Не назначен </mat-option>
+                    <mat-option *ngFor="let worker of projectWorkers" [value]="worker.Email">
+                      {{worker.Email | getUserNameFromEmail}}
+                    </mat-option>
+                  </mat-select>
+                <mat-error *ngIf="emailErrorResponsible.hasError('required')">
+                  Выберите сотрудника, ответственного за решение ошибки
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="Статус ошибки" formControlName="Status" required (selectionChange)="updateError('Статус ошибки')">
+                <mat-option *ngFor="let status of errorService.status" [value]="status.value">
+                  {{status.viewValue}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="status.hasError('required')">
+                Обязательно укажите статус ошибки
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput [min]="error.DateCreation" disabled [matDatepicker]="deadlineDatepicker" placeholder="Срок выполнения" formControlName='Deadline' (dateChange)="updateError('Срок выполнения')"
+                required>
+              <mat-datepicker-toggle matSuffix [for]="deadlineDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #deadlineDatepicker disabled="false" ></mat-datepicker>
+              <mat-error *ngIf="deadline.hasError('required')">
+                Обязательно введите срок выполнения ошибки
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div style="width: 48%" class="form-field-container">
+
+
+            <mat-form-field>
+              <mat-select placeholder="Приоритет ошибки" formControlName="Priority" required (selectionChange)="updateError('Приоритет ошибки')">
+                <mat-option *ngFor="let priority of errorService.priorities" [value]="priority.value">
+                  {{priority.viewValue}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="priority.hasError('required')">
+                Обязательно укажите приоритет ошибки
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="Классификация ошибки" formControlName="Classification" required (selectionChange)="updateError('Классификация ошибки')">
+                <mat-option *ngFor="let classification of errorService.classification" [value]="classification.value">
+                  {{classification.viewValue}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="classification.hasError('required')">
+                Обязательно укажите классификацию ошибки
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-tab-group style="margin-top: 30px;">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>attach_file
+          </mat-icon> Вложения
+        </ng-template>
+        <h1>Best pasta restaurants</h1>
+        <h1>Best pasta restaurants</h1>
+        <h1>Best pasta restaurants</h1>
+        <h1>Best pasta restaurants</h1>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>done</mat-icon> Решение
+        </ng-template>
+        <!-- <button mat-raised-button *ngIf="error.Solution?.Description == ''" (click)="openSolutionErrorDialog()">Добавить решение</button> -->
+     <span *ngIf="errorSolution?.Description != ''"></span>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-dialog-content>
+</form>

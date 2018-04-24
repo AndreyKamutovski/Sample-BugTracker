@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>
+  Удалить пользователя
+  <strong>{{userEmail}}</strong> из проекта?
+</h2>
+
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Отмена</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">Удалить пользователя</button>
+</mat-dialog-actions>

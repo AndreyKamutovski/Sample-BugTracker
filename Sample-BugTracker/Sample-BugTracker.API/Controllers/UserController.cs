@@ -30,6 +30,11 @@ namespace Sample_BugTracker.API.Controllers
             return _userService.GetProjectUsers(projectId);
         }
 
+        public IEnumerable<UserDTO> GetProjectWorkers([Required]int projectId)
+        {
+            return _userService.GetProjectWorkers(projectId);
+        }
+
         public IEnumerable<UserDTO> GetAll()
         {
             return _userService.GetAll();
@@ -54,6 +59,31 @@ namespace Sample_BugTracker.API.Controllers
         public async Task<string> UploadUserAvatar()
         {
             return  await _userService.UploadUserAvatar(Request);
+        }
+
+        [HttpPost]
+        public UserDTO AttachUser([Required] AttachUserDTO attachUser)
+        {
+            return _userService.AttachUser(attachUser);
+        }
+
+        [HttpPost]
+        public UserDTO EditAttachedUser([Required] AttachUserDTO editUser)
+        {
+            return _userService.EditAttachedUser(editUser);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public void ConfirmAttachmentUser([Required] ConfirmAttachmentUserDTO confirmUser)
+        {
+            _userService.ConfirmAttachmentUser(confirmUser);
+        }
+
+        [HttpPost]
+        public void UnattachUser([Required] UnattachUserDTO unattachUser)
+        {
+            _userService.UnattachUser(unattachUser);
         }
     }
 }

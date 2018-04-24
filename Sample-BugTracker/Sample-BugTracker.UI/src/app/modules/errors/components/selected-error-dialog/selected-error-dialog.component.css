@@ -1,0 +1,25 @@
+.info-error-flex-container {
+    display: flex;
+     justify-content: space-between;
+}
+
+.info-error-flex-container>div {
+    width: 48%;
+    padding-top: 20px;
+}
+
+.dialog-title-text {
+    font-size: 14px;
+     font-weight: 400;
+      line-height:18px;
+       color:rgb(109, 110, 113);
+ }
+
+ .error-dialog-header {
+     position: relative;
+ }
+ .error-dialog-close-btn {
+    position: absolute;
+    top: -22px;
+    right: -22px;
+ }

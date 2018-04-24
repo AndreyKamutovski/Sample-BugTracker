@@ -1,0 +1,31 @@
+<form [formGroup]='editUserForm' (ngSubmit)="updateUser()" novalidate>
+  <h2 mat-dialog-title>
+    Редактировать пользователя
+  </h2>
+  <mat-dialog-content class="form-field-container">
+    <mat-list>
+      <mat-list-item>
+        <img matListAvatar [src]="(data.editUser.Avatar != null) ? uri + data.editUser.Avatar : '../../../../../assets/person.png'">
+        <strong matLine> {{data.editUser.Email | getUserNameFromEmail}} </strong>
+        <span matLine> {{data.editUser.Email}} </span>
+      </mat-list-item>
+    </mat-list>
+
+    <mat-form-field>
+      <mat-select placeholder="Роль пользователя" formControlName='RoleName' required>
+        <mat-option *ngFor="let role of roles" [value]="role.value">
+          {{ role.viewValue }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="RoleName.hasError('required')">
+        Пожалуйста, выберите роль пользователя
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+
+  <mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="null" type="reset">Отмена</button>
+    <button mat-raised-button color="primary" [disabled]="!editUserForm.valid" type="submit">Обновить</button>
+  </mat-dialog-actions>
+</form>

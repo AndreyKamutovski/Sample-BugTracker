@@ -7,6 +7,8 @@ namespace Sample_BugTracker.DAL.Entities
     {
         public virtual ICollection<UserProject> UserProjects { get; set; }
         public virtual ICollection<Error> Errors { get; set; }
+        public virtual ICollection<ErrorSolution> ErrorSolutions { get; set; }
+        public virtual ICollection<Attachment> Attachments { get; set; }
         public virtual Portal Portal { get; set; }
 
         public string Avatar { get; set; }

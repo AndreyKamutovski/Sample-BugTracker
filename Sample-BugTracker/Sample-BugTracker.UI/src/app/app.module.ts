@@ -21,7 +21,6 @@ import { GlobalErrorHandlerComponent } from './shared/components/global-error-ha
 import { GlobalErrorHandlerService } from './shared/components/global-error-handler/global-error-handler.service';
 import { AuthService } from './shared/services/auth.service';
 import { HttpClientService, REST_URI } from './shared/services/httpClient.service';
-import { InternationalizationService } from './shared/services/internationalization.service';
 import { QuillEditorConfigurationService } from './shared/services/quill-editor-configuration.service';
 
 // import { CaptchaComponent } from './captcha/captcha.component';
@@ -53,7 +52,6 @@ import { QuillEditorConfigurationService } from './shared/services/quill-editor-
         AuthGuardLoginService,
         AuthGuardLogoutService,
         HttpClientService,
-        InternationalizationService,
         QuillEditorConfigurationService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },

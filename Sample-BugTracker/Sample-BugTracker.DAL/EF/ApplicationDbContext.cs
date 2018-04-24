@@ -18,6 +18,9 @@ namespace Sample_BugTracker.DAL.EF
         public DbSet<Portal> Portals { get; set; }
         public DbSet<UserProject> UserProjects { get; set; }
         public DbSet<AwaitingAttachmentUser> AwaitingAttachmentUsers { get; set; }
+        public DbSet<ErrorSolution> ErrorSolutions { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
+
 
         public ApplicationDbContext()
             : base("BTContext")

@@ -15,13 +15,10 @@ import { UsersService } from '../../users.service';
 })
 export class AddUserFormComponent implements OnInit {
   private addUserForm: FormGroup;
-  private roles = [
-    { value: 'Moderator', viewValue: 'Модератор' },
-    { value: 'Worker', viewValue: 'Сотрудник' },
-    { value: 'User', viewValue: 'Обычный пользователь' },
-  ];
+
   private existsUser: User[];
   private filteredUserEmails: Observable<string[]>;
+  private roles = [];
 
   get Email() { return this.addUserForm.get('Email'); }
   get RoleName() { return this.addUserForm.get('RoleName'); }
@@ -31,13 +28,14 @@ export class AddUserFormComponent implements OnInit {
     private dialogRef: MatDialogRef<AddUserFormComponent>,
     private userService: UsersService
   ) {
+    this.roles = this.userService.roles.filter(r => r.value != "Admin");
     this.createForm();
   };
 
   private createForm(): void {
     this.addUserForm = this.formBuilder.group({
       'Email': ['', [Validators.required, Validators.email]],
-      'RoleName': ['', [Validators.required]],
+      'RoleName': [this.roles[1].value, [Validators.required]],
       'ProjectId': [sessionStorage.getItem('projectID')]
     });
   }

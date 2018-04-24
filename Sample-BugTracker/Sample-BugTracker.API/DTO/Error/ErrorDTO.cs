@@ -1,4 +1,6 @@
-﻿using Sample_BugTracker.DAL.Enumerations;
+﻿using Sample_BugTracker.DAL.EF;
+using Sample_BugTracker.DAL.Enumerations;
+using Sample_BugTracker.DAL.Repositories;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -48,5 +50,12 @@ namespace Sample_BugTracker.API.DTO
         [Display(Name = "Email address of error author")]
         [EmailAddress(ErrorMessage = "Invalid Email Address of error author")]
         public string EmailErrorAuthor { get; set; }
+
+        public ErrorSolutionDTO Solution { get; set; }
+
+        public ErrorDTO()
+        {
+
+        }
     }
 }

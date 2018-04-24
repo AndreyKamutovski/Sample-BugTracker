@@ -4,13 +4,16 @@ import { Observable } from 'rxjs/Observable';
 
 import { HttpClientService } from '../../shared/services/httpClient.service';
 import { ErrorBT } from './models/error.model';
+import { UpdateErrorResponsibleBT } from './models/update-error-responsible.model';
+import { UpdateErrorDeadlineBT } from './models/update-error-deadline.model';
+import { SolutionErrorFormComponent } from './components/solution-error-form/solution-error-form.component';
 
 @Injectable()
 export class ErrorService {
 
   public status = [
     { value: 1, viewValue: 'Открыто', color: "" },
-    { value: 2, viewValue: 'Решено', color: "" },
+    { value: 2, viewValue: 'Выполняется', color: "" },
     { value: 3, viewValue: 'Необходимо протестировать', color: "" },
     { value: 4, viewValue: 'Закрыто', color: "" },
   ];
@@ -38,10 +41,36 @@ export class ErrorService {
   }
 
   addError(error: ErrorBT): Observable<ErrorBT> {
-    console.log('addError serv');
-    console.log('err', error);
-
-    
-    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Error', null, { 'Content-Type': 'application/json' }, error);
+    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Error/Add', null, { 'Content-Type': 'application/json' }, error);
   }
+
+  addSolution(solution: SolutionErrorFormComponent): Observable<SolutionErrorFormComponent> {
+    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Error/AddSolution', null, { 'Content-Type': 'application/json' }, solution);
+  }
+
+  updateError(error: ErrorBT): Observable<ErrorBT> {
+    return this.HttpClientService.sendRequest(RequestMethod.Put, 'api/Error', null, { 'Content-Type': 'application/json' }, error);
+  }
+
+  updateErrorResponsible(errorResponsible: UpdateErrorResponsibleBT): Observable<UpdateErrorResponsibleBT> {
+    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Error/UpdateErrorResponsible', null, { 'Content-Type': 'application/json' }, errorResponsible);
+  }
+
+  updateErrorDeadline(errorDeadline: UpdateErrorDeadlineBT): Observable<UpdateErrorDeadlineBT> {
+    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Error/UpdateErrorDeadline', null, { 'Content-Type': 'application/json' }, errorDeadline);
+  }
+
+  updateErrorStatus(errorStatus: any): Observable<any> {
+    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Error/UpdateErrorStatus', null, { 'Content-Type': 'application/json' }, errorStatus);
+  }
+
+  updateErrorPriority(errorPriority: any): Observable<any> {
+    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Error/UpdateErrorPriority', null, { 'Content-Type': 'application/json' }, errorPriority);
+  }
+
+  updateErrorClassification(errorClassification: any): Observable<any> {
+    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Error/UpdateErrorClassification', null, { 'Content-Type': 'application/json' }, errorClassification);
+  }
+
+
 }

@@ -9,20 +9,27 @@ import { SelectedProjectPageComponent } from './components/selected-project-page
 import { ProjectService } from './project.service';
 import { CurrentProjectResolverService } from './resolvers/current-project-resolver.service';
 import { ProjectListResolverService } from './resolvers/project-list-resolver.service';
-
+import {TableModule} from 'primeng/table';
+import { EditProjectFormComponent } from './components/edit-project-form/edit-project-form.component';
+import { ConfirmDeletingProjectComponent } from './components/confirm-deleting-project/confirm-deleting-project.component';
 
 @NgModule({
   imports: [
     SharedModule,
-    NavbarModule,               
+    NavbarModule,   
+    TableModule            
   ],
   entryComponents: [
-    AddProjectFormComponent
+    AddProjectFormComponent,
+    EditProjectFormComponent,
+    ConfirmDeletingProjectComponent
   ],
   declarations: [
     ProjectListComponent,
     AddProjectFormComponent,
     SelectedProjectPageComponent,
+    EditProjectFormComponent,
+    ConfirmDeletingProjectComponent,
   ],
   providers: [
     ProjectService,

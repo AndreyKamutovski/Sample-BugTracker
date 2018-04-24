@@ -34,16 +34,14 @@ namespace Sample_BugTracker.API.Controllers
         }
 
         [HttpPost]
-        public void AttachUser([Required] AttachUserDTO attachUser)
+        public ProjectDTO Edit([Required] ProjectDTO project)
         {
-            _projectService.AttachUser(attachUser);
+            return _projectService.Edit(project);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public void ConfirmAttachmentUser([Required] ConfirmAttachmentUserDTO confirmUser)
-        {   
-            _projectService.ConfirmAttachmentUser(confirmUser);
+        public void Delete([Required] int projectId)
+        {
+            _projectService.Delete(projectId);
         }
     }
 }

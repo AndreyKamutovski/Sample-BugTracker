@@ -1,0 +1,9 @@
+.error-global-filter {
+    min-height: 64px;
+    padding: 12px 24px 0;
+    background: white;
+  }
+
+  .error-global-filter>mat-form-field {
+    width: 100%;
+  }

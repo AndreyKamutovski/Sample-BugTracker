@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sample_BugTracker.API.DTO.Error;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sample_BugTracker.API.DTO
@@ -23,5 +24,12 @@ namespace Sample_BugTracker.API.DTO
         [MinLength(10)]
         [MaxLength(1000)]
         public string Description { get; set; }
+
+        public StatisticsErrorDTO ErrorStatistics { get; set; }
+
+        public ProjectDTO()
+        {
+            ErrorStatistics = new StatisticsErrorDTO();
+        }
     }
 }

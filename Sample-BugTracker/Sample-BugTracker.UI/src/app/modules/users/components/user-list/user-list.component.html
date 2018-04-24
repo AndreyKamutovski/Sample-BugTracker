@@ -5,25 +5,20 @@
   <mat-list-item *ngFor="let user of users">
     <img matListAvatar [src]="(user.Avatar != null) ? uri + user.Avatar : '../../../../../assets/person.png'">
     <strong matLine> {{user.Email}} </strong>
-    <span matLine> {{user.RoleName |  getRoleName }} </span>
-    <button mat-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
+    <span matLine *ngIf="user.RoleName !== 'Admin'"> {{user.RoleName | viewRole }} </span>
+    <strong matLine *ngIf="user.RoleName === 'Admin'">
+      <b>{{user.RoleName | viewRole }}</b>
+    </strong>
+    <button *ngIf="user.RoleName !== 'Admin'" mat-icon-button matTooltip="Редактировать" (click)="openEditUserDialog(user)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button *ngIf="user.RoleName !== 'Admin'" mat-icon-button matTooltip="Удалить" (click)="openDeleteUserDialog(user)">
+      <mat-icon>delete</mat-icon>
     </button>
     <mat-divider></mat-divider>
   </mat-list-item>
 </mat-list>
 
-
-<mat-menu #menu>
-  <button mat-menu-item>
-    <mat-icon>edit</mat-icon>
-    <span>Редактировать</span>
-  </button>
-  <button mat-menu-item>
-    <mat-icon>delete</mat-icon>
-    <span>Удалить</span>
-  </button>
-</mat-menu>
 
 <button *ngIf="authService.isPortalOwner" mat-fab class="mat-fab-buttom-right" (click)="openAddUserDialog()">
   <mat-icon>add</mat-icon>

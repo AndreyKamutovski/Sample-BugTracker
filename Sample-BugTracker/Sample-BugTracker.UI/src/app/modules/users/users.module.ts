@@ -8,6 +8,9 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserListResolverService } from './resolvers/user-list-resolver.service';
 import { ProjectOwnerResolverService } from './resolvers/project-owner-resolver.service';
+import { ConfirmDeletingUserComponent } from './components/confirm-deleting-user/confirm-deleting-user.component';
+import { EditUserFormComponent } from './components/edit-user-form/edit-user-form.component';
+import { ProjectWorkersResolverService } from './resolvers/project-workers-resolver.service';
 
 
 @NgModule({
@@ -19,15 +22,20 @@ import { ProjectOwnerResolverService } from './resolvers/project-owner-resolver.
     AddUserFormComponent,
     LoginFormComponent,
     ConfirmPasswordComponent,
-    ConfirmPasswordFormComponent
+    ConfirmPasswordFormComponent,
+    ConfirmDeletingUserComponent,
+    EditUserFormComponent
   ],
   entryComponents: [
     ConfirmPasswordFormComponent,
-    AddUserFormComponent
+    AddUserFormComponent,
+    ConfirmDeletingUserComponent,
+    EditUserFormComponent
 ],
 providers: [
   UserListResolverService,
-  ProjectOwnerResolverService
+  ProjectOwnerResolverService,
+  ProjectWorkersResolverService
 ]
 })
 export class UsersModule { }

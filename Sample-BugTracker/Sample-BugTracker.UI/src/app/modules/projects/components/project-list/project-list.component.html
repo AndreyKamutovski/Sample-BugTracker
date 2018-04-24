@@ -1,66 +1,62 @@
 <app-navbar *ngIf="authService.isLoggedIn" titleApp="BugTracker"></app-navbar>
-<div *ngIf="dataSource.data.length === 0" style="margin: 10% 0;">
+<div *ngIf="projects.length === 0" style="margin: 10% 0;">
     <span class="mat-h1">В Ваше портале отсутствуют проекты. Нажмите кнопку для создания первого проекта</span>&nbsp;
     <button mat-raised-button color="accent" (click)="openAddProjectDialog()">Создать проект</button>
 </div>
-<div class="mat-elevation-z5 table-container" [hidden]="!(dataSource.data.length > 0)">
-    <mat-table [dataSource]="dataSource" matSort #projectTable class="mat-typography">
-        <ng-container matColumnDef="Title">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-                <h3>Название проекта</h3>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let project"> {{ project.Title }} </mat-cell>
-        </ng-container>
+<div class="mat-elevation-z5 table-container" [hidden]="!(projects.length > 0)">
 
-        <ng-container matColumnDef="countError">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-                <h3>Ошибки</h3>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let project"> {{ 1 }} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="DateStart">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-                <h3>Дата начала</h3>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let project"> {{ project.DateStart | date:'longDate' }} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="DateEnd">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-                <h3>Дата окончания</h3>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let project"> {{ project.DateEnd | date:'longDate' }} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="select">
-            <mat-header-cell *matHeaderCellDef>
-                <!-- Действие -->
-            </mat-header-cell>
-            <mat-cell *matCellDef="let project">
-                <button mat-icon-button [matMenuTriggerFor]="menu" (click)='onClickMatMenuBtn($event)'>
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu>
-                    <button mat-menu-item>
+    <p-table #projectsTable (onRowSelect)="onRowSelect($event)" [responsive]="true" [columns]="cols" selectionMode="single" [value]="projects"
+        [paginator]="true" [rows]="10">
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" colspan="2" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+                <th colspan="1"></th>
+                <th colspan="1"></th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field" colspan="2">
+                    <input *ngSwitchCase="'Title'" pInputText type="text" (input)="projectsTable.filter($event.target.value, col.field, col.filterMatchMode)">
+                </th>
+                <TH colspan="2"></TH>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-project>
+            <tr [pSelectableRow]="project">
+                <td colspan="2">{{ (project.Title.length > 50) ? (project.Title | slice:0:50)+'...' : (project.Title) }}</td>
+                <td colspan="2">
+                    <div class="error-statistics-container" [matTooltip]="project.ErrorStatistics.ClosedErrorCount + ' решено из ' + project.ErrorStatistics.Total">
+                        <span class="error-statistics-progress" [style.width.%]="project.ErrorStatistics.ProgressPercentage">
+                        </span>
+                        <span [style.width.%]="100 - project.ErrorStatistics.ProgressPercentage">
+                        </span>
+                        <span class="error-statistics-percent-text">
+                            {{project.ErrorStatistics.ProgressPercentage}}%
+                        </span>
+                    </div>
+                </td>
+                <td colspan="2">{{ project.DateStart | date:'longDate' }}</td>
+                <td colspan="2">{{ project.DateEnd | date:'longDate' }}</td>
+                <td colspan="1">
+                    <button mat-icon-button matTooltip="Редактировать" (click)="openEditProjectDialog($event, project)">
                         <mat-icon>edit</mat-icon>
-                        <span>Редактировать</span>
                     </button>
-                    <button mat-menu-item>
+                </td>
+                <td colspan="1">
+                    <button mat-icon-button matTooltip="Удалить" (click)="openDeleteProjectDialog($event, project)">
                         <mat-icon>delete</mat-icon>
-                        <span>Удалить</span>
                     </button>
-                </mat-menu>
-            </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let projectRowData; columns: displayedColumns" (click)="onClickRow(projectRowData.Id)"></mat-row>
-    </mat-table>
-
-    <mat-paginator #projectPaginator [length]="this.dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"
-        [pageIndex]="0">
-    </mat-paginator>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 
     <button *ngIf="authService.isPortalOwner" mat-fab class="mat-fab-buttom-right" (click)="openAddProjectDialog()">
         <mat-icon>add</mat-icon>

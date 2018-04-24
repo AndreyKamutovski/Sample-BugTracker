@@ -20,6 +20,7 @@ import { UserListComponent } from './modules/users/components/user-list/user-lis
 import { AuthGuardLogoutService } from './modules/users/guards/auth-guard-logout.service';
 import { ProjectOwnerResolverService } from './modules/users/resolvers/project-owner-resolver.service';
 import { UserListResolverService } from './modules/users/resolvers/user-list-resolver.service';
+import { ProjectWorkersResolverService } from './modules/users/resolvers/project-workers-resolver.service';
 
 
 // { path: '', component: ProjectListComponent, resolve: { projectList: ProjectListResolverService } },
@@ -32,7 +33,7 @@ const routes: Routes = [
         canActivateChild: [AuthGuardLoginService],
         children: [
             { path: 'dashboard', component: DashboardComponent, resolve: { currentProject: CurrentProjectResolverService, projectOwner: ProjectOwnerResolverService }, },
-            { path: 'errors', component: ErrorListComponent, resolve: {errorList: ErrorListResolverService} },
+            { path: 'errors', component: ErrorListComponent, resolve: {errorList: ErrorListResolverService, projectWorkers: ProjectWorkersResolverService, userList: UserListResolverService, currentProject: CurrentProjectResolverService} },
             { path: 'users', component: UserListComponent, resolve: { userList: UserListResolverService }, }
         ]
     },

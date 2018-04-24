@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.DAL.Enumerations;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sample_BugTracker.DAL.Entities
@@ -31,5 +32,10 @@ namespace Sample_BugTracker.DAL.Entities
 
         public string ErrorResponsibleId { get; set; }
         public virtual AppUser ErrorResponsible { get; set; }
+
+        public virtual ErrorSolution Solution { get; set; }
+
+        public virtual ICollection<Attachment> Attachments { get; set; }
+
     }
 }

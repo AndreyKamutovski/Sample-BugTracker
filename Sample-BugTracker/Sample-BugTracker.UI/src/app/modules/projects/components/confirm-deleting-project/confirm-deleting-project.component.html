@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>
+  Удалить проект
+  <strong>{{projectTitle}}</strong>?
+</h2>
+<mat-dialog-content>Это приведёт к удалению всех связанных с проектом ошибок.</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Отмена</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">Удалить проект</button>
+</mat-dialog-actions> 

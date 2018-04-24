@@ -1,3 +1,5 @@
+import { StatisticsError } from "../../errors/models/statistics-error.model";
+
 export class Project {
 
     public Id?: number;
@@ -5,6 +7,8 @@ export class Project {
     public DateStart: Date;
     public DateEnd: Date;
     public Description: string;
+
+    public ErrorStatistics?: StatisticsError;
 
     constructor(init?: Partial<Project>) {
         Object.assign(this, init);
