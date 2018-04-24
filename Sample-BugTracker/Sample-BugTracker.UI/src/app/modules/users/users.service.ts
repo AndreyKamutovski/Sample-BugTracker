@@ -40,7 +40,7 @@ export class UsersService {
   }
 
   uploadAvatar(formData: FormData): Observable<any> {
-    return this.HttpClientService.sendRequest(RequestMethod.Post, "api/User", null, null, formData);  // { 'Content-Type': 'multipart/form-data' }
+    return this.HttpClientService.sendRequest(RequestMethod.Post, "api/User/UploadUserAvatar", null, null, formData);  // { 'Content-Type': 'multipart/form-data' }
   }
 
   confirmAttachmentUser(confirm: any) {

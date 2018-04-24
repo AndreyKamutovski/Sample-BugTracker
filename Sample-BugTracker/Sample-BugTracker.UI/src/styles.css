@@ -18,7 +18,7 @@ body, .app-background {
   flex-direction: column;
 }
 
-.form-field-container>* {
+.form-field-container mat-form-field {
     width: 100%;
     margin-bottom: 20px;
 }
@@ -30,8 +30,8 @@ body, .app-background {
     align-items: center;
 }
 
-.horizontal-flex-container-for-two-datepicker > * {
-    width: 48%;
+.horizontal-flex-container-for-two-datepicker > mat-form-field {
+    width: 45%;
 }
 .logo-img {
     width: 80px;

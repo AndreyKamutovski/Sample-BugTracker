@@ -32,6 +32,7 @@ namespace Sample_BugTracker.DAL.EF
             Database.SetInitializer(new StoreDbInitializer());
         }
 
+        // CreateDatabaseIfNotExists
         // Инициализация происходит при первом обращении к контексту данных
         public class StoreDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
         {
