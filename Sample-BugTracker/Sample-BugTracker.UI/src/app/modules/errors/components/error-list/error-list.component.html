@@ -58,8 +58,9 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-error>
+        <!-- {{ (error.Title.length > 10) ? (error.Title | slice:0:10)+'...' : (error.Title) }} -->
       <tr [pSelectableRow]="error">
-        <td><a href="#" (click)="openErrorDialog(error)">{{ (error.Title.length > 10) ? (error.Title | slice:0:10)+'...' : (error.Title) }}</a></td>
+        <td><a href="#" (click)="openErrorDialog(error)">{{ error.Title }}</a></td>
         <td>{{ error.EmailErrorAuthor | getUserNameFromEmail }}</td>
         <td>{{ error.DateCreation | date:'longDate' }}</td>
         <td>

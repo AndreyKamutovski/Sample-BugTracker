@@ -1,7 +1,7 @@
 <form [formGroup]='errorForm' novalidate>
   <div mat-dialog-title class="error-dialog-header">
     <mat-form-field style="width: 100%;">
-      <input matInput type="text" (change)="updateError('Название ошибки')" placeholder="Название ошибки" required minlength='3'
+      <input matInput type="text" (change)="updateError('Название ошибки', 'Title')" placeholder="Название ошибки" required minlength='3'
         maxlength='100' formControlName='Title' appInputAutofocus>
       <mat-error *ngIf="title.hasError('required')">
         Обязательно введите название ошибки
@@ -68,19 +68,19 @@
         <div class="info-error-flex-container">
           <div style="width: 48%" class="form-field-container">
             <mat-form-field>
-                <mat-select placeholder="Ответственный за ошибку" formControlName="EmailErrorResponsible" (selectionChange)="updateError('Ответственный за ошибку')">
-                    <mat-option value=""> Не назначен </mat-option>
-                    <mat-option *ngFor="let worker of projectWorkers" [value]="worker.Email">
-                      {{worker.Email | getUserNameFromEmail}}
-                    </mat-option>
-                  </mat-select>
-                <mat-error *ngIf="emailErrorResponsible.hasError('required')">
-                  Выберите сотрудника, ответственного за решение ошибки
-                </mat-error>
+              <mat-select placeholder="Ответственный за ошибку" formControlName="EmailErrorResponsible" (selectionChange)="updateError('Ответственный за ошибку', 'EmailErrorResponsible')">
+                <mat-option value=""> Не назначен </mat-option>
+                <mat-option *ngFor="let worker of projectWorkers" [value]="worker.Email">
+                  {{worker.Email | getUserNameFromEmail}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="emailErrorResponsible.hasError('required')">
+                Выберите сотрудника, ответственного за решение ошибки
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-select placeholder="Статус ошибки" formControlName="Status" required (selectionChange)="updateError('Статус ошибки')">
+              <mat-select placeholder="Статус ошибки" formControlName="Status" required (selectionChange)="updateError('Статус ошибки', 'Status')">
                 <mat-option *ngFor="let status of errorService.status" [value]="status.value">
                   {{status.viewValue}}
                 </mat-option>
@@ -91,10 +91,10 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput [min]="error.DateCreation" disabled [matDatepicker]="deadlineDatepicker" placeholder="Срок выполнения" formControlName='Deadline' (dateChange)="updateError('Срок выполнения')"
-                required>
+              <input matInput [min]="error.DateCreation" disabled [matDatepicker]="deadlineDatepicker" placeholder="Срок выполнения" formControlName='Deadline'
+                (dateChange)="updateError('Срок выполнения', 'Deadline')" required>
               <mat-datepicker-toggle matSuffix [for]="deadlineDatepicker"></mat-datepicker-toggle>
-              <mat-datepicker #deadlineDatepicker disabled="false" ></mat-datepicker>
+              <mat-datepicker #deadlineDatepicker disabled="false"></mat-datepicker>
               <mat-error *ngIf="deadline.hasError('required')">
                 Обязательно введите срок выполнения ошибки
               </mat-error>
@@ -104,7 +104,7 @@
 
 
             <mat-form-field>
-              <mat-select placeholder="Приоритет ошибки" formControlName="Priority" required (selectionChange)="updateError('Приоритет ошибки')">
+              <mat-select placeholder="Приоритет ошибки" formControlName="Priority" required (selectionChange)="updateError('Приоритет ошибки', 'Priority')">
                 <mat-option *ngFor="let priority of errorService.priorities" [value]="priority.value">
                   {{priority.viewValue}}
                 </mat-option>
@@ -115,7 +115,7 @@
             </mat-form-field>
 
             <mat-form-field>
-              <mat-select placeholder="Классификация ошибки" formControlName="Classification" required (selectionChange)="updateError('Классификация ошибки')">
+              <mat-select placeholder="Классификация ошибки" formControlName="Classification" required (selectionChange)="updateError('Классификация ошибки', 'Classification')">
                 <mat-option *ngFor="let classification of errorService.classification" [value]="classification.value">
                   {{classification.viewValue}}
                 </mat-option>
@@ -147,7 +147,7 @@
           <mat-icon>done</mat-icon> Решение
         </ng-template>
         <!-- <button mat-raised-button *ngIf="error.Solution?.Description == ''" (click)="openSolutionErrorDialog()">Добавить решение</button> -->
-     <span *ngIf="errorSolution?.Description != ''"></span>
+        <span *ngIf="errorSolution?.Description != ''"></span>
       </mat-tab>
     </mat-tab-group>
   </mat-dialog-content>

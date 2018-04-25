@@ -36,4 +36,8 @@ export class ProjectService {
     getPortalProjects(portalId: string): Observable<Project> {
         return this.HttpClientService.sendRequest(RequestMethod.Get, `api/Project`, { 'portalId': portalId });
     }
+
+    getUserRoleForProject(projectId: number): Observable<string> {
+        return this.HttpClientService.sendRequest(RequestMethod.Get, `api/Project/GetUserRoleForProject`, { 'projectId': projectId });
+    }
 }

@@ -9,10 +9,10 @@
     <strong matLine *ngIf="user.RoleName === 'Admin'">
       <b>{{user.RoleName | viewRole }}</b>
     </strong>
-    <button *ngIf="user.RoleName !== 'Admin'" mat-icon-button matTooltip="Редактировать" (click)="openEditUserDialog(user)">
+    <button *ngIf="user.RoleName !== 'Admin' && authService.isPortalOwner" mat-icon-button matTooltip="Редактировать" (click)="openEditUserDialog(user)">
       <mat-icon>edit</mat-icon>
     </button>
-    <button *ngIf="user.RoleName !== 'Admin'" mat-icon-button matTooltip="Удалить" (click)="openDeleteUserDialog(user)">
+    <button *ngIf="user.RoleName !== 'Admin' && authService.isPortalOwner" mat-icon-button matTooltip="Удалить" (click)="openDeleteUserDialog(user)">
       <mat-icon>delete</mat-icon>
     </button>
     <mat-divider></mat-divider>

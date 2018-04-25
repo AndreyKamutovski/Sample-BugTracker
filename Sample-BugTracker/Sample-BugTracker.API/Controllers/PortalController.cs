@@ -17,9 +17,9 @@ namespace Sample_BugTracker.API.Controllers
         private PortalService _portalService = new PortalService();
 
         [HttpPost]
-        public void Create([Required] PortalDTO portal)
+        public string Create([Required] PortalDTO portal)
         {
-             _portalService.Create(portal);
+             return _portalService.Create(portal);
         }
 
         [HttpGet]

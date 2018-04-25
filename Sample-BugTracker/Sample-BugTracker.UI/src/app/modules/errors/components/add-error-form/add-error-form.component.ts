@@ -50,7 +50,7 @@ export class AddErrorFormComponent implements OnInit {
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(100),
-        Validators.pattern("^[А-Яа-я0-9 _-]*$")
+        Validators.pattern("^[А-Яа-яa-zA-Z0-9 _-]*$")
       ]],
       "Description": ["", [
         Validators.maxLength(5000),

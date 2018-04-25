@@ -11,7 +11,7 @@ export class PortalService {
 
   constructor(private HttpClientService: HttpClientService) { }
 
-  public createPortal(portal: Portal): Observable<void> {
+  public createPortal(portal: Portal): Observable<string> {
     return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Portal', null, { 'Content-Type': 'application/json' }, portal);
   }
 

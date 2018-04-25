@@ -13,7 +13,7 @@ namespace Sample_BugTracker.API.Services
 {
     public class PortalService : BaseService
     {
-        public void Create(PortalDTO _portal)
+        public string Create(PortalDTO _portal)
         {
             using (UoW)
             {
@@ -33,6 +33,7 @@ namespace Sample_BugTracker.API.Services
                 Portal portal = new Portal() { Id = user.Id, Title = _portal.Title };
                 UoW.Portals.Add(portal);
                 UoW.Complete();
+                return portal.Id;
             }
         }
 

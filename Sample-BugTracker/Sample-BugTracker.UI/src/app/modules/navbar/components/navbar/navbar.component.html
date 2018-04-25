@@ -1,13 +1,15 @@
 <mat-toolbar class="mat-toolbar-single-row mat-elevation-z5 app-navbar" color="primary">
+              <img src="../../assets/bugTracker-white.png" alt="Bug Tracker Logo" height="26" width="50">
 
-  <span style="flex: 1 1 50%;">
+  <span style="flex: 1 1 50%; display: flex;  align-items: center; margin-left: 1%;">
+
       <button *ngIf="sidenav != null" mat-icon-button (click)="toggleSidenav()">
           <mat-icon>menu</mat-icon>
       </button>
-    <a mat-button routerLink="/" matTooltip="Главная" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+    <a mat-button routerLink="#" matTooltip="Главная" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
       true}">
-      <img src="../../assets/logo.png" alt="Bug Tracker Logo" height="26" width="50">
-      <span class="mat-title">{{titleApp}}</span>
+      
+      <span class="mat-title">Главная</span>
     </a>
     <a mat-button *ngFor="let link of navbarElements" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
       true}" [routerLink]="['/app', link.routerLink]" [matTooltip]="link.tooltipTitle">
@@ -17,7 +19,7 @@
   <button mat-icon-button [matMenuTriggerFor]="accountMenu" [matMenuTriggerData]="authService.currentUser" [matTooltip]="authService.currentUser?.Email"
     class="avatar-button" matTooltipPosition="left" [style.background-image]="getUriAvatar">
   </button>
-</mat-toolbar>
+</mat-toolbar>  
 
 <mat-menu #accountMenu [overlapTrigger]="false" class="mat-menu-avatar-panel">
   <ng-template matMenuContent let-Email="Email">

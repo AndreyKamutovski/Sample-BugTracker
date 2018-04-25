@@ -43,5 +43,11 @@ namespace Sample_BugTracker.API.Controllers
         {
             _projectService.Delete(projectId);
         }
+
+  
+        //public string GetUserRoleForProject([Required] int projectId)
+        //{
+        //    return _projectService.GetUserRoleForProject(projectId);
+        //}
     }
 }

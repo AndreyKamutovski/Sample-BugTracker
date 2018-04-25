@@ -62,7 +62,7 @@ namespace Sample_BugTracker.API.Services
                 var userProject = new UserProject() { Project = project, Worker = CurrentUser, Role = UoW.Roles.GetByName("Admin") };
                 UoW.UserProjects.Add(userProject);
                 UoW.Complete();
-                return _project;
+                return Mapper.Map<ProjectDTO>(project);
             }
         }
 
@@ -101,7 +101,21 @@ namespace Sample_BugTracker.API.Services
                 UoW.Projects.Remove(project);
                 UoW.Complete();
             }
-                
+
+        }
+
+        public string GetUserRoleForProject(int projectId)
+        {
+            using (UoW)
+            {
+                Project project = UoW.Projects.Get(projectId);
+                if (project == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", projectId), HttpStatusCode.NotFound);
+                }
+                var projUser = UoW.UserProjects.Find(pu => pu.ProjectId == projectId && pu.WorkerId == CurrentUser.Id).FirstOrDefault();
+                return projUser.Role.Name;
+            }
         }
     }
 }

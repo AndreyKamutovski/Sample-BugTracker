@@ -22,7 +22,7 @@ import { GlobalErrorHandlerService } from './shared/components/global-error-hand
 import { AuthService } from './shared/services/auth.service';
 import { HttpClientService, REST_URI } from './shared/services/httpClient.service';
 import { QuillEditorConfigurationService } from './shared/services/quill-editor-configuration.service';
-
+import 'chart.js/dist/Chart.min.js';
 // import { CaptchaComponent } from './captcha/captcha.component';
 
 @NgModule({

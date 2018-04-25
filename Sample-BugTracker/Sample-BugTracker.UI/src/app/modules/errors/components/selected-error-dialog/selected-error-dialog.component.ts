@@ -55,8 +55,8 @@ export class SelectedErrorDialogComponent implements OnInit {
   }
 
 
-  updateError(updatedField: string) {
-    if (this.errorForm.valid) {
+  updateError(updatedField: string, fcName: string) {
+    if (this.getFormControl(fcName).valid) {
       this.errorService.updateError(this.errorForm.value).toPromise().then((error: ErrorBT) => {
         this.error = error;
         this.snackBar.open(`${updatedField}: успешно обновлено`, '', { duration: 2000 });
@@ -93,7 +93,7 @@ export class SelectedErrorDialogComponent implements OnInit {
       'Priority': [this.error.Priority, [Validators.required]],
       'Classification': [this.error.Classification, [Validators.required]],
       'ProjectId': [this.error.ProjectId],
-      'EmailErrorResponsible': [this.error.EmailErrorResponsible != null ? this.error.EmailErrorResponsible : '']
+      'EmailErrorResponsible': [this.error.EmailErrorResponsible]
     });
   }
 

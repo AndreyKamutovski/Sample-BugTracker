@@ -38,7 +38,8 @@ export class TariffPlansComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        this.portalService.createPortal(result.portalData).subscribe(res => {
+        this.portalService.createPortal(result.portalData).subscribe((res: string) => {
+          sessionStorage.setItem('portalID', res);
           this.authService.login(result.portalData.Owner).then(res => {
             this.router.navigateByUrl('app/projects');
           })

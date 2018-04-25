@@ -18,8 +18,8 @@
                     {{col.header}}
                     <p-sortIcon [field]="col.field"></p-sortIcon>
                 </th>
-                <th colspan="1"></th>
-                <th colspan="1"></th>
+                <th *ngIf="authService.isPortalOwner" colspan="1"></th>
+                <th *ngIf="authService.isPortalOwner" colspan="1"></th>
             </tr>
             <tr>
                 <th *ngFor="let col of columns" [ngSwitch]="col.field" colspan="2">
@@ -44,12 +44,12 @@
                 </td>
                 <td colspan="2">{{ project.DateStart | date:'longDate' }}</td>
                 <td colspan="2">{{ project.DateEnd | date:'longDate' }}</td>
-                <td colspan="1">
+                <td *ngIf="authService.isPortalOwner" colspan="1">
                     <button mat-icon-button matTooltip="Редактировать" (click)="openEditProjectDialog($event, project)">
                         <mat-icon>edit</mat-icon>
                     </button>
                 </td>
-                <td colspan="1">
+                <td *ngIf="authService.isPortalOwner" colspan="1">
                     <button mat-icon-button matTooltip="Удалить" (click)="openDeleteProjectDialog($event, project)">
                         <mat-icon>delete</mat-icon>
                     </button>
