@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Marvin.JsonPatch;
 using Sample_BugTracker.API.DTO;
 using Sample_BugTracker.API.Exceptions;
 using Sample_BugTracker.DAL.Entities;
@@ -13,41 +14,26 @@ namespace Sample_BugTracker.API.Services
 {
     public class ErrorService : BaseService
     {
-        public IEnumerable<ErrorDTO> GetProjectErrors(int projectId)
+        public void Add(int projectId, ErrorDTO errorDto)
         {
             using (UoW)
             {
+                var error = Mapper.Map<Error>(errorDto);
                 var project = UoW.Projects.Get(projectId);
                 if (project == null)
                 {
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", projectId), HttpStatusCode.NotFound);
                 }
-
-                return Mapper.Map<List<ErrorDTO>>(project.Errors);
-            }
-        }
-
-        public ErrorDTO Add(ErrorDTO _error)
-        {
-            using (UoW)
-            {
-                Error error = Mapper.Map<Error>(_error);
-                error.ErrorAuthor = CurrentUser;
-                //var errorResponsible = UoW.Users.GetByEmail(_error.EmailErrorResponsible);
-                //if (errorResponsible == null)
-                //{
-                //    throw new ApplicationOperationException(string.Format("Error responsible user with email {0} not found", _error.EmailErrorResponsible), HttpStatusCode.NotFound);
-                //}
-                //error.ErrorResponsible = errorResponsible;
-                var project = UoW.Projects.Get(_error.ProjectId);
-                if (project == null)
+                var assignee = UoW.Users.GetByEmail(errorDto.EmailAssignee);
+                if (assignee == null)
                 {
-                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", _error.ProjectId), HttpStatusCode.NotFound);
+                    throw new ApplicationOperationException(string.Format("Error assignee with email {0} not found", errorDto.EmailAssignee), HttpStatusCode.NotFound);
                 }
                 error.Project = project;
+                error.Author = CurrentUser;
+                error.Assignee = assignee;
                 UoW.Errors.Add(error);
                 UoW.Complete();
-                return Mapper.Map<ErrorDTO>(error);
             }
         }
 
@@ -70,126 +56,41 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-
-        public UpdateErrorResponsibleDTO UpdateErrorResponsible(UpdateErrorResponsibleDTO _error)
+        public ErrorDTO Update(int id, ErrorDTO errorDto)
         {
             using (UoW)
             {
-                var error = UoW.Errors.Get(_error.ErrorId);
+                var error = UoW.Errors.Get(id);
                 if (error == null)
                 {
-                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", _error.ErrorId), HttpStatusCode.NotFound);
+                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
                 }
-                if (_error.EmailErrorResponsible != string.Empty)
+                UoW.Errors.Update(error, errorDto);
+
+                if (errorDto.EmailAuthor != null)
                 {
-                    var errorResponsible = UoW.Users.GetByEmail(_error.EmailErrorResponsible);
-                    if (errorResponsible == null)
+                    var newAuthor = UoW.Users.GetByEmail(errorDto.EmailAuthor);
+                    if (newAuthor == null)
                     {
-                        throw new ApplicationOperationException(string.Format("User with email {0} not found", _error.EmailErrorResponsible), HttpStatusCode.NotFound);
+                        throw new ApplicationOperationException(string.Format("Error author with email {0} not found", errorDto.EmailAuthor), HttpStatusCode.NotFound);
                     }
-                    error.ErrorResponsible = errorResponsible;
-
+                    error.Author = newAuthor;
                 }
-                else
-                {
-                    error.ErrorResponsible = null;  // не назначен
-                    error.ErrorResponsibleId = null;
-                }
-                UoW.Complete();
-                return _error;
-            }
 
-        }
-
-        public UpdateErrorDeadlineDTO UpdateErrorDeadline(UpdateErrorDeadlineDTO _error)
-        {
-            using (UoW)
-            {
-                var error = UoW.Errors.Get(_error.ErrorId);
-                if (error == null)
+                if (errorDto.EmailAssignee != null)
                 {
-                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", _error.ErrorId), HttpStatusCode.NotFound);
-                }
-                error.Deadline = _error.Deadline;
-                UoW.Complete();
-                return _error;
-            }
-        }
-
-        public UpdateErrorSPCEnumsDTO<Status> UpdateErrorStatus(UpdateErrorSPCEnumsDTO<Status> _error)
-        {
-            using (UoW)
-            {
-                var error = UoW.Errors.Get(_error.ErrorId);
-                if (error == null)
-                {
-                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", _error.ErrorId), HttpStatusCode.NotFound);
-                }
-                error.Status = _error.spc;
-                UoW.Complete();
-                return _error;
-            }
-        }
-
-        public UpdateErrorSPCEnumsDTO<Priority> UpdateErrorPriority(UpdateErrorSPCEnumsDTO<Priority> _error)
-        {
-            using (UoW)
-            {
-                var error = UoW.Errors.Get(_error.ErrorId);
-                if (error == null)
-                {
-                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", _error.ErrorId), HttpStatusCode.NotFound);
-                }
-                error.Priority = _error.spc;
-                UoW.Complete();
-                return _error;
-            }
-        }
-
-        public UpdateErrorSPCEnumsDTO<Classification> UpdateErrorClassification(UpdateErrorSPCEnumsDTO<Classification> _error)
-        {
-            using (UoW)
-            {
-                var error = UoW.Errors.Get(_error.ErrorId);
-                if (error == null)
-                {
-                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", _error.ErrorId), HttpStatusCode.NotFound);
-                }
-                error.Classification = _error.spc;
-                UoW.Complete();
-                return _error;
-            }
-        }
-
-        public ErrorDTO UpdateError(ErrorDTO _error)
-        {
-            using (UoW)
-            {
-                var error = UoW.Errors.Get(_error.Id);
-                if (error == null)
-                {
-                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", _error.Id), HttpStatusCode.NotFound);
-                }
-                if (_error.EmailErrorResponsible != null)
-                {
-                    var errorResponsible = UoW.Users.GetByEmail(_error.EmailErrorResponsible);
-                    if (errorResponsible == null)
+                    var newAssignee = UoW.Users.GetByEmail(errorDto.EmailAssignee);
+                    if (newAssignee == null)
                     {
-                        throw new ApplicationOperationException(string.Format("User with email {0} not found", _error.EmailErrorResponsible), HttpStatusCode.NotFound);
+                        throw new ApplicationOperationException(string.Format("Error assignee with email {0} not found", errorDto.EmailAssignee), HttpStatusCode.NotFound);
                     }
-                    error.ErrorResponsible = errorResponsible;
+                    error.Assignee = newAssignee;
                 }
-                else
+                if (errorDto.EmailAssignee == null)
                 {
-                    error.ErrorResponsible = null;  // не назначен
-                    error.ErrorResponsibleId = null;
+                    error.AssigneeId = null;
+                    error.Assignee = null;
                 }
-                error.Title = _error.Title;
-                error.Description = _error.Description;
-                error.Deadline = _error.Deadline;
-                error.Status = _error.Status;
-                error.Priority = _error.Priority;
-                error.Classification = _error.Classification;
                 UoW.Complete();
                 return Mapper.Map<ErrorDTO>(error);
             }

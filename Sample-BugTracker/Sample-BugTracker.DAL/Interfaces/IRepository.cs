@@ -15,6 +15,8 @@ namespace Sample_BugTracker.DAL.Interfaces
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
 
+        TEntity Update(TEntity entity, object entityDto);
+
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
     }

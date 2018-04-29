@@ -21,6 +21,13 @@ namespace Sample_BugTracker.DAL.Repositories
             Context.Set<TEntity>().Add(entity);
         }
 
+        public TEntity Update(TEntity entity, object entityDto)
+        {
+            Context.Entry(entity).CurrentValues.SetValues(entityDto);
+            return entity;
+        }
+
+
         public void AddRange(IEnumerable<TEntity> entities)
         {
             Context.Set<TEntity>().AddRange(entities);

@@ -279,11 +279,11 @@ namespace Sample_BugTracker.API.Services
                     throw new ApplicationOperationException(string.Format("User with email {0} not attached to project {1}", unattachUser.Email, project.Title), HttpStatusCode.NotFound);
                 }
                 UoW.UserProjects.Remove(userProject);
-                var errors = project.Errors.Where(e => e.ErrorResponsibleId == user.Id);
+                var errors = project.Errors.Where(e => e.AuthorId == user.Id);
                 foreach(var error in errors)
                 {
-                    error.ErrorResponsible = null;
-                    error.ErrorResponsibleId = null;
+                    error.Assignee = null;
+                    error.AssigneeId = null;
                 }
                 UoW.Complete();
             }

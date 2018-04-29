@@ -8,7 +8,7 @@ namespace Sample_BugTracker.API.DTO
 {
     public class ErrorDTO
     {
-        public int Id { get; set; }
+        public int ErrorId { get; set; }
 
         [Required(ErrorMessage = "Title of error is a required field")]
         [MinLength(3)]
@@ -36,20 +36,15 @@ namespace Sample_BugTracker.API.DTO
         [Range(1, 6)]
         public Classification Classification { get; set; }
 
-        [Required(ErrorMessage = "The projectId is required")]
-        public int ProjectId { get; set; }
-
-        //[Required(ErrorMessage = "The email address of error responsible is required")]
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email address of error responsible")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address of error responsible")]
-        public string EmailErrorResponsible { get; set; }
+        [Display(Name = "Email address of error assignee")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address of error assignee")]
+        public string EmailAssignee { get; set; }
 
-        //[Required(ErrorMessage = "The email address of error author is required")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email address of error author")]
         [EmailAddress(ErrorMessage = "Invalid Email Address of error author")]
-        public string EmailErrorAuthor { get; set; }
+        public string EmailAuthor { get; set; }
 
         public ErrorSolutionDTO Solution { get; set; }
 

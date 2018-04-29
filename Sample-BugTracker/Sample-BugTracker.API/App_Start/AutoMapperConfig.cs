@@ -24,8 +24,9 @@ namespace Sample_BugTracker.API.App_Start
                 config.CreateMap<AppUser, UserDTO>();
                 config.CreateMap<AttachUserDTO, UserDTO>();
                 config.CreateMap<AttachUserDTO, AppUser>();
-                config.CreateMap<Error, ErrorDTO>().ForMember(dest => dest.EmailErrorResponsible, dest => dest.MapFrom(src => src.ErrorResponsible.Email))
-                                                   .ForMember(dest => dest.EmailErrorAuthor, dest => dest.MapFrom(src => src.ErrorAuthor.Email));
+                config.CreateMap<Error, ErrorDTO>().ForMember(dest => dest.EmailAssignee, dest => dest.MapFrom(src => src.Assignee.Email))
+                                                   .ForMember(dest => dest.EmailAuthor, dest => dest.MapFrom(src => src.Author.Email))
+                                                   .ForMember(dest => dest.ErrorId, dest => dest.MapFrom(src => src.Id));
                 config.CreateMap<ErrorDTO, Error>();
 
             });

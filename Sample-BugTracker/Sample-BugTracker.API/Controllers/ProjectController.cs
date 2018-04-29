@@ -13,35 +13,41 @@ using System.Web.Http;
 namespace Sample_BugTracker.API.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/project")]
     public class ProjectController : ApiController
     {
         private ProjectService _projectService = new ProjectService();
 
-        public ProjectDTO GetById([Required] int projectId)
+        [Route("{id:int:min(1)}")]
+        public ProjectDTO GetById([Required] int id)
         {
-            return _projectService.GetById(projectId);
+            return _projectService.GetById(id);
         }
 
-        public IEnumerable<ProjectDTO> GetPortalProjects([Required] string portalId)
+        [Route("{id:int:min(1)}/errors")]
+        public IEnumerable<ErrorDTO> GetProjectErrors([Required] int id)
         {
-            return _projectService.GetPortalProjects(portalId);
-        }
-
-        [HttpPost]
-        public ProjectDTO Add([Required] ProjectDTO project)
-        {
-            return _projectService.Add(project);
+            return _projectService.GetProjectErrors(id);
         }
 
         [HttpPost]
-        public ProjectDTO Edit([Required] ProjectDTO project)
+        [Route("")]
+        public void Add([Required] ProjectDTO projectDto)
         {
-            return _projectService.Edit(project);
+            _projectService.Add(projectDto);
         }
 
-        public void Delete([Required] int projectId)
+        [HttpPut]
+        [Route("{id:int:min(1)}")]
+        public ProjectDTO Update([Required] int id, [Required] ProjectDTO projectDto)
         {
-            _projectService.Delete(projectId);
+            return _projectService.Update(id, projectDto);
+        }
+
+        [Route("")]
+        public void Delete([Required] int id)
+        {
+            _projectService.Delete(id);
         }
 
   

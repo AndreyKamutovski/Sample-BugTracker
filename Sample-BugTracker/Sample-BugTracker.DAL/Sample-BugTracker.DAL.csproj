@@ -124,6 +124,10 @@
     <Compile Include="Migrations\201804212153163_Add ErrorSolution and Attachment entites.Designer.cs">
       <DependentUpon>201804212153163_Add ErrorSolution and Attachment entites.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804291558337_Change fields names in Error model.cs" />
+    <Compile Include="Migrations\201804291558337_Change fields names in Error model.Designer.cs">
+      <DependentUpon>201804291558337_Change fields names in Error model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AwaitingAttachmentUserRepository.cs" />
@@ -171,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804212153163_Add ErrorSolution and Attachment entites.resx">
       <DependentUpon>201804212153163_Add ErrorSolution and Attachment entites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804291558337_Change fields names in Error model.resx">
+      <DependentUpon>201804291558337_Change fields names in Error model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

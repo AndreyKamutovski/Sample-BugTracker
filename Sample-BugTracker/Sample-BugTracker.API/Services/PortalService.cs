@@ -13,6 +13,27 @@ namespace Sample_BugTracker.API.Services
 {
     public class PortalService : BaseService
     {
+        private StatisticsService _statisticsService = new StatisticsService();
+
+        public IEnumerable<ProjectDTO> GetPortalProjects(string portalId)
+        {
+            using (UoW)
+            {
+                var portal = UoW.Portals.Get(portalId);
+                if (portal == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Portal with id {0} not found", portalId), HttpStatusCode.NotFound);
+                }
+                var projects = CurrentUser.UserProjects.Select(up => up.Project).Where(p => p.PortalId == portal.Id).ToList();
+                var projectsDto = Mapper.Map<List<ProjectDTO>>(projects);
+                foreach (var project in projectsDto)
+                {
+                    project.ErrorStatistics = _statisticsService.GetProjectErrorReport(project.ProjectId);
+                }
+                return projectsDto;
+            }
+        }
+
         public string Create(PortalDTO _portal)
         {
             using (UoW)

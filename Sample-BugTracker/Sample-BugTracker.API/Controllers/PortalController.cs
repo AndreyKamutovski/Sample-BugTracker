@@ -16,6 +16,11 @@ namespace Sample_BugTracker.API.Controllers
     {
         private PortalService _portalService = new PortalService();
 
+        public IEnumerable<ProjectDTO> GetPortalProjects([Required] string portalId)
+        {
+            return _portalService.GetPortalProjects(portalId);
+        }
+
         [HttpPost]
         public string Create([Required] PortalDTO portal)
         {

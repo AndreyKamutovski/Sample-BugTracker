@@ -15,6 +15,7 @@ namespace Sample_BugTracker.API
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+
             config.Routes.MapHttpRoute(
                 name: "BugTrackerApi",
                 routeTemplate: "api/{controller}/{action}"

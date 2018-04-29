@@ -27,11 +27,11 @@ namespace Sample_BugTracker.DAL.Entities
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
 
-        public string ErrorAuthorId { get; set; }
-        public virtual AppUser ErrorAuthor { get; set; }
+        public string AuthorId { get; set; }
+        public virtual AppUser Author { get; set; }
 
-        public string ErrorResponsibleId { get; set; }
-        public virtual AppUser ErrorResponsible { get; set; }
+        public string AssigneeId { get; set; }
+        public virtual AppUser Assignee { get; set; }
 
         public virtual ErrorSolution Solution { get; set; }
 

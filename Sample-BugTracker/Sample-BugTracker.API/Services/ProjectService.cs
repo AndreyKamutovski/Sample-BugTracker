@@ -17,42 +17,34 @@ namespace Sample_BugTracker.API.Services
 
     public class ProjectService : BaseService
     {
-        private StatisticsService _statisticsService = new StatisticsService();
 
-        public ProjectDTO GetById(int projectId)
+        public ProjectDTO GetById(int id)
         {
             using (UoW)
             {
-                Project project = UoW.Projects.Get(projectId);
+                Project project = UoW.Projects.Get(id);
                 if (project == null)
                 {
-                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", projectId), HttpStatusCode.NotFound);
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
                 }
                 return Mapper.Map<ProjectDTO>(project);
             }
         }
 
-
-        public IEnumerable<ProjectDTO> GetPortalProjects(string portalId)
+        public IEnumerable<ErrorDTO> GetProjectErrors(int id)
         {
             using (UoW)
             {
-                var portal = UoW.Portals.Get(portalId);
-                if (portal == null)
+                var project = UoW.Projects.Get(id);
+                if (project == null)
                 {
-                    throw new ApplicationOperationException(string.Format("Portal with id {0} not found", portalId), HttpStatusCode.NotFound);
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
                 }
-                var projects = CurrentUser.UserProjects.Select(up => up.Project).Where(p => p.PortalId == portal.Id).ToList();
-                var projectsDto = Mapper.Map<List<ProjectDTO>>(projects);
-                foreach (var project in projectsDto)
-                {
-                    project.ErrorStatistics = _statisticsService.GetProjectErrorReport(project.Id);
-                }
-                return projectsDto;
+                return Mapper.Map<List<ErrorDTO>>(project.Errors);
             }
         }
 
-        public ProjectDTO Add(ProjectDTO _project)
+        public void Add(ProjectDTO _project)
         {
             using (UoW)
             {
@@ -62,25 +54,21 @@ namespace Sample_BugTracker.API.Services
                 var userProject = new UserProject() { Project = project, Worker = CurrentUser, Role = UoW.Roles.GetByName("Admin") };
                 UoW.UserProjects.Add(userProject);
                 UoW.Complete();
-                return Mapper.Map<ProjectDTO>(project);
             }
         }
 
-        public ProjectDTO Edit(ProjectDTO _project)
+        public ProjectDTO Update(int id, ProjectDTO projectDto)
         {
             using (UoW)
             {
-                Project project = UoW.Projects.Get(_project.Id);
+                Project project = UoW.Projects.Get(id);
                 if (project == null)
                 {
-                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", _project.Id), HttpStatusCode.NotFound);
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
                 }
-                project.Title = _project.Title;
-                project.DateStart = _project.DateStart;
-                project.DateEnd = _project.DateEnd;
-                project.Description = _project.Description;
+                UoW.Projects.Update(project, projectDto);
                 UoW.Complete();
-                return _project;
+                return Mapper.Map<ProjectDTO>(project);
             }
         }
 

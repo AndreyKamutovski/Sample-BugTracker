@@ -1,12 +1,12 @@
-﻿using Sample_BugTracker.API.DTO;
+﻿using Marvin.JsonPatch;
+using Sample_BugTracker.API.DTO;
 using Sample_BugTracker.API.Services;
+using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Sample_BugTracker.API.Controllers
@@ -16,15 +16,10 @@ namespace Sample_BugTracker.API.Controllers
     {
         private ErrorService _errorService = new ErrorService();
 
-        public IEnumerable<ErrorDTO> GetProjectErrors([Required] int projectId)
-        {
-            return _errorService.GetProjectErrors(projectId);
-        }
-
         [HttpPost]
-        public ErrorDTO Add([Required] ErrorDTO error)
+        public void Add([Required] int projectId, [Required, FromBody] ErrorDTO errorDto)
         {
-            return _errorService.Add(error);
+            _errorService.Add(projectId, errorDto);
         }
 
         [HttpPost]
@@ -34,40 +29,11 @@ namespace Sample_BugTracker.API.Controllers
             return solution;
         }
 
-        [HttpPost]
-        public UpdateErrorResponsibleDTO UpdateErrorResponsible([Required] UpdateErrorResponsibleDTO error)
-        {
-            return _errorService.UpdateErrorResponsible(error);
-        }
-
-        [HttpPost]
-        public UpdateErrorDeadlineDTO UpdateErrorDeadline([Required] UpdateErrorDeadlineDTO error)
-        {
-            return _errorService.UpdateErrorDeadline(error);
-        }
-
-        [HttpPost]
-        public UpdateErrorSPCEnumsDTO<Status> UpdateErrorStatus([Required] UpdateErrorSPCEnumsDTO<Status> error)
-        {
-            return _errorService.UpdateErrorStatus(error);
-        }
-
-        [HttpPost]
-        public UpdateErrorSPCEnumsDTO<Priority> UpdateErrorPriority([Required] UpdateErrorSPCEnumsDTO<Priority> error)
-        {
-            return _errorService.UpdateErrorPriority(error);
-        }
-
-        [HttpPost]
-        public UpdateErrorSPCEnumsDTO<Classification> UpdateErrorClassification([Required] UpdateErrorSPCEnumsDTO<Classification> error)
-        {
-            return _errorService.UpdateErrorClassification(error);
-        }
-
         [HttpPut]
-        public ErrorDTO UpdateError([Required] ErrorDTO error)
+        [Route("api/Error/{id:int:min(1)}")]
+        public ErrorDTO Update([Required] int id, [Required, FromBody]ErrorDTO errorDto)
         {
-            return _errorService.UpdateError(error);
+            return _errorService.Update(id, errorDto);
         }
     }
 }
