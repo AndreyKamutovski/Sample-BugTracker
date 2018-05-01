@@ -14,76 +14,77 @@ using System.Web.Http.Description;
 namespace Sample_BugTracker.API.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
         private UserService _userService = new UserService();
 
-        [HttpGet]
-        [AllowAnonymous]
-        public bool CheckEmailNotTaken([Required]string email)
-        {
-            return _userService.CheckEmailNotTaken(email);
-        }
-
-        public IEnumerable<UserDTO> GetProjectUsers([Required]int projectId)
-        {
-            return _userService.GetProjectUsers(projectId);
-        }
-
-        public IEnumerable<UserDTO> GetProjectWorkers([Required]int projectId)
-        {
-            return _userService.GetProjectWorkers(projectId);
-        }
-
+        [Route("")]
         public IEnumerable<UserDTO> GetAll()
         {
             return _userService.GetAll();
         }
 
+        [Route("portals")]
+        public IEnumerable<PortalDTO> GetUserPortals()
+        {
+            return _userService.GetUserPortals();
+        }
+
+        [Route("current")]
         public UserDTO GetCurrentUser()
         {
             return _userService.GetCurrentUser();
         }
 
-        public UserDTO GetProjectOwner([Required] int projectId)
-        {
-            return _userService.GetProjectOwner(projectId);
-        }
-
+        [Route("")]
         public IEnumerable<UserDTO> GetAttachableUsers([Required] int projectId)
         {
             return _userService.GetAttachableUsers(projectId);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("")]
+        public bool IsEmailAvailable([Required] string email)
+        {
+            return _userService.IsEmailAvailable(email);
+        }
+
         [HttpPost]
+        [Route("")]
         public async Task<string> UploadUserAvatar()
         {
-            return  await _userService.UploadUserAvatar(Request);
+            return await _userService.UploadUserAvatar(Request);
         }
 
         [HttpPost]
-        public UserDTO AttachUser([Required] AttachUserDTO attachUser)
+        [Route("attach")]
+        public UserDTO AttachUser([Required] AttachUserDTO attachUserDto)
         {
-            return _userService.AttachUser(attachUser);
+            return _userService.AttachUser(attachUserDto);
         }
 
-        [HttpPost]
-        public UserDTO EditAttachedUser([Required] AttachUserDTO editUser)
+        [HttpPut]
+        [Route("update")]
+        public UserDTO UpdateAttachedUser([Required] AttachUserDTO updateUserDto)
         {
-            return _userService.EditAttachedUser(editUser);
+            return _userService.UpdateAttachedUser(updateUserDto);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public void ConfirmAttachmentUser([Required] ConfirmAttachmentUserDTO confirmUser)
+        [Route("confirm")]
+        public void ConfirmAttachmentUser([Required] ConfirmAttachmentUserDTO confirmUserDto)
         {
-            _userService.ConfirmAttachmentUser(confirmUser);
+            _userService.ConfirmAttachmentUser(confirmUserDto);
         }
 
         [HttpPost]
-        public void UnattachUser([Required] UnattachUserDTO unattachUser)
+        [Route("unattach")]
+        public void UnattachUser([Required] UnattachUserDTO unattachUserDto)
         {
-            _userService.UnattachUser(unattachUser);
+            _userService.UnattachUser(unattachUserDto);
         }
     }
 }

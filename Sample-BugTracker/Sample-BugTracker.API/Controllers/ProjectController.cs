@@ -30,11 +30,29 @@ namespace Sample_BugTracker.API.Controllers
             return _projectService.GetProjectErrors(id);
         }
 
+        [Route("{id:int:min(1)}/users")]
+        public IEnumerable<UserDTO> GetProjectUsers([Required]int id)
+        {
+            return _projectService.GetProjectUsers(id);
+        }
+
+        [Route("{id:int:min(1)}/workers")]
+        public IEnumerable<UserDTO> GetProjectWorkers([Required]int id)
+        {
+            return _projectService.GetProjectWorkers(id);
+        }
+
+        [Route("{id:int:min(1)}/owner")]
+        public UserDTO GetProjectOwner([Required] int id)
+        {
+            return _projectService.GetProjectOwner(id);
+        }
+
         [HttpPost]
         [Route("")]
-        public void Add([Required] ProjectDTO projectDto)
+        public ProjectDTO Add([Required] ProjectDTO projectDto)
         {
-            _projectService.Add(projectDto);
+            return _projectService.Add(projectDto);
         }
 
         [HttpPut]
@@ -44,7 +62,7 @@ namespace Sample_BugTracker.API.Controllers
             return _projectService.Update(id, projectDto);
         }
 
-        [Route("")]
+        [Route("{id:int:min(1)}")]
         public void Delete([Required] int id)
         {
             _projectService.Delete(id);

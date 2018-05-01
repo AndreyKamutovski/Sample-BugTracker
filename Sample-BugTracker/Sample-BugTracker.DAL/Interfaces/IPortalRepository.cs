@@ -9,6 +9,6 @@ namespace Sample_BugTracker.DAL.Interfaces
 {
     public interface IPortalRepository : IRepository<Portal>
     {
-
+        bool IsPortalTitleAvailable(string title);
     }
 }

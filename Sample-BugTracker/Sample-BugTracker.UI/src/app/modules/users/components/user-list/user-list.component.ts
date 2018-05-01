@@ -56,7 +56,7 @@ export class UserListComponent implements OnInit {
     delDialogRef.afterClosed().toPromise().then(res => {
       if (res) {
         this.users.find(u => u.Email === res.editUser.Email).RoleName = res.editUser.RoleName;
-        this.userService.editAttachedUser(res.editUser).toPromise().then(res => {
+        this.userService.updateAttachedUser(res.editUser).toPromise().then(res => {
           this.snackBar.open("Пользователь успешно обновлён", '', { duration: 2000 });
         });
       }

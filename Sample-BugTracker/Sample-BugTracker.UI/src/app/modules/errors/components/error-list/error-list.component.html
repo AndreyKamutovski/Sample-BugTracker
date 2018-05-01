@@ -11,8 +11,8 @@
   </div>
 
 
-  <p-table #errorsTable [columns]="cols" [value]="errors" [paginator]="true" [rows]="5"  [responsive]="true" [scrollable]="true"
-    scrollHeight="500px" [resizableColumns]="true" >
+  <p-table #errorsTable [columns]="cols" [(value)]="errors" [paginator]="true" [rows]="5" [responsive]="true" [scrollable]="true"
+    scrollHeight="500px" [resizableColumns]="true">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of cols" [pSortableColumn]="col.field">
@@ -28,12 +28,7 @@
               {{user.Email | getUserNameFromEmail}}
             </mat-option>
           </mat-select>
-          <!-- <div *ngSwitchCase="'DateCreation'">
-            <input #inpCreation pInputText type="text" [matDatepicker]="creationDatepicker" (dateChange)="test($event, errorsTable, col)">
-            <mat-datepicker-toggle matPrefix [for]="creationDatepicker"></mat-datepicker-toggle>
-            <mat-datepicker #creationDatepicker></mat-datepicker>
-          </div> -->
-          <mat-select *ngSwitchCase="'EmailErrorResponsible'" placeholder="Все пользователи" multiple (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
+          <mat-select *ngSwitchCase="'EmailAssignee'" placeholder="Все пользователи" multiple (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
             <mat-option *ngFor="let worker of projectWorkers" [value]="worker.Email">
               {{worker.Email | getUserNameFromEmail}}
             </mat-option>
@@ -58,46 +53,44 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-error>
-        <!-- {{ (error.Title.length > 10) ? (error.Title | slice:0:10)+'...' : (error.Title) }} -->
       <tr [pSelectableRow]="error">
-        <td><a href="#" (click)="openErrorDialog(error)">{{ error.Title }}</a></td>
-        <td>{{ error.EmailErrorAuthor | getUserNameFromEmail }}</td>
+        <td>
+          <a href="#" (click)="openErrorDialog(error)">{{ error.Title }}</a>
+        </td>
+        <td>{{ error.EmailAuthor | getUserNameFromEmail }}</td>
         <td>{{ error.DateCreation | date:'longDate' }}</td>
         <td>
-          <mat-select [value]="error.EmailErrorResponsible ? error.EmailErrorResponsible : ''" (selectionChange)="selectionChangeErrorResponsible(error.Id, $event)">
-            <mat-option value=""> Не назначен </mat-option>
+          <mat-select placeholder="Не назначен" [(value)]="error.EmailAssignee" (selectionChange)="updateError(error, 'Ответственный за ошибку')">
+            <mat-option [value]="null"> Не назначен </mat-option>
             <mat-option *ngFor="let worker of projectWorkers" [value]="worker.Email">
               {{worker.Email | getUserNameFromEmail}}
             </mat-option>
           </mat-select>
         </td>
         <td>
-          <mat-form-field style="width: 95%;">
-            <input matInput style="color: black;" [min]="error.DateCreation" [matDatepicker]="deadlineDatepicker" disabled [value]="error.Deadline"
-              (dateChange)="changeDeadline(error.Id, $event)">
+          <mat-form-field style="width: 95%;" floatLabel="never">
+            <input matInput style="color: black;" placeholder="Не установлен" [min]="error.DateCreation" [matDatepicker]="deadlineDatepicker" disabled [(ngModel)]="error.Deadline"
+              (dateChange)="updateError(error, 'Срок выполнения')">
             <mat-datepicker-toggle matSuffix [for]="deadlineDatepicker"></mat-datepicker-toggle>
-
             <mat-datepicker #deadlineDatepicker disabled="false"></mat-datepicker>
-
-
           </mat-form-field>
         </td>
         <td>
-          <mat-select [value]="error.Status" (selectionChange)="changeErrorStatus(error.Id, $event)">
+          <mat-select [(value)]="error.Status" (selectionChange)="updateError(error, 'Статус ошибки')">
             <mat-option *ngFor="let status of errorService.status" [value]="status.value">
               {{status.viewValue}}
             </mat-option>
           </mat-select>
         </td>
         <td>
-          <mat-select [value]="error.Priority" (selectionChange)="changeErrorPriority(error.Id, $event)">
+          <mat-select [(value)]="error.Priority" (selectionChange)="updateError(error, 'Приоритет ошибки')">
             <mat-option *ngFor="let priority of errorService.priorities" [value]="priority.value">
               {{priority.viewValue}}
             </mat-option>
           </mat-select>
         </td>
         <td>
-          <mat-select [value]="error.Classification" (selectionChange)="changeErrorClassification(error.Id, $event)">
+          <mat-select [(value)]="error.Classification" (selectionChange)="updateError(error, 'Классификация ошибки')">
             <mat-option *ngFor="let classification of errorService.classification" [value]="classification.value">
               {{classification.viewValue}}
             </mat-option>

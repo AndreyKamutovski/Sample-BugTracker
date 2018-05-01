@@ -6,9 +6,7 @@ namespace Sample_BugTracker.DAL.Interfaces
 {
     public interface IRepository<TEntity> where TEntity: class
     {
-        TEntity Get(int id);
-        TEntity Get(Guid guid);
-        TEntity Get(string id);
+        TEntity Get(object id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 

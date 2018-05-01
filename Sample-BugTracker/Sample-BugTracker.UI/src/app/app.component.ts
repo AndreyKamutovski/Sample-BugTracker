@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import * as moment from 'moment';
 
 import { LoaderService } from './modules/loader/loader.service';
 
@@ -16,6 +17,7 @@ export class AppComponent {
     ) {}
         
     ngOnInit(){
+        Date.prototype.toJSON = function(){ return moment(this).format(); }
         this.router.events.subscribe(e => {
        
                    if (e instanceof NavigationStart) {

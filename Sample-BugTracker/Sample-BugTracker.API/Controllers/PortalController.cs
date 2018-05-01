@@ -11,39 +11,39 @@ using System.Web.Http;
 
 namespace Sample_BugTracker.API.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
+    [RoutePrefix("api/portal")]
     public class PortalController : ApiController
     {
         private PortalService _portalService = new PortalService();
 
-        public IEnumerable<ProjectDTO> GetPortalProjects([Required] string portalId)
+        [Route("{id}/projects")]
+        public IEnumerable<ProjectDTO> GetPortalProjects([Required] string id)
         {
-            return _portalService.GetPortalProjects(portalId);
+            return _portalService.GetPortalProjects(id);
+        }
+
+        [HttpGet]
+        [Route("")]
+        [AllowAnonymous]
+        public bool IsPortalTitleAvailable([Required] string title)
+        {
+            return _portalService.IsPortalTitleAvailable(title);
+        }
+
+        [HttpGet]
+        [Route("")]
+        public bool IsPortalOwner([Required] string id)
+        {
+            return _portalService.IsPortalOwner(id);
         }
 
         [HttpPost]
-        public string Create([Required] PortalDTO portal)
+        [Route("")]
+        [AllowAnonymous]
+        public PortalDTO Create([Required] PortalDTO portalDto)
         {
-             return _portalService.Create(portal);
-        }
-
-        [HttpGet]
-        public bool CheckPortalTitleNotTaken([Required] string title)
-        {
-            return _portalService.CheckPortalTitleNotTaken(title);
-        }
-
-        [Authorize]
-        public IEnumerable<PortalDTO> GetUserPortals()
-        {
-            return _portalService.GetUserPortals();
-        }
-
-        [Authorize]
-        [HttpGet]
-        public bool IsPortalOwner([Required] string portalId)
-        {
-            return _portalService.IsPortalOwner(portalId);
+             return _portalService.Create(portalDto);
         }
     }
 }

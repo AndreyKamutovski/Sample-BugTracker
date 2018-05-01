@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { PortalService } from '../../services/portal.service';
 import { AddPortalFormComponent } from '../add-portal-form/add-portal-form.component';
+import { Portal } from '../../models/portal.model';
 
 @Component({
   selector: 'app-tariff-plans',
@@ -38,8 +39,8 @@ export class TariffPlansComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        this.portalService.createPortal(result.portalData).subscribe((res: string) => {
-          sessionStorage.setItem('portalID', res);
+        this.portalService.createPortal(result.portalData).subscribe((res: Portal) => {
+          sessionStorage.setItem('portalID', res.PortalId);
           this.authService.login(result.portalData.Owner).then(res => {
             this.router.navigateByUrl('app/projects');
           })

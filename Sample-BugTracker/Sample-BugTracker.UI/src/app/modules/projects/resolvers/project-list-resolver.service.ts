@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { ProjectService } from '../project.service';
+import { PortalService } from '../../portal/services/portal.service';
 
 @Injectable()
 export class ProjectListResolverService {
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private portaltService: PortalService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let portalId = sessionStorage.getItem('portalID');
-    return this.projectService.getPortalProjects(portalId);
+    return this.portaltService.getPortalProjects(portalId);
   }
 }

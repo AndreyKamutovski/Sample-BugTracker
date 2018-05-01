@@ -2,7 +2,7 @@ import { StatisticsError } from "../../errors/models/statistics-error.model";
 
 export class Project {
 
-    public Id?: number;
+    public ProjectId?: number;
     public Title: string;
     public DateStart: Date;
     public DateEnd: Date;

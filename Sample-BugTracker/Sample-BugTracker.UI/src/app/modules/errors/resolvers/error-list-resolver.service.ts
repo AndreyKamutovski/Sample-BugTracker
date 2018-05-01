@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
-import { ErrorService } from '../error.service';
+import { ProjectService } from '../../projects/project.service';
 
 @Injectable()
 export class ErrorListResolverService implements Resolve<any> {
 
-  constructor(private errorService: ErrorService) { }
+  constructor(private projectService: ProjectService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let projectId = +sessionStorage.getItem('projectID');
-    return this.errorService.getProjectErrors(projectId);
+    return this.projectService.getProjectErrors(projectId);
   }
 }

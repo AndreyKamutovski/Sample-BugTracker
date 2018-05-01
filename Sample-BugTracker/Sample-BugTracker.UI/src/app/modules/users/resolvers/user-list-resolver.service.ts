@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { UsersService } from '../users.service';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+
+import { ProjectService } from '../../projects/project.service';
 
 @Injectable()
 export class UserListResolverService implements Resolve<any> {
 
-  constructor(private userService: UsersService) { }
+  constructor(private projectService: ProjectService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let projectId = +sessionStorage.getItem('projectID');
-    return this.userService.getProjectUsers(projectId);
+    return this.projectService.getProjectUsers(projectId);
   }
 }

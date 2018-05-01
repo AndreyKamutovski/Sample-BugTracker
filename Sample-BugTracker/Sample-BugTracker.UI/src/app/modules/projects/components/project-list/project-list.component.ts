@@ -63,7 +63,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   private onRowSelect(event) {
-    sessionStorage.setItem('projectID', event.data.Id);
+    sessionStorage.setItem('projectID', event.data.ProjectId);
     this._router.navigateByUrl('/app/project/dashboard');
   }
 
@@ -101,9 +101,9 @@ export class ProjectListComponent implements OnInit {
 
   private afterClosedEditProjectDialog(res: any) {
     if (res != undefined && res != null) {
-      this.projectService.editProject(res.projectData).toPromise().then(updateProject => {
+      this.projectService.updateProject(res.projectData.ProjectId, res.projectData).toPromise().then(updateProject => {
         let projcs = [...this.projects];
-        let idx = projcs.findIndex(p => p.Id == updateProject.Id);
+        let idx = projcs.findIndex(p => p.ProjectId == updateProject.ProjectId);
         projcs[idx] = updateProject;
         this.projects = projcs;
         this.snackBar.open("Проект успешно обновлён", '', { duration: 2000 });
@@ -120,7 +120,7 @@ export class ProjectListComponent implements OnInit {
     delDialogRef.afterClosed().toPromise().then(userChoice => {
       if (userChoice) {
         this.projects.splice(this.projects.indexOf(delProject), 1);
-        this.projectService.deleteProject(delProject.Id).toPromise().then(res => {
+        this.projectService.deleteProject(delProject.ProjectId).toPromise().then(res => {
           this.snackBar.open("Проект успешно удалён", '', { duration: 2000 });
         });
       }

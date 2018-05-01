@@ -38,17 +38,7 @@ namespace Sample_BugTracker.DAL.Repositories
             return Context.Set<TEntity>().Where(predicate);
         }
 
-        public TEntity Get(int id)
-        {
-            return Context.Set<TEntity>().Find(id);
-        }
-
-        public TEntity Get(Guid guid)
-        {
-            return Context.Set<TEntity>().Find(guid);
-        }
-
-        public TEntity Get(string id)
+        public TEntity Get(object id)
         {
             return Context.Set<TEntity>().Find(id);
         }

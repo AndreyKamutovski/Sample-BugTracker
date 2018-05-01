@@ -8,7 +8,7 @@ namespace Sample_BugTracker.API.DTO
 {
     public class PortalDTO
     {
-        public string Id;
+        public string PortalId;
 
         [Required(ErrorMessage = "Title of portal is a required")]
         [MinLength(3)]

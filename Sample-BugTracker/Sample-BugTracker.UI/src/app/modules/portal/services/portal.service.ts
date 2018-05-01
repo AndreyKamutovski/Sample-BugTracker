@@ -4,26 +4,29 @@ import { Observable } from 'rxjs/Observable';
 
 import { HttpClientService } from '../../../shared/services/httpClient.service';
 import { Portal } from '../models/portal.model';
+import { Project } from '../../projects/models/project.model';
 
 
 @Injectable()
 export class PortalService {
+  private readonly routerPrefix: string = "api/portal";
+  
 
   constructor(private HttpClientService: HttpClientService) { }
 
-  public createPortal(portal: Portal): Observable<string> {
-    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Portal', null, { 'Content-Type': 'application/json' }, portal);
+  getPortalProjects(portalId: string): Observable<Project> {
+    return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/${portalId}/projects`);
   }
 
-  public CheckPortalTitleNotTaken(title: string): Observable<boolean> {
-    return this.HttpClientService.sendRequest(RequestMethod.Get, 'api/Portal', { 'title': title });
+  public createPortal(portal: Portal): Observable<Portal> {
+    return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, null, { 'Content-Type': 'application/json' }, portal);
   }
 
-  public getUserPortals(): Observable<Portal[]> {
-    return this.HttpClientService.sendRequest(RequestMethod.Get, 'api/Portal');
+  public IsPortalTitleAvailable(title: string): Observable<boolean> {
+    return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}`, { 'title': title });
   }
 
   public IsPortalOwner(portalId: string): Observable<boolean> {
-    return this.HttpClientService.sendRequest(RequestMethod.Get, 'api/Portal/IsPortalOwner', { 'portalId': portalId });
+    return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}`, { 'id': portalId });
   }
 }

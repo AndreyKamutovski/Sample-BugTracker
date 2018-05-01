@@ -21,7 +21,6 @@ namespace Sample_BugTracker.API.DTO
         [Required(ErrorMessage = "DateCreation of error is a required field")]
         public DateTime DateCreation { get; set; }
 
-        //[Required(ErrorMessage = "Deadline of error is a required field")]
         public DateTime? Deadline { get; set; }
 
         [Required(ErrorMessage = "Status of error is a required field")]

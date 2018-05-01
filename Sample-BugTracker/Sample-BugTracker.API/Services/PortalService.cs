@@ -15,16 +15,16 @@ namespace Sample_BugTracker.API.Services
     {
         private StatisticsService _statisticsService = new StatisticsService();
 
-        public IEnumerable<ProjectDTO> GetPortalProjects(string portalId)
+        public IEnumerable<ProjectDTO> GetPortalProjects(string id)
         {
             using (UoW)
             {
-                var portal = UoW.Portals.Get(portalId);
+                var portal = UoW.Portals.Get(id);
                 if (portal == null)
                 {
-                    throw new ApplicationOperationException(string.Format("Portal with id {0} not found", portalId), HttpStatusCode.NotFound);
+                    throw new ApplicationOperationException(string.Format("Portal with id {0} not found", id), HttpStatusCode.NotFound);
                 }
-                var projects = CurrentUser.UserProjects.Select(up => up.Project).Where(p => p.PortalId == portal.Id).ToList();
+                var projects = CurrentUser.UserProjects.Where(up => up.Project.PortalId == portal.Id).Select(p => p.Project).ToList();
                 var projectsDto = Mapper.Map<List<ProjectDTO>>(projects);
                 foreach (var project in projectsDto)
                 {
@@ -34,58 +34,43 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-        public string Create(PortalDTO _portal)
+        public PortalDTO Create(PortalDTO portalDto)
         {
             using (UoW)
             {
-                AppUser userExists = UoW.Users.GetByEmail(_portal.Owner.Email);
+                AppUser userExists = UoW.Users.GetByEmail(portalDto.Owner.Email);
                 if (userExists != null)
                 {
-                    throw new ApplicationOperationException(string.Format("User with email {0} already exists", _portal.Owner.Email), HttpStatusCode.Conflict);
+                    throw new ApplicationOperationException(string.Format("User with email {0} already exists", portalDto.Owner.Email), HttpStatusCode.Conflict);
                 }
 
-                if (UoW.Portals.Find(prl => prl.Title == _portal.Title).Count<Portal>() > 0)
+                if (UoW.Portals.Find(prl => prl.Title == portalDto.Title).Count<Portal>() > 0)
                 {
-                    throw new ApplicationOperationException(string.Format("Portal with name {0} already exists", _portal.Title), HttpStatusCode.Conflict);
+                    throw new ApplicationOperationException(string.Format("Portal with name {0} already exists", portalDto.Title), HttpStatusCode.Conflict);
                 }
 
-                AppUser user = Mapper.Map<AppUser>(_portal.Owner);
-                UoW.Users.Add(user, _portal.Owner.Password, _portal.Owner.RoleName);
-                Portal portal = new Portal() { Id = user.Id, Title = _portal.Title };
+                AppUser user = Mapper.Map<AppUser>(portalDto.Owner);
+                UoW.Users.Add(user, portalDto.Owner.Password, portalDto.Owner.RoleName);
+                Portal portal = new Portal() { Id = user.Id, Title = portalDto.Title };
                 UoW.Portals.Add(portal);
                 UoW.Complete();
-                return portal.Id;
+                return Mapper.Map<PortalDTO>(portal);
             }
         }
 
-        public bool CheckPortalTitleNotTaken(string title)
+        public bool IsPortalTitleAvailable(string title)
         {
             using (UoW)
             {
-                int count = UoW.Portals.Find(prt => prt.Title == title).Count();
-                return count > 0 ? false : true;
+                return UoW.Portals.IsPortalTitleAvailable(title);
             }
         }
 
-        public IEnumerable<PortalDTO> GetUserPortals()
+        public bool IsPortalOwner(string id)
         {
             using (UoW)
             {
-                var portals = CurrentUser.UserProjects.Select(up => up.Project.Portal).ToList();
-                if(CurrentUser.Portal != null)  // т.к. его могут прикрепить к проекту и он не имеет собственного портала
-                {
-                portals.Add(CurrentUser.Portal);
-
-                }
-                return Mapper.Map<List<PortalDTO>>(portals.Distinct());
-            }
-        }
-
-        public bool IsPortalOwner(string portalId)
-        {
-            using (UoW)
-            {
-                var portal = UoW.Portals.Get(portalId);
+                var portal = UoW.Portals.Get(id);
                 return portal.Owner.Id == CurrentUser.Id;
             }
         }

@@ -8,7 +8,6 @@ import { Project } from '../../../projects/models/project.model';
 import { ErrorService } from '../../error.service';
 import { ErrorBT } from '../../models/error.model';
 import { User } from '../../../users/models/user.model';
-import { UpdateErrorDeadlineBT } from '../../models/update-error-deadline.model';
 import { SolutionErrorFormComponent } from '../solution-error-form/solution-error-form.component';
 
 @Component({
@@ -57,7 +56,7 @@ export class SelectedErrorDialogComponent implements OnInit {
 
   updateError(updatedField: string, fcName: string) {
     if (this.getFormControl(fcName).valid) {
-      this.errorService.updateError(this.errorForm.value).toPromise().then((error: ErrorBT) => {
+      this.errorService.updateError(this.error.ErrorId, this.errorForm.value).toPromise().then((error: ErrorBT) => {
         this.error = error;
         this.snackBar.open(`${updatedField}: успешно обновлено`, '', { duration: 2000 });
       });
@@ -77,7 +76,7 @@ export class SelectedErrorDialogComponent implements OnInit {
 
   private createForm(): void {
     this.errorForm = this.formBuilder.group({
-      'Id': [this.error.Id],
+      'Id': [this.error.ErrorId],
       'Title': [this.error.Title, [
         Validators.required,
         Validators.minLength(3),
@@ -93,7 +92,7 @@ export class SelectedErrorDialogComponent implements OnInit {
       'Priority': [this.error.Priority, [Validators.required]],
       'Classification': [this.error.Classification, [Validators.required]],
       'ProjectId': [this.error.ProjectId],
-      'EmailErrorResponsible': [this.error.EmailErrorResponsible]
+      'EmailAssignee': [this.error.EmailAssignee]
     });
   }
 
@@ -103,7 +102,7 @@ export class SelectedErrorDialogComponent implements OnInit {
   get status() { return this.getFormControl('Status'); }
   get priority() { return this.getFormControl('Priority'); }
   get classification() { return this.getFormControl('Classification'); }
-  get emailErrorResponsible() { return this.getFormControl('EmailErrorResponsible'); }
+  get emailAssignee() { return this.getFormControl('EmailAssignee'); }
 
 
   private getFormControl(fcPath: string) {

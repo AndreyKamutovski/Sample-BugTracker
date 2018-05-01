@@ -89,5 +89,10 @@ namespace Sample_BugTracker.DAL.Repositories
             AppUser user = _userManager.FindByName(userName);
             return user;
         }
+
+        public bool IsEmailAvailable(string email)
+        {
+            return _userManager.FindByEmail(email) == null;
+        }
     }
 }

@@ -7,37 +7,52 @@ import { RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { HttpClientService } from '../../shared/services/httpClient.service';
+import { User } from '../users/models/user.model';
 import { Project } from './models/project.model';
+import { ErrorBT } from '../errors/models/error.model';
 
 
 
 
 @Injectable()
 export class ProjectService {
+    private readonly routerPrefix: string = "api/project";
 
     constructor(private HttpClientService: HttpClientService) { }
 
-    addProject(project: Project): Observable<Project> {
-        return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Project/Add', null, { 'Content-Type': 'application/json' }, project);
+    getProjectUsers(projectId: number): Observable<User[]> {
+        return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/${projectId}/users`)
     }
 
-    editProject(project: Project): Observable<Project> {
-        return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Project/Edit', null, { 'Content-Type': 'application/json' }, project);
+    getProjectOwner(projectId: number): Observable<User> {
+        return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/${projectId}/owner`);
+    }
+
+    getProjectWorkers(projectId: number): Observable<User[]> {
+        return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/${projectId}/workers`);
+    }
+
+    getProjectErrors(projectId: number): Observable<ErrorBT> {
+        return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/${projectId}/errors`);
+    }
+
+    addProject(project: Project): Observable<Project> {
+        return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, null, { 'Content-Type': 'application/json' }, project);
+    }
+
+    updateProject(projectId: number, project: Project): Observable<Project> {
+        return this.HttpClientService.sendRequest(RequestMethod.Put, `${this.routerPrefix}/${projectId}`, null, { 'Content-Type': 'application/json' }, project);
     }
 
     deleteProject(projectId: number): Observable<void> {
-        return this.HttpClientService.sendRequest(RequestMethod.Delete, 'api/Project', { 'projectId': projectId });
+        return this.HttpClientService.sendRequest(RequestMethod.Delete, `${this.routerPrefix}/${projectId}`);
     }
 
     getProjectById(projectId: number): Observable<Project> {
-        return this.HttpClientService.sendRequest(RequestMethod.Get, `api/Project`, { 'projectId': projectId });
+        return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/${projectId}`);
     }
 
-    getPortalProjects(portalId: string): Observable<Project> {
-        return this.HttpClientService.sendRequest(RequestMethod.Get, `api/Project`, { 'portalId': portalId });
-    }
-
-    getUserRoleForProject(projectId: number): Observable<string> {
-        return this.HttpClientService.sendRequest(RequestMethod.Get, `api/Project/GetUserRoleForProject`, { 'projectId': projectId });
-    }
+    // getUserRoleForProject(projectId: number): Observable<string> {
+    //     return this.HttpClientService.sendRequest(RequestMethod.Get, `api/Project/GetUserRoleForProject`, { 'projectId': projectId });
+    // }
 }

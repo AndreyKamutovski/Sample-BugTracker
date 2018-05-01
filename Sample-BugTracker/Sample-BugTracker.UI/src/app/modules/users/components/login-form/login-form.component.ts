@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { CaptchaComponent } from '../../../../shared/components/captcha/captcha.component';
 import { AuthService } from '../../../../shared/services/auth.service';
-import { PortalService } from '../../../portal/services/portal.service';
+import { UsersService } from '../../users.service';
 
 @Component({
   selector: 'app-login-form',
@@ -20,7 +20,7 @@ export class LoginFormComponent implements OnInit {
   constructor(
       private formBuilder: FormBuilder,
       private authService: AuthService,
-      private portalService: PortalService,
+      private userService: UsersService,
       private router: Router) {
       this.loginForm = this.formBuilder.group({
           'Email': ['', [Validators.required, Validators.email]],
@@ -37,12 +37,12 @@ export class LoginFormComponent implements OnInit {
           this.authService.login(this.loginForm.value).then(
               res => {
                   if (this.authService.isLoggedIn) {
-                      this.portalService.getUserPortals().toPromise().then(res => {
+                      this.userService.getUserPortals().toPromise().then(res => {
                           if (res.length > 1) {
                               this.router.navigateByUrl('app/portals');
                           }
                           if (res.length === 1) {
-                              sessionStorage.setItem('portalID', res[0].Id);
+                              sessionStorage.setItem('portalID', res[0].PortalId);
                               this.router.navigateByUrl('app/projects');
                           }
                       });

@@ -48,7 +48,7 @@ export class EditProjectFormComponent implements OnInit {
   editProject(): void {
     if (this.editProjectForm.valid) {
       let newProject = new Project({
-        Id: this.project.Id,
+        ProjectId: this.project.ProjectId,
         Title: this.title.value,
         DateStart: this.dateStart.value,
         DateEnd: this.dateEnd.value,

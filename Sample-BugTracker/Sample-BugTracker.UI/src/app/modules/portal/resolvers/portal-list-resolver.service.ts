@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-
-import { PortalService } from '../services/portal.service';
 import { Observable } from 'rxjs/Observable';
+
+import { UsersService } from '../../users/users.service';
 import { Portal } from '../models/portal.model';
 
 @Injectable()
 export class PortalListResolverService {
 
-  constructor(private portalService: PortalService) { }
+  constructor(private userService: UsersService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Portal[]> {
-    return this.portalService.getUserPortals();
+    return this.userService.getUserPortals();
   }
 }

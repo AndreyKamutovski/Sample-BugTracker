@@ -44,16 +44,53 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-        public void Add(ProjectDTO _project)
+        public IEnumerable<UserDTO> GetProjectUsers(int id)
         {
             using (UoW)
             {
-                Project project = Mapper.Map<Project>(_project);
+                Project project = UoW.Projects.Get(id);
+                if (project == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+                return Mapper.Map<List<UserDTO>>(project.UserProjects);
+            }
+        }
+
+        public IEnumerable<UserDTO> GetProjectWorkers(int id)
+        {
+            using (UoW)
+            {
+                Project project = UoW.Projects.Get(id);
+                if (project == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+                var workers = project.UserProjects.Where(up => up.Role.Name == "Worker").ToList();
+                return Mapper.Map<List<UserDTO>>(workers);
+            }
+        }
+
+        public UserDTO GetProjectOwner(int id)
+        {
+            using (UoW)
+            {
+                AppUser owner = UoW.Projects.Get(id).Portal.Owner;
+                return Mapper.Map<UserDTO>(owner);
+            }
+        }
+
+        public ProjectDTO Add(ProjectDTO projectDto)
+        {
+            using (UoW)
+            {
+                Project project = Mapper.Map<Project>(projectDto);
                 project.Portal = CurrentUser.Portal;
                 UoW.Projects.Add(project);
                 var userProject = new UserProject() { Project = project, Worker = CurrentUser, Role = UoW.Roles.GetByName("Admin") };
                 UoW.UserProjects.Add(userProject);
                 UoW.Complete();
+                return Mapper.Map<ProjectDTO>(project);
             }
         }
 
@@ -72,24 +109,18 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-        public void Delete(int projectId)
+        public void Delete(int id)
         {
-            if (projectId <= 0)
-            {
-                throw new ApplicationOperationException(string.Format("Not a valid project Id"), HttpStatusCode.NotFound);
-
-            }
             using (UoW)
             {
-                Project project = UoW.Projects.Get(projectId);
+                Project project = UoW.Projects.Get(id);
                 if (project == null)
                 {
-                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", projectId), HttpStatusCode.NotFound);
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
                 }
                 UoW.Projects.Remove(project);
                 UoW.Complete();
             }
-
         }
 
         public string GetUserRoleForProject(int projectId)

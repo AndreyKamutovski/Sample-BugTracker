@@ -27,5 +27,6 @@ namespace Sample_BugTracker.DAL.Interfaces
 
         IdentityResult Add(AppUser user, string password, string roleName);
 
+        bool IsEmailAvailable(string email);
     }
 }

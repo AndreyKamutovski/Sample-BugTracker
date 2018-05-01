@@ -2,7 +2,7 @@ import { ErrorSolution } from "./error-solution.model";
 
 export class ErrorBT {
 
-    public Id?: number;
+    public ErrorId?: number;
     public Title: string;
     public Description?: string;
     public DateCreation: Date;
@@ -11,8 +11,8 @@ export class ErrorBT {
     public Priority: number;
     public Classification: number;
     public ProjectId: number;
-    public EmailErrorAuthor: string;
-    public EmailErrorResponsible?: string;
+    public EmailAuthor: string;
+    public EmailAssignee?: string;
 
     public Solution: ErrorSolution;
 

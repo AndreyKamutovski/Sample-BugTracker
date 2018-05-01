@@ -68,13 +68,13 @@
         <div class="info-error-flex-container">
           <div style="width: 48%" class="form-field-container">
             <mat-form-field>
-              <mat-select placeholder="Ответственный за ошибку" formControlName="EmailErrorResponsible" (selectionChange)="updateError('Ответственный за ошибку', 'EmailErrorResponsible')">
+              <mat-select placeholder="Ответственный за ошибку" formControlName="EmailAssignee" (selectionChange)="updateError('Ответственный за ошибку', 'EmailAssignee')">
                 <mat-option value=""> Не назначен </mat-option>
                 <mat-option *ngFor="let worker of projectWorkers" [value]="worker.Email">
                   {{worker.Email | getUserNameFromEmail}}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="emailErrorResponsible.hasError('required')">
+              <mat-error *ngIf="emailAssignee.hasError('required')">
                 Выберите сотрудника, ответственного за решение ошибки
               </mat-error>
             </mat-form-field>

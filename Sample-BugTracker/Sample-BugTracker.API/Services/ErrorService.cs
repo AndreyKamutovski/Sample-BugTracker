@@ -14,7 +14,7 @@ namespace Sample_BugTracker.API.Services
 {
     public class ErrorService : BaseService
     {
-        public void Add(int projectId, ErrorDTO errorDto)
+        public ErrorDTO Add(int projectId, ErrorDTO errorDto)
         {
             using (UoW)
             {
@@ -24,16 +24,21 @@ namespace Sample_BugTracker.API.Services
                 {
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", projectId), HttpStatusCode.NotFound);
                 }
-                var assignee = UoW.Users.GetByEmail(errorDto.EmailAssignee);
-                if (assignee == null)
+                if (errorDto.EmailAssignee != null)
                 {
-                    throw new ApplicationOperationException(string.Format("Error assignee with email {0} not found", errorDto.EmailAssignee), HttpStatusCode.NotFound);
+                    var assignee = UoW.Users.GetByEmail(errorDto.EmailAssignee);
+                    if (assignee == null)
+                    {
+                        throw new ApplicationOperationException(string.Format("Error assignee with email {0} not found", errorDto.EmailAssignee), HttpStatusCode.NotFound);
+                    }
+                    error.Assignee = assignee;
                 }
+                else error.Assignee = null;
                 error.Project = project;
                 error.Author = CurrentUser;
-                error.Assignee = assignee;
                 UoW.Errors.Add(error);
                 UoW.Complete();
+                return Mapper.Map<ErrorDTO>(error);
             }
         }
 

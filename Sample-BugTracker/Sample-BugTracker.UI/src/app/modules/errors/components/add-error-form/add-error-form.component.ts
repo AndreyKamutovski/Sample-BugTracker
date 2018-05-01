@@ -37,7 +37,7 @@ export class AddErrorFormComponent implements OnInit {
 
   addError(): void {
     if (this.addErrorForm.valid) {
-      this.dialogRef.close({ 'errorData': this.addErrorForm.value });
+      this.dialogRef.close({ 'errorData': this.addErrorForm.value, 'ProjectId':  sessionStorage.getItem('projectID')});
 
     } else {
       throw new Error("Ошибка не добавлена. Проверьте правильность ввода данных.")
@@ -60,7 +60,7 @@ export class AddErrorFormComponent implements OnInit {
       'Status': [1, [Validators.required]],
       'Priority': [1, [Validators.required]],
       'Classification': [1, [Validators.required]],
-      'ProjectId': [sessionStorage.getItem('projectID')],
+      // 'ProjectId': [sessionStorage.getItem('projectID')],
       // 'EmailErrorAuthor': [this.authService.currentUser.Email, [Validators.email]],     
      
       // 'EmailErrorResponsible': ["", [

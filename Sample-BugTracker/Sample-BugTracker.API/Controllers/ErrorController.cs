@@ -17,9 +17,9 @@ namespace Sample_BugTracker.API.Controllers
         private ErrorService _errorService = new ErrorService();
 
         [HttpPost]
-        public void Add([Required] int projectId, [Required, FromBody] ErrorDTO errorDto)
+        public ErrorDTO Add([Required] int projectId, [Required, FromBody] ErrorDTO errorDto)
         {
-            _errorService.Add(projectId, errorDto);
+            return _errorService.Add(projectId, errorDto);
         }
 
         [HttpPost]

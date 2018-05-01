@@ -192,20 +192,18 @@
     <Compile Include="Controllers\PortalController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\test.cs" />
-    <Compile Include="DTO\ErrorSolutionDTO.cs" />
+    <Compile Include="DTO\Error\ErrorSolutionDTO.cs" />
     <Compile Include="DTO\Error\StatisticsErrorDTO.cs" />
-    <Compile Include="DTO\UnattachUserDTO.cs" />
-    <Compile Include="DTO\AttachUserDTO.cs" />
-    <Compile Include="DTO\ConfirmAttachmentUserDTO.cs" />
+    <Compile Include="DTO\User\UnattachUserDTO.cs" />
+    <Compile Include="DTO\User\AttachUserDTO.cs" />
+    <Compile Include="DTO\User\ConfirmAttachmentUserDTO.cs" />
     <Compile Include="DTO\Error\ErrorDTO.cs" />
     <Compile Include="DTO\PortalDTO.cs" />
     <Compile Include="DTO\ProjectDTO.cs" />
-    <Compile Include="DTO\Error\UpdateErrorDeadlineDTO.cs" />
-    <Compile Include="DTO\Error\UpdateErrorResponsibleDTO.cs" />
-    <Compile Include="DTO\Error\UpdateErrorStatusDTO.cs" />
-    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="DTO\User\UserDTO.cs" />
     <Compile Include="Exceptions\IdentityOperationException.cs" />
     <Compile Include="Filters\ApplicationFilterException.cs" />
+    <Compile Include="Filters\ProjectAuthorizationAttribute .cs" />
     <Compile Include="Filters\ValidateDTOModelAttribute .cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -227,6 +225,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
