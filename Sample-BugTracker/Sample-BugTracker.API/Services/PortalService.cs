@@ -71,6 +71,10 @@ namespace Sample_BugTracker.API.Services
             using (UoW)
             {
                 var portal = UoW.Portals.Get(id);
+                if(portal == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Portal with id {0} not found", id), HttpStatusCode.NotFound);
+                }
                 return portal.Owner.Id == CurrentUser.Id;
             }
         }

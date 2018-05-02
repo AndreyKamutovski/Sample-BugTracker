@@ -187,6 +187,7 @@
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\PortalController.cs" />
@@ -194,6 +195,9 @@
     <Compile Include="Controllers\test.cs" />
     <Compile Include="DTO\Error\ErrorSolutionDTO.cs" />
     <Compile Include="DTO\Error\StatisticsErrorDTO.cs" />
+    <Compile Include="DTO\Permission\ErrorPermissionDTO.cs" />
+    <Compile Include="DTO\Permission\ProjectPermissionDTO.cs" />
+    <Compile Include="DTO\Permission\UsersPermissionDTO.cs" />
     <Compile Include="DTO\User\UnattachUserDTO.cs" />
     <Compile Include="DTO\User\AttachUserDTO.cs" />
     <Compile Include="DTO\User\ConfirmAttachmentUserDTO.cs" />
@@ -213,6 +217,7 @@
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Services\ErrorService.cs" />
     <Compile Include="Services\MailService.cs" />
+    <Compile Include="Services\PermissionService.cs" />
     <Compile Include="Services\StatisticsService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\BaseService.cs" />

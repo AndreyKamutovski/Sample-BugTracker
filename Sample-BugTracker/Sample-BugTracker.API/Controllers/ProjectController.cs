@@ -1,4 +1,5 @@
 ﻿using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.Filters;
 using Sample_BugTracker.API.Services;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace Sample_BugTracker.API.Controllers
 
         [HttpPost]
         [Route("")]
+        [ProjectAuthorizationAttribute]
         public ProjectDTO Add([Required] ProjectDTO projectDto)
         {
             return _projectService.Add(projectDto);
@@ -57,12 +59,14 @@ namespace Sample_BugTracker.API.Controllers
 
         [HttpPut]
         [Route("{id:int:min(1)}")]
+        [ProjectAuthorizationAttribute]
         public ProjectDTO Update([Required] int id, [Required] ProjectDTO projectDto)
         {
             return _projectService.Update(id, projectDto);
         }
 
         [Route("{id:int:min(1)}")]
+        [ProjectAuthorizationAttribute]
         public void Delete([Required] int id)
         {
             _projectService.Delete(id);
