@@ -1,5 +1,6 @@
 ﻿using Marvin.JsonPatch;
 using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.Filters;
 using Sample_BugTracker.API.Services;
 using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Enumerations;
@@ -17,7 +18,7 @@ namespace Sample_BugTracker.API.Controllers
     {
         private ErrorService _errorService = new ErrorService();
 
-        [HttpPost]
+        [HttpGet]
         [Route("{id:int:min(1)}")]
         public ErrorDTO GetById([Required] int id)
         {
@@ -48,6 +49,7 @@ namespace Sample_BugTracker.API.Controllers
 
         [HttpPatch]
         [Route("{id:int:min(1)}/status")]
+        [HasPermissionAttribute(PermissionList.EDITING_STATUS_OF_ERROR)]
         public Status Status([Required] int id, [Required, FromBody]Status status)
         {
             return _errorService.UpdateStatus(id, status);
