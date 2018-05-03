@@ -21,12 +21,23 @@ namespace Sample_BugTracker.DAL.Repositories
 
         public IdentityResult Add(string roleName)
         {
-            if (!_roleManager.RoleExists(roleName))
+            AppRole role = new AppRole(roleName);
+            return AddRole(role);
+        }
+
+        public IdentityResult Add(AppRole role)
+        {
+            return AddRole(role);
+        }
+
+        public IdentityResult AddRange(IEnumerable<AppRole> roles)
+        {
+            IdentityResult result = new IdentityResult();
+            foreach (var role in roles)
             {
-                AppRole role = new AppRole(roleName);
-                return _roleManager.Create(role);
+                result = AddRole(role);
             }
-            return new IdentityResult(string.Format("Role with name {0} already exists", roleName));
+            return result;
         }
 
         public IEnumerable<AppRole> GetAll()
@@ -37,6 +48,15 @@ namespace Sample_BugTracker.DAL.Repositories
         public AppRole GetByName(string roleName)
         {
             return _roleManager.FindByName(roleName);
+        }
+
+        private IdentityResult AddRole(AppRole role)
+        {
+            if (!_roleManager.RoleExists(role.Name))
+            {
+                return _roleManager.Create(role);
+            }
+            return new IdentityResult(string.Format("Role with name {0} already exists", role.Name));
         }
     }
 }

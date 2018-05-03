@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sample_BugTracker.DAL.Enumerations
+﻿namespace Sample_BugTracker.DAL.Enumerations
 {
     public enum Status
     {

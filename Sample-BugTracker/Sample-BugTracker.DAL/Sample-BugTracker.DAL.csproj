@@ -64,18 +64,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EF\ApplicationDbContext.cs" />
+    <Compile Include="EF\BugTrackerDbInitializer.cs" />
     <Compile Include="Entities\AppRole.cs" />
     <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Entities\Attachment.cs" />
     <Compile Include="Entities\AwaitingAttachmentUser.cs" />
     <Compile Include="Entities\Error.cs" />
     <Compile Include="Entities\ErrorSolution.cs" />
+    <Compile Include="Entities\Permission.cs" />
     <Compile Include="Entities\Portal.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\UserProject.cs" />
     <Compile Include="Enumerations\Error.cs" />
+    <Compile Include="Enumerations\PermissionList.cs" />
     <Compile Include="Interfaces\IAwaitingAttachmentUser.cs" />
     <Compile Include="Interfaces\IErrorSolutionRepository.cs" />
+    <Compile Include="Interfaces\IPermissionRepository.cs" />
     <Compile Include="Interfaces\IPortalRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\IUserProjectRepository.cs" />
@@ -128,10 +132,15 @@
     <Compile Include="Migrations\201804291558337_Change fields names in Error model.Designer.cs">
       <DependentUpon>201804291558337_Change fields names in Error model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805031138521_Add permission%27s.cs" />
+    <Compile Include="Migrations\201805031138521_Add permission%27s.Designer.cs">
+      <DependentUpon>201805031138521_Add permission%27s.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AwaitingAttachmentUserRepository.cs" />
     <Compile Include="Repositories\ErrorSolutionRepository.cs" />
+    <Compile Include="Repositories\PermissionRepository.cs" />
     <Compile Include="Repositories\PortalRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\UserProjectRepository.cs" />
@@ -178,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804291558337_Change fields names in Error model.resx">
       <DependentUpon>201804291558337_Change fields names in Error model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805031138521_Add permission%27s.resx">
+      <DependentUpon>201805031138521_Add permission%27s.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

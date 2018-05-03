@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.DAL.Entities;
-using Sample_BugTracker.DAL.Repositories;
-using System;
-using System.Collections.Generic;
+using Sample_BugTracker.DAL.Migrations;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sample_BugTracker.DAL.EF
 {
@@ -20,41 +14,18 @@ namespace Sample_BugTracker.DAL.EF
         public DbSet<AwaitingAttachmentUser> AwaitingAttachmentUsers { get; set; }
         public DbSet<ErrorSolution> ErrorSolutions { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
 
 
         public ApplicationDbContext()
             : base("BTContext")
         {
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
         }
 
         static ApplicationDbContext()
         {
-            Database.SetInitializer(new StoreDbInitializer());
-        }
-
-        // CreateDatabaseIfNotExists
-        // Инициализация происходит при первом обращении к контексту данных
-        public class StoreDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
-        {
-            protected override void Seed(ApplicationDbContext _context)
-            {
-                var UoW = new UnitOfWork(_context);
-                UoW.Roles.Add("Admin");
-                UoW.Roles.Add("Moderator");
-                UoW.Roles.Add("Worker");
-                UoW.Roles.Add("User");
-
-                // Addition Admin
-                AppUser admin = new AppUser()
-                {
-                    Email = "KVISLAND20@gmail.com",
-                    UserName = "KVISLAND20@gmail.com"
-                };
-                UoW.Users.Add(admin, "aBcDe20*", "Admin");
-                Portal portal = new Portal() { Id = admin.Id, Title = "Admin's portal" };
-                UoW.Portals.Add(portal);
-                UoW.Complete();
-            }
+            Database.SetInitializer(new BugTrackerDbInitializer());
         }
 
         // Fluent API

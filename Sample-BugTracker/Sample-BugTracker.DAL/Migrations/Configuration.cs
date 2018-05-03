@@ -1,9 +1,11 @@
 namespace Sample_BugTracker.DAL.Migrations
 {
-    using System;
-    using System.Data.Entity;
+    using EF;
+    using Entities;
+    using Enumerations;
+    using Repositories;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Sample_BugTracker.DAL.EF.ApplicationDbContext>
     {
@@ -12,10 +14,10 @@ namespace Sample_BugTracker.DAL.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Sample_BugTracker.DAL.EF.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
-
+          
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
         }

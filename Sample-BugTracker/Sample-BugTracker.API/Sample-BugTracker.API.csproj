@@ -207,6 +207,7 @@
     <Compile Include="DTO\User\UserDTO.cs" />
     <Compile Include="Exceptions\IdentityOperationException.cs" />
     <Compile Include="Filters\ApplicationFilterException.cs" />
+    <Compile Include="Filters\HasPermissionAttribute.cs" />
     <Compile Include="Filters\ProjectAuthorizationAttribute .cs" />
     <Compile Include="Filters\ValidateDTOModelAttribute .cs" />
     <Compile Include="Global.asax.cs">

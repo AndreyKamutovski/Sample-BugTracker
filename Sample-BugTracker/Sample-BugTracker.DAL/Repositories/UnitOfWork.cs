@@ -24,6 +24,13 @@ namespace Sample_BugTracker.DAL.Repositories
             Roles = new RoleRepository(_context);
             AwaitingAttachmentUsers = new AwaitingAttachmentUserRepository(_context);
             Solutions = new ErrorSolutionRepository(_context);
+            Permission = new PermissionRepository(_context);
+        }
+
+        public IPermissionRepository Permission
+        {
+            get;
+            private set;
         }
 
         public IErrorSolutionRepository Solutions

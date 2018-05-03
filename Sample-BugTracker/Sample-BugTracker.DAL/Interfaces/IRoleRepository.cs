@@ -14,5 +14,9 @@ namespace Sample_BugTracker.DAL.Interfaces
         AppRole GetByName(string roleName);
 
         IdentityResult Add(string roleName);
+        IdentityResult Add(AppRole role);
+
+        IdentityResult AddRange(IEnumerable<AppRole> roles);
+
     }
 }

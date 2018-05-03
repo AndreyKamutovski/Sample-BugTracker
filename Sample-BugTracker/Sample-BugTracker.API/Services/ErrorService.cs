@@ -14,6 +14,19 @@ namespace Sample_BugTracker.API.Services
 {
     public class ErrorService : BaseService
     {
+        public ErrorDTO GetById(int id)
+        {
+            using (UoW)
+            {
+                var error = UoW.Errors.Get(id);
+                if (error == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+                return Mapper.Map<ErrorDTO>(error);
+            }
+        }
+
         public ErrorDTO Add(int projectId, ErrorDTO errorDto)
         {
             using (UoW)
@@ -100,5 +113,23 @@ namespace Sample_BugTracker.API.Services
                 return Mapper.Map<ErrorDTO>(error);
             }
         }
+
+        public Status UpdateStatus(int id, Status status)
+        {
+            using (UoW)
+            {
+                var error = UoW.Errors.Get(id);
+                if (error == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+                if (error.Status != status)
+                {
+                    error.Status = status;
+                }
+                return error.Status;
+            }
+        }
+
     }
 }
