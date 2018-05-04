@@ -17,6 +17,7 @@ import { ErrorBT } from '../errors/models/error.model';
 @Injectable()
 export class ProjectService {
     private readonly routerPrefix: string = "api/project";
+    private portalId: string = sessionStorage.getItem('portalID');
 
     constructor(private HttpClientService: HttpClientService) { }
 
@@ -37,15 +38,15 @@ export class ProjectService {
     }
 
     addProject(project: Project): Observable<Project> {
-        return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, null, { 'Content-Type': 'application/json' }, project);
+        return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, { 'portalId':  this.portalId}, { 'Content-Type': 'application/json' }, project);
     }
 
     updateProject(projectId: number, project: Project): Observable<Project> {
-        return this.HttpClientService.sendRequest(RequestMethod.Put, `${this.routerPrefix}/${projectId}`, null, { 'Content-Type': 'application/json' }, project);
+        return this.HttpClientService.sendRequest(RequestMethod.Put, `${this.routerPrefix}/${projectId}`, { 'portalId':  this.portalId}, { 'Content-Type': 'application/json' }, project);
     }
 
     deleteProject(projectId: number): Observable<void> {
-        return this.HttpClientService.sendRequest(RequestMethod.Delete, `${this.routerPrefix}/${projectId}`);
+        return this.HttpClientService.sendRequest(RequestMethod.Delete, `${this.routerPrefix}/${projectId}`, { 'portalId':  this.portalId});
     }
 
     getProjectById(projectId: number): Observable<Project> {

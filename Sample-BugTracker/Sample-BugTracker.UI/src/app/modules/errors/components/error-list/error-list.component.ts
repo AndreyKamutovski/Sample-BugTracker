@@ -3,12 +3,14 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../../../shared/services/auth.service';
+import { PermissionService } from '../../../../shared/services/permission.service';
 import { Project } from '../../../projects/models/project.model';
 import { User } from '../../../users/models/user.model';
 import { ErrorService } from '../../error.service';
 import { ErrorBT } from '../../models/error.model';
 import { AddErrorFormComponent } from '../add-error-form/add-error-form.component';
 import { SelectedErrorDialogComponent } from '../selected-error-dialog/selected-error-dialog.component';
+import { PermissionList }   from '../../../../shared/enums/permission-list.enum';
 
 @Component({
   selector: 'app-error-list',
@@ -28,8 +30,8 @@ export class ErrorListComponent implements OnInit {
     private authService: AuthService,
     private errorService: ErrorService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
-
+    private snackBar: MatSnackBar,
+    private permissionService: PermissionService
   ) { }
 
 
@@ -56,6 +58,11 @@ export class ErrorListComponent implements OnInit {
     });
   }
   
+  showUpdatedMsg(msg: string) {
+  this.errors[0].Status
+    this.snackBar.open(`${msg}: успешно обновлено`, '', { duration: 2000 });
+  }
+
   openErrorDialog(error: ErrorBT): void {
     event.preventDefault();
     let dialogRef = this.dialog.open(SelectedErrorDialogComponent, {

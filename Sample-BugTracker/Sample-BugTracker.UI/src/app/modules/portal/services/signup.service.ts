@@ -10,7 +10,7 @@ export class SignupService {
 
   constructor(private HttpClientService: HttpClientService) { }
 
-  public checkEmailNotTaken(email: string): Observable<boolean> {
-    return this.HttpClientService.sendRequest(RequestMethod.Get, 'api/User', { 'email': email });
+  public IsEmailAvailable(email: string): Observable<boolean> {
+    return this.HttpClientService.sendRequest(RequestMethod.Get, 'api/user', { 'email': email });
   }
 }

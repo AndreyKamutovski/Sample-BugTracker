@@ -19,10 +19,16 @@ namespace Sample_BugTracker.API.Filters
     public class HasPermissionAttribute : ActionFilterAttribute
     {
         private PermissionList[] _permission;
+        private int _projId;
+        private string _errorIdParamName;
+        private string _projectIdParamName;
 
-        public HasPermissionAttribute(params PermissionList[] permission)
+
+        public HasPermissionAttribute(string errorIdParamName = "Id", string projectIdParamName = "projectId", params PermissionList[] permission)
         {
             this._permission = permission;
+            this._errorIdParamName = errorIdParamName;
+            this._projectIdParamName = projectIdParamName;
         }
 
         public override void OnActionExecuting(HttpActionContext actionContext)
@@ -31,32 +37,44 @@ namespace Sample_BugTracker.API.Filters
             var actionName = actionContext.ActionDescriptor.ActionName;
             if (currentUser.IsAuthenticated)
             {
-                var queryString = actionContext.Request.RequestUri.Query;
-                var parameters = System.Web.HttpUtility.ParseQueryString(queryString);
-                var errorId = actionContext.ActionArguments["id"];
-                if (errorId == null)
-                {
-                    throw new HttpResponseException(actionContext.Request.CreateErrorResponse(HttpStatusCode.NotFound, "HasPermissionAttribute: parameter id not found"));
-                }
-
                 using (var UoW = new UnitOfWork(new ApplicationDbContext()))
                 {
-                    var error = UoW.Errors.Get(errorId);
-                    if(error == null)
+                    UserProject userProject = null;
+                    if (actionContext.ActionArguments.ContainsKey((_errorIdParamName))) // for errorId
                     {
-                        throw new HttpResponseException(actionContext.Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("Error with id {0} not found", errorId)));
+                        var errorId = actionContext.ActionArguments[_errorIdParamName];
+                        var error = UoW.Errors.Get(errorId);
+                        if (error == null)
+                        {
+                            throw new HttpResponseException(actionContext.Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("Error with id {0} not found", errorId)));
+                        }
+                        _projId = error.ProjectId;
+                        userProject = UoW.UserProjects.Find(up => up.ProjectId == error.ProjectId && up.Worker.Email == currentUser.Name).FirstOrDefault();
                     }
-                    var userProject = UoW.UserProjects.Find(up => up.ProjectId == error.ProjectId && up.Worker.Email == currentUser.Name).FirstOrDefault();
-                    if(userProject == null)
+
+                    if (actionContext.ActionArguments.ContainsKey((_projectIdParamName)))
                     {
-                        throw new HttpResponseException(actionContext.Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("UserProject for project with id {0} and worker email {1} not found", error.ProjectId, currentUser.Name)));
+                        var projId = actionContext.ActionArguments[_projectIdParamName];
+                        var project = UoW.Errors.Get(projId);
+                        if (project == null)
+                        {
+                            throw new HttpResponseException(actionContext.Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("Project with id {0} not found", projId)));
+                        }
+                        _projId = project.Id;
+                        userProject = UoW.UserProjects.Find(up => up.ProjectId == project.Id && up.Worker.Email == currentUser.Name).FirstOrDefault();
+                    }
+
+                    if (userProject == null)
+                    {
+                        throw new HttpResponseException(actionContext.Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("UserProject for project with id {0} and user email {1} not found", _projId, currentUser.Name)));
                     }
                     var isAuthorized = false;
                     List<PermissionList> rolePermission = userProject.Role.Permission.Select(p => p.Description).ToList();
-                    foreach (var perm in _permission) {
+                    foreach (var perm in _permission)
+                    {
                         isAuthorized = rolePermission.Contains(perm);
                     }
-                    if(!isAuthorized)
+                    if (!isAuthorized)
                     {
                         throw new HttpResponseException(actionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, string.Format("Unauthorized: for execute action {0} insufficient permissions ", actionName)));
                     }

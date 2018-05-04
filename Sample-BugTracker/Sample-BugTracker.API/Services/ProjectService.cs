@@ -3,6 +3,7 @@ using Sample_BugTracker.API.DTO;
 using Sample_BugTracker.API.DTO.Error;
 using Sample_BugTracker.API.Exceptions;
 using Sample_BugTracker.DAL.Entities;
+using Sample_BugTracker.DAL.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -80,6 +81,25 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
+        public PermissionList[] GetProjectPermission(int id)
+        {
+            using (UoW)
+            {
+                Project project = UoW.Projects.Get(id);
+                if (project == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+
+                var userProject = UoW.UserProjects.Find(up => up.ProjectId == project.Id && up.Worker.Email == CurrentUser.Email).FirstOrDefault();
+                if (userProject == null)
+                {
+                    throw new ApplicationOperationException(string.Format("UserProject for project with id {0} and user email {1} not found", project.Id, CurrentUser.Email), HttpStatusCode.NotFound);
+                }
+                return userProject.Role.Permission.Select(p => p.Description).ToArray();
+            }
+        }
+
         public ProjectDTO Add(ProjectDTO projectDto)
         {
             using (UoW)
@@ -120,20 +140,6 @@ namespace Sample_BugTracker.API.Services
                 }
                 UoW.Projects.Remove(project);
                 UoW.Complete();
-            }
-        }
-
-        public string GetUserRoleForProject(int projectId)
-        {
-            using (UoW)
-            {
-                Project project = UoW.Projects.Get(projectId);
-                if (project == null)
-                {
-                    throw new ApplicationOperationException(string.Format("Project with id {0} not found", projectId), HttpStatusCode.NotFound);
-                }
-                var projUser = UoW.UserProjects.Find(pu => pu.ProjectId == projectId && pu.WorkerId == CurrentUser.Id).FirstOrDefault();
-                return projUser.Role.Name;
             }
         }
     }

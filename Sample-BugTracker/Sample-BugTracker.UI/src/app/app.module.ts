@@ -1,3 +1,5 @@
+import 'chart.js/dist/Chart.min.js';
+
 import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
@@ -21,8 +23,9 @@ import { GlobalErrorHandlerComponent } from './shared/components/global-error-ha
 import { GlobalErrorHandlerService } from './shared/components/global-error-handler/global-error-handler.service';
 import { AuthService } from './shared/services/auth.service';
 import { HttpClientService, REST_URI } from './shared/services/httpClient.service';
+import { PermissionService } from './shared/services/permission.service';
 import { QuillEditorConfigurationService } from './shared/services/quill-editor-configuration.service';
-import 'chart.js/dist/Chart.min.js';
+
 // import { CaptchaComponent } from './captcha/captcha.component';
 
 @NgModule({
@@ -52,6 +55,7 @@ import 'chart.js/dist/Chart.min.js';
         AuthGuardLoginService,
         AuthGuardLogoutService,
         HttpClientService,
+        PermissionService,
         QuillEditorConfigurationService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },

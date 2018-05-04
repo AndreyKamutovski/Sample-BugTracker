@@ -1,5 +1,6 @@
 ﻿using Marvin.JsonPatch;
 using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.DTO.Error.PartialUpdate;
 using Sample_BugTracker.API.Filters;
 using Sample_BugTracker.API.Services;
 using Sample_BugTracker.DAL.Entities;
@@ -27,6 +28,7 @@ namespace Sample_BugTracker.API.Controllers
 
         [HttpPost]
         [Route("")]
+        [HasPermissionAttribute(permission: PermissionList.ADDITION_ERROR)]
         public ErrorDTO Add([Required] int projectId, [Required, FromBody] ErrorDTO errorDto)
         {
             return _errorService.Add(projectId, errorDto);
@@ -48,11 +50,43 @@ namespace Sample_BugTracker.API.Controllers
         }
 
         [HttpPatch]
-        [Route("{id:int:min(1)}/status")]
-        [HasPermissionAttribute(PermissionList.EDITING_STATUS_OF_ERROR)]
-        public Status Status([Required] int id, [Required, FromBody]Status status)
+        [Route("{id:int:min(1)}/assignee")]
+        [HasPermissionAttribute(permission: PermissionList.EDITING_ASSIGNEE_OF_ERROR)]
+        public AssigneeUpdateDTO Assignee([Required] int id, [Required]AssigneeUpdateDTO assignee)
+        {
+            return _errorService.UpdateAssignee(id, assignee);
+        }
+
+        [HttpPatch]
+        [Route("{id:int:min(1)}/status/{status:range(1,4)}")]
+        [HasPermissionAttribute(permission: PermissionList.EDITING_STATUS_OF_ERROR)]
+        public Status Status([Required] int id, [Required]Status status)
         {
             return _errorService.UpdateStatus(id, status);
+        }
+
+        [HttpPatch]
+        [Route("{id:int:min(1)}/deadline")]
+        [HasPermissionAttribute(permission: PermissionList.EDITING_DEADLINE_OF_ERROR)]
+        public DateTime Deadline([Required] int id, [Required]DateTime deadline)
+        {
+            return _errorService.UpdateDeadline(id, deadline);
+        }
+
+        [HttpPatch]
+        [Route("{id:int:min(1)}/priority/{priority:range(1,4)}")]
+        [HasPermissionAttribute(permission: PermissionList.EDITING_PRIORITY_OF_ERROR)]
+        public Priority Priority([Required] int id, [Required]Priority priority)
+        {
+            return _errorService.UpdatePriority(id, priority);
+        }
+
+        [HttpPatch]
+        [Route("{id:int:min(1)}/classification/{classification:range(1,6)}")]
+        [HasPermissionAttribute(permission: PermissionList.EDITING_CLASSIFICATION_OF_ERROR)]
+        public Classification Classification([Required] int id, [Required]Classification classification)
+        {
+            return _errorService.UpdateClassification(id, classification);
         }
     }
 }

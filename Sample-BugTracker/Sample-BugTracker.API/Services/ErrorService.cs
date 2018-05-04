@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Marvin.JsonPatch;
 using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.DTO.Error.PartialUpdate;
 using Sample_BugTracker.API.Exceptions;
 using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Enumerations;
@@ -127,9 +128,86 @@ namespace Sample_BugTracker.API.Services
                 {
                     error.Status = status;
                 }
+                UoW.Complete();
                 return error.Status;
             }
         }
+
+        public AssigneeUpdateDTO UpdateAssignee(int id, AssigneeUpdateDTO assignee)
+        {
+            using (UoW)
+            {
+                var error = UoW.Errors.Get(id);
+                if (error == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+                var newAssignee = UoW.Users.GetByEmail(assignee.EmailAssignee);
+                if (newAssignee == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Error assignee with email {0} not found", assignee.EmailAssignee), HttpStatusCode.NotFound);
+                }
+                error.Assignee = newAssignee;
+                UoW.Complete();
+                return assignee;
+            }
+
+        }
+
+        public DateTime UpdateDeadline(int id, DateTime deadline)
+        {
+            using (UoW)
+            {
+                var error = UoW.Errors.Get(id);
+                if (error == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+                if (error.Deadline != deadline)
+                {
+                    error.Deadline = deadline;
+                    UoW.Complete();
+                }
+                return deadline;
+            }
+        }
+
+        public Priority UpdatePriority(int id, Priority priority)
+        {
+            using (UoW)
+            {
+                var error = UoW.Errors.Get(id);
+                if (error == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+                if (error.Priority != priority)
+                {
+                    error.Priority = priority;
+                    UoW.Complete();
+                }
+                return error.Priority;
+            }
+        }
+
+        public Classification UpdateClassification(int id, Classification classification)
+        {
+            using (UoW)
+            {
+                var error = UoW.Errors.Get(id);
+                if (error == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+                if (error.Classification != classification)
+                {
+                    error.Classification = classification;
+                    UoW.Complete();
+                }
+                return error.Classification;
+            }
+        }
+
 
     }
 }

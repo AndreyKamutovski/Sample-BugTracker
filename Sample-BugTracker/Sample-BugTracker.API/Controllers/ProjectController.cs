@@ -1,6 +1,7 @@
 ﻿using Sample_BugTracker.API.DTO;
 using Sample_BugTracker.API.Filters;
 using Sample_BugTracker.API.Services;
+using Sample_BugTracker.DAL.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -49,6 +50,12 @@ namespace Sample_BugTracker.API.Controllers
             return _projectService.GetProjectOwner(id);
         }
 
+        [Route("{id:int:min(1)}/permission")]
+        public PermissionList[] GetProjectPermission([Required] int id)
+        {
+            return _projectService.GetProjectPermission(id);
+        }
+
         [HttpPost]
         [Route("")]
         [ProjectAuthorizationAttribute]
@@ -71,11 +78,5 @@ namespace Sample_BugTracker.API.Controllers
         {
             _projectService.Delete(id);
         }
-
-  
-        //public string GetUserRoleForProject([Required] int projectId)
-        //{
-        //    return _projectService.GetUserRoleForProject(projectId);
-        //}
     }
 }

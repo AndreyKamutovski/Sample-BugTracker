@@ -68,19 +68,32 @@
           </mat-select>
         </td>
         <td>
-          <mat-form-field style="width: 95%;" floatLabel="never">
-            <input matInput style="color: black;" placeholder="Не установлен" [min]="error.DateCreation" [matDatepicker]="deadlineDatepicker" disabled [(ngModel)]="error.Deadline"
-              (dateChange)="updateError(error, 'Срок выполнения')">
-            <mat-datepicker-toggle matSuffix [for]="deadlineDatepicker"></mat-datepicker-toggle>
-            <mat-datepicker #deadlineDatepicker disabled="false"></mat-datepicker>
-          </mat-form-field>
+          <div [ngSwitch]="permissionService.Permission.includes(permissionService.PERMISSION_LIST.EDITING_DEADLINE_OF_ERROR)">
+            <mat-form-field *ngSwitchCase="true" style="width: 95%;" floatLabel="never">
+              <input matInput style="color: black;" placeholder="Не установлен" [min]="error.DateCreation" [matDatepicker]="deadlineDatepicker"
+                disabled [(ngModel)]="error.Deadline" (dateChange)="updateError(error, 'Срок выполнения')">
+              <mat-datepicker-toggle matSuffix [for]="deadlineDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #deadlineDatepicker disabled="false"></mat-datepicker>
+            </mat-form-field>
+            <span *ngSwitchDefault>
+              {{error.Deadline ? (error.Deadline | date:'longDate') : 'Не установлен' }}
+            </span>
+          </div>
         </td>
-        <td>
-          <mat-select [(value)]="error.Status" (selectionChange)="updateError(error, 'Статус ошибки')">
-            <mat-option *ngFor="let status of errorService.status" [value]="status.value">
-              {{status.viewValue}}
-            </mat-option>
-          </mat-select>
+        <td> 
+          <div [ngSwitch]="permissionService.Permission.includes(permissionService.PERMISSION_LIST.EDITING_STATUS_OF_ERROR)">
+            <mat-select [(value)]="error.Status" (selectionChange)="errorService.updateStatus(error.ErrorId, $event.value).then(showUpdatedMsg('Статус ошибки'))">
+              <mat-option *ngFor="let status of errorService.status" [value]="status.value">
+                {{status.viewValue}}
+              </mat-option>
+            </mat-select>
+            <span *ngSwitchDefault>
+              {{error.Status ? error.Status : 'Не установлен' }}
+            </span>
+          </div>
+
+
+
         </td>
         <td>
           <mat-select [(value)]="error.Priority" (selectionChange)="updateError(error, 'Приоритет ошибки')">

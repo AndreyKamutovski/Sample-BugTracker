@@ -42,7 +42,6 @@ export class AuthService {
             return this.userService.getCurrentUser().toPromise().then(user => {
                 this._currentUser = user;
                 this._isLoggedIn = true;
-                
             });
         });
     }

@@ -14,13 +14,14 @@ import {
 import { AuthGuardLoginService } from './modules/projects/guards/auth-guard-login.service';
 import { CurrentProjectResolverService } from './modules/projects/resolvers/current-project-resolver.service';
 import { ProjectListResolverService } from './modules/projects/resolvers/project-list-resolver.service';
+import { ProjectPermissionResolverService } from './modules/projects/resolvers/project-permission-resolver.service';
 import { ConfirmPasswordComponent } from './modules/users/components/confirm-password/confirm-password.component';
 import { LoginFormComponent } from './modules/users/components/login-form/login-form.component';
 import { UserListComponent } from './modules/users/components/user-list/user-list.component';
 import { AuthGuardLogoutService } from './modules/users/guards/auth-guard-logout.service';
 import { ProjectOwnerResolverService } from './modules/users/resolvers/project-owner-resolver.service';
-import { UserListResolverService } from './modules/users/resolvers/user-list-resolver.service';
 import { ProjectWorkersResolverService } from './modules/users/resolvers/project-workers-resolver.service';
+import { UserListResolverService } from './modules/users/resolvers/user-list-resolver.service';
 
 
 // { path: '', component: ProjectListComponent, resolve: { projectList: ProjectListResolverService } },
@@ -32,7 +33,7 @@ const routes: Routes = [
         path: "app/project", component: SelectedProjectPageComponent, canActivate: [AuthGuardLoginService],
         canActivateChild: [AuthGuardLoginService],
         children: [
-            { path: 'dashboard', component: DashboardComponent, resolve: { currentProject: CurrentProjectResolverService, projectOwner: ProjectOwnerResolverService }, },
+            { path: 'dashboard', component: DashboardComponent, resolve: { currentProject: CurrentProjectResolverService, projectOwner: ProjectOwnerResolverService, projectPerm: ProjectPermissionResolverService }, },
             { path: 'errors', component: ErrorListComponent, resolve: {errorList: ErrorListResolverService, projectWorkers: ProjectWorkersResolverService, userList: UserListResolverService, currentProject: CurrentProjectResolverService} },
             { path: 'users', component: UserListComponent, resolve: { userList: UserListResolverService }, }
         ]

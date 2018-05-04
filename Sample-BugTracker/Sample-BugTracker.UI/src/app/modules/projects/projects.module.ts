@@ -12,6 +12,7 @@ import { ProjectListResolverService } from './resolvers/project-list-resolver.se
 import {TableModule} from 'primeng/table';
 import { EditProjectFormComponent } from './components/edit-project-form/edit-project-form.component';
 import { ConfirmDeletingProjectComponent } from './components/confirm-deleting-project/confirm-deleting-project.component';
+import { ProjectPermissionResolverService } from './resolvers/project-permission-resolver.service';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { ConfirmDeletingProjectComponent } from './components/confirm-deleting-p
     ProjectService,
     ProjectListResolverService,
     CurrentProjectResolverService,
+    ProjectPermissionResolverService,
     UsersService,
   ]
 })
