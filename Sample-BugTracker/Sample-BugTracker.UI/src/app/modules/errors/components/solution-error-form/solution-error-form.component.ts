@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../../shared/services/auth.service';
-import { ErrorService } from '../../error.service';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-solution-error-form',

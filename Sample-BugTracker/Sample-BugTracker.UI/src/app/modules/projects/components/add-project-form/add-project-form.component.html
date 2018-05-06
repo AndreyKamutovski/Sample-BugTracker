@@ -1,8 +1,9 @@
 <form [formGroup]='addProjectForm' (ngSubmit)="addProject()" novalidate>
     <h2 mat-dialog-title>Добавить проект</h2>
-
+  
     <mat-dialog-content class="form-field-container">
-        <mat-form-field>
+        <app-project-title-input></app-project-title-input>
+        <!-- <mat-form-field>
             <input matInput type="text" name="projectName" placeholder="Название проекта" required minlength='3' formControlName='title'
                 appInputAutofocus>
             <mat-error *ngIf="title.hasError('required')">
@@ -20,10 +21,10 @@
                 Название проекта должно быть меньше {{title.errors.maxlength.requiredLength }} символов
             </mat-error>
 
-        </mat-form-field>
+        </mat-form-field> -->
 
 
-        <div formGroupName="datepickerGroup" class="horizontal-flex-container-for-two-datepicker">
+        <!-- <div formGroupName="datepickerGroup" class="horizontal-flex-container-for-two-datepicker">
             <mat-form-field>
                 <input matInput [matDatepicker]="startDatepicker" placeholder="Дата начала" formControlName='dateStart' required (dateChange)="dateChangeEvent($event)">
                 <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
@@ -34,9 +35,9 @@
                 <mat-error *ngIf="dateStart.hasError('matDatepickerParse')">
                     Неправильная дата
                 </mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
 
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <input matInput [matDatepicker]="endDatepicker" placeholder="Дата окончания" formControlName='dateEnd' [min]="endDateIncrement"
                     required (dateChange)="dateChangeEvent($event)">
                 <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
@@ -60,12 +61,12 @@
         <mat-error *ngIf="description.hasError('required') && (description.touched && description.dirty)">
             Обязательно введите описание проекта
         </mat-error>
-        <mat-error *ngIf="textContent.length-1 < 10 && !description.hasError('required')">
+        <mat-error *ngIf="textContent.length-1 < 10 && !description.hasError('required')"> -->
             <!-- {{ description.errors.minlength.requiredLength }} -->
             <!-- {{ description.errors.minlength.actualLength }} -->
            
-            Описание проекта должно должно содержать не менее 10 символов. Вы ввели {{textContent.length-1}}  символа 
-        </mat-error>
+            <!-- Описание проекта должно должно содержать не менее 10 символов. Вы ввели {{textContent.length-1}}  символа 
+        </mat-error> -->
         <!-- {{textContent}} -->
         <!-- <mat-error *ngIf="description.hasError('pattern')">
             Описание проекта содержит недопустимые символы. Допустимы буквы от А до Я (строчные и прописные), цифры от 0 до 9, знак тире
@@ -93,6 +94,7 @@
 
     <mat-dialog-actions>
         <button mat-button mat-dialog-close>Отмена</button>
-        <button mat-raised-button color="primary" [disabled]="!addProjectForm.valid" type="submit">Добавить проект</button>
+        <!-- [disabled]="!addProjectForm.valid" -->
+        <button mat-raised-button color="primary"  type="submit">Добавить проект</button>
     </mat-dialog-actions>
 </form>

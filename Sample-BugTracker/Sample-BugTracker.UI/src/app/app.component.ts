@@ -17,7 +17,7 @@ export class AppComponent {
     ) {}
         
     ngOnInit(){
-        Date.prototype.toJSON = function(){ return moment(this).format(); }
+        Date.prototype.toJSON = function(){ return moment(this).format("YYYY-MM-DD"); }
         this.router.events.subscribe(e => {
        
                    if (e instanceof NavigationStart) {

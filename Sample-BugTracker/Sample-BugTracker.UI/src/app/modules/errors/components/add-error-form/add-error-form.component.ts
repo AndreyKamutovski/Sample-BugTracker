@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 
 import { QuillEditorConfigurationService } from '../../../../shared/services/quill-editor-configuration.service';
-import { ErrorService } from '../../error.service';
+import { ErrorService } from '../../services/error.service';
 import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({

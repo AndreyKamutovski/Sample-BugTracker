@@ -1,13 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, MatDatepickerInputEvent, MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { AuthService } from '../../../../shared/services/auth.service';
 import { QuillEditorConfigurationService } from '../../../../shared/services/quill-editor-configuration.service';
-import { Project } from '../../../projects/models/project.model';
-import { ErrorService } from '../../error.service';
 import { ErrorBT } from '../../models/error.model';
-import { User } from '../../../users/models/user.model';
+import { ErrorListSharedService } from '../../services/error-list-shared.service';
 import { SolutionErrorFormComponent } from '../solution-error-form/solution-error-form.component';
 
 @Component({
@@ -15,55 +13,60 @@ import { SolutionErrorFormComponent } from '../solution-error-form/solution-erro
   templateUrl: './selected-error-dialog.component.html',
   styleUrls: ['./selected-error-dialog.component.css']
 })
-export class SelectedErrorDialogComponent implements OnInit {
+export class SelectedErrorDialogComponent {
 
   private errorForm: FormGroup;
   private error: ErrorBT;
-  private project: Project;
+  // private project: Project;
   private isShowQuillEditor: boolean = false;
-  private projectWorkers: User[];
+  // private projectWorkers: User[];
   private errorSolution: SolutionErrorFormComponent;
+  // private isDisabledTitleAndDesc: boolean;
 
 
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<SelectedErrorDialogComponent>,
     private quillEditorConfig: QuillEditorConfigurationService,
-    private errorService: ErrorService,
+    // private errorService: ErrorService,
     private authService: AuthService,
-    private snackBar: MatSnackBar,
     private dialog: MatDialog,
+    private errorListSharedService: ErrorListSharedService,
     
     @Inject(MAT_DIALOG_DATA) public data: any,
 
   ) {
     this.error = this.data.error;
-    this.project = this.data.project;
-    this.projectWorkers = this.data.projectWorkers;
-    this.isShowQuillEditor = this.error.Description != '' ? true : false;
+    // this.project = this.data.project;
+    // this.projectWorkers = this.data.projectWorkers;
+    // this.isDisabledTitleAndDesc = this.data.isDisabledTitleAndDesc;
+    // this.isShowQuillEditor = this.error.Description != '' ? true : false;
     this.createForm();
   };
 
 
   quillEditorTextContent: string = '';
+  quillEditorHtmlContent: string = '';
+
   quillEditorIsActive: boolean = false;
 
   contentChange(event: any) {
+    this.quillEditorHtmlContent = event.html;
     this.quillEditorTextContent = event.text;
-    this.error.DateCreation
   }
 
+  // updateError(updatedField: string, fcName: string) {
+  //   if (this.getFormControl(fcName).valid) {
+  //     this.errorService.updateError(this.error.ErrorId, this.errorForm.value).toPromise().then((error: ErrorBT) => {
+  //       this.error = error;
+  //       this.snackBar.open(`${updatedField}: успешно обновлено`, '', { duration: 2000 });
+  //     });
+  //   } else { 
+  //     this.snackBar.open(`Не удалось выполнить обновление`, '', { duration: 2000 });
+  //   }
+  // }
 
-  updateError(updatedField: string, fcName: string) {
-    if (this.getFormControl(fcName).valid) {
-      this.errorService.updateError(this.error.ErrorId, this.errorForm.value).toPromise().then((error: ErrorBT) => {
-        this.error = error;
-        this.snackBar.open(`${updatedField}: успешно обновлено`, '', { duration: 2000 });
-      });
-    } else {
-      this.snackBar.open(`Не удалось выполнить обновление`, '', { duration: 2000 });
-    }
-  }
+
 
   // changeDeadline(errorId: number, event: MatDatepickerInputEvent<Date>) {
   //   let errorDeadline = new UpdateErrorDeadlineBT(errorId, event.value);
@@ -107,9 +110,6 @@ export class SelectedErrorDialogComponent implements OnInit {
 
   private getFormControl(fcPath: string) {
     return this.errorForm.get(fcPath);
-  }
-  ngOnInit() {
-
   }
 
   openSolutionErrorDialog() {

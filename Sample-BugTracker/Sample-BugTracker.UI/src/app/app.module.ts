@@ -25,6 +25,7 @@ import { AuthService } from './shared/services/auth.service';
 import { HttpClientService, REST_URI } from './shared/services/httpClient.service';
 import { PermissionService } from './shared/services/permission.service';
 import { QuillEditorConfigurationService } from './shared/services/quill-editor-configuration.service';
+import { MessageService } from './shared/services/message.service';
 
 // import { CaptchaComponent } from './captcha/captcha.component';
 
@@ -56,6 +57,7 @@ import { QuillEditorConfigurationService } from './shared/services/quill-editor-
         AuthGuardLogoutService,
         HttpClientService,
         PermissionService,
+        MessageService,
         QuillEditorConfigurationService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },

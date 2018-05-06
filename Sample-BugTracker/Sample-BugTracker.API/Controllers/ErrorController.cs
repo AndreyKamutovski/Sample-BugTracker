@@ -51,6 +51,7 @@ namespace Sample_BugTracker.API.Controllers
 
         [HttpPatch]
         [Route("{id:int:min(1)}/assignee")]
+        [CanEditErrorAttribute]
         [HasPermissionAttribute(permission: PermissionList.EDITING_ASSIGNEE_OF_ERROR)]
         public AssigneeUpdateDTO Assignee([Required] int id, [Required]AssigneeUpdateDTO assignee)
         {
@@ -59,6 +60,7 @@ namespace Sample_BugTracker.API.Controllers
 
         [HttpPatch]
         [Route("{id:int:min(1)}/status/{status:range(1,4)}")]
+        [CanEditErrorAttribute]
         [HasPermissionAttribute(permission: PermissionList.EDITING_STATUS_OF_ERROR)]
         public Status Status([Required] int id, [Required]Status status)
         {
@@ -67,14 +69,16 @@ namespace Sample_BugTracker.API.Controllers
 
         [HttpPatch]
         [Route("{id:int:min(1)}/deadline")]
+        [CanEditErrorAttribute]
         [HasPermissionAttribute(permission: PermissionList.EDITING_DEADLINE_OF_ERROR)]
-        public DateTime Deadline([Required] int id, [Required]DateTime deadline)
+        public DeadlineUpdateDTO Deadline([Required] int id, [Required]DeadlineUpdateDTO deadline)
         {
             return _errorService.UpdateDeadline(id, deadline);
         }
 
         [HttpPatch]
         [Route("{id:int:min(1)}/priority/{priority:range(1,4)}")]
+        [CanEditErrorAttribute]
         [HasPermissionAttribute(permission: PermissionList.EDITING_PRIORITY_OF_ERROR)]
         public Priority Priority([Required] int id, [Required]Priority priority)
         {
@@ -83,10 +87,29 @@ namespace Sample_BugTracker.API.Controllers
 
         [HttpPatch]
         [Route("{id:int:min(1)}/classification/{classification:range(1,6)}")]
+        [CanEditErrorAttribute]
         [HasPermissionAttribute(permission: PermissionList.EDITING_CLASSIFICATION_OF_ERROR)]
         public Classification Classification([Required] int id, [Required]Classification classification)
         {
             return _errorService.UpdateClassification(id, classification);
+        }
+
+        [HttpPatch]
+        [Route("{id:int:min(1)}/title")]
+        [CanEditErrorTitleDescAttribute]
+        //[HasPermissionAttribute(permission: PermissionList.EDITING_TITLE_DESCRIPTION_OF_ERROR)]
+        public string Title([Required] int id, [Required]TitleUpdateDTO title)
+        {
+            return _errorService.UpdateTitle(id, title);
+        }
+
+        [HttpPatch]
+        [Route("{id:int:min(1)}/description")]
+        [CanEditErrorTitleDescAttribute]
+        //[HasPermissionAttribute(permission: PermissionList.EDITING_TITLE_DESCRIPTION_OF_ERROR)]
+        public string Description([Required] int id, [Required]DescriptionUpdateDTO description)
+        {
+            return _errorService.UpdateDescription(id, description);
         }
     }
 }

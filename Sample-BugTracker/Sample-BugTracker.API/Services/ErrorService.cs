@@ -142,19 +142,26 @@ namespace Sample_BugTracker.API.Services
                 {
                     throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
                 }
-                var newAssignee = UoW.Users.GetByEmail(assignee.EmailAssignee);
-                if (newAssignee == null)
+                if (assignee.EmailAssignee != null)
                 {
-                    throw new ApplicationOperationException(string.Format("Error assignee with email {0} not found", assignee.EmailAssignee), HttpStatusCode.NotFound);
+                    var newAssignee = UoW.Users.GetByEmail(assignee.EmailAssignee);
+                    if (newAssignee == null)
+                    {
+                        throw new ApplicationOperationException(string.Format("Error assignee with email {0} not found", assignee.EmailAssignee), HttpStatusCode.NotFound);
+                    }
+                    error.Assignee = newAssignee;
                 }
-                error.Assignee = newAssignee;
+                if (assignee.EmailAssignee == null)
+                {
+                    error.AssigneeId = null;
+                    error.Assignee = null;
+                }
                 UoW.Complete();
                 return assignee;
             }
-
         }
 
-        public DateTime UpdateDeadline(int id, DateTime deadline)
+        public DeadlineUpdateDTO UpdateDeadline(int id, DeadlineUpdateDTO deadline)
         {
             using (UoW)
             {
@@ -163,9 +170,9 @@ namespace Sample_BugTracker.API.Services
                 {
                     throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
                 }
-                if (error.Deadline != deadline)
+                if (error.Deadline != deadline.Deadline)
                 {
-                    error.Deadline = deadline;
+                    error.Deadline = deadline.Deadline;
                     UoW.Complete();
                 }
                 return deadline;
@@ -208,6 +215,35 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
+        public string UpdateTitle(int id, TitleUpdateDTO title)
+        {
+            var error = UoW.Errors.Get(id);
+            if (error == null)
+            {
+                throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
+            }
+            if (error.Title != title.Title)
+            {
+                error.Title = title.Title;
+                UoW.Complete();
+            }
+            return title.Title;
+        }
+
+        public string UpdateDescription(int id, DescriptionUpdateDTO description)
+        {
+            var error = UoW.Errors.Get(id);
+            if (error == null)
+            {
+                throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
+            }
+            if (error.Description != description.Description)
+            {
+                error.Description = description.Description;
+                UoW.Complete();
+            }
+            return description.Description;
+        }
 
     }
 }

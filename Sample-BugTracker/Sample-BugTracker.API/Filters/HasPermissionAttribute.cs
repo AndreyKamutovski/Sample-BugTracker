@@ -24,7 +24,7 @@ namespace Sample_BugTracker.API.Filters
         private string _projectIdParamName;
 
 
-        public HasPermissionAttribute(string errorIdParamName = "Id", string projectIdParamName = "projectId", params PermissionList[] permission)
+        public HasPermissionAttribute(string errorIdParamName = "id", string projectIdParamName = "projectId", params PermissionList[] permission)
         {
             this._permission = permission;
             this._errorIdParamName = errorIdParamName;
@@ -55,7 +55,7 @@ namespace Sample_BugTracker.API.Filters
                     if (actionContext.ActionArguments.ContainsKey((_projectIdParamName)))
                     {
                         var projId = actionContext.ActionArguments[_projectIdParamName];
-                        var project = UoW.Errors.Get(projId);
+                        var project = UoW.Projects.Get(projId);
                         if (project == null)
                         {
                             throw new HttpResponseException(actionContext.Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("Project with id {0} not found", projId)));

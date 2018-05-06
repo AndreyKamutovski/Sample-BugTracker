@@ -22,4 +22,8 @@ export class PermissionService {
     return this.HttpClientService.sendRequest(RequestMethod.Get, `api/project/${projectId}/permission`);
   }
 
+  checkPermission(permission: PermissionList): boolean {
+    return this.Permission.includes(permission);
+  }
+
 }

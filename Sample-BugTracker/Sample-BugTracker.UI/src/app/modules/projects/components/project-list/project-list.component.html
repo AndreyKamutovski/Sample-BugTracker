@@ -7,31 +7,31 @@
 
     <p-table #projectsTable (onRowSelect)="onRowSelect($event)" [responsive]="true" [columns]="cols" selectionMode="single" [value]="projects"
         [paginator]="true" [rows]="10">
-        <ng-template pTemplate="colgroup" let-columns>
+        <!-- <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of columns">
             </colgroup>
-        </ng-template>
+        </ng-template> -->
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns" colspan="2" [pSortableColumn]="col.field">
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
                     {{col.header}}
                     <p-sortIcon [field]="col.field"></p-sortIcon>
                 </th>
-                <th *ngIf="authService.isPortalOwner" colspan="1"></th>
-                <th *ngIf="authService.isPortalOwner" colspan="1"></th>
+                <th *ngIf="authService.isPortalOwner"></th>
+                <th *ngIf="authService.isPortalOwner"></th>
             </tr>
             <tr>
-                <th *ngFor="let col of columns" [ngSwitch]="col.field" colspan="2">
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
                     <input *ngSwitchCase="'Title'" pInputText type="text" (input)="projectsTable.filter($event.target.value, col.field, col.filterMatchMode)">
                 </th>
-                <TH colspan="2"></TH>
+                <TH *ngIf="authService.isPortalOwner" colspan="2"></TH>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-project>
             <tr [pSelectableRow]="project">
-                <td colspan="2">{{ (project.Title.length > 50) ? (project.Title | slice:0:50)+'...' : (project.Title) }}</td>
-                <td colspan="2">
+                <td>{{ (project.Title.length > 50) ? (project.Title | slice:0:50)+'...' : (project.Title) }}</td>
+                <td>
                     <div class="error-statistics-container" [matTooltip]="project.ErrorStatistics.ClosedErrorCount + ' решено из ' + project.ErrorStatistics.Total">
                         <span class="error-statistics-progress" [style.width.%]="project.ErrorStatistics.ProgressPercentage">
                         </span>
@@ -42,14 +42,14 @@
                         </span>
                     </div>
                 </td>
-                <td colspan="2">{{ project.DateStart | date:'longDate' }}</td>
-                <td colspan="2">{{ project.DateEnd | date:'longDate' }}</td>
-                <td *ngIf="authService.isPortalOwner" colspan="1">
+                <td>{{ project.DateStart | date:'longDate' }}</td>
+                <td>{{ project.DateEnd | date:'longDate' }}</td>
+                <td *ngIf="authService.isPortalOwner">
                     <button mat-icon-button matTooltip="Редактировать" (click)="openEditProjectDialog($event, project)">
                         <mat-icon>edit</mat-icon>
                     </button>
                 </td>
-                <td *ngIf="authService.isPortalOwner" colspan="1">
+                <td *ngIf="authService.isPortalOwner">
                     <button mat-icon-button matTooltip="Удалить" (click)="openDeleteProjectDialog($event, project)">
                         <mat-icon>delete</mat-icon>
                     </button>

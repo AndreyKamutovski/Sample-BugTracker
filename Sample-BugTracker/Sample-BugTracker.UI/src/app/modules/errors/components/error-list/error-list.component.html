@@ -1,8 +1,8 @@
-<div *ngIf="errors.length === 0" style="margin: 10% 0;">
+<div *ngIf="errorListSharedService.Errors.length === 0" style="margin: 10% 0;">
   <span class="mat-h1">В проекте отсутствуют ошибки. Нажмите кнопку 'Добавить ошибку' для добавления ошибки</span>&nbsp;
   <button mat-raised-button color="accent" (click)="openAddErrorDialog()">Добавить ошибку</button>
 </div>
-<div class="mat-elevation-z5 table-container" [hidden]="!(errors.length > 0)">
+<div class="mat-elevation-z5 table-container" [hidden]="!(errorListSharedService.Errors.length > 0)">
 
   <div class="error-global-filter">
     <mat-form-field>
@@ -11,8 +11,8 @@
   </div>
 
 
-  <p-table #errorsTable [columns]="cols" [(value)]="errors" [paginator]="true" [rows]="5" [responsive]="true" [scrollable]="true"
-    scrollHeight="500px" [resizableColumns]="true">
+  <p-table #errorsTable [columns]="cols" [(value)]="errorListSharedService.Errors" [paginator]="true" [rows]="5" [responsive]="true"
+    [scrollable]="true" scrollHeight="500px" [resizableColumns]="true">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of cols" [pSortableColumn]="col.field">
@@ -49,66 +49,82 @@
             </mat-option>
           </mat-select>
         </th>
-
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-error>
       <tr [pSelectableRow]="error">
         <td>
-          <a href="#" (click)="openErrorDialog(error)">{{ error.Title }}</a>
+          <a href="#" (click)="openEditErrorDialog(error)">{{ error.Title }}</a>
         </td>
         <td>{{ error.EmailAuthor | getUserNameFromEmail }}</td>
         <td>{{ error.DateCreation | date:'longDate' }}</td>
         <td>
-          <mat-select placeholder="Не назначен" [(value)]="error.EmailAssignee" (selectionChange)="updateError(error, 'Ответственный за ошибку')">
-            <mat-option [value]="null"> Не назначен </mat-option>
-            <mat-option *ngFor="let worker of projectWorkers" [value]="worker.Email">
-              {{worker.Email | getUserNameFromEmail}}
-            </mat-option>
-          </mat-select>
+          <div [ngSwitch]="permissionService.checkPermission(permissionService.PERMISSION_LIST.EDITING_ASSIGNEE_OF_ERROR) && errorListSharedService.thisTesterIsErrorAuthor(error)">
+            <mat-select *ngSwitchCase="true" placeholder="Не назначен" [(value)]="error.EmailAssignee" (selectionChange)="errorListSharedService.updateAssignee(error.ErrorId, $event.value)">
+              <mat-option [value]="null"> Не назначен </mat-option>
+              <mat-option *ngFor="let worker of projectWorkers" [value]="worker.Email">
+                {{worker.Email | getUserNameFromEmail}}
+              </mat-option>
+            </mat-select>
+            <span *ngSwitchDefault>
+              {{error.EmailAssignee ? (error.EmailAssignee | getUserNameFromEmail) : 'Не назначен' }}
+            </span>
+          </div>
         </td>
         <td>
-          <div [ngSwitch]="permissionService.Permission.includes(permissionService.PERMISSION_LIST.EDITING_DEADLINE_OF_ERROR)">
+          <div [ngSwitch]="permissionService.checkPermission(permissionService.PERMISSION_LIST.EDITING_DEADLINE_OF_ERROR) && errorListSharedService.thisTesterIsErrorAuthor(error)">
             <mat-form-field *ngSwitchCase="true" style="width: 95%;" floatLabel="never">
               <input matInput style="color: black;" placeholder="Не установлен" [min]="error.DateCreation" [matDatepicker]="deadlineDatepicker"
-                disabled [(ngModel)]="error.Deadline" (dateChange)="updateError(error, 'Срок выполнения')">
+                disabled [(ngModel)]="error.Deadline" (dateChange)="errorListSharedService.updateDeadline(error.ErrorId, $event.value)">
               <mat-datepicker-toggle matSuffix [for]="deadlineDatepicker"></mat-datepicker-toggle>
               <mat-datepicker #deadlineDatepicker disabled="false"></mat-datepicker>
             </mat-form-field>
             <span *ngSwitchDefault>
-              {{error.Deadline ? (error.Deadline | date:'longDate') : 'Не установлен' }}
+              {{error.Deadline ? (error.Deadline | date:'longDate') : 'Не установлено' }}
             </span>
           </div>
         </td>
-        <td> 
-          <div [ngSwitch]="permissionService.Permission.includes(permissionService.PERMISSION_LIST.EDITING_STATUS_OF_ERROR)">
-            <mat-select [(value)]="error.Status" (selectionChange)="errorService.updateStatus(error.ErrorId, $event.value).then(showUpdatedMsg('Статус ошибки'))">
+        <td>
+          <div [ngSwitch]="permissionService.checkPermission(permissionService.PERMISSION_LIST.EDITING_STATUS_OF_ERROR) && errorListSharedService.thisTesterIsErrorAuthor(error)">
+            <mat-select *ngSwitchCase="true" [(value)]="error.Status" (selectionChange)="errorListSharedService.updateStatus(error.ErrorId, $event.value)">
               <mat-option *ngFor="let status of errorService.status" [value]="status.value">
                 {{status.viewValue}}
               </mat-option>
             </mat-select>
             <span *ngSwitchDefault>
-              {{error.Status ? error.Status : 'Не установлен' }}
+              {{ getViewValue(errorService.status, error.Status) }}
             </span>
           </div>
-
-
-
         </td>
         <td>
-          <mat-select [(value)]="error.Priority" (selectionChange)="updateError(error, 'Приоритет ошибки')">
-            <mat-option *ngFor="let priority of errorService.priorities" [value]="priority.value">
-              {{priority.viewValue}}
-            </mat-option>
-          </mat-select>
+          <div [ngSwitch]="permissionService.checkPermission(permissionService.PERMISSION_LIST.EDITING_PRIORITY_OF_ERROR) && errorListSharedService.thisTesterIsErrorAuthor(error)">
+            <mat-select *ngSwitchCase="true" [(value)]="error.Priority" (selectionChange)="errorListSharedService.updatePriority(error.ErrorId, $event.value)">
+              <mat-option *ngFor="let priority of errorService.priorities" [value]="priority.value">
+                {{priority.viewValue}}
+              </mat-option>
+            </mat-select>
+            <span *ngSwitchDefault>
+              {{ getViewValue(errorService.priorities, error.Priority) }}
+            </span>
+          </div>
         </td>
         <td>
-          <mat-select [(value)]="error.Classification" (selectionChange)="updateError(error, 'Классификация ошибки')">
-            <mat-option *ngFor="let classification of errorService.classification" [value]="classification.value">
-              {{classification.viewValue}}
-            </mat-option>
-          </mat-select>
+          <div [ngSwitch]="permissionService.checkPermission(permissionService.PERMISSION_LIST.EDITING_CLASSIFICATION_OF_ERROR) && errorListSharedService.thisTesterIsErrorAuthor(error)">
+            <mat-select *ngSwitchCase="true" [(value)]="error.Classification" (selectionChange)="errorListSharedService.updateClassification(error.ErrorId, $event.value)">
+              <mat-option *ngFor="let classification of errorService.classification" [value]="classification.value">
+                {{classification.viewValue}}
+              </mat-option>
+            </mat-select>
+            <span *ngSwitchDefault>
+              {{ getViewValue(errorService.classification, error.Classification) }}
+            </span>
+          </div>
         </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        Отсутствуют ошибки, удовлетворяющие критериям поиска
       </tr>
     </ng-template>
   </p-table>

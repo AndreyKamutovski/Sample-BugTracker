@@ -194,6 +194,9 @@
     <Compile Include="Controllers\test.cs" />
     <Compile Include="DTO\Error\ErrorSolutionDTO.cs" />
     <Compile Include="DTO\Error\PartialUpdate\AssigneeUpdateDTO.cs" />
+    <Compile Include="DTO\Error\PartialUpdate\DeadlineUpdateDTO.cs" />
+    <Compile Include="DTO\Error\PartialUpdate\DescriptionUpdateDTO.cs" />
+    <Compile Include="DTO\Error\PartialUpdate\TitleUpdateDTO.cs" />
     <Compile Include="DTO\Error\StatisticsErrorDTO.cs" />
     <Compile Include="DTO\User\UnattachUserDTO.cs" />
     <Compile Include="DTO\User\AttachUserDTO.cs" />
@@ -204,7 +207,9 @@
     <Compile Include="DTO\User\UserDTO.cs" />
     <Compile Include="Exceptions\IdentityOperationException.cs" />
     <Compile Include="Filters\ApplicationFilterException.cs" />
+    <Compile Include="Filters\CanEditErrorTitleDescAttribute.cs" />
     <Compile Include="Filters\HasPermissionAttribute.cs" />
+    <Compile Include="Filters\CanEditErrorAttribute.cs" />
     <Compile Include="Filters\ProjectAuthorizationAttribute .cs" />
     <Compile Include="Filters\ValidateDTOModelAttribute .cs" />
     <Compile Include="Global.asax.cs">

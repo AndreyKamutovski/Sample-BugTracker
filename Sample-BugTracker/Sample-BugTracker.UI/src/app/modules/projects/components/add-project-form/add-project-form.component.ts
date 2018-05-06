@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDatepickerInputEvent, MatDialogRef } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
@@ -24,6 +24,8 @@ export class AddProjectFormComponent implements OnInit {
 
   addProjectForm: FormGroup;
   project: Project = new Project();
+
+testGroup: FormGroup;
 
   get title() { return this.addProjectForm.get('title'); }
   get description() { return this.addProjectForm.get('description'); }
@@ -54,21 +56,26 @@ export class AddProjectFormComponent implements OnInit {
     this.description.dirty
   }
 
-  addProject(): void {
-    if (this.addProjectForm.valid) {
-      this.description.touched
-      let newProject = new Project({
-        Title: this.title.value,
-        DateStart: this.dateStart.value,
-        DateEnd: this.dateEnd.value,
-        Description: this.description.value
-      });
+  test: FormControl;
 
-      this.dialogRef.close({ 'projectData': newProject });
+  addProject(f): void {
+  
+    console.log('test form', f);
+    // alert(f);
+    // if (this.addProjectForm.valid) {
+    //   this.description.touched
+    //   let newProject = new Project({
+    //     Title: this.title.value,
+    //     DateStart: this.dateStart.value,
+    //     DateEnd: this.dateEnd.value,
+    //     Description: this.description.value
+    //   });
 
-    } else {
-      throw new Error("Проект не создан. Проверьте правильность ввода данных.")
-    }
+    //   this.dialogRef.close({ 'projectData': newProject });
+
+    // } else {
+    //   throw new Error("Проект не создан. Проверьте правильность ввода данных.")
+    // }
   }
 
   private createForm(): void {

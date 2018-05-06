@@ -1,8 +1,8 @@
 <form [formGroup]='errorForm' novalidate>
   <div mat-dialog-title class="error-dialog-header">
     <mat-form-field style="width: 100%;">
-      <input matInput type="text" (change)="updateError('Название ошибки', 'Title')" placeholder="Название ошибки" required minlength='3'
-        maxlength='100' formControlName='Title' appInputAutofocus>
+      <input matInput type="text" (change)="errorListSharedService.updateTitle(error.ErrorId, $event.target.value)"
+        placeholder="Название ошибки" required minlength='3' maxlength='100' formControlName='Title' appInputAutofocus [readonly]="errorListSharedService.isDisabledErrorTitleAndDescription(error)">
       <mat-error *ngIf="title.hasError('required')">
         Обязательно введите название ошибки
       </mat-error>
@@ -19,11 +19,11 @@
       </mat-error>
     </mat-form-field>
     <span class="dialog-title-text">Создана пользователем
-      <b>{{error.EmailErrorAuthor}} {{error.DateCreation | date:'longDate'}}</b>
+      <b>{{error.EmailAuthor}} {{error.DateCreation | date:'longDate'}}</b>
     </span>
     <br>
-    <span class="dialog-title-text" [matTooltip]="project.Title">Проект:
-      <b>{{project.Title}}</b>
+    <span class="dialog-title-text" [matTooltip]="errorListSharedService.Project.Title">Проект:
+      <b>{{errorListSharedService.Project.Title}}</b>
     </span>
     <button mat-icon-button [mat-dialog-close]="error" class="error-dialog-close-btn">
       <mat-icon>close</mat-icon>
@@ -31,7 +31,6 @@
   </div>
 
   <mat-dialog-content class="form-field-container">
-
     <mat-accordion>
       <mat-expansion-panel (closed)="quillEditorIsActive = false">
         <mat-expansion-panel-header style="background-color: gainsboro;">
@@ -47,7 +46,7 @@
           Описание ошибки должно содержать не более 5000 символов. Вы ввели {{quillEditorTextContent.length-1}} символа
         </mat-error>
 
-        <button mat-raised-button color="primary" *ngIf="quillEditorIsActive" (click)="updateError('Описание ошибки'); quillEditorIsActive = false;">Сохранить</button>
+        <button mat-raised-button color="primary" *ngIf="quillEditorIsActive" (click)="errorListSharedService.updateTitle(error.ErrorId, quillEditorHtmlContent); quillEditorIsActive = false;">Сохранить</button>
         <button mat-raised-button *ngIf="quillEditorIsActive" (click)="quillEditorIsActive = false; description.setValue(error.Description);">Отмена</button>
         <mat-action-row>
           <button mat-icon-button *ngIf="description.value == '' && !quillEditorIsActive" matTooltip="Добавить описание" (click)="quillEditorIsActive = true; isShowQuillEditor = true">

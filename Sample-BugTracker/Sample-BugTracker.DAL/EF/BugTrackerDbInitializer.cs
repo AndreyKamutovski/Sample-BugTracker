@@ -24,6 +24,8 @@ namespace Sample_BugTracker.DAL.EF
             var EDITING_ALL_USER = new Permission() { Description = PermissionList.EDITING_ALL_USER_OF_PROJECT };
             var ADDITION_ERROR = new Permission() { Description = PermissionList.ADDITION_ERROR };
             var EDITING_ERROR = new Permission() { Description = PermissionList.EDITING_ERROR };
+            var EDITING_TITLE_DESCRIPTION = new Permission() { Description = PermissionList.EDITING_TITLE_DESCRIPTION_OF_ERROR };
+
 
             UoW.Permission.AddRange(new List<Permission>
                 {
@@ -35,7 +37,8 @@ namespace Sample_BugTracker.DAL.EF
                     VIEW_ALL_USER,
                     EDITING_ALL_USER,
                     ADDITION_ERROR,
-                    EDITING_ERROR
+                    EDITING_ERROR,
+                    EDITING_TITLE_DESCRIPTION
                 });
 
 
@@ -56,7 +59,8 @@ namespace Sample_BugTracker.DAL.EF
                     VIEW_ALL_USER,
                     EDITING_ALL_USER,
                     ADDITION_ERROR,
-                    EDITING_ERROR
+                    EDITING_ERROR,
+                    EDITING_TITLE_DESCRIPTION
                 });
 
             moderatorRole.Permission.AddRange(new List<Permission> {
@@ -65,14 +69,17 @@ namespace Sample_BugTracker.DAL.EF
                    EDITING_STATUS,
                    EDITING_PRIORITY,
                    EDITING_CLASSIFICATION,
-                   VIEW_ALL_USER
+                   VIEW_ALL_USER,
+
+                   EDITING_TITLE_DESCRIPTION
             });
 
             workerRole.Permission.AddRange(new List<Permission>
             {
                 EDITING_STATUS,
                 ADDITION_ERROR,
-                EDITING_ERROR
+                EDITING_ERROR,
+                EDITING_TITLE_DESCRIPTION
             });
 
             userRole.Permission.AddRange(new List<Permission>
@@ -80,7 +87,8 @@ namespace Sample_BugTracker.DAL.EF
                 EDITING_PRIORITY,
                 EDITING_CLASSIFICATION,
                 ADDITION_ERROR,
-                EDITING_ERROR
+                EDITING_ERROR,
+                EDITING_TITLE_DESCRIPTION
             });
 
             UoW.Roles.AddRange(new List<AppRole>() {

@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../../../shared/services/auth.service';
+import { MessageService } from '../../../../shared/services/message.service';
 import { PermissionService } from '../../../../shared/services/permission.service';
-import { Project } from '../../../projects/models/project.model';
-import { User } from '../../../users/models/user.model';
-import { ErrorService } from '../../error.service';
 import { ErrorBT } from '../../models/error.model';
+import { ErrorListSharedService } from '../../services/error-list-shared.service';
+import { ErrorService } from '../../services/error.service';
 import { AddErrorFormComponent } from '../add-error-form/add-error-form.component';
 import { SelectedErrorDialogComponent } from '../selected-error-dialog/selected-error-dialog.component';
-import { PermissionList }   from '../../../../shared/enums/permission-list.enum';
 
 @Component({
   selector: 'app-error-list',
@@ -19,51 +18,38 @@ import { PermissionList }   from '../../../../shared/enums/permission-list.enum'
 })
 export class ErrorListComponent implements OnInit {
 
-  private projectWorkers: User[];
-  private projectUsers: User[];
-  private errors: ErrorBT[];
-  private project: Project;
-  private cols: any[];
+  private cols: any[] = [
+    { field: 'Title', header: 'Ошибка' },
+    { field: 'EmailAuthor', header: 'Автор' },
+    { field: 'DateCreation', header: 'Создано' },
+    { field: 'EmailAssignee', header: 'Ответственный' },
+    { field: 'Deadline', header: 'Срок' },
+    { field: 'Status', header: 'Статус' },
+    { field: 'Priority', header: 'Приоритет' },
+    { field: 'Classification', header: 'Классификация' },
+  ];
 
   constructor(
     private _route: ActivatedRoute,
     private authService: AuthService,
     private errorService: ErrorService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private errorListSharedService: ErrorListSharedService,
+    private messageService: MessageService
+
   ) { }
 
 
   ngOnInit() {
-    this.errors = this._route.snapshot.data.errorList;
-    this.projectWorkers = this._route.snapshot.data.projectWorkers;
-    this.projectUsers = this._route.snapshot.data.userList;
-    this.project = this._route.snapshot.data.currentProject;
-    this.cols = [
-      { field: 'Title', header: 'Ошибка' },
-      { field: 'EmailAuthor', header: 'Автор' },
-      { field: 'DateCreation', header: 'Создано' },
-      { field: 'EmailAssignee', header: 'Ответственный' },
-      { field: 'Deadline', header: 'Срок' },
-      { field: 'Status', header: 'Статус' },
-      { field: 'Priority', header: 'Приоритет' },
-      { field: 'Classification', header: 'Классификация' },
-    ];
+    this.errorListSharedService.Errors = this._route.snapshot.data.errorList;
+    this.errorListSharedService.ProjectWorkers = this._route.snapshot.data.projectWorkers;
+    this.errorListSharedService.ProjectUsers = this._route.snapshot.data.userList;
+    this.errorListSharedService.Project = this._route.snapshot.data.currentProject;
   }
 
-  updateError(error: ErrorBT, msg: string) {
-    this.errorService.updateError(error.ErrorId, error).toPromise().then((error: ErrorBT) => {
-      this.snackBar.open(`${msg}: успешно обновлено`, '', { duration: 2000 });
-    });
-  }
-  
-  showUpdatedMsg(msg: string) {
-  this.errors[0].Status
-    this.snackBar.open(`${msg}: успешно обновлено`, '', { duration: 2000 });
-  }
-
-  openErrorDialog(error: ErrorBT): void {
+  // editing error dialog
+  openEditErrorDialog(error: ErrorBT): void {
     event.preventDefault();
     let dialogRef = this.dialog.open(SelectedErrorDialogComponent, {
       width: '95%',
@@ -71,28 +57,27 @@ export class ErrorListComponent implements OnInit {
       height: '95%',
       maxHeight: '95%',
       disableClose: true,
-      data: { 'error': error, 'project': this.project, 'projectWorkers': this.projectWorkers }
+      data: { 'error': error}
     });
-
-    dialogRef.afterClosed().subscribe(this.afterClosedErrorDialog.bind(this));
+    dialogRef.afterClosed().subscribe(this.afterClosedEditErrorDialog.bind(this));
   }
 
 
-  afterClosedErrorDialog(err: ErrorBT): void {
+  afterClosedEditErrorDialog(err: ErrorBT): void {
     if (err != null) {
-      let errs = [...this.errors];
+      let errs = [...this.errorListSharedService.Errors];
       let idx = errs.findIndex(p => p.ErrorId == err.ErrorId);
       errs[idx] = err;
-      this.errors = errs;
+      this.errorListSharedService.Errors = errs;
     }
   }
 
+
+  // addition error dialog
   openAddErrorDialog(): void {
     let dialogRef = this.dialog.open(AddErrorFormComponent, {
-      width: '50%',
-      data: {}
+      width: '50%'
     });
-
     dialogRef.afterClosed().subscribe(this.afterClosedAddErrorDialog.bind(this));
   };
 
@@ -100,10 +85,8 @@ export class ErrorListComponent implements OnInit {
     if (res != undefined && res != null) {
       if (res.hasOwnProperty('errorData')) {
         this.errorService.addError(res.ProjectId, res.errorData).toPromise().then(newError => {
-          let errs = [...this.errors];
-          errs.push(newError);
-          this.errors = errs;
-          this.snackBar.open("Ошибка успешно добавлена", '', { duration: 2000 });
+          this.errorListSharedService.Errors = [...this.errorListSharedService.Errors, newError];
+          this.messageService.showSnackBarMsg("Ошибка успешно добавлена");
         });
       }
     }
