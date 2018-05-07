@@ -9,6 +9,11 @@ import { SolutionErrorFormComponent } from './components/solution-error-form/sol
 import { ErrorListResolverService } from './resolvers/error-list-resolver.service';
 import { ErrorListSharedService } from './services/error-list-shared.service';
 import { ErrorService } from './services/error.service';
+import { ErrorTitleInputComponent } from './components/shared/error-title-input/error-title-input.component';
+import { ErrorDescriptionInputComponent } from './components/shared/error-description-input/error-description-input.component';
+import { ErrorPrioritySelectComponent } from './components/shared/error-priority-select/error-priority-select.component';
+import { ErrorClassificationSelectComponent } from './components/shared/error-classification-select/error-classification-select.component';
+import { ErroStatusSelectComponent } from './components/shared/erro-status-select/erro-status-select.component';
 
 
 @NgModule({
@@ -20,7 +25,12 @@ import { ErrorService } from './services/error.service';
     ErrorListComponent,
     AddErrorFormComponent,
     SelectedErrorDialogComponent,
-    SolutionErrorFormComponent
+    SolutionErrorFormComponent,
+    ErrorTitleInputComponent,
+    ErrorDescriptionInputComponent,
+    ErrorPrioritySelectComponent,
+    ErrorClassificationSelectComponent,
+    ErroStatusSelectComponent
   ],
   entryComponents: [
     AddErrorFormComponent,

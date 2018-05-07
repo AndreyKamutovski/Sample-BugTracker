@@ -20,8 +20,8 @@ namespace Sample_BugTracker.API.DTO
         [Required(ErrorMessage = "DateEnd of project is a required field")]
         public DateTime DateEnd { get; set; }
 
-        [Required(ErrorMessage = "Description of project is a required field")]
-        [MinLength(10)]
+        //[Required(ErrorMessage = "Description of project is a required field")]
+        //[MinLength(10)]
         [MaxLength(1000)]
         public string Description { get; set; }
 

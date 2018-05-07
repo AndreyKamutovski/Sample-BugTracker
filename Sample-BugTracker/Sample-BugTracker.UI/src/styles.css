@@ -23,16 +23,6 @@ body, .app-background {
     margin-bottom: 20px;
 }
 
-.horizontal-flex-container-for-two-datepicker {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.horizontal-flex-container-for-two-datepicker > mat-form-field {
-    width: 45%;
-}
 .logo-img {
     width: 80px;
     height: 40px;

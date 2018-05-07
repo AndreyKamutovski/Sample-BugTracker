@@ -1,13 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-project-title-input',
-  templateUrl: './project-title-input.component.html',
+  selector: 'app-error-title-input',
+  templateUrl: './error-title-input.component.html',
   styles: []
 })
-export class ProjectTitleInputComponent implements OnInit {
+export class ErrorTitleInputComponent implements OnInit {
 
   @Input() public form: FormGroup;
   @Input() public initValue: string = '';
@@ -21,8 +20,9 @@ export class ProjectTitleInputComponent implements OnInit {
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(100),
-      Validators.pattern("^[A-Za-zА-Яа-я0-9 _-]*$")
+      Validators.pattern("^[А-Яа-яa-zA-Z0-9 _-]*$")
     ]);
     this.form.addControl('Title', this.title);
   }
+
 }

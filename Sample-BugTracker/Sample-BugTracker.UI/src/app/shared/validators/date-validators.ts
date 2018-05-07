@@ -15,24 +15,21 @@ export const BUGTRACKER_DATE_FORMATS = {
 };
 
 export function groupDateValidator(fg: FormGroup): { [key: string]: any } {
-  let dateStart = fg.get('dateStart');
-  let dateEnd = fg.get('dateEnd');
-  if (dateEnd != null && dateStart != null) {
-    if (dateEnd.value != null && dateStart.value != null) {
-      if (dateEnd.value > dateStart.value) {
-        return null;
-      }
-      else {
-        dateEnd.setErrors({
-          'endDateError': true
-        });
-        return {
-          'groupdate': {
-            'errorMsg': 'Дата окончания проекта не может быть раньше даты начала проекта.'
-          }
-        };
-      }
+  if (fg.contains('DateStart') && fg.contains('DateEnd')) {
+    let dateStart = moment(fg.get('DateStart').value).format();
+    let dateEnd = moment(fg.get('DateEnd').value).format();
+    if (dateEnd < dateStart) {
+      let ctlDateEnd = fg.get('DateEnd');
+      ctlDateEnd.markAsDirty();
+      ctlDateEnd.setErrors({
+        'endDateError': true
+      });
+      return {
+        'groupdate': {
+          'errorMsg': 'Дата окончания проекта не может быть раньше даты начала проекта.'
+        }
+      };
     }
   }
-  else return null;
+  return null;
 }

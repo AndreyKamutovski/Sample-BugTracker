@@ -46,12 +46,12 @@ export class AddErrorFormComponent implements OnInit {
 
   private createForm(): void {
     this.addErrorForm = this.formBuilder.group({
-      'Title': ["", [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(100),
-        Validators.pattern("^[А-Яа-яa-zA-Z0-9 _-]*$")
-      ]],
+      // 'Title': ["", [
+      //   Validators.required,
+      //   Validators.minLength(3),
+      //   Validators.maxLength(100),
+      //   Validators.pattern("^[А-Яа-яa-zA-Z0-9 _-]*$")
+      // ]],
       "Description": ["", [
         Validators.maxLength(5000),
       ]],

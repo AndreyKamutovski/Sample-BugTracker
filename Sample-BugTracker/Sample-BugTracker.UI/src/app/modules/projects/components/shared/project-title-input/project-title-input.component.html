@@ -1,11 +1,10 @@
 <mat-form-field>
-  <input matInput type="text" name="projectName" placeholder="Название проекта" required minlength='3' formControl='title'
-    appInputAutofocus>
+  <input matInput type="text" placeholder="Название проекта" [formControl]='title' required>
   <mat-error *ngIf="title.hasError('required')">
     Обязательно введите название проекта
   </mat-error>
   <mat-error *ngIf="title.hasError('pattern')">
-    Название проекта содержит недопустимые символы. Допустимы буквы от А до Я (строчные и прописные), цифры от 0 до 9, знак тире
+    Название проекта содержит недопустимые символы. Допустимы буквы от А до Я, A-Z (строчные и прописные), цифры от 0 до 9, знак тире
     (-), подчёркивания (_) и пробела
   </mat-error>
   <mat-error *ngIf="title.hasError('minlength') && !title.hasError('pattern')">

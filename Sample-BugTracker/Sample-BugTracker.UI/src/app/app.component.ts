@@ -14,19 +14,19 @@ export class AppComponent {
     constructor(
         private router: Router,
         private loadingService: LoaderService,
-    ) {}
-        
-    ngOnInit(){
-        Date.prototype.toJSON = function(){ return moment(this).format("YYYY-MM-DD"); }
+    ) { }
+
+    ngOnInit() {
+        Date.prototype.toISOString = Date.prototype.toJSON = function () { return moment(this).format("YYYY-MM-DD"); }
         this.router.events.subscribe(e => {
-       
-                   if (e instanceof NavigationStart) {
-                       this.loadingService.show();
-                   }
-       
-                   if (e instanceof NavigationEnd) {
-                    this.loadingService.hide();
-                }
-               });
-       }
+
+            if (e instanceof NavigationStart) {
+                this.loadingService.show();
+            }
+
+            if (e instanceof NavigationEnd) {
+                this.loadingService.hide();
+            }
+        });
+    }
 }

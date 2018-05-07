@@ -1,0 +1,31 @@
+<div [formGroup]="datepickerGroup" class="horizontal-datepicker">
+  <mat-form-field>
+    <input matInput [matDatepicker]="startDatepicker" placeholder="Дата начала" formControlName='DateStart' required>
+    <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #startDatepicker></mat-datepicker>
+    <mat-error *ngIf="dateStart.hasError('required') && !dateStart.hasError('matDatepickerParse')">
+      Обязательно введите дату начала проекта
+    </mat-error>
+    <mat-error *ngIf="dateStart.hasError('matDatepickerParse')">
+      Неправильная дата
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="endDatepicker" placeholder="Дата окончания" formControlName='DateEnd' [min]="startDatepicker.startAt" required>
+    <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #endDatepicker></mat-datepicker>
+    <mat-error *ngIf="dateEnd.hasError('required') && !dateEnd.hasError('matDatepickerParse')">
+      Обязательно введите дату начала проекта
+    </mat-error>
+    <mat-error *ngIf="dateEnd.hasError('matDatepickerParse')">
+      Неправильная дата
+    </mat-error>
+    <mat-error *ngIf="dateEnd.hasError('endDateError')">
+      Установите дату большую или равную {{dateStart.value | date:'longDate'}}
+    </mat-error>
+  </mat-form-field>
+</div>
+<mat-error *ngIf="datepickerGroup.hasError('groupdate')">
+  {{datepickerGroup.errors.groupdate.errorMsg}}
+</mat-error>
