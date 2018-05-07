@@ -6,42 +6,14 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClientService } from '../../../shared/services/httpClient.service';
 import { SolutionErrorFormComponent } from '../components/solution-error-form/solution-error-form.component';
 import { ErrorBT } from '../models/error.model';
-import { StatusList } from '../../../shared/enums/status-list.enum';
-import { PriorityList } from '../../../shared/enums/priority-list.enum';
-import { ClassificationList } from '../../../shared/enums/classification-list.enum';
-
-export interface SelectItem {
-  value: number;
-  viewValue: string;
-  color: string;
-}
+import { StatusList } from '../enums/status-list.enum';
+import { PriorityList } from '../enums/priority-list.enum';
+import { ClassificationList } from '../enums/classification-list.enum';
 
 @Injectable()
 export class ErrorService {
 
-  private readonly routerPrefix: string = "api/error";
-
-  public status: SelectItem[] = [
-    { value: StatusList.OPEN, viewValue: 'Открыто', color: "" },
-    { value: StatusList.DECIDED, viewValue: 'Выполняется', color: "" },
-    { value: StatusList.NECESSARYTEST, viewValue: 'Необходимо протестировать', color: "" },
-    { value: StatusList.CLOSED, viewValue: 'Закрыто', color: "" }
-  ];
-  public priorities: SelectItem[] = [
-    { value: PriorityList.CRITICAL, viewValue: 'Критический', color: "" },
-    { value: PriorityList.HIGH, viewValue: 'Высокий', color: "" },
-    { value: PriorityList.MIDDLE, viewValue: 'Средний', color: "" },
-    { value: PriorityList.LOW, viewValue: 'Низкий', color: "" }
-  ];
-  public classification: SelectItem[] = [
-    { value: ClassificationList.SECURITY, viewValue: 'Безопасность', color: "" },
-    { value: ClassificationList.CRASHORHANG, viewValue: 'Сбой/зависание', color: "" },
-    { value: ClassificationList.DATALOSS, viewValue: 'Потеря данных', color: "" },
-    { value: ClassificationList.PERFORMANCE, viewValue: 'Производительность', color: "" },
-    { value: ClassificationList.UI, viewValue: 'Пользовательский интерфейс', color: "" },
-    { value: ClassificationList.OTHERERROR, viewValue: 'Другая ошибка', color: "" }
-  ];
-
+  private readonly routerPrefix: string = "api/error"; 
 
   constructor(private HttpClientService: HttpClientService) {}
 

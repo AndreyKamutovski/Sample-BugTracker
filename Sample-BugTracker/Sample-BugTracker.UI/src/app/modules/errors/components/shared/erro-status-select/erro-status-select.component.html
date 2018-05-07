@@ -1,3 +1,10 @@
-<p>
-  erro-status-select works!
-</p>
+<mat-form-field>
+  <mat-select placeholder="Статус ошибки" [formControl]="status" required (selectionChange)="selectChange($event.value)">
+    <mat-option *ngFor="let status of errorStatusSelectService.Statuses" [value]="status.value">
+      {{status.viewValue}}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="status.hasError('required')">
+    Обязательно укажите статус ошибки
+  </mat-error>
+</mat-form-field>

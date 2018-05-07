@@ -1,5 +1,5 @@
 <mat-form-field>
-  <input matInput type="text" placeholder="Название ошибки" required [formControl]='Title'>
+  <input matInput type="text" placeholder="Название ошибки" required [formControl]='title'>
   <mat-error *ngIf="title.hasError('required')">
     Обязательно введите название ошибки
   </mat-error>

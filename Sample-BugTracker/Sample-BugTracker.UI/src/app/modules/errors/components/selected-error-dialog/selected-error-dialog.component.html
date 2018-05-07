@@ -78,7 +78,8 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field>
+            <!-- <app-erro-status-select [form]="errorForm" (selectionChange)=""></app-erro-status-select> -->
+            <!-- <mat-form-field>
               <mat-select placeholder="Статус ошибки" formControlName="Status" required (selectionChange)="updateError('Статус ошибки', 'Status')">
                 <mat-option *ngFor="let status of errorService.status" [value]="status.value">
                   {{status.viewValue}}
@@ -87,7 +88,7 @@
               <mat-error *ngIf="status.hasError('required')">
                 Обязательно укажите статус ошибки
               </mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
 
             <mat-form-field>
               <input matInput [min]="error.DateCreation" disabled [matDatepicker]="deadlineDatepicker" placeholder="Срок выполнения" formControlName='Deadline'

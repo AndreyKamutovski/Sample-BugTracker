@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ErrorBT } from '../models/error.model';
-import { User } from '../../users/models/user.model';
-import { Project } from '../../projects/models/project.model';
-import { SelectItem, ErrorService } from './error.service';
+
 import { AuthService } from '../../../shared/services/auth.service';
 import { MessageService } from '../../../shared/services/message.service';
-import { StatusList } from '../../../shared/enums/status-list.enum';
-import { PriorityList } from '../../../shared/enums/priority-list.enum';
-import { ClassificationList } from '../../../shared/enums/classification-list.enum';
+import { Project } from '../../projects/models/project.model';
+import { User } from '../../users/models/user.model';
+import { ClassificationList } from '../enums/classification-list.enum';
+import { PriorityList } from '../enums/priority-list.enum';
+import { StatusList } from '../enums/status-list.enum';
+import { SelectItem } from '../interfaces/select-item';
+import { ErrorBT } from '../models/error.model';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class ErrorListSharedService {

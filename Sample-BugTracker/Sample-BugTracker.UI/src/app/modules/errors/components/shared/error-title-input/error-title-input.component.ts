@@ -24,5 +24,4 @@ export class ErrorTitleInputComponent implements OnInit {
     ]);
     this.form.addControl('Title', this.title);
   }
-
 }

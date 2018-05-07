@@ -1,3 +1,10 @@
-<p>
-  error-priority-select works!
-</p>
+<mat-form-field>
+  <mat-select placeholder="Приоритет ошибки" [formControl]="priority" required>
+    <mat-option *ngFor="let priority of errorPrioritySelectService.Priorities" [value]="priority.value">
+      {{priority.viewValue}}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="priority.hasError('required')">
+    Обязательно укажите приоритет ошибки
+  </mat-error>
+</mat-form-field>

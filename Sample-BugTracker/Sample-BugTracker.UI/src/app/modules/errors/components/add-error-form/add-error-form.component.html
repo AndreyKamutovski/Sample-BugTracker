@@ -3,37 +3,10 @@
 
   <mat-dialog-content class="form-field-container">
     <app-error-title-input [form]="addErrorForm"></app-error-title-input>
-
-    <quill-editor formControlName='Description' placeholder="Введите описание ошибки" [style]="{'height': '200px', 'margin-bottom':'20px'}"
-      (onContentChanged)="contentChange($event);" [modules]="quillEditorConfig.getToolbarConfig"></quill-editor>
-    <mat-error *ngIf="quillEditorTextContent.length-1 > 5000 && (description.touched && description.dirty)">
-      Описание ошибки должно содержать не более 5000 символов. Вы ввели {{quillEditorTextContent.length-1}} символа
-    </mat-error>
-
-    <mat-form-field>
-      <mat-select placeholder="Приоритет ошибки" formControlName="Priority" required>
-        <mat-option *ngFor="let priority of errorService.priorities" [value]="priority.value">
-          {{priority.viewValue}}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="priority.hasError('required')">
-        Обязательно укажите приоритет ошибки
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-select placeholder="Классификация ошибки" formControlName="Classification" required>
-        <mat-option *ngFor="let classification of errorService.classification" [value]="classification.value">
-          {{classification.viewValue}}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="classification.hasError('required')">
-        Обязательно укажите классификацию ошибки
-      </mat-error>
-    </mat-form-field>
+    <app-error-description-input [form]="addErrorForm"></app-error-description-input>
+    <app-error-priority-select [form]="addErrorForm"></app-error-priority-select>
+    <app-error-classification-select [form]="addErrorForm"></app-error-classification-select>
   </mat-dialog-content>
-
-
 
   <mat-dialog-actions>
     <button mat-button mat-dialog-close>Отмена</button>
