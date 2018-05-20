@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../../../../shared/services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { PortalService } from '../../services/portal.service';
 import { AddPortalFormComponent } from '../add-portal-form/add-portal-form.component';
 import { Portal } from '../../models/portal.model';

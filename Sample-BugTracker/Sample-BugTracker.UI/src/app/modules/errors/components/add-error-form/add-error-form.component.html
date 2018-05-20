@@ -2,10 +2,48 @@
   <h2 mat-dialog-title>Добавить ошибку</h2>
 
   <mat-dialog-content class="form-field-container">
-    <app-error-title-input [form]="addErrorForm"></app-error-title-input>
-    <app-error-description-input [form]="addErrorForm"></app-error-description-input>
-    <app-error-priority-select [form]="addErrorForm"></app-error-priority-select>
-    <app-error-classification-select [form]="addErrorForm"></app-error-classification-select>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Название ошибки" required formControlName='Title'>
+      <mat-error *ngIf="title.hasError('required')">
+        Обязательно введите название ошибки
+      </mat-error>
+      <mat-error *ngIf="title.hasError('pattern')">
+        Название ошибки содержит недопустимые символы. Допустимы буквы от А до Я (строчные и прописные), цифры от 0 до 9, знак тире
+        (-), подчёркивания (_) и пробела
+      </mat-error>
+      <mat-error *ngIf="title.hasError('minlength') && !title.hasError('pattern')">
+        Название ошибки должно быть больше {{ title.errors.minlength.requiredLength }} символов. Вы ввели {{ title.errors.minlength.actualLength
+        }} символа
+      </mat-error>
+      <mat-error *ngIf="title.hasError('maxlength') && !title.hasError('pattern')">
+        Название ошибки должно быть меньше {{title.errors.maxlength.requiredLength }} символов
+      </mat-error>
+    </mat-form-field>
+
+    <quill-editor formControlName='Description' placeholder="Введите описание ошибки" [style]="{'height': '200px', 'margin-bottom':'20px'}"
+      [modules]="quillEditorConfig.getToolbarConfig"></quill-editor>
+
+    <mat-form-field>
+      <mat-select placeholder="Приоритет ошибки" formControlName="Priority" required>
+        <mat-option *ngFor="let priority of prioritySelectItemsService.Priorities" [value]="priority.value">
+          {{priority.viewValue}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="priority.hasError('required')">
+        Обязательно укажите приоритет ошибки
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Классификация ошибки" formControlName="Classification" required>
+        <mat-option *ngFor="let classification of classificationSelectItemsService.Classifications" [value]="classification.value">
+          {{classification.viewValue}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="classification.hasError('required')">
+        Обязательно укажите классификацию ошибки
+      </mat-error>
+    </mat-form-field>
   </mat-dialog-content>
 
   <mat-dialog-actions>

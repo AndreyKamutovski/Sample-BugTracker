@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Project } from '../../models/project.model';
-import { ProjectService } from '../../project.service';
-import { UsersService } from '../../../users/users.service';
-import { AuthService } from '../../../../shared/services/auth.service';
+import { ProjectService } from '../../../shared/services/project.service';
+import { UsersService } from '../../../shared/services/users.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 
 
@@ -21,16 +21,16 @@ interface sidenavNavElement {
 })
 export class SelectedProjectPageComponent implements OnInit {
 
-  private sidenavNavElements: sidenavNavElement[] = [
+  sidenavNavElements: sidenavNavElement[] = [
     { title: "Информационная панель", matIcon: "info", link: "dashboard" },
     { title: "Ошибки", matIcon: "bug_report", link: "errors" },
     { title: "Пользователи", matIcon: "people", link: "users" }
   ];
 
   constructor(
-    private _route: ActivatedRoute,
-    private userService: UsersService,
-    private authService: AuthService
+     public _route: ActivatedRoute,
+     public userService: UsersService,
+     public authService: AuthService
     
   ) { }
 

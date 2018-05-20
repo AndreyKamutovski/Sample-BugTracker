@@ -2,14 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
-import { AuthService } from '../../../../shared/services/auth.service';
-import { MessageService } from '../../../../shared/services/message.service';
-import { PermissionService } from '../../../../shared/services/permission.service';
+import { AuthService } from '../../../shared/services/auth.service';
+import { MessageService } from '../../../shared/services/message.service';
+import { PermissionService } from '../../../shared/services/permission.service';
 import { ErrorBT } from '../../models/error.model';
 import { ErrorListSharedService } from '../../services/error-list-shared.service';
 import { ErrorService } from '../../services/error.service';
+import { ClassificationSelectItems } from '../../services/selection-lists-items/classification-select-items';
+import { PrioritySelectItems } from '../../services/selection-lists-items/priority-select-items';
+import { StatusSelectItems } from '../../services/selection-lists-items/status-select-items';
 import { AddErrorFormComponent } from '../add-error-form/add-error-form.component';
 import { SelectedErrorDialogComponent } from '../selected-error-dialog/selected-error-dialog.component';
+import { StatusList } from '../../enums/status-list.enum';
 
 @Component({
   selector: 'app-error-list',
@@ -18,7 +22,7 @@ import { SelectedErrorDialogComponent } from '../selected-error-dialog/selected-
 })
 export class ErrorListComponent implements OnInit {
 
-  private cols: any[] = [
+   cols: any[] = [
     { field: 'Title', header: 'Ошибка' },
     { field: 'EmailAuthor', header: 'Автор' },
     { field: 'DateCreation', header: 'Создано' },
@@ -30,14 +34,16 @@ export class ErrorListComponent implements OnInit {
   ];
 
   constructor(
-    private _route: ActivatedRoute,
-    private authService: AuthService,
-    private errorService: ErrorService,
-    private dialog: MatDialog,
-    private permissionService: PermissionService,
-    private errorListSharedService: ErrorListSharedService,
-    private messageService: MessageService
-
+    public _route: ActivatedRoute,
+    public authService: AuthService,
+    public errorService: ErrorService,
+    public dialog: MatDialog,
+    public permissionService: PermissionService,
+    public errorListSharedService: ErrorListSharedService,
+    public messageService: MessageService,
+    public statusSelectItemsService: StatusSelectItems,
+    public prioritySelectItemsService: PrioritySelectItems,
+    public classificationSelectItemsService: ClassificationSelectItems
   ) { }
 
 
@@ -48,16 +54,21 @@ export class ErrorListComponent implements OnInit {
     this.errorListSharedService.Project = this._route.snapshot.data.currentProject;
   }
 
+  crossErrorTitle(status: StatusList) {
+    return status == StatusList.CLOSED ? 'line-through' : '';
+  }
+
   // editing error dialog
   openEditErrorDialog(error: ErrorBT): void {
     event.preventDefault();
+    
     let dialogRef = this.dialog.open(SelectedErrorDialogComponent, {
       width: '95%',
       maxWidth: '95%',
       height: '95%',
       maxHeight: '95%',
-      disableClose: true,
-      data: { 'error': error}
+      disableClose: true,      
+      data: { 'error': error }
     });
     dialogRef.afterClosed().subscribe(this.afterClosedEditErrorDialog.bind(this));
   }
@@ -81,7 +92,9 @@ export class ErrorListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(this.afterClosedAddErrorDialog.bind(this));
   };
 
-  private afterClosedAddErrorDialog(res: any) {
+
+
+  afterClosedAddErrorDialog(res: any) {
     if (res != undefined && res != null) {
       if (res.hasOwnProperty('errorData')) {
         this.errorService.addError(res.ProjectId, res.errorData).toPromise().then(newError => {

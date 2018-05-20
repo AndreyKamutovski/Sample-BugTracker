@@ -35,7 +35,7 @@ namespace Sample_BugTracker.DAL.Entities
 
         public virtual ErrorSolution Solution { get; set; }
 
-        public virtual ICollection<Attachment> Attachments { get; set; }
+        public virtual ICollection<ErrorAttachment> Attachments { get; set; }
 
     }
 }

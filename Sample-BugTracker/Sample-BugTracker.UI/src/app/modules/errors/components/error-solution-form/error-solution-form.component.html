@@ -1,0 +1,34 @@
+<form [formGroup]='solutionForm' (ngSubmit)="addSolution()" novalidate>
+  <h2 mat-dialog-title>Добавить решение</h2>
+
+  <mat-dialog-content class="form-field-container">
+    <app-status-select [status]="errorStatus"></app-status-select>
+    <quill-editor formControlName="Description" placeholder="Введите решение" [style]="{'height': '200px'}" [modules]="quillEditorConfig.getToolbarConfig">
+    </quill-editor>
+    <mat-error *ngIf="description.hasError('required') && description.dirty">
+      Обязательно введите описание решения
+    </mat-error>
+
+    <p-fileUpload #fileUploader name="attachments[]" url="" styleClass="my-fileupload" [showUploadButton]="false" chooseLabel="Выбрать файлы"
+      cancelLabel="Отменить все" (onUpload)="onUpload($event)" multiple="multiple" maxFileSize="30000000">
+      <ng-template let-file let-idx="index" pTemplate="file">
+        <mat-card class="file-upload-item">
+          <mat-card-header>
+            <img mat-card-avatar [src]="getFilePreviewSrc(file.name)" style="border-radius:0;">
+            <mat-card-title>{{file.name}}</mat-card-title>
+            <mat-card-subtitle>{{getFileSizeInKB(file.size)}}</mat-card-subtitle>
+            <button mat-icon-button color="warn" matTooltip="Отменить" (click)="cancelAttachment(idx)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-card-header>
+        </mat-card>
+      </ng-template>
+    </p-fileUpload>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button color="primary" [disabled]="!solutionForm.valid" type="submit">Добавить</button>
+    <button mat-button [mat-dialog-close]="null">Отмена</button>
+    <mat-spinner *ngIf="isLoadSolution" diameter="36"></mat-spinner>    
+  </mat-dialog-actions>
+</form>

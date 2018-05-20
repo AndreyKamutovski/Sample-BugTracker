@@ -3,9 +3,9 @@ import { MatDialog, MatSnackBar, MatSidenav } from '@angular/material';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../../../../shared/services/auth.service';
-import { REST_URI } from '../../../../shared/services/httpClient.service';
-import { UsersService } from '../../../users/users.service';
+import { AuthService } from '../../../shared/services/auth.service';
+import { REST_URI } from '../../../shared/services/httpClient.service';
+import { UsersService } from '../../../shared/services/users.service';
 import { UploadUserPhotoFormComponent } from '../upload-user-photo-form/upload-user-photo-form.component';
 
 interface NavbarElement {
@@ -20,17 +20,17 @@ interface NavbarElement {
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  @Input() public titleApp: string;
-  @Input() public sidenav: MatSidenav = null;
+  @Input()  titleApp: string;
+  @Input()  sidenav: MatSidenav = null;
 
 
-  private navbarElements: NavbarElement[] = [
-    { title: "Проекты", tooltipTitle: "Проекты", routerLink: "projects" }
+  public navbarElements: NavbarElement[] = [
+    { title: "Проекты", tooltipTitle: "Проекты", routerLink: `/portals/${sessionStorage.getItem('portalTitle')}/projects`}
   ];
 
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     private userService: UsersService,
@@ -68,7 +68,7 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  private get getUriAvatar(): SafeStyle {
+  get getUriAvatar(): SafeStyle {
     let uriAvatar = `url('../../assets/person.png')`;
     if (this.authService.currentUser.Avatar != null) {
       uriAvatar = `url('${this.uri}${this.authService.currentUser.Avatar}')`;

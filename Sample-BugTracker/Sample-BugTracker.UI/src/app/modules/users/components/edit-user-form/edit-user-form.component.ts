@@ -2,9 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { REST_URI } from '../../../../shared/services/httpClient.service';
+import { REST_URI } from '../../../shared/services/httpClient.service';
 import { AttachableUser } from '../../models/attachable-user.model';
-import { UsersService } from '../../users.service';
+import { UsersService } from '../../../shared/services/users.service';
 
 @Component({
   selector: 'app-edit-user-form',
@@ -13,18 +13,18 @@ import { UsersService } from '../../users.service';
 })
 export class EditUserFormComponent implements OnInit {
 
-  private editUserForm: FormGroup;
-  private roles = [];
+   editUserForm: FormGroup;
+   roles = [];
 
   get Email() { return this.editUserForm.get('Email'); }
   get RoleName() { return this.editUserForm.get('RoleName'); }
 
   constructor(
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<EditUserFormComponent>,
-    private userService: UsersService,
+    public dialogRef: MatDialogRef<EditUserFormComponent>,
+    public userService: UsersService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    @Inject(REST_URI) private uri: string,
+    @Inject(REST_URI) public uri: string,
   ) {
     this.roles = this.userService.roles.filter(r => r.value != "Admin");
     this.createForm();

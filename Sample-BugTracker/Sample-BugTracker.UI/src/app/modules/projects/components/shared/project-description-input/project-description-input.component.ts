@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { QuillEditorConfigurationService } from '../../../../../shared/services/quill-editor-configuration.service';
+import { QuillEditorConfigurationService } from '../../../../shared/services/quill-editor-configuration.service';
 
 @Component({
   selector: 'app-project-description-input',
@@ -10,12 +10,12 @@ import { QuillEditorConfigurationService } from '../../../../../shared/services/
 })
 export class ProjectDescriptionInputComponent implements OnInit {
 
-  @Input() public form: FormGroup;
-  @Input() public initValue: string = '';
+  @Input()  form: FormGroup;
+  @Input()  initValue: string = '';
 
-  private description: FormControl;
+   description: FormControl;
  
-  constructor(private quillEditorConfig: QuillEditorConfigurationService) { }
+  constructor(public quillEditorConfig: QuillEditorConfigurationService) { }
 
   ngOnInit() {
     this.description = new FormControl(this.initValue);

@@ -8,7 +8,7 @@ import { LoaderService } from './loader.service';
 })
 export class LoaderComponent implements OnInit {
 
-  constructor(private loadingService: LoaderService) { }
+  constructor(public loadingService: LoaderService) { }
 
   ngOnInit() {
   }

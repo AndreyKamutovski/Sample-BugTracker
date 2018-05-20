@@ -3,7 +3,7 @@
 
   <mat-dialog-content class="form-field-container">
     <mat-form-field hintLabel="Название портала должно быть уникальным">
-      <input matInput type="text" placeholder="Название портала" required minlength='3' maxlength="100" formControlName='Title' appInputAutofocus>
+      <input matInput type="text" placeholder="Название портала" required minlength='3' maxlength="100" formControlName='Title'>
       <mat-error *ngIf="title.hasError('required')">
         Обязательно введите название портала
       </mat-error>

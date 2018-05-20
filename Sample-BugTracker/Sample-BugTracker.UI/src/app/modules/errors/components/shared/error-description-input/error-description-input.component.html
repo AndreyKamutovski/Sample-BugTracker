@@ -1,5 +1,0 @@
-<quill-editor id="quillEditor" [formControl]='description' placeholder="Введите описание ошибки" [style]="{'height': '200px', 'margin-bottom':'20px'}"
-  [modules]="quillEditorConfig.getToolbarConfig"></quill-editor>
-<mat-error *ngIf="quill.root.textContent.length > 5000 && (description.touched && description.dirty)">
-  Описание ошибки должно содержать не более 5000 символов. Вы ввели {{quill.root.textContent.length}} символа
-</mat-error>

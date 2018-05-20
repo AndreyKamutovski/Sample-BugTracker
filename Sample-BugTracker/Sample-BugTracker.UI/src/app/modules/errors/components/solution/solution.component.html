@@ -1,0 +1,11 @@
+<div *ngIf="solution == null">
+  Решение не найдено.
+  <br> Зарегистрируйте решение для ошибки.
+  <br>
+  <button mat-button (click)="addSolutionDialog()">Добавить решение</button>
+</div>
+<div *ngIf="solution != null">
+  <quill-editor [(ngModel)]="solution.Description" [style]="{'height': '200px'}" [readOnly]="true" [modules]="{toolbar: false}">
+  </quill-editor>
+  <span>от {{solution.Author.Email | getUserNameFromEmail}} в {{solution.RecievingDate | localDateFromUtc}}</span>
+</div>

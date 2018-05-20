@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 })
 export class ConfirmDeletingUserComponent implements OnInit {
 
-  private userEmail: string;
+   userEmail: string;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.userEmail = this.data.userEmail;

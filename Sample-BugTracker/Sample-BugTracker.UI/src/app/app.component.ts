@@ -1,14 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, InjectionToken } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import * as moment from 'moment';
 
 import { LoaderService } from './modules/loader/loader.service';
 
+export const ERROR_ATTACHMENT_URI = new InjectionToken('ERROR_ATTACHMENT_URI');
+
 
 @Component({
     moduleId: module.id,
     selector: 'app-root',
-    templateUrl: './app.component.html'
+    template: `
+    <router-outlet></router-outlet>
+    <app-loader></app-loader>
+    `
 })
 export class AppComponent {
     constructor(

@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ImageUploadModule } from 'angular2-image-upload';
 
-import { UsersService } from '../users/users.service';
+import { ErrorAttachmentService } from '../errors/services/error-attachment.service';
 import { SharedModule } from './../shared/shared.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UploadUserPhotoFormComponent } from './components/upload-user-photo-form/upload-user-photo-form.component';
@@ -20,7 +20,8 @@ import { UploadUserPhotoFormComponent } from './components/upload-user-photo-for
     UploadUserPhotoFormComponent
   ],
   providers: [
-    UsersService
+    // UsersService,
+    ErrorAttachmentService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

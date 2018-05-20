@@ -13,6 +13,10 @@ namespace Sample_BugTracker.DAL.Interfaces
         IUserProjectRepository UserProjects { get; }
         IAwaitingAttachmentUser AwaitingAttachmentUsers { get; }
         IPermissionRepository Permission { get; }
+        IErrorSolutionRepository Solutions { get; }
+        ISolutionAttachmentRepository SolutionAttachments { get; }
+        IErrorAttachmentRepository ErrorAttachments { get; }
+
 
         int Complete();
     }

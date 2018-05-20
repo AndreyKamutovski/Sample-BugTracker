@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 
-import { emailNotTakenValidator } from '../../../../shared/validators/async-validators/email-not-taken.validator';
-import { equalPasswordValidator } from '../../../../shared/validators/equal-password.validator';
-import { nonLetterOrDigitPasswordValidator } from '../../../../shared/validators/non-letter-or-digit-password.validator';
-import { requireDigitPasswordValidator } from '../../../../shared/validators/require-digit-password.validator';
-import { requireLowercasePasswordValidator } from '../../../../shared/validators/require-lowercase-password.validator';
-import { requireUppercasePasswordValidator } from '../../../../shared/validators/require-uppercase-password.validator';
+import { emailNotTakenValidator } from '../../../shared/validators/async-validators/email-not-taken.validator';
+import { equalPasswordValidator } from '../../../shared/validators/equal-password.validator';
+import { nonLetterOrDigitPasswordValidator } from '../../../shared/validators/non-letter-or-digit-password.validator';
+import { requireDigitPasswordValidator } from '../../../shared/validators/require-digit-password.validator';
+import { requireLowercasePasswordValidator } from '../../../shared/validators/require-lowercase-password.validator';
+import { requireUppercasePasswordValidator } from '../../../shared/validators/require-uppercase-password.validator';
 import { PortalService } from '../../services/portal.service';
 import { SignupService } from '../../services/signup.service';
 import { portalTitleNotTakenValidator } from '../../validators/async-validators/portal-title-not-taken.validator';
@@ -18,13 +18,13 @@ import { portalTitleNotTakenValidator } from '../../validators/async-validators/
   styles: []
 })
 export class AddPortalFormComponent implements OnInit {
-  private addPortalForm: FormGroup;
+   addPortalForm: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<AddPortalFormComponent>,
-    private signupService: SignupService,
-    private portalService: PortalService
+     public formBuilder: FormBuilder,
+     public dialogRef: MatDialogRef<AddPortalFormComponent>,
+     public signupService: SignupService,
+     public portalService: PortalService
   ) {
     this.createForm();
   };
@@ -36,8 +36,8 @@ export class AddPortalFormComponent implements OnInit {
   get confirmPassword() { return this.addPortalForm.get('Owner.ConfirmPassword'); }
   get owner() { return this.addPortalForm.get('Owner'); }
 
-  private hidePassword: boolean = true;
-  private hidePConfirm: boolean = true;
+   hidePassword: boolean = true;
+   hidePConfirm: boolean = true;
 
   private createForm(): void {
     this.addPortalForm = this.formBuilder.group({

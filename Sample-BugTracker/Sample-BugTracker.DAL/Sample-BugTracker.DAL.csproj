@@ -67,7 +67,9 @@
     <Compile Include="EF\BugTrackerDbInitializer.cs" />
     <Compile Include="Entities\AppRole.cs" />
     <Compile Include="Entities\AppUser.cs" />
-    <Compile Include="Entities\Attachment.cs" />
+    <Compile Include="Entities\BaseAttachment.cs" />
+    <Compile Include="Entities\SolutionAttachment.cs" />
+    <Compile Include="Entities\ErrorAttachment.cs" />
     <Compile Include="Entities\AwaitingAttachmentUser.cs" />
     <Compile Include="Entities\Error.cs" />
     <Compile Include="Entities\ErrorSolution.cs" />
@@ -78,10 +80,12 @@
     <Compile Include="Enumerations\Error.cs" />
     <Compile Include="Enumerations\PermissionList.cs" />
     <Compile Include="Interfaces\IAwaitingAttachmentUser.cs" />
+    <Compile Include="Interfaces\IErrorAttachmentRepository.cs" />
     <Compile Include="Interfaces\IErrorSolutionRepository.cs" />
     <Compile Include="Interfaces\IPermissionRepository.cs" />
     <Compile Include="Interfaces\IPortalRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />
+    <Compile Include="Interfaces\ISolutionAttachmentRepository.cs" />
     <Compile Include="Interfaces\IUserProjectRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IErrorRepository.cs" />
@@ -136,13 +140,23 @@
     <Compile Include="Migrations\201805031138521_Add permission%27s.Designer.cs">
       <DependentUpon>201805031138521_Add permission%27s.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805111147184_Correct Solution, ErrorAttach and SolutionAttach models.cs" />
+    <Compile Include="Migrations\201805111147184_Correct Solution, ErrorAttach and SolutionAttach models.Designer.cs">
+      <DependentUpon>201805111147184_Correct Solution, ErrorAttach and SolutionAttach models.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805141316164_update attachments domain models.cs" />
+    <Compile Include="Migrations\201805141316164_update attachments domain models.Designer.cs">
+      <DependentUpon>201805141316164_update attachments domain models.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AwaitingAttachmentUserRepository.cs" />
+    <Compile Include="Repositories\ErrorAttachmentRepository.cs" />
     <Compile Include="Repositories\ErrorSolutionRepository.cs" />
     <Compile Include="Repositories\PermissionRepository.cs" />
     <Compile Include="Repositories\PortalRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Repositories\SolutionAttachmentRepository.cs" />
     <Compile Include="Repositories\UserProjectRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
@@ -190,6 +204,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805031138521_Add permission%27s.resx">
       <DependentUpon>201805031138521_Add permission%27s.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805111147184_Correct Solution, ErrorAttach and SolutionAttach models.resx">
+      <DependentUpon>201805111147184_Correct Solution, ErrorAttach and SolutionAttach models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805141316164_update attachments domain models.resx">
+      <DependentUpon>201805141316164_update attachments domain models.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

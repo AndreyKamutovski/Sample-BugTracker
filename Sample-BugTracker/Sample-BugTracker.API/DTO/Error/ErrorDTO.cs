@@ -45,6 +45,8 @@ namespace Sample_BugTracker.API.DTO
         [EmailAddress(ErrorMessage = "Invalid Email Address of error author")]
         public string EmailAuthor { get; set; }
 
+        public bool IsAttachments { get; set; }
+
         public ErrorSolutionDTO Solution { get; set; }
 
         public ErrorDTO()

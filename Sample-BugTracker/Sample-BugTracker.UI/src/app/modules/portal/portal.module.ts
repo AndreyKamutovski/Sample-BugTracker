@@ -8,12 +8,15 @@ import { PortalListResolverService } from './resolvers/portal-list-resolver.serv
 import { PortalService } from './services/portal.service';
 import { SignupService } from './services/signup.service';
 import { IsPortalOwnerService } from './resolvers/is-portal-owner.service';
+import { PortalsRoutingModule } from './portals-routing.module';
+import { AuthService } from '../shared/services/auth.service';
 
 
 
 @NgModule({
   imports: [
-    SharedModule
+    SharedModule,
+    PortalsRoutingModule
   ],
   entryComponents: [
     AddPortalFormComponent

@@ -4,7 +4,7 @@ import { MatDatepickerInputEvent } from '@angular/material';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 
-import { groupDateValidator } from '../../../../../shared/validators/date-validators';
+import { groupDateValidator } from '../../../../shared/validators/date-validators';
 
 
 @Component({
@@ -24,13 +24,13 @@ import { groupDateValidator } from '../../../../../shared/validators/date-valida
 })
 export class ProjectStartEndDatesInputComponent implements OnInit {
 
-  @Input() public form: FormGroup;
-  @Input() public startDateInitValue: Date;
-  @Input() public endDateInitValue: Date;
+  @Input()  form: FormGroup;
+  @Input()  startDateInitValue: Date;
+  @Input()  endDateInitValue: Date;
 
-  private datepickerGroup: FormGroup;
-  private dateStart: FormControl;
-  private dateEnd: FormControl;
+   datepickerGroup: FormGroup;
+   dateStart: FormControl;
+   dateEnd: FormControl;
 
   constructor() { }
 

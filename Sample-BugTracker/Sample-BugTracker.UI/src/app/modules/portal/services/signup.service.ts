@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { HttpClientService } from '../../../shared/services/httpClient.service';
+import { HttpClientService } from '../../shared/services/httpClient.service';
 
 
 @Injectable()

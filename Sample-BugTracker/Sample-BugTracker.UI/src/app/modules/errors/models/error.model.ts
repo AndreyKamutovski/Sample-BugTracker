@@ -13,6 +13,7 @@ export class ErrorBT {
     public ProjectId: number;
     public EmailAuthor: string;
     public EmailAssignee?: string;
+    public IsAttachments: boolean;
 
     public Solution: ErrorSolution;
 

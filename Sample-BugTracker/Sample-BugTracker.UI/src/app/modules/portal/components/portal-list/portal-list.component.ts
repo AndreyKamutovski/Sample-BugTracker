@@ -3,7 +3,7 @@ import 'rxjs/add/operator/filter';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AuthService } from '../../../../shared/services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { Portal } from '../../models/portal.model';
 
 @Component({
@@ -13,11 +13,11 @@ import { Portal } from '../../models/portal.model';
 })
 export class PortalListComponent implements OnInit {
 
-  private _portals: Portal[];
+   _portals: Portal[];
 
   constructor(
-    private authService: AuthService,
-    private router: Router,
+    public authService: AuthService,
+    private _router: Router,
     private _route: ActivatedRoute,
   ) { }
 
@@ -25,9 +25,10 @@ export class PortalListComponent implements OnInit {
     this._portals = this._route.snapshot.data.portals;
   }
 
-  private onClickPortal(event: Event, portalId: string) {
+  onClickPortal(event: Event, portal: Portal) {
     event.preventDefault();
-    sessionStorage.setItem('portalID', portalId);
-    this.router.navigateByUrl('app/projects');
+    sessionStorage.setItem('portalID', portal.PortalId);
+    sessionStorage.setItem('portalTitle', portal.Title);
+    this._router.navigate([portal.Title, "projects"], {relativeTo: this._route});
   }
 }

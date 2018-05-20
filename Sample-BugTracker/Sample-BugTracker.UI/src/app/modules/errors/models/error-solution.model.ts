@@ -1,7 +1,9 @@
-export class ErrorSolution {
+import { User } from "../../users/models/user.model";
 
-    public ErrorId: number;
+export class ErrorSolution {
+    public Id: number;
     public ErrorStatus: number;
     public Description: string;
-    public DateSolution: Date;
+    public RecievingDate: Date;
+    public Author: User;
 }

@@ -1,14 +1,13 @@
-import { stagger } from '@angular/core/src/animation/dsl';
 import { Injectable } from '@angular/core';
 import { RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { HttpClientService } from '../../../shared/services/httpClient.service';
-import { SolutionErrorFormComponent } from '../components/solution-error-form/solution-error-form.component';
+import { HttpClientService } from '../../shared/services/httpClient.service';
 import { ErrorBT } from '../models/error.model';
 import { StatusList } from '../enums/status-list.enum';
 import { PriorityList } from '../enums/priority-list.enum';
 import { ClassificationList } from '../enums/classification-list.enum';
+import { ErrorSolutionFormComponent } from '../components/error-solution-form/error-solution-form.component';
 
 @Injectable()
 export class ErrorService {
@@ -19,10 +18,6 @@ export class ErrorService {
 
   addError(projectId: number, error: ErrorBT): Observable<ErrorBT> {
     return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, { 'projectId': projectId }, { 'Content-Type': 'application/json' }, error);
-  }
-
-  addSolution(solution: SolutionErrorFormComponent): Observable<SolutionErrorFormComponent> {
-    return this.HttpClientService.sendRequest(RequestMethod.Post, 'api/Error/AddSolution', null, { 'Content-Type': 'application/json' }, solution);
   }
 
   updateError(errorId: number, error: ErrorBT): Observable<ErrorBT> {

@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators/map';
 import { startWith } from 'rxjs/operators/startWith';
 
 import { User } from '../../models/user.model';
-import { UsersService } from '../../users.service';
+import { UsersService } from '../../../shared/services/users.service';
 
 @Component({
   selector: 'app-add-user-form',
@@ -14,11 +14,11 @@ import { UsersService } from '../../users.service';
   styles: []
 })
 export class AddUserFormComponent implements OnInit {
-  private addUserForm: FormGroup;
+  addUserForm: FormGroup;
 
-  private existsUser: User[];
-  private filteredUserEmails: Observable<string[]>;
-  private roles = [];
+   existsUser: User[];
+   filteredUserEmails: Observable<string[]>;
+   roles = [];
 
   get Email() { return this.addUserForm.get('Email'); }
   get RoleName() { return this.addUserForm.get('RoleName'); }
@@ -26,7 +26,7 @@ export class AddUserFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<AddUserFormComponent>,
-    private userService: UsersService
+    public userService: UsersService
   ) {
     this.roles = this.userService.roles.filter(r => r.value != "Admin");
     this.createForm();
@@ -59,7 +59,7 @@ export class AddUserFormComponent implements OnInit {
     });
   }
 
-  private filter(val: string): string[] {
+  filter(val: string): string[] {
     return this.existsUser.filter(user => {
       return user.Email.toLowerCase().indexOf(val.toLowerCase()) >= 0
     }).map(user => user.Email);

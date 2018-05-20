@@ -90,10 +90,10 @@ namespace Sample_BugTracker.API.Services
                         System.IO.File.Delete(deletedAvatarPath);
                     }
                 }
-                string rootAvatarFolder = HttpContext.Current.Server.MapPath("~/Avatars");
-                var provider = new AvatarStreamProvider(rootAvatarFolder);
+                string rootAvatarFolder = HttpContext.Current.Server.MapPath("~/Content/Avatars");
+                var provider = new StreamProvider(rootAvatarFolder);
 
-                // Read the form data.
+                // Read the form data
                 await request.Content.ReadAsMultipartAsync(provider);
                 string returningPath = string.Empty;
                 using (UoW)

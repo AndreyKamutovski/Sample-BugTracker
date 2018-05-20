@@ -9,7 +9,7 @@ import { MatDialogRef } from '@angular/material';
 export class UploadUserPhotoFormComponent implements OnInit {
 
   private tempSelectedFile: File = null;
-  private isAvatarSelected: boolean = false;
+  public isAvatarSelected: boolean = false;
   customUploadStyle = {
     clearButton: {
       "display": "none"

@@ -13,7 +13,8 @@ namespace Sample_BugTracker.DAL.EF
         public DbSet<UserProject> UserProjects { get; set; }
         public DbSet<AwaitingAttachmentUser> AwaitingAttachmentUsers { get; set; }
         public DbSet<ErrorSolution> ErrorSolutions { get; set; }
-        public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<ErrorAttachment> ErrorAttachments { get; set; }
+        public DbSet<SolutionAttachment> SolutionAttachments { get; set; }
         public DbSet<Permission> Permissions { get; set; }
 
 

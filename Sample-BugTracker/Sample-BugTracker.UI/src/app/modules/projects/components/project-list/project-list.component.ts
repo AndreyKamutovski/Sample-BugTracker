@@ -10,9 +10,9 @@ import {
 } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthService } from '../../../../shared/services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { Project } from '../../models/project.model';
-import { ProjectService } from '../../project.service';
+import { ProjectService } from '../../../shared/services/project.service';
 import { AddProjectFormComponent } from '../add-project-form/add-project-form.component';
 import { EditProjectFormComponent } from '../edit-project-form/edit-project-form.component';
 import { ConfirmDeletingProjectComponent } from '../confirm-deleting-project/confirm-deleting-project.component';
@@ -35,16 +35,16 @@ export class ProjectListComponent implements OnInit {
   // private selection = new SelectionModel<Project>(false, []);
 
 
-  private projects: Project[];
-  private cols: any[];
+  projects: Project[];
+  cols: any[];
 
   constructor(
-    private projectService: ProjectService,
-    private _router: Router,
-    private _route: ActivatedRoute,
-    private authService: AuthService,
+    public projectService: ProjectService,
+    public _router: Router,
+    public _route: ActivatedRoute,
+    public authService: AuthService,
     public dialog: MatDialog,
-    private changeDetectorRefs: ChangeDetectorRef,
+    public changeDetectorRefs: ChangeDetectorRef,
     public snackBar: MatSnackBar
   ) {
   }
@@ -62,9 +62,10 @@ export class ProjectListComponent implements OnInit {
   ngAfterViewInit() {
   }
 
-  private onRowSelect(event) {
+  onRowSelect(event) {
     sessionStorage.setItem('projectID', event.data.ProjectId);
-    this._router.navigateByUrl('/app/project/dashboard');
+    // this._router.navigateByUrl('/app/project/dashboard');
+    this._router.navigate([event.data.ProjectId, "dashboard"], {relativeTo: this._route});
   }
 
   openAddProjectDialog(): void {
@@ -76,7 +77,7 @@ export class ProjectListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(this.afterClosedAddProjectDialog.bind(this));
   };
 
-  private afterClosedAddProjectDialog(res: any) {
+  afterClosedAddProjectDialog(res: any) {
     if (res != undefined && res != null) {
       if (res.hasOwnProperty('projectData')) {
         this.projectService.addProject(res.projectData).toPromise().then(newProject => {
@@ -99,7 +100,7 @@ export class ProjectListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(this.afterClosedEditProjectDialog.bind(this));
   };
 
-  private afterClosedEditProjectDialog(res: any) {
+  afterClosedEditProjectDialog(res: any) {
     if (res != undefined && res != null) {
       this.projectService.updateProject(res.projectData.ProjectId, res.projectData).toPromise().then(updateProject => {
         let projcs = [...this.projects];
@@ -111,7 +112,7 @@ export class ProjectListComponent implements OnInit {
     }
   }
 
-  private openDeleteProjectDialog(event: Event, delProject: Project): void {
+   openDeleteProjectDialog(event: Event, delProject: Project): void {
     event.stopPropagation();    
     let delDialogRef = this.dialog.open(ConfirmDeletingProjectComponent, {
       width: '30%',

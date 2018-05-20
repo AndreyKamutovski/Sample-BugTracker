@@ -1,8 +1,8 @@
-<form [formGroup]='errorForm' novalidate>
+<form [formGroup]='editErrorForm' novalidate>
   <div mat-dialog-title class="error-dialog-header">
     <mat-form-field style="width: 100%;">
-      <input matInput type="text" (change)="errorListSharedService.updateTitle(error.ErrorId, $event.target.value)"
-        placeholder="Название ошибки" required minlength='3' maxlength='100' formControlName='Title' appInputAutofocus [readonly]="errorListSharedService.isDisabledErrorTitleAndDescription(error)">
+      <input matInput type="text" (change)="updateError(errorListSharedService.updateTitle, $event.target.value)" placeholder="Название ошибки"
+        required minlength='3' maxlength='100' formControlName='Title' [readonly]="errorListSharedService.isDisabledErrorTitleAndDescription(error)">
       <mat-error *ngIf="title.hasError('required')">
         Обязательно введите название ошибки
       </mat-error>
@@ -25,34 +25,42 @@
     <span class="dialog-title-text" [matTooltip]="errorListSharedService.Project.Title">Проект:
       <b>{{errorListSharedService.Project.Title}}</b>
     </span>
-    <button mat-icon-button [mat-dialog-close]="error" class="error-dialog-close-btn">
+    <button mat-icon-button (click)="close()" matTooltip="Закрыть" class="error-dialog-close-btn">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
   <mat-dialog-content class="form-field-container">
     <mat-accordion>
-      <mat-expansion-panel (closed)="quillEditorIsActive = false">
+      <mat-expansion-panel (closed)="viewQuill = false">
         <mat-expansion-panel-header style="background-color: gainsboro;">
           <mat-panel-title>
             Описание ошибки
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <div style="margin: 0 -24px -16px;">
+          <div *ngIf="(description.value == '' || description.value == null)  && !viewQuill">
+            Описание ошибки отсутствует.
+            <button mat-raised-button color="primary" (click)="viewQuill = true">
+              Добавить описание
+            </button>
+          </div>
 
-        <quill-editor *ngIf="isShowQuillEditor" formControlName="Description" placeholder="Введите описание ошибки" [style]="{'height': '200px', 'margin-bottom':'15px'}"
-          (onContentChanged)="contentChange($event);" [readOnly]="!quillEditorIsActive" [modules]="quillEditorConfig.getToolbarConfig">
-        </quill-editor>
-        <mat-error *ngIf="quillEditorTextContent.length-1 > 5000 && (description.touched && description.dirty)">
-          Описание ошибки должно содержать не более 5000 символов. Вы ввели {{quillEditorTextContent.length-1}} символа
-        </mat-error>
+          <quill-editor [style.display]="viewQuill || (description.value == null || description.value == '') ? 'none' : 'block'" formControlName="Description"
+            [style]="{'height': '200px'}" [readOnly]="true" [modules]="{toolbar: false}">
+          </quill-editor>
 
-        <button mat-raised-button color="primary" *ngIf="quillEditorIsActive" (click)="errorListSharedService.updateTitle(error.ErrorId, quillEditorHtmlContent); quillEditorIsActive = false;">Сохранить</button>
-        <button mat-raised-button *ngIf="quillEditorIsActive" (click)="quillEditorIsActive = false; description.setValue(error.Description);">Отмена</button>
+          <quill-editor [style.display]="viewQuill ? 'block' : 'none'" formControlName="Description" placeholder="Введите описание ошибки"
+            [style]="{'height': '200px'}" (onContentChanged)="contentChange($event);" [modules]="quillEditorConfig.getToolbarConfig">
+          </quill-editor>
+        </div>
+
+
         <mat-action-row>
-          <button mat-icon-button *ngIf="description.value == '' && !quillEditorIsActive" matTooltip="Добавить описание" (click)="quillEditorIsActive = true; isShowQuillEditor = true">
-            <mat-icon>add</mat-icon>
-          </button>
-          <button mat-icon-button *ngIf="description.value != '' && !quillEditorIsActive" matTooltip="Редактировать описание" (click)="quillEditorIsActive = true;">
+          <button mat-raised-button color="primary" *ngIf="viewQuill" style="margin-right: 10px;" (click)="updateError(errorListSharedService.updateDescription, quillEditorHtmlContent); description.setValue(quillEditorHtmlContent != '' ? quillEditorHtmlContent : null);  viewQuill = false;">Сохранить</button>
+          <button mat-raised-button *ngIf="viewQuill" (click)="viewQuill = false; description.setValue(oldQuillHtmlContent);">Отмена</button>
+          <button mat-icon-button *ngIf="(description.value != '' && description.value != null)  && !viewQuill" matTooltip="Редактировать описание"
+            (click)="viewQuill = true; oldQuillHtmlContent = description.value;">
             <mat-icon>edit</mat-icon>
           </button>
         </mat-action-row>
@@ -67,9 +75,9 @@
         <div class="info-error-flex-container">
           <div style="width: 48%" class="form-field-container">
             <mat-form-field>
-              <mat-select placeholder="Ответственный за ошибку" formControlName="EmailAssignee" (selectionChange)="updateError('Ответственный за ошибку', 'EmailAssignee')">
-                <mat-option value=""> Не назначен </mat-option>
-                <mat-option *ngFor="let worker of projectWorkers" [value]="worker.Email">
+              <mat-select placeholder="Ответственный за ошибку" formControlName="EmailAssignee" (selectionChange)="updateError(errorListSharedService.updateAssignee, $event.value == 'null' ? null : $event.value)">
+                <mat-option value="null"> Не назначен </mat-option>
+                <mat-option *ngFor="let worker of errorListSharedService.ProjectWorkers" [value]="worker.Email">
                   {{worker.Email | getUserNameFromEmail}}
                 </mat-option>
               </mat-select>
@@ -78,25 +86,30 @@
               </mat-error>
             </mat-form-field>
 
-            <!-- <app-erro-status-select [form]="errorForm" (selectionChange)=""></app-erro-status-select> -->
-            <!-- <mat-form-field>
-              <mat-select placeholder="Статус ошибки" formControlName="Status" required (selectionChange)="updateError('Статус ошибки', 'Status')">
-                <mat-option *ngFor="let status of errorService.status" [value]="status.value">
-                  {{status.viewValue}}
+            <mat-form-field>
+              <mat-select placeholder="Статус ошибки" formControlName="Status" required (selectionChange)="updateError(errorListSharedService.updateStatus, $event.value)">
+                <mat-select-trigger>
+                  <span class="status-select-{{statusSelectItemsService.getColor(status.value)}}">&nbsp;&nbsp;&nbsp;</span> {{statusSelectItemsService.getViewValue(status.value)}}
+                </mat-select-trigger>
+                <mat-option *ngFor="let status of statusSelectItemsService.Statuses" [value]="status.value">
+                  <span class="status-select-{{status.color}}">&nbsp;&nbsp;&nbsp;</span> {{status.viewValue}}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="status.hasError('required')">
                 Обязательно укажите статус ошибки
               </mat-error>
-            </mat-form-field> -->
+            </mat-form-field>
 
             <mat-form-field>
-              <input matInput [min]="error.DateCreation" disabled [matDatepicker]="deadlineDatepicker" placeholder="Срок выполнения" formControlName='Deadline'
-                (dateChange)="updateError('Срок выполнения', 'Deadline')" required>
+              <input matInput [min]="error.DateCreation" [matDatepicker]="deadlineDatepicker" placeholder="Срок выполнения" formControlName='Deadline'
+                (dateChange)="updateError(errorListSharedService.updateDeadline, $event.value)">
               <mat-datepicker-toggle matSuffix [for]="deadlineDatepicker"></mat-datepicker-toggle>
-              <mat-datepicker #deadlineDatepicker disabled="false"></mat-datepicker>
-              <mat-error *ngIf="deadline.hasError('required')">
+              <mat-datepicker #deadlineDatepicker></mat-datepicker>
+              <mat-error *ngIf="deadline.hasError('required') && !deadline.hasError('matDatepickerParse')">
                 Обязательно введите срок выполнения ошибки
+              </mat-error>
+              <mat-error *ngIf="deadline.hasError('matDatepickerParse')">
+                Неправильная дата
               </mat-error>
             </mat-form-field>
           </div>
@@ -104,8 +117,8 @@
 
 
             <mat-form-field>
-              <mat-select placeholder="Приоритет ошибки" formControlName="Priority" required (selectionChange)="updateError('Приоритет ошибки', 'Priority')">
-                <mat-option *ngFor="let priority of errorService.priorities" [value]="priority.value">
+              <mat-select placeholder="Приоритет ошибки" formControlName="Priority" required (selectionChange)="updateError(errorListSharedService.updatePriority, $event.value)">
+                <mat-option *ngFor="let priority of prioritySelectItemsService.Priorities" [value]="priority.value">
                   {{priority.viewValue}}
                 </mat-option>
               </mat-select>
@@ -115,8 +128,8 @@
             </mat-form-field>
 
             <mat-form-field>
-              <mat-select placeholder="Классификация ошибки" formControlName="Classification" required (selectionChange)="updateError('Классификация ошибки', 'Classification')">
-                <mat-option *ngFor="let classification of errorService.classification" [value]="classification.value">
+              <mat-select placeholder="Классификация ошибки" formControlName="Classification" required (selectionChange)="updateError(errorListSharedService.updateClassification, $event.value)">
+                <mat-option *ngFor="let classification of classificationSelectItemsService.Classifications" [value]="classification.value">
                   {{classification.viewValue}}
                 </mat-option>
               </mat-select>
@@ -126,28 +139,17 @@
             </mat-form-field>
           </div>
         </div>
-
-
       </mat-expansion-panel>
     </mat-accordion>
 
     <mat-tab-group style="margin-top: 30px;">
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>attach_file
-          </mat-icon> Вложения
-        </ng-template>
-        <h1>Best pasta restaurants</h1>
-        <h1>Best pasta restaurants</h1>
-        <h1>Best pasta restaurants</h1>
-        <h1>Best pasta restaurants</h1>
+      <mat-tab label="ВЛОЖЕНИЯ">  
+            <app-error-attachments [errorId]="error.ErrorId"></app-error-attachments>
       </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>done</mat-icon> Решение
-        </ng-template>
+      <mat-tab label="РЕШЕНИЕ">
+       <app-solution [error]="error"></app-solution>
         <!-- <button mat-raised-button *ngIf="error.Solution?.Description == ''" (click)="openSolutionErrorDialog()">Добавить решение</button> -->
-        <span *ngIf="errorSolution?.Description != ''"></span>
+        <!-- <span *ngIf="errorSolution?.Description != ''"></span> -->
       </mat-tab>
     </mat-tab-group>
   </mat-dialog-content>

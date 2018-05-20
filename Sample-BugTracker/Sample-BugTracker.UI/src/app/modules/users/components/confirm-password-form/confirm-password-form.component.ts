@@ -2,11 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { equalPasswordValidator } from '../../../../shared/validators/equal-password.validator';
-import { nonLetterOrDigitPasswordValidator } from '../../../../shared/validators/non-letter-or-digit-password.validator';
-import { requireDigitPasswordValidator } from '../../../../shared/validators/require-digit-password.validator';
-import { requireLowercasePasswordValidator } from '../../../../shared/validators/require-lowercase-password.validator';
-import { requireUppercasePasswordValidator } from '../../../../shared/validators/require-uppercase-password.validator';
+import { equalPasswordValidator } from '../../../shared/validators/equal-password.validator';
+import { nonLetterOrDigitPasswordValidator } from '../../../shared/validators/non-letter-or-digit-password.validator';
+import { requireDigitPasswordValidator } from '../../../shared/validators/require-digit-password.validator';
+import { requireLowercasePasswordValidator } from '../../../shared/validators/require-lowercase-password.validator';
+import { requireUppercasePasswordValidator } from '../../../shared/validators/require-uppercase-password.validator';
 
 @Component({
   selector: 'app-confirm-password-form',
@@ -14,7 +14,7 @@ import { requireUppercasePasswordValidator } from '../../../../shared/validators
   styles: []
 })
 export class ConfirmPasswordFormComponent implements OnInit {
-  private confirmPasswordForm: FormGroup;
+  confirmPasswordForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,8 +23,8 @@ export class ConfirmPasswordFormComponent implements OnInit {
   ) {
     this.createForm();
   };
-  private hidePassword: boolean = true;
-  private hidePConfirm: boolean = true;
+   hidePassword: boolean = true;
+   hidePConfirm: boolean = true;
 
   get password() { return this.confirmPasswordForm.get('Password'); }
   get confirmPassword() { return this.confirmPasswordForm.get('ConfirmPassword'); }

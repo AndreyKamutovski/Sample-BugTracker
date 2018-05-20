@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { UsersService } from '../../users/users.service';
+import { UsersService } from '../../shared/services/users.service';
 import { Portal } from '../models/portal.model';
 
 @Injectable()

@@ -22,7 +22,7 @@ namespace Sample_BugTracker.API
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            if (Request.Headers.AllKeys.Contains("Access-Control-Request-Headers") && Request.Headers.AllKeys.Contains("Access-Control-Request-Method") && Request.HttpMethod == "OPTIONS")
+            if ((Request.Headers.AllKeys.Contains("Access-Control-Request-Headers") || Request.Headers.AllKeys.Contains("Access-Control-Request-Method")) && Request.HttpMethod == "OPTIONS")
             {
                 Response.Headers.Add("Access-Control-Allow-Headers", "authorization, content-type");
                 Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, PATCH");

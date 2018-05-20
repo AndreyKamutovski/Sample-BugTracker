@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDialogRef } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
-import { BUGTRACKER_DATE_FORMATS } from '../../../../shared/validators/date-validators';
+import { BUGTRACKER_DATE_FORMATS } from '../../../shared/validators/date-validators';
 import { Project } from '../../models/project.model';
 
 
@@ -14,7 +14,7 @@ import { Project } from '../../models/project.model';
 })
 export class AddProjectFormComponent {
 
-  private addProjectForm: FormGroup;
+  addProjectForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<AddProjectFormComponent>,
@@ -38,7 +38,7 @@ export class AddProjectFormComponent {
     }
   }
 
-  private createForm(): void {
+  createForm(): void {
     this.addProjectForm = new FormGroup({});
   }
 }

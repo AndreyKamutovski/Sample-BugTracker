@@ -25,6 +25,8 @@ namespace Sample_BugTracker.DAL.Repositories
             AwaitingAttachmentUsers = new AwaitingAttachmentUserRepository(_context);
             Solutions = new ErrorSolutionRepository(_context);
             Permission = new PermissionRepository(_context);
+            SolutionAttachments = new SolutionAttachmentRepository(_context);
+            ErrorAttachments = new ErrorAttachmentRepository(_context);
         }
 
         public IPermissionRepository Permission
@@ -34,6 +36,18 @@ namespace Sample_BugTracker.DAL.Repositories
         }
 
         public IErrorSolutionRepository Solutions
+        {
+            get;
+            private set;
+        }
+
+        public ISolutionAttachmentRepository SolutionAttachments
+        {
+            get;
+            private set;
+        }
+
+        public IErrorAttachmentRepository ErrorAttachments
         {
             get;
             private set;

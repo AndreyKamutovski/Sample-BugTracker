@@ -9,10 +9,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class ProjectTitleInputComponent implements OnInit {
 
-  @Input() public form: FormGroup;
-  @Input() public initValue: string = '';
+  @Input()  form: FormGroup;
+  @Input()  initValue: string = '';
 
-  private title: FormControl;
+   title: FormControl;
 
   constructor() { }
 

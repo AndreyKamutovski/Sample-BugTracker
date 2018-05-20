@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { PermissionService } from '../../../shared/services/permission.service';
+import { PermissionService } from '../../shared/services/permission.service';
 
 @Injectable()
 export class ProjectPermissionResolverService {

@@ -3,63 +3,51 @@ import 'chart.js/dist/Chart.min.js';
 import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 
-import { AppComponent } from './app.component';
-import { routing } from './app.routing';
-import { DashboardModule } from './modules/dashboard/dashboard.module';
-import { ErrorsModule } from './modules/errors/errors.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent, ERROR_ATTACHMENT_URI } from './app.component';
 import { LoaderComponent } from './modules/loader/loader.component';
 import { LoaderModule } from './modules/loader/loader.module';
-import { PortalModule } from './modules/portal/portal.module';
-import { AuthGuardLoginService } from './modules/projects/guards/auth-guard-login.service';
-import { ProjectsModule } from './modules/projects/projects.module';
+import { AuthGuard } from './modules/projects/guards/auth-guard-login.service';
+import { CaptchaComponent } from './modules/shared/components/captcha/captcha.component';
+import {
+    GlobalErrorHandlerComponent,
+} from './modules/shared/components/global-error-handler/global-error-handler.component';
+import { GlobalErrorHandlerService } from './modules/shared/components/global-error-handler/global-error-handler.service';
+import { LoginFormComponent } from './modules/shared/components/login-form/login-form.component';
+import { REST_URI } from './modules/shared/services/httpClient.service';
+import { PermissionService } from './modules/shared/services/permission.service';
+import { QuillEditorConfigurationService } from './modules/shared/services/quill-editor-configuration.service';
 import { SharedModule } from './modules/shared/shared.module';
 import { AuthGuardLogoutService } from './modules/users/guards/auth-guard-logout.service';
-import { UsersModule } from './modules/users/users.module';
-import { CaptchaComponent } from './shared/components/captcha/captcha.component';
-import { GlobalErrorHandlerComponent } from './shared/components/global-error-handler/global-error-handler.component';
-import { GlobalErrorHandlerService } from './shared/components/global-error-handler/global-error-handler.service';
-import { AuthService } from './shared/services/auth.service';
-import { HttpClientService, REST_URI } from './shared/services/httpClient.service';
-import { PermissionService } from './shared/services/permission.service';
-import { QuillEditorConfigurationService } from './shared/services/quill-editor-configuration.service';
-import { MessageService } from './shared/services/message.service';
-
-// import { CaptchaComponent } from './captcha/captcha.component';
 
 @NgModule({
     imports: [
-        BrowserModule,
-        SharedModule,
+        BrowserAnimationsModule, 
+        SharedModule.forRoot(), 
         HttpModule,
-        routing,
         ReCaptchaModule,
-        ProjectsModule,
-        PortalModule,
         LoaderModule,
-        ErrorsModule,
-        DashboardModule,
-        UsersModule
+        AppRoutingModule
     ],
     declarations: [
         AppComponent,
         CaptchaComponent,
         GlobalErrorHandlerComponent,
+        LoginFormComponent
     ],
     entryComponents: [
         GlobalErrorHandlerComponent,
     ],
     providers: [
-        AuthService,
-        AuthGuardLoginService,
+        AuthGuard,
         AuthGuardLogoutService,
-        HttpClientService,
         PermissionService,
-        MessageService,
         QuillEditorConfigurationService,
         { provide: REST_URI, useValue: 'http://localhost:2038/' },
+        { provide: ERROR_ATTACHMENT_URI, useValue: 'Content/ErrorAttachments/' },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
         { provide: LOCALE_ID, useValue: 'ru' },
         { provide: ErrorHandler, useClass: GlobalErrorHandlerService }

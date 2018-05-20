@@ -58,21 +58,21 @@ namespace Sample_BugTracker.API.Services
 
         public void AddSolution(ErrorSolutionDTO _solution)
         {
-            using (UoW)
-            {
-                var error = UoW.Errors.Get(_solution.ErrorId);
-                if (error == null)
-                {
-                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", _solution.ErrorId), HttpStatusCode.NotFound);
-                }
-                var solution = new ErrorSolution();
-                solution.Author = CurrentUser;
-                solution.Error = error;
-                solution.Description = _solution.Description;
-                solution.DateSolution = _solution.DateSolution;
-                UoW.Solutions.Add(solution);
-                UoW.Complete();
-            }
+            //using (UoW)
+            //{
+            //    var error = UoW.Errors.Get(_solution.ErrorId);
+            //    if (error == null)
+            //    {
+            //        throw new ApplicationOperationException(string.Format("Error with id {0} not found", _solution.ErrorId), HttpStatusCode.NotFound);
+            //    }
+            //    var solution = new ErrorSolution();
+            //    solution.Author = CurrentUser;
+            //    solution.Error = error;
+            //    solution.Description = _solution.Description;
+            //    solution.DateSolution = _solution.DateSolution;
+            //    UoW.Solutions.Add(solution);
+            //    UoW.Complete();
+            //}
         }
 
         public ErrorDTO Update(int id, ErrorDTO errorDto)

@@ -13,15 +13,15 @@ namespace Sample_BugTracker.DAL.Entities
         [Key]
         [ForeignKey("Error")]
         public int Id { get; set; }
-
         public virtual Error Error { get; set; }
 
         public string Description { get; set; }
 
-        public DateTime? DateSolution { get; set; }
+        public DateTime? RecievingDate { get; set; }
 
         public string AuthorId { get; set; }
         public virtual AppUser Author { get; set; }
 
+        public virtual ICollection<SolutionAttachment> Attachments { get; set; }
     }
 }

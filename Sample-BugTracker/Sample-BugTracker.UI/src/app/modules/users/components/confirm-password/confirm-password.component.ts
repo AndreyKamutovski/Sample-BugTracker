@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { UsersService } from '../../users.service';
+import { UsersService } from '../../../shared/services/users.service';
 import { ConfirmPasswordFormComponent } from '../confirm-password-form/confirm-password-form.component';
 
 @Component({

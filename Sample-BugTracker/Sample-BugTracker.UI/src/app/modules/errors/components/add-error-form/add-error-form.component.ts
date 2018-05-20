@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 
-import { AuthService } from '../../../../shared/services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
+import { StatusList } from '../../enums/status-list.enum';
+import { QuillEditorConfigurationService } from '../../../shared/services/quill-editor-configuration.service';
+import { PriorityList } from '../../enums/priority-list.enum';
+import { ClassificationList } from '../../enums/classification-list.enum';
+import { ClassificationSelectItems } from '../../services/selection-lists-items/classification-select-items';
+import { PrioritySelectItems } from '../../services/selection-lists-items/priority-select-items';
 
 @Component({
   selector: 'app-add-error-form',
@@ -11,13 +17,19 @@ import { AuthService } from '../../../../shared/services/auth.service';
 })
 export class AddErrorFormComponent {
 
-  private addErrorForm: FormGroup;
+   addErrorForm: FormGroup;
+   title: FormControl;
+   description: FormControl;
+   priority: FormControl;
+   classification: FormControl;
 
   constructor(
+    public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddErrorFormComponent>,
-  ) {
-    this.createForm();
-  };
+    public quillEditorConfig: QuillEditorConfigurationService,
+    public classificationSelectItemsService: ClassificationSelectItems,
+    public prioritySelectItemsService: PrioritySelectItems,
+  ) { this.createForm(); };
 
   addError(): void {
     if (this.addErrorForm.valid) {
@@ -28,8 +40,25 @@ export class AddErrorFormComponent {
   }
 
   private createForm(): void {
-    this.addErrorForm = new FormGroup({
-      'DateCreation': new FormControl(Date.now())
+    this.title = new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(100),
+      Validators.pattern("^[А-Яа-яa-zA-Z0-9 _-]*$")
+    ]);
+    this.description = new FormControl('', [
+      Validators.maxLength(5000)
+    ]);
+    this.priority = new FormControl(PriorityList.CRITICAL);
+    this.classification = new FormControl(ClassificationList.SECURITY);
+
+    this.addErrorForm = this.formBuilder.group({
+      'Title': this.title,
+      'Description': this.description,
+      'DateCreation': [new Date(Date.now())],
+      'Status': [StatusList.OPEN],
+      'Priority': this.priority,
+      'Classification': this.classification
     });
   }
 }

@@ -2,11 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
-import { AuthService } from '../../../../shared/services/auth.service';
-import { REST_URI } from '../../../../shared/services/httpClient.service';
+import { AuthService } from '../../../shared/services/auth.service';
+import { REST_URI } from '../../../shared/services/httpClient.service';
 import { UnattachUser } from '../../models/unattach-user.model';
 import { User } from '../../models/user.model';
-import { UsersService } from '../../users.service';
+import { UsersService } from '../../../shared/services/users.service';
 import { AddUserFormComponent } from '../add-user-form/add-user-form.component';
 import { ConfirmDeletingUserComponent } from '../confirm-deleting-user/confirm-deleting-user.component';
 import { EditUserFormComponent } from '../edit-user-form/edit-user-form.component';
@@ -17,15 +17,15 @@ import { EditUserFormComponent } from '../edit-user-form/edit-user-form.componen
   styles: [':host mat-list { width: 93%; }']
 })
 export class UserListComponent implements OnInit {
-  private users: User[];
+   users: User[];
 
   constructor(
-    private userService: UsersService,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog,
-    private _route: ActivatedRoute,
-    private authService: AuthService,
-    @Inject(REST_URI) private uri: string,
+    public userService: UsersService,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public _route: ActivatedRoute,
+    public authService: AuthService,
+    @Inject(REST_URI) public uri: string,
 
   ) { }
 
@@ -48,7 +48,7 @@ export class UserListComponent implements OnInit {
     })
   }
 
-  private openEditUserDialog(editUser: User): void {
+  openEditUserDialog(editUser: User): void {
     let delDialogRef = this.dialog.open(EditUserFormComponent, {
       width: '50%',
       data: { 'editUser': editUser }
@@ -63,7 +63,7 @@ export class UserListComponent implements OnInit {
     })
   }
 
-  public openAddUserDialog(): void {
+  openAddUserDialog(): void {
     let dialogRef = this.dialog.open(AddUserFormComponent, {
       width: '50%',
       data: {}

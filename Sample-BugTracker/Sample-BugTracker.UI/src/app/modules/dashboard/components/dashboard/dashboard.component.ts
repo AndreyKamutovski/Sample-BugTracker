@@ -16,11 +16,11 @@ enum diagramTypes {
 })
 export class DashboardComponent implements OnInit {
 
-  private _project: Project;
-  private _projectOwner: User;
-  private _diagramType: diagramTypes;
-  private _dataDiagram;
-
+  public _project: Project;
+  public _projectOwner: User;
+  public _diagramType: diagramTypes;
+  public _dataDiagram;
+public diagramTypes = diagramTypes;
   constructor(
     private _route: ActivatedRoute
   ) {

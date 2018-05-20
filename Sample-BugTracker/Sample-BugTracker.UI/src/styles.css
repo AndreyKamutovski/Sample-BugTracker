@@ -23,6 +23,10 @@ body, .app-background {
     margin-bottom: 20px;
 }
 
+.form-field-container mat-form-field:last-child {
+    margin-bottom: 0;
+}
+
 .logo-img {
     width: 80px;
     height: 40px;
@@ -33,7 +37,14 @@ body, .app-background {
     align-items: center;
 }
 
+.warn-color {
+    color: #f44336;
+}
 
+h2.dialog-title-container {
+    display: flex;
+    align-items: center;
+}
 
 .pointerCursor:hover, .hover-tile:hover {
     cursor: pointer;
@@ -178,3 +189,57 @@ background-color: lightgrey;
 }
 
 div.mat-card-header-text {width: 100%;}
+
+
+/* select colors */
+
+.status-select-padding {
+padding: 7px 0 7px 5px;
+}
+
+.status-select-padding .mat-select-value {
+    color: white;
+}
+
+/* OPEN */
+.status-select-blue{
+    background: #568dd5;
+    }
+
+    /* DECIDED */
+.status-select-bisque {
+    background: #f1b02b;
+    }
+
+        /* NECESSARYTEST */
+.status-select-lightgreen {
+    background: #8eb15a;
+    }
+
+/* CLOSED */
+.status-select-turquoise {
+background: #3cccc6;
+}
+
+.trancate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* solution file uploader */
+  .my-fileupload {
+      margin-top: 15px;
+  }
+  .my-fileupload .ui-fileupload-files {
+      width: 100%;
+  }
+
+  /* .my-fileupload .ui-fileupload-content {
+      height: 300px;
+
+  } */
+
+  .my-fileupload .file-upload-item:last-child {
+      margin-bottom: 0;
+  }

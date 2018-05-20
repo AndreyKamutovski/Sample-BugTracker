@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { PortalService } from '../services/portal.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Injectable()
 export class IsPortalOwnerService {

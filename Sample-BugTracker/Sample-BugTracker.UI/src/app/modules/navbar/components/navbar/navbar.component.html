@@ -12,7 +12,7 @@
       <span class="mat-title">Главная</span>
     </a>
     <a mat-button *ngFor="let link of navbarElements" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
-      true}" [routerLink]="['/app', link.routerLink]" [matTooltip]="link.tooltipTitle">
+      true}" [routerLink]="[link.routerLink]" [matTooltip]="link.tooltipTitle">
       <span class="mat-title">{{link.title}}</span>
     </a>
   </span>
@@ -38,7 +38,7 @@
       <mat-card-content>
       </mat-card-content>
       <mat-card-actions align="end">
-        <a mat-raised-button routerLink="/app/portals">Мои порталы</a>
+        <a mat-raised-button routerLink="/portals">Мои порталы</a>
         <button mat-raised-button color="primary" (click)="logout()">Выйти</button>
       </mat-card-actions>
     </mat-card>

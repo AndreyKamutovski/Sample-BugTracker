@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.DTO.Error;
 using Sample_BugTracker.DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,9 @@ namespace Sample_BugTracker.API.App_Start
                                                    .ForMember(dest => dest.EmailAuthor, dest => dest.MapFrom(src => src.Author.Email))
                                                    .ForMember(dest => dest.ErrorId, dest => dest.MapFrom(src => src.Id));
                 config.CreateMap<ErrorDTO, Error>();
-
+                config.CreateMap<ErrorAttachment, AttachmentDTO>();
+                config.CreateMap<SolutionAttachment, AttachmentDTO>();
+                config.CreateMap<ErrorSolution, ErrorSolutionDTO>();
             });
         }
     }
