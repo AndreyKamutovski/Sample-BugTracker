@@ -12,11 +12,16 @@ using System.Web.Http;
 namespace Sample_BugTracker.API.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/attachment")]
+    [RoutePrefix("api/error/attachment")]
     public class ErrorAttachmentController : ApiController
     {
         private ErrorAttachmentService _errorAttachService = new ErrorAttachmentService();
 
+        [Route("")]
+        public List<AttachmentDTO> Get([Required] int errorId)
+        {
+            return _errorAttachService.Get(errorId);
+        }
 
         [HttpPost]
         [Route("")]
@@ -25,11 +30,6 @@ namespace Sample_BugTracker.API.Controllers
             return await _errorAttachService.Add(errorId, Request);
         }
 
-        [Route("")]
-        public List<AttachmentDTO> Get([Required] int errorId)
-        {
-            return _errorAttachService.Get(errorId);
-        }
 
         [Route("{id:int:min(1)}")]
         public void Delete([Required] int id)
@@ -43,7 +43,5 @@ namespace Sample_BugTracker.API.Controllers
         {
             return _errorAttachService.Download(id);
         }
-
-
     }
 }

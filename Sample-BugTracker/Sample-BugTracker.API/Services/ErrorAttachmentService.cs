@@ -19,11 +19,24 @@ namespace Sample_BugTracker.API.Services
 {
     public class ErrorAttachmentService : BaseAttachmentService
     {
-        private string _rootPath;
+        private readonly string root;
 
         public ErrorAttachmentService()
         {
-            _rootPath = HttpContext.Current.Server.MapPath("~/Content/ErrorAttachments");
+            root = HttpContext.Current.Server.MapPath("~/Content/ErrorAttachments");
+        }
+
+        public List<AttachmentDTO> Get(int errorId)
+        {
+            using (UoW)
+            {
+                var error = UoW.Errors.Get(errorId);
+                if (error == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Error with errorId {0} not found", errorId), HttpStatusCode.NotFound);
+                }
+                return Mapper.Map<List<AttachmentDTO>>(error.Attachments);
+            }
         }
 
         public async Task<List<AttachmentDTO>> Add(int errorId, HttpRequestMessage request)
@@ -34,7 +47,7 @@ namespace Sample_BugTracker.API.Services
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
 
-            var provider = new StreamProvider(_rootPath);
+            var provider = new StreamProvider(root);
 
             try
             {
@@ -69,19 +82,6 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-        public List<AttachmentDTO> Get(int errorId)
-        {
-            using (UoW)
-            {
-                var error = UoW.Errors.Get(errorId);
-                if (error == null)
-                {
-                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", errorId), HttpStatusCode.NotFound);
-                }
-                return Mapper.Map<List<AttachmentDTO>>(error.Attachments);
-            }
-        }
-
         public void Delete(int id)
         {
             try
@@ -93,7 +93,7 @@ namespace Sample_BugTracker.API.Services
                     {
                         throw new ApplicationOperationException(string.Format("Attachment with id {0} not found", id), HttpStatusCode.NotFound);
                     }
-                    System.IO.File.Delete(Path.Combine(_rootPath, attachment.FileName));
+                    System.IO.File.Delete(Path.Combine(root, attachment.FileName));
                     UoW.ErrorAttachments.Remove(attachment);
                     UoW.Complete();
                 }
@@ -115,7 +115,7 @@ namespace Sample_BugTracker.API.Services
                     {
                         throw new ApplicationOperationException(string.Format("Attachment with id {0} not found", id), HttpStatusCode.NotFound);
                     }
-                    return GetDownloadResponse(_rootPath, attachment);
+                    return GetDownloadResponse(root, attachment);
                 }
             }
             catch (System.Exception e)

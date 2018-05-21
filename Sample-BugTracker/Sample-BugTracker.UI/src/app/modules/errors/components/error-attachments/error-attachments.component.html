@@ -1,8 +1,11 @@
-<p-fileUpload #fileUploader mode="basic" [url]="urlToUpload" maxFileSize="30000000" (onSelect)="onSelectAttachment($event)"
+<p-fileUpload #fileUploader mode="basic" [url]="urlToUpload" maxFileSize="30000000" 
   name="attachments[]" (onBeforeSend)="onBeforeSendAttachment($event)" (onUpload)="onUploadAttachment($event)" chooseLabel="Прикрепить файлы"
   multiple="multiple"></p-fileUpload>
 
-<div *ngIf="attachmentsError.length == 0">
+  <!-- (onSelect)="onSelectAttachment($event)" -->
+
+  <app-attachments #attachments [attachmentsService]="errorAttachSrv"></app-attachments>
+<!-- <div *ngIf="attachmentsError.length == 0">
   Вложения отсутствуют
 </div>
 
@@ -32,4 +35,4 @@
       </mat-card>
     </div>
   </div>
-</div>
+</div> -->

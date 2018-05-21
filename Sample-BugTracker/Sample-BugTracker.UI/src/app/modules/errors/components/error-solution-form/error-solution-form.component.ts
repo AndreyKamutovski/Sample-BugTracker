@@ -13,6 +13,8 @@ import { ErrorSolution } from '../../models/error-solution.model';
 import { MessageService } from '../../../shared/services/message.service';
 import { ErrorBT } from '../../models/error.model';
 import { ErrorAttachment } from '../../models/error-attachment.model';
+import { AttachmentPreviewService } from '../../services/attachment-preview.service';
+import { SolutionAttachmentService } from '../../services/solution-attachment.service';
 
 @Component({
   selector: 'app-solution-error-form',
@@ -40,8 +42,9 @@ export class ErrorSolutionFormComponent implements OnInit {
     public snackBar: MatSnackBar,
     public quillEditorConfig: QuillEditorConfigurationService,
     private statusSelectItems: StatusSelectItems,
-    private errorAttachmentService: ErrorAttachmentService,
+    private attachPreviewSrv: AttachmentPreviewService,
     public messageService: MessageService,
+    private slnAttachSrv: SolutionAttachmentService,
     @Inject(MAT_DIALOG_DATA) public data: any,
 
   ) {
@@ -60,7 +63,7 @@ export class ErrorSolutionFormComponent implements OnInit {
         for (let file of this._fileUploader.files) {
           formData.append('solutionAttachments[]', file, file.name);
         }
-        this.solutionService.addAttachments(solution.Id, formData).toPromise().then((attachments: ErrorAttachment[]) => {
+        this.slnAttachSrv.add(solution.Id, formData).toPromise().then((attachments: ErrorAttachment[]) => {
           this.isLoadSolution = false;
           this.dialogRef.close({ 'solution': solution, 'attachments': attachments });
           this.messageService.showSnackBarMsg("Решение успешно добавлено");
@@ -104,7 +107,7 @@ export class ErrorSolutionFormComponent implements OnInit {
   }
 
   getFilePreviewSrc(fileName: string) {
-    return `${this._fileTypeIconsFolder}/${this.errorAttachmentService.getFilePreview(fileName)}`;
+    return `${this._fileTypeIconsFolder}/${this.attachPreviewSrv.getFilePreview(fileName)}`;
   }
 
   cancelAttachment(index: number) {

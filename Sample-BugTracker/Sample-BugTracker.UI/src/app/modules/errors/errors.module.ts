@@ -19,6 +19,9 @@ import { ErrorSolutionFormComponent } from './components/error-solution-form/err
 import { SolutionComponent } from './components/solution/solution.component';
 import { StatusSelectComponent } from './components/status-select/status-select.component';
 import { ErrorSolutionService } from './services/error-solution.service';
+import { AttachmentsComponent } from './components/attachments/attachments.component';
+import { SolutionAttachmentService } from './services/solution-attachment.service';
+import { AttachmentPreviewService } from './services/attachment-preview.service';
 
 @NgModule({
   imports: [
@@ -36,6 +39,7 @@ import { ErrorSolutionService } from './services/error-solution.service';
     ConfirmAttachmentDeleteComponent,
     SolutionComponent,
     StatusSelectComponent,
+    AttachmentsComponent,
   ],
   entryComponents: [
     AddErrorFormComponent,
@@ -50,7 +54,9 @@ import { ErrorSolutionService } from './services/error-solution.service';
     ErrorListSharedService,
     StatusSelectItems,
     PrioritySelectItems,
-    ClassificationSelectItems
+    ClassificationSelectItems,
+    SolutionAttachmentService,
+    AttachmentPreviewService
   ]
 })
 export class ErrorsModule { }

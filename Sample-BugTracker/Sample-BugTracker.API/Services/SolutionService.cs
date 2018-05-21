@@ -19,13 +19,7 @@ namespace Sample_BugTracker.API.Services
 {
     public class SolutionService : BaseService
     {
-        private readonly string root;
         private SolutionAttachmentService _slnAttachmentService = new SolutionAttachmentService();
-
-        public SolutionService()
-        {
-            root = HttpContext.Current.Server.MapPath("~/Content/SolutionAttachments");
-        }
 
         public ErrorSolutionDTO Get(int id)
         {
@@ -37,19 +31,6 @@ namespace Sample_BugTracker.API.Services
                     throw new ApplicationOperationException(string.Format("Solution with id {0} not found", id), HttpStatusCode.NotFound);
                 }
                 return Mapper.Map<ErrorSolutionDTO>(sln);
-            }
-        }
-
-        public List<AttachmentDTO> GetAttachments(int id)
-        {
-            using (UoW)
-            {
-                var sln = UoW.Solutions.Get(id);
-                if (sln == null)
-                {
-                    throw new ApplicationOperationException(string.Format("Solution with id {0} not found", id), HttpStatusCode.NotFound);
-                }
-                return Mapper.Map<List<AttachmentDTO>>(sln.Attachments);
             }
         }
 
@@ -78,51 +59,6 @@ namespace Sample_BugTracker.API.Services
                 UoW.Solutions.Add(solution);
                 UoW.Complete();
                 return Mapper.Map<ErrorSolutionDTO>(solution);
-            }
-        }
-
-        public async Task<List<AttachmentDTO>> AddAttachments(int id, HttpRequestMessage request)
-        {
-            try
-            {
-                // Check if the request contains multipart/form-data.
-                if (!request.Content.IsMimeMultipartContent())
-                {
-                    throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-                }
-
-                using (UoW)
-                {
-                    var solution = UoW.Solutions.Get(id);
-                    if (solution == null)
-                    {
-                        throw new ApplicationOperationException(string.Format("Solution with id {0} not found", id), HttpStatusCode.NotFound);
-                    }
-
-                    var provider = new StreamProvider(root);
-                    await request.Content.ReadAsMultipartAsync(provider);
-
-                    var attachments = new List<SolutionAttachment>();
-                    foreach (MultipartFileData file in provider.FileData)
-                    {
-                        var attachment = new SolutionAttachment()
-                        {
-                            Author = CurrentUser,
-                            Solution = solution,
-                            UploadDate = DateTime.UtcNow,
-                            OriginalFileName = file.Headers.ContentDisposition.FileName.Replace("\"", string.Empty),
-                            FileName = file.LocalFileName.Substring(file.LocalFileName.LastIndexOf('\\') + 1)
-                        };
-                        attachments.Add(attachment);
-                    }
-                    UoW.SolutionAttachments.AddRange(attachments);
-                    UoW.Complete();
-                    return Mapper.Map<List<AttachmentDTO>>(attachments);
-                }
-            }
-            catch (System.Exception e)
-            {
-                throw new ApplicationOperationException(e.Message, HttpStatusCode.InternalServerError);
             }
         }
 

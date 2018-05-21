@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
 using Marvin.JsonPatch;
 using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.DTO.Error;
 using Sample_BugTracker.API.DTO.Error.PartialUpdate;
 using Sample_BugTracker.API.Exceptions;
+using Sample_BugTracker.API.Providers;
 using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 
 namespace Sample_BugTracker.API.Services

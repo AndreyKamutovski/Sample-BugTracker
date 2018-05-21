@@ -8,4 +8,6 @@
   <quill-editor [(ngModel)]="solution.Description" [style]="{'height': '200px'}" [readOnly]="true" [modules]="{toolbar: false}">
   </quill-editor>
   <span>от {{solution.Author.Email | getUserNameFromEmail}} в {{solution.RecievingDate | localDateFromUtc}}</span>
+  <app-attachments #attachments [attachmentsService]="slnAttachSrv"></app-attachments>
+  
 </div>

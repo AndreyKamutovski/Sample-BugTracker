@@ -1,9 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { ErrorSolution } from '../../models/error-solution.model';
 import { ErrorSolutionFormComponent } from '../error-solution-form/error-solution-form.component';
 import { ErrorBT } from '../../models/error.model';
+import { ErrorAttachment } from '../../models/error-attachment.model';
+import { SolutionAttachmentService } from '../../services/solution-attachment.service';
+import { AttachmentsComponent } from '../attachments/attachments.component';
 
 @Component({
   selector: 'app-solution',
@@ -14,14 +17,16 @@ export class SolutionComponent implements OnInit {
 
   @Input() error: ErrorBT;
   solution: ErrorSolution;
+  @ViewChild("attachments") attachments: AttachmentsComponent;
 
   constructor(
     public dialog: MatDialog,
+    public slnAttachSrv: SolutionAttachmentService,
 
   ) { }
 
   ngOnInit() {
-this.solution = this.error.Solution;
+    this.solution = this.error.Solution;
   }
 
   addSolutionDialog() {
@@ -34,7 +39,7 @@ this.solution = this.error.Solution;
   }
 
   afterCloseAddSolutionDialog(data: any) {
-this.solution.Description = data.solution.Description;
+    this.solution.Description = data.solution.Description;
+    this.attachments.pushAttachments(data.attachments);
   }
-
 }

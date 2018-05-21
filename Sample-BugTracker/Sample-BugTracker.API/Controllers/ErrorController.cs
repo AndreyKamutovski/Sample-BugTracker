@@ -1,5 +1,6 @@
 ﻿using Marvin.JsonPatch;
 using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.DTO.Error;
 using Sample_BugTracker.API.DTO.Error.PartialUpdate;
 using Sample_BugTracker.API.Filters;
 using Sample_BugTracker.API.Services;

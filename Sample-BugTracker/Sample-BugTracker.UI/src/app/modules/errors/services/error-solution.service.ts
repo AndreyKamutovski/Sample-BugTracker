@@ -16,8 +16,4 @@ export class ErrorSolutionService {
   addSolution(errorId: number, solution: ErrorSolution): Observable<ErrorSolution> {
     return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, { "errorId": errorId }, { 'Content-Type': 'application/json' }, solution);
   }
-
-  addAttachments(id: number, formData: FormData): Observable<ErrorAttachment[]> {
-    return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}/${id}/attachment`, null, null, formData);
-  }
 }
