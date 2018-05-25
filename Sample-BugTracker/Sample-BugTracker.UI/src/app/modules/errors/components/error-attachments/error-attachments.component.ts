@@ -1,6 +1,7 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { FileUpload } from 'primeng/fileupload';
+
+import { Component, Inject, Input, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 
 import { ERROR_ATTACHMENT_URI } from '../../../../app.component';
 import { REST_URI } from '../../../shared/services/httpClient.service';
@@ -9,18 +10,18 @@ import { ErrorAttachment } from '../../models/error-attachment.model';
 import { ErrorAttachmentService } from '../../services/error-attachment.service';
 import { AttachmentsComponent } from '../attachments/attachments.component';
 
-
 @Component({
   selector: 'app-error-attachments',
   templateUrl: './error-attachments.component.html',
+  styles: [".upload-button-and-spinner-container {display: flex; align-items: center; justify-content: flex-start;}"]
 })
 export class ErrorAttachmentsComponent implements OnInit {
 
-  urlToUpload: string;
+  isUploaded: boolean = false;
   @Input() errorId: number;
-
   @ViewChild("fileUploader") _fileUploader: FileUpload;
   @ViewChild("attachments") attachments: AttachmentsComponent;
+
 
   constructor(
     public messageService: MessageService,
@@ -29,7 +30,6 @@ export class ErrorAttachmentsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.urlToUpload = `${this.uri}api/error/attachment?errorId=${this.errorId}`;
     this.errorAttachSrv.get(this.errorId).toPromise().then(a => {
       this.attachments.pushAttachments(a);
     });
@@ -53,21 +53,20 @@ export class ErrorAttachmentsComponent implements OnInit {
   //   }
   // }
 
-  onBeforeSendAttachment(event) {
-    let xhr = event.xhr as XMLHttpRequest;
-    if (xhr != null) {
-      xhr.setRequestHeader('Authorization', `Bearer ${sessionStorage.getItem('token')}`);
-    }
-  }
-
-  onUploadAttachment(event) {
-    let resAttachment = JSON.parse(event.xhr.response) as ErrorAttachment[];
-    if (resAttachment) {
-      resAttachment.forEach((v, i, array) => {
-        this.attachments.pushAttachments(resAttachment);
-        // this.attachmentsError.push(v);
+  errorAttachmentUploader(event) {
+    let files = event.files as File[];
+    if (files.length > 0) {
+      this.isUploaded = true;
+      let formData = new FormData();
+      for (let file of files) {
+        formData.append('errorAttachments[]', file, file.name);
+      }
+      this._fileUploader.clear();
+      this.errorAttachSrv.add(this.errorId, formData).toPromise().then((attachments: ErrorAttachment[]) => {
+        this.isUploaded = false;
+        this.attachments.pushAttachments(attachments);
+        this.messageService.showSnackBarMsg(`Вложени${event.files.length == 1 ? 'е' : 'я'} успешно добавлены`);
       });
-      this.messageService.showSnackBarMsg("Вложение(я) успешно добавлены");
     }
   }
 }

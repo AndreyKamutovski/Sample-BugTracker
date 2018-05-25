@@ -7,6 +7,7 @@ import { AttachmentOperations } from '../../interfaces/attachment-operations';
 import { ErrorAttachment } from '../../models/error-attachment.model';
 import { AttachmentPreviewService } from '../../services/attachment-preview.service';
 import { ConfirmAttachmentDeleteComponent } from '../confirm-attachment-delete/confirm-attachment-delete.component';
+import { WarningDialogComponent } from '../../../shared/components/warning-dialog/warning-dialog.component';
 
 @Component({
   selector: 'app-attachments',
@@ -65,8 +66,9 @@ export class AttachmentsComponent implements OnInit {
   }
 
   delete(id: number) {
-    let confirmDeletionDialog = this.dialog.open(ConfirmAttachmentDeleteComponent, {
-      width: '50%'
+    let confirmDeletionDialog = this.dialog.open(WarningDialogComponent, {
+      width: '50%',
+      data: { 'dialogBody': 'Удалить вложение?' }
     });
     confirmDeletionDialog.afterClosed().toPromise().then(isDel => {
       if (isDel) {

@@ -1,38 +1,7 @@
-<p-fileUpload #fileUploader mode="basic" [url]="urlToUpload" maxFileSize="30000000" 
-  name="attachments[]" (onBeforeSend)="onBeforeSendAttachment($event)" (onUpload)="onUploadAttachment($event)" chooseLabel="Прикрепить файлы"
-  multiple="multiple"></p-fileUpload>
-
-  <!-- (onSelect)="onSelectAttachment($event)" -->
-
-  <app-attachments #attachments [attachmentsService]="errorAttachSrv"></app-attachments>
-<!-- <div *ngIf="attachmentsError.length == 0">
-  Вложения отсутствуют
+<div class="upload-button-and-spinner-container">
+  <p-fileUpload #fileUploader mode="basic" style="margin-right: 10px;" auto="auto" customUpload="true" (uploadHandler)="errorAttachmentUploader($event)"
+  maxFileSize="30000000" chooseLabel="Прикрепить файлы" multiple="multiple"></p-fileUpload>
+<mat-spinner *ngIf="isUploaded" diameter="30"></mat-spinner>
 </div>
-
-<div *ngIf="attachmentsError.length > 0">
-  <div class="ui-g">
-    <div *ngFor="let attach of attachmentsError" class="ui-g-12 ui-md-3 ui-lg-2">
-      <mat-card class="error-attachment-card">
-        <mat-card-header>
-          <mat-card-title>
-            <b> {{attach.OriginalFileName}}</b>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-spinner *ngIf="attach.PreviewFilePath == null"></mat-spinner>
-        <img *ngIf="attach.PreviewFilePath != null" mat-card-image [src]="attach.PreviewFilePath">
-        <mat-card-content>
-          {{attach.Author.Email | getUserNameFromEmail}}
-          <br> {{getAttachmentFormatDate(attach.UploadDate)}}
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-icon-button matTooltip="Загрузить" (click)="download(attach)">
-            <mat-icon>cloud_download</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" matTooltip="Удалить" (click)="delete(attach.Id)">
-            <mat-icon>delete_forever</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-  </div>
-</div> -->
+<mat-divider class="select-error-dialog-divider"></mat-divider>
+<app-attachments #attachments [attachmentsService]="errorAttachSrv"></app-attachments>

@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
-import { AttachmentOperations } from '../interfaces/attachment-operations';
 import { Observable } from 'rxjs/Observable';
-import { ErrorAttachment } from '../models/error-attachment.model';
+
+import { Injectable } from '@angular/core';
+import { RequestMethod, ResponseContentType } from '@angular/http';
+
 import { HttpClientService } from '../../shared/services/httpClient.service';
-import { RequestMethod } from '@angular/http';
+import { AttachmentOperations } from '../interfaces/attachment-operations';
+import { ErrorAttachment } from '../models/error-attachment.model';
 
 @Injectable()
 export class SolutionAttachmentService implements AttachmentOperations {
@@ -15,15 +17,15 @@ export class SolutionAttachmentService implements AttachmentOperations {
   ) { }
 
   get(id: number): Observable<ErrorAttachment[]> {
-    throw new Error("Method not implemented.");
+    return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}`, { 'solutionId': id });
   }
   add(id: number, formData: FormData): Observable<ErrorAttachment[]> {
     return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, { 'solutionId': id }, null, formData);
   }
   delete(id: number): Observable<any> {
-    throw new Error("Method not implemented.");
+    return this.HttpClientService.sendRequest(RequestMethod.Delete, `${this.routerPrefix}/${id}`);
   }
   download(id: number): Observable<Response> {
-    throw new Error("Method not implemented.");
+    return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/${id}/download`, null, null, null, ResponseContentType.Blob, false);
   }
 }

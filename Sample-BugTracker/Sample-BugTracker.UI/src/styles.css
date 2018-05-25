@@ -243,3 +243,19 @@ background: #3cccc6;
   .my-fileupload .file-upload-item:last-child {
       margin-bottom: 0;
   }
+
+  .headers-align .mat-expansion-panel-header-title, 
+.headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+  .headers-align .mat-expansion-panel-header-description {
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .mat-divider.select-error-dialog-divider {
+    margin: 25px 0; 
+    }
+
+

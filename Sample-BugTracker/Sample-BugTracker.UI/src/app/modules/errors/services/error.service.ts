@@ -16,8 +16,16 @@ export class ErrorService {
 
   constructor(private HttpClientService: HttpClientService) {}
 
+  get(id: number): Observable<ErrorBT> {
+    return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/${id}`);
+  }
+
   addError(projectId: number, error: ErrorBT): Observable<ErrorBT> {
     return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, { 'projectId': projectId }, { 'Content-Type': 'application/json' }, error);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.HttpClientService.sendRequest(RequestMethod.Delete, `${this.routerPrefix}/${id}`);
   }
 
   updateError(errorId: number, error: ErrorBT): Observable<ErrorBT> {

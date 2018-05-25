@@ -14,6 +14,7 @@ import { StatusSelectItems } from '../../services/selection-lists-items/status-s
 import { AddErrorFormComponent } from '../add-error-form/add-error-form.component';
 import { SelectedErrorDialogComponent } from '../selected-error-dialog/selected-error-dialog.component';
 import { StatusList } from '../../enums/status-list.enum';
+import { WarningDialogComponent } from '../../../shared/components/warning-dialog/warning-dialog.component';
 
 @Component({
   selector: 'app-error-list',
@@ -22,7 +23,7 @@ import { StatusList } from '../../enums/status-list.enum';
 })
 export class ErrorListComponent implements OnInit {
 
-   cols: any[] = [
+  cols: any[] = [
     { field: 'Title', header: 'Ошибка' },
     { field: 'EmailAuthor', header: 'Автор' },
     { field: 'DateCreation', header: 'Создано' },
@@ -59,20 +60,19 @@ export class ErrorListComponent implements OnInit {
   }
 
   // editing error dialog
-  openEditErrorDialog(error: ErrorBT): void {
+  openEditErrorDialog(error: ErrorBT, isOpenAttachmentExpPanel: boolean): void {
     event.preventDefault();
-    
+
     let dialogRef = this.dialog.open(SelectedErrorDialogComponent, {
       width: '95%',
       maxWidth: '95%',
       height: '95%',
       maxHeight: '95%',
-      disableClose: true,      
-      data: { 'error': error }
+      disableClose: true,
+      data: { 'error': error, 'isOpenAttachExpPanel': isOpenAttachmentExpPanel }
     });
     dialogRef.afterClosed().subscribe(this.afterClosedEditErrorDialog.bind(this));
   }
-
 
   afterClosedEditErrorDialog(err: ErrorBT): void {
     if (err != null) {
@@ -92,8 +92,6 @@ export class ErrorListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(this.afterClosedAddErrorDialog.bind(this));
   };
 
-
-
   afterClosedAddErrorDialog(res: any) {
     if (res != undefined && res != null) {
       if (res.hasOwnProperty('errorData')) {
@@ -103,5 +101,26 @@ export class ErrorListComponent implements OnInit {
         });
       }
     }
+  }
+
+
+  deleteError(id: number) {
+    let confirmDeletionDialog = this.dialog.open(WarningDialogComponent, {
+      width: '50%',
+      data: { 'dialogBody': 'Удалить ошибку?' }
+    });
+    confirmDeletionDialog.afterClosed().toPromise().then(userChoice => {
+      if (userChoice) {
+        this.errorService.delete(id).toPromise().then(r => {
+          let errs = [...this.errorListSharedService.Errors];
+          let idx = errs.findIndex(p => p.ErrorId == id);
+          errs.splice(idx, 1);
+          this.errorListSharedService.Errors = errs;
+          this.messageService.showSnackBarMsg("Ошибка успешно удалена");
+        }
+        );
+      }
+    }
+    );
   }
 }

@@ -30,13 +30,16 @@
     </button>
   </div>
 
-  <mat-dialog-content class="form-field-container">
-    <mat-accordion>
-      <mat-expansion-panel (closed)="viewQuill = false">
-        <mat-expansion-panel-header style="background-color: gainsboro;">
+  <mat-dialog-content class="form-field-container error-dialog-body">
+    <mat-accordion class="headers-align">
+      <mat-expansion-panel (closed)="viewQuill = false" hideToggle="true">
+        <mat-expansion-panel-header>
           <mat-panel-title>
             Описание ошибки
           </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon>description</mat-icon>
+          </mat-panel-description>
         </mat-expansion-panel-header>
         <div style="margin: 0 -24px -16px;">
           <div *ngIf="(description.value == '' || description.value == null)  && !viewQuill">
@@ -66,11 +69,14 @@
         </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header style="background-color: gainsboro;">
+      <mat-expansion-panel hideToggle="true">
+        <mat-expansion-panel-header>
           <mat-panel-title>
             Сведения об ошибке
           </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon>info</mat-icon>
+          </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="info-error-flex-container">
           <div style="width: 48%" class="form-field-container">
@@ -140,17 +146,34 @@
           </div>
         </div>
       </mat-expansion-panel>
-    </mat-accordion>
+      <span #attachmentsExpPanelAnchor></span>
+      <mat-expansion-panel [expanded]="isOpenAttachmentExpPanel" hideToggle="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Вложения
+          </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon>attach_file</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <app-error-attachments [errorId]="error.ErrorId"></app-error-attachments>
+        </ng-template>
+      </mat-expansion-panel>
 
-    <mat-tab-group style="margin-top: 30px;">
-      <mat-tab label="ВЛОЖЕНИЯ">  
-            <app-error-attachments [errorId]="error.ErrorId"></app-error-attachments>
-      </mat-tab>
-      <mat-tab label="РЕШЕНИЕ">
-       <app-solution [error]="error"></app-solution>
-        <!-- <button mat-raised-button *ngIf="error.Solution?.Description == ''" (click)="openSolutionErrorDialog()">Добавить решение</button> -->
-        <!-- <span *ngIf="errorSolution?.Description != ''"></span> -->
-      </mat-tab>
-    </mat-tab-group>
+      <mat-expansion-panel hideToggle="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Решение
+          </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon>done</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <app-solution [error]="error" (solutionChange)="solutionChange($event)"></app-solution>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-dialog-content>
 </form>

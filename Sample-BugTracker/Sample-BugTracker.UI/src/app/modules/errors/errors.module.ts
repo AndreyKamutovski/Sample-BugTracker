@@ -22,6 +22,7 @@ import { ErrorSolutionService } from './services/error-solution.service';
 import { AttachmentsComponent } from './components/attachments/attachments.component';
 import { SolutionAttachmentService } from './services/solution-attachment.service';
 import { AttachmentPreviewService } from './services/attachment-preview.service';
+import { UpdateSolutionFormComponent } from './components/update-solution-form/update-solution-form.component';
 
 @NgModule({
   imports: [
@@ -40,12 +41,14 @@ import { AttachmentPreviewService } from './services/attachment-preview.service'
     SolutionComponent,
     StatusSelectComponent,
     AttachmentsComponent,
+    UpdateSolutionFormComponent,
   ],
   entryComponents: [
     AddErrorFormComponent,
     SelectedErrorDialogComponent,
     ErrorSolutionFormComponent,
-    ConfirmAttachmentDeleteComponent
+    ConfirmAttachmentDeleteComponent,
+    UpdateSolutionFormComponent
   ],
   providers: [
     ErrorService,

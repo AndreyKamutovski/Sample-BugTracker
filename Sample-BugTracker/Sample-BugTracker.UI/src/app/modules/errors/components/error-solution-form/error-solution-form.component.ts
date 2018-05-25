@@ -21,16 +21,16 @@ import { SolutionAttachmentService } from '../../services/solution-attachment.se
   templateUrl: './error-solution-form.component.html',
   styleUrls: ['./error-solution-form.component.css'],
 })
-export class ErrorSolutionFormComponent implements OnInit {
+export class ErrorSolutionFormComponent {
 
   solutionForm: FormGroup;
-
   errorStatus: FormControl;
   description: FormControl;
-
   error: ErrorBT;
-
   @ViewChild("fileUploader") _fileUploader: FileUpload;
+  isLoadSolution: boolean = false;
+  uploadedFiles: any[] = [];
+  _fileTypeIconsFolder: string = "../../../../../assets/file-types-icons";
 
 
   constructor(
@@ -53,21 +53,24 @@ export class ErrorSolutionFormComponent implements OnInit {
 
   };
 
-  isLoadSolution: boolean = false;
 
   addSolution(): void {
     if (this.solutionForm.valid) {
       this.isLoadSolution = true;
       this.solutionService.addSolution(this.error.ErrorId, this.solutionForm.value).toPromise().then((solution: ErrorSolution) => {
-        let formData = new FormData();
-        for (let file of this._fileUploader.files) {
-          formData.append('solutionAttachments[]', file, file.name);
+        if (this._fileUploader.files.length > 0) {
+          let formData = new FormData();
+          for (let file of this._fileUploader.files) {
+            formData.append('solutionAttachments[]', file, file.name);
+          }
+          this.slnAttachSrv.add(solution.Id, formData).toPromise().then((attachments: ErrorAttachment[]) => {
+            this.isLoadSolution = false;
+            this.dialogRef.close({ 'solution': solution, 'attachments': attachments });
+          });
         }
-        this.slnAttachSrv.add(solution.Id, formData).toPromise().then((attachments: ErrorAttachment[]) => {
-          this.isLoadSolution = false;
-          this.dialogRef.close({ 'solution': solution, 'attachments': attachments });
-          this.messageService.showSnackBarMsg("Решение успешно добавлено");
-        });
+        else {
+          this.dialogRef.close({ 'solution': solution });
+        }
       });
     } else {
       throw new Error("Решение не добавлено. Проверьте правильность ввода данных.")
@@ -85,7 +88,6 @@ export class ErrorSolutionFormComponent implements OnInit {
     });
   }
 
-  uploadedFiles: any[] = [];
 
   onUpload(event) {
     console.log('upload');
@@ -94,16 +96,8 @@ export class ErrorSolutionFormComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-
-  }
-
-  _fileTypeIconsFolder: string = "../../../../../assets/file-types-icons";
-
-
   getFileSizeInKB(size: number): string {
-    let sizeKB = size / 1024;
-    return `${sizeKB.toFixed(0)} KB`;
+    return this.attachPreviewSrv.getFileSizeInKB(size);
   }
 
   getFilePreviewSrc(fileName: string) {

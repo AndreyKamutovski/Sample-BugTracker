@@ -1,41 +1,42 @@
 <h1>
-    {{_project.Title}}
-    <h3>Владелец проекта:&nbsp;{{_projectOwner.Email}}</h3>
+    {{project.Title}}
+    <h3>Владелец проекта:&nbsp;{{projectOwner.Email}}</h3>
 </h1>
-<mat-expansion-panel>
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            Описание проекта
-        </mat-panel-title>
-    </mat-expansion-panel-header>
-    <quill-editor [(ngModel)]="_project.Description" [readOnly]="true" [style]="{'height': '300px', 'background-color':'white'}"
-        style="background-color:white" [modules]="{toolbar: false}"></quill-editor>
-</mat-expansion-panel>
 
-<mat-expansion-panel>
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            Состояние ошибок
-        </mat-panel-title>
-    </mat-expansion-panel-header>
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Описание проекта
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <quill-editor [(ngModel)]="project.Description" [readOnly]="true" [style]="{'height': '300px', 'background-color':'white'}"
+            style="background-color:white" [modules]="{toolbar: false}"></quill-editor>
+    </mat-expansion-panel>
 
-    <div [ngSwitch]="_diagramType">
-        <p-chart type="bar" *ngSwitchDefault [data]="_dataDiagram"></p-chart>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Состояние ошибок
+            </mat-panel-title>
+            <mat-panel-description>
+                Отслеживайте ошибки, которые влияют на проект
+            </mat-panel-description>
+        </mat-expansion-panel-header>
 
-    </div>
-
-    <mat-action-row>
-        <button mat-icon-button matTooltip="Гистограмма" (click)="_diagramType = diagramTypes.Bar">
-            <mat-icon>insert_chart </mat-icon>
-        </button>
-        <button mat-icon-button matTooltip="
-                    Круговая диаграмма" (click)="_diagramType = diagramTypes.Pie">
-            <mat-icon>pie_chart</mat-icon>
-        </button>
-
-        <button mat-icon-button matTooltip="Кольцевая диаграмма" (click)="_diagramType = diagramTypes.Donut">
-            <mat-icon>pie_chart_outlined
-            </mat-icon>
-        </button>
-    </mat-action-row>
-</mat-expansion-panel>
+        <div [ngSwitch]="diagramType">
+            <p-chart type="bar" *ngSwitchDefault [data]="dataDiagram"></p-chart>
+        </div>
+        <mat-action-row>
+            <button mat-icon-button matTooltip="Гистограмма" (click)="diagramType = diagramTypes.Bar">
+                <mat-icon>insert_chart </mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Круговая диаграмма" (click)="diagramType = diagramTypes.Pie">
+                <mat-icon>pie_chart</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Кольцевая диаграмма" (click)="diagramType = diagramTypes.Donut">
+                <mat-icon>pie_chart_outlined</mat-icon>
+            </button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>

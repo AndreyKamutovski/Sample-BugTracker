@@ -77,4 +77,9 @@ export class AttachmentPreviewService {
       return `file.png`;
     }
   }
+
+  getFileSizeInKB(sizeInBytes: number): string {
+    let sizeKB = sizeInBytes / 1024;
+    return `${sizeKB.toFixed(0)} KB`;
+  }
 }

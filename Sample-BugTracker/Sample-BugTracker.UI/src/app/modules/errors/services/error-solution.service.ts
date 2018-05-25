@@ -16,4 +16,8 @@ export class ErrorSolutionService {
   addSolution(errorId: number, solution: ErrorSolution): Observable<ErrorSolution> {
     return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, { "errorId": errorId }, { 'Content-Type': 'application/json' }, solution);
   }
+
+  updateSolution(id: number, solution: ErrorSolution): Observable<ErrorSolution> {
+    return this.HttpClientService.sendRequest(RequestMethod.Put, `${this.routerPrefix}/${id}`, null, { 'Content-Type': 'application/json' }, solution);
+  }
 }

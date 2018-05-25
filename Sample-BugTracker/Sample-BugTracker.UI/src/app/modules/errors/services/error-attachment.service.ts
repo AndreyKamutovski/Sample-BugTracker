@@ -20,7 +20,7 @@ export class ErrorAttachmentService implements AttachmentOperations {
     return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}`, { 'errorId': id });
   }
   add(id: number, formData: FormData): Observable<ErrorAttachment[]> {
-    throw new Error("Method not implemented.");
+    return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, { 'errorId': id }, null, formData);
   }
   delete(id: number): Observable<any> {
     return this.HttpClientService.sendRequest(RequestMethod.Delete, `${this.routerPrefix}/${id}`);

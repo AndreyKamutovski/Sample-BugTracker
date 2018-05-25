@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatExpansionPanel } from '@angular/material';
 
 import { AuthService } from '../../../shared/services/auth.service';
 import { MessageService } from '../../../shared/services/message.service';
@@ -16,6 +16,9 @@ import { StatusSelectItems } from '../../services/selection-lists-items/status-s
 import { ErrorAttachment } from '../../models/error-attachment.model';
 import { ErrorAttachmentService } from '../../services/error-attachment.service';
 import { ErrorSolutionFormComponent } from '../error-solution-form/error-solution-form.component';
+import { ErrorSolution } from '../../models/error-solution.model';
+import { ErrorService } from '../../services/error.service';
+import { ScrollToService } from 'ng2-scroll-to-el';
 
 
 
@@ -29,14 +32,26 @@ type errorUpdateFunc = (errorId: number, value: string | Date | StatusList | Pri
 })
 export class SelectedErrorDialogComponent {
 
-   error: ErrorBT;
-   errorSolution: ErrorSolutionFormComponent;
 
-   viewQuill: boolean = false;
-
+  error: ErrorBT;
+  errorSolution: ErrorSolutionFormComponent;
+  viewQuill: boolean = false;
   quillEditorTextContent: string = '';
   quillEditorHtmlContent: string = '';
   oldQuillHtmlContent: string = '';
+
+  editErrorForm: FormGroup;
+  title: FormControl;
+  description: FormControl;
+  dateCreation: FormControl;
+  deadline: FormControl;
+  status: FormControl;
+  priority: FormControl;
+  classification: FormControl;
+  emailAssignee: FormControl;
+  isOpenAttachmentExpPanel: boolean;
+  @ViewChild("attachmentsExpPanelAnchor") attachmentsExpPanelAnchor: HTMLElement;
+
 
 
   constructor(
@@ -52,31 +67,24 @@ export class SelectedErrorDialogComponent {
     public prioritySelectItemsService: PrioritySelectItems,
     public classificationSelectItemsService: ClassificationSelectItems,
     public errorAttachmentService: ErrorAttachmentService,
-    
+    public errorService: ErrorService,
+    private scrollService: ScrollToService
   ) {
     this.error = this.data.error;
+    this.isOpenAttachmentExpPanel = this.data.isOpenAttachExpPanel as boolean;
     this.createForm();
   };
 
-
-  ngOnInit() {
+  ngAfterViewInit(): void {
+    if (this.isOpenAttachmentExpPanel) {
+      this.scrollService.scrollTo(this.attachmentsExpPanelAnchor);
+    }
   }
 
   contentChange(event: any) {
     this.quillEditorHtmlContent = event.html;
     this.quillEditorTextContent = event.text;
   }
-
-   editErrorForm: FormGroup;
-   title: FormControl;
-   description: FormControl;
-   dateCreation: FormControl;
-   deadline: FormControl;
-   status: FormControl;
-   priority: FormControl;
-   classification: FormControl;
-   emailAssignee: FormControl;
-
 
   updateError(callback: errorUpdateFunc, value: any) {
     if (this.editErrorForm.valid) {
@@ -87,7 +95,7 @@ export class SelectedErrorDialogComponent {
     }
   }
 
-   createForm(): void {
+  createForm(): void {
 
     this.title = new FormControl(this.error.Title, [
       Validators.required,
@@ -113,33 +121,21 @@ export class SelectedErrorDialogComponent {
       'Status': this.status,
       'Priority': this.priority,
       'Classification': this.classification,
-      'EmailAssignee': this.emailAssignee
+      'EmailAssignee': this.emailAssignee,
+      'Solution': [this.error.Solution]
     });
   }
 
-  openSolutionErrorDialog() {
-
-    event.preventDefault();
-    
-    let dialogRef = this.dialog.open(ErrorSolutionFormComponent, {
-      width: '50%',
-      maxWidth: '50%',
-      data: { 'error': null }
-    });
-
-    dialogRef.afterClosed().subscribe(this.afterSolutionErrorDialog.bind(this));
-  }
-
-  afterSolutionErrorDialog(sln: ErrorSolutionFormComponent) {
-    if (sln != null) {
-      this.errorSolution = sln;
-    }
-
+  solutionChange(sln: ErrorSolution) {
+    this.editErrorForm.get('Solution').setValue(sln);
+    this.status.setValue(sln.ErrorStatus);
   }
 
   close() {
     if (this.editErrorForm.valid) {
-      this.dialogEditError.close(this.editErrorForm.value);
+      this.errorService.get(this.error.ErrorId).toPromise().then((error: ErrorBT) => {
+        this.dialogEditError.close(error);
+      });
     }
     else {
       this.dialogEditError.close(null);

@@ -9,18 +9,17 @@
       <input matInput type="text" size="50" placeholder="Глобальный фильтр" (input)="errorsTable.filterGlobal($event.target.value, 'contains')">
     </mat-form-field>
   </div>
-
-
   <p-table #errorsTable [columns]="cols" [(value)]="errorListSharedService.Errors" [paginator]="true" [rows]="5" [responsive]="true"
     [scrollable]="true" scrollHeight="500px" [resizableColumns]="true">
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th  style="width: 2.5vw;">
-          
+        <th style="width: 2.5vw;">
         </th>
         <th *ngFor="let col of cols" [pSortableColumn]="col.field">
           {{col.header}}
           <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+        <th style="width: 2.5vw;">
         </th>
       </tr>
       <tr>
@@ -53,15 +52,16 @@
             </mat-option>
           </mat-select>
         </th>
+        <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-error>
       <tr [pSelectableRow]="error">
-        <td  style="width: 2.5vw;">
-            <mat-icon *ngIf="error.IsAttachments" matTooltip="Вложения">attach_file</mat-icon>
+        <td style="width: 2.5vw;">
+          <mat-icon *ngIf="error.IsAttachments" style="cursor: pointer;" matTooltip="Вложения" (click)="openEditErrorDialog(error, true)">attach_file</mat-icon>
         </td>
         <td>
-          <a href="#" (click)="openEditErrorDialog(error)">
+          <a href="#" (click)="openEditErrorDialog(error, false)">
             <div class="trancate-text" [matTooltip]="error.Title" [style.text-decoration]="crossErrorTitle(error.Status)">
               {{ error.Title }}
             </div>
@@ -131,6 +131,9 @@
               {{ classificationSelectItemsService.getViewValue(error.Classification) }}
             </span>
           </div>
+        </td>
+        <td style="width: 2.5vw;">
+          <mat-icon style="cursor: pointer;" matTooltip="Удалить" (click)="deleteError(error.ErrorId)">delete</mat-icon>
         </td>
       </tr>
     </ng-template>
