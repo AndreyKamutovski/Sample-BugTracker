@@ -19,7 +19,7 @@ namespace Sample_BugTracker.API.Services
 {
     public class ErrorAttachmentService : BaseAttachmentService
     {
-        private readonly string root;
+        public readonly string root;
 
         public ErrorAttachmentService()
         {
@@ -86,16 +86,16 @@ namespace Sample_BugTracker.API.Services
         {
             try
             {
-                using (UoW)
+                using (var uow = CreateUnitOfWork())
                 {
-                    var attachment = UoW.ErrorAttachments.Get(id);
+                    var attachment = uow.ErrorAttachments.Get(id);
                     if (attachment == null)
                     {
                         throw new ApplicationOperationException(string.Format("Attachment with id {0} not found", id), HttpStatusCode.NotFound);
                     }
                     System.IO.File.Delete(Path.Combine(root, attachment.FileName));
-                    UoW.ErrorAttachments.Remove(attachment);
-                    UoW.Complete();
+                    uow.ErrorAttachments.Remove(attachment);
+                    uow.Complete();
                 }
             }
             catch (System.Exception e)

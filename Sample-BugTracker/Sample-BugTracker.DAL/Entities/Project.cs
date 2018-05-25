@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sample_BugTracker.DAL.Entities
 {
@@ -15,8 +16,10 @@ namespace Sample_BugTracker.DAL.Entities
 
         public string Description { get; set; }
 
+        [Required]
         public virtual ICollection<Error> Errors { get; set; }
 
+        [Required]
         public virtual ICollection<UserProject> UserProjects { get; set; }
 
         public string PortalId { get; set; }

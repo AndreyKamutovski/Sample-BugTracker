@@ -17,7 +17,7 @@ namespace Sample_BugTracker.API.Services
 {
     public class SolutionAttachmentService: BaseAttachmentService
     {
-        private readonly string  root;
+        public readonly string  root;
 
         public SolutionAttachmentService()
         {

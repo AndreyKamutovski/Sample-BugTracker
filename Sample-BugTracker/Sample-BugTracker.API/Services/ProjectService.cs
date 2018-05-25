@@ -41,13 +41,7 @@ namespace Sample_BugTracker.API.Services
                 {
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
                 }
-                var errors = Mapper.Map<List<ErrorDTO>>(project.Errors);
-                var errorsDomain = project.Errors.ToList();
-                for(int i = 0; i < errors.Count && i < errorsDomain.Count; i++)
-                {
-                    errors[i].IsAttachments = (errorsDomain[i].Attachments.Count > 0) ? true : false;
-                }
-                return errors;
+                return Mapper.Map<List<ErrorDTO>>(project.Errors);
             }
         }
 

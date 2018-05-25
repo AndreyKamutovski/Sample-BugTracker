@@ -9,6 +9,7 @@ using Sample_BugTracker.DAL.Entities;
 using Sample_BugTracker.DAL.Enumerations;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -18,6 +19,9 @@ namespace Sample_BugTracker.API.Services
 {
     public class ErrorService : BaseService
     {
+        private ErrorAttachmentService _errorAttachService = new ErrorAttachmentService();
+        private SolutionAttachmentService _solutionAttachService = new SolutionAttachmentService();
+
         public ErrorDTO GetById(int id)
         {
             using (UoW)
@@ -246,6 +250,42 @@ namespace Sample_BugTracker.API.Services
                 UoW.Complete();
             }
             return description.Description;
+        }
+
+
+        public void Delete(int id)
+        {
+            using (UoW)
+            {
+                var error = UoW.Errors.Get(id);
+                if (error == null)
+                {
+                    throw new ApplicationOperationException(string.Format("Error with id {0} not found", id), HttpStatusCode.NotFound);
+                }
+                if (error.Solution != null)
+                {
+                    if (error.Solution.Attachments.Count > 0)
+                    {
+                        foreach (var attachment in error.Solution.Attachments)
+                        {
+                            System.IO.File.Delete(Path.Combine(_solutionAttachService.root, attachment.FileName));
+                        }
+                        UoW.SolutionAttachments.RemoveRange(error.Solution.Attachments);
+
+                    }
+                    UoW.Solutions.Remove(error.Solution);
+                }
+                if (error.Attachments.Count > 0)
+                {
+                    foreach (var attachment in error.Attachments)
+                    {
+                        System.IO.File.Delete(Path.Combine(_errorAttachService.root, attachment.FileName));
+                    }
+                    UoW.ErrorAttachments.RemoveRange(error.Attachments);
+                }
+                UoW.Errors.Remove(error);
+                UoW.Complete();
+            }
         }
 
     }

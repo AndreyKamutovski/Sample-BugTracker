@@ -148,6 +148,14 @@
     <Compile Include="Migrations\201805141316164_update attachments domain models.Designer.cs">
       <DependentUpon>201805141316164_update attachments domain models.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805242040095_Off cascade delete project model.cs" />
+    <Compile Include="Migrations\201805242040095_Off cascade delete project model.Designer.cs">
+      <DependentUpon>201805242040095_Off cascade delete project model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805242318284_fix cascade delete.cs" />
+    <Compile Include="Migrations\201805242318284_fix cascade delete.Designer.cs">
+      <DependentUpon>201805242318284_fix cascade delete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AwaitingAttachmentUserRepository.cs" />
@@ -210,6 +218,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805141316164_update attachments domain models.resx">
       <DependentUpon>201805141316164_update attachments domain models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805242040095_Off cascade delete project model.resx">
+      <DependentUpon>201805242040095_Off cascade delete project model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805242318284_fix cascade delete.resx">
+      <DependentUpon>201805242318284_fix cascade delete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

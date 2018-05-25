@@ -37,5 +37,9 @@ namespace Sample_BugTracker.DAL.Entities
 
         public virtual ICollection<ErrorAttachment> Attachments { get; set; }
 
+        public Error()
+        {
+            Attachments = new List<ErrorAttachment>();
+        }
     }
 }

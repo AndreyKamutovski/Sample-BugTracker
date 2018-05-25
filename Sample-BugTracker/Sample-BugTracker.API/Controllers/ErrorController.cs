@@ -35,6 +35,12 @@ namespace Sample_BugTracker.API.Controllers
             return _errorService.Add(projectId, errorDto);
         }
 
+        [Route("{id:int:min(1)}")]
+        public void Delete([Required] int id)
+        {
+            _errorService.Delete(id);
+        }
+
         [HttpPost]
         [Route("")]
         public ErrorSolutionDTO AddSolution([Required] ErrorSolutionDTO solution)

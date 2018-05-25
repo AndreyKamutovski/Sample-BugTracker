@@ -19,7 +19,7 @@ namespace Sample_BugTracker.API.Filters
     public class HasPermissionAttribute : ActionFilterAttribute
     {
         private PermissionList[] _permission;
-        private int _projId;
+        private int? _projId;
         private string _errorIdParamName;
         private string _projectIdParamName;
 
