@@ -1,19 +1,22 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { FileUpload } from 'primeng/components/fileupload/fileupload';
+
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 
 import { AuthService } from '../../../shared/services/auth.service';
+import { MessageService } from '../../../shared/services/message.service';
+import {
+    QuillEditorConfigurationService
+} from '../../../shared/services/quill-editor-configuration.service';
+import { ErrorAttachment } from '../../models/error-attachment.model';
+import { ErrorSolution } from '../../models/error-solution.model';
+import { ErrorBT } from '../../models/error.model';
+import { AttachmentPreviewService } from '../../services/attachment-preview.service';
+import { ErrorAttachmentService } from '../../services/error-attachment.service';
+import { ErrorSolutionService } from '../../services/error-solution.service';
 import { ErrorService } from '../../services/error.service';
 import { StatusSelectItems } from '../../services/selection-lists-items/status-select-items';
-import { QuillEditorConfigurationService } from '../../../shared/services/quill-editor-configuration.service';
-import { ErrorAttachmentService } from '../../services/error-attachment.service';
-import { FileUpload } from 'primeng/components/fileupload/fileupload';
-import { ErrorSolutionService } from '../../services/error-solution.service';
-import { ErrorSolution } from '../../models/error-solution.model';
-import { MessageService } from '../../../shared/services/message.service';
-import { ErrorBT } from '../../models/error.model';
-import { ErrorAttachment } from '../../models/error-attachment.model';
-import { AttachmentPreviewService } from '../../services/attachment-preview.service';
 import { SolutionAttachmentService } from '../../services/solution-attachment.service';
 
 @Component({

@@ -1,23 +1,33 @@
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { TableModule } from 'primeng/table';
+
 import { NgModule } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { TableModule } from 'primeng/table';
 
 import { NavbarModule } from '../navbar/navbar.module';
+import { SharedModule } from '../shared/shared.module';
 import { BUGTRACKER_DATE_FORMATS } from '../shared/validators/date-validators';
-import { SharedModule } from './../shared/shared.module';
 import { AddProjectFormComponent } from './components/add-project-form/add-project-form.component';
-import { ConfirmDeletingProjectComponent } from './components/confirm-deleting-project/confirm-deleting-project.component';
-import { EditProjectFormComponent } from './components/edit-project-form/edit-project-form.component';
-import { ProjectListComponent } from './components/project-list/project-list.component';
-import { SelectedProjectPageComponent } from './components/selected-project-page/selected-project-page.component';
 import {
-  ProjectDescriptionInputComponent,
+    ConfirmDeletingProjectComponent
+} from './components/confirm-deleting-project/confirm-deleting-project.component';
+import {
+    EditProjectFormComponent
+} from './components/edit-project-form/edit-project-form.component';
+import { ProjectListComponent } from './components/project-list/project-list.component';
+import {
+    SelectedProjectPageComponent
+} from './components/selected-project-page/selected-project-page.component';
+import {
+    ProjectDescriptionInputComponent
 } from './components/shared/project-description-input/project-description-input.component';
 import {
-  ProjectStartEndDatesInputComponent,
+    ProjectStartEndDatesInputComponent
 } from './components/shared/project-start-end-dates-input/project-start-end-dates-input.component';
-import { ProjectTitleInputComponent } from './components/shared/project-title-input/project-title-input.component';
+import {
+    ProjectTitleInputComponent
+} from './components/shared/project-title-input/project-title-input.component';
 import { ProjectRoutingModule } from './project-routing.module';
 import { ProjectListResolverService } from './resolvers/project-list-resolver.service';
 import { ProjectPermissionResolverService } from './resolvers/project-permission-resolver.service';
@@ -27,6 +37,7 @@ import { ProjectPermissionResolverService } from './resolvers/project-permission
     SharedModule,
     NavbarModule,   
     TableModule,
+    OverlayPanelModule,
     ProjectRoutingModule            
   ],
   entryComponents: [

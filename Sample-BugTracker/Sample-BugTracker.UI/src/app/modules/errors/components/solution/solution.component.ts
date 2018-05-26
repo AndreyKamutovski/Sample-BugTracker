@@ -1,6 +1,8 @@
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
+import Quill from 'quill';
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -13,10 +15,8 @@ import { SolutionAttachmentService } from '../../services/solution-attachment.se
 import { AttachmentsComponent } from '../attachments/attachments.component';
 import { ErrorSolutionFormComponent } from '../error-solution-form/error-solution-form.component';
 import {
-  UpdateSolutionFormComponent
+    UpdateSolutionFormComponent
 } from '../update-solution-form/update-solution-form.component';
-import Quill from 'quill';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-solution',
@@ -37,10 +37,12 @@ export class SolutionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.solution = this.error.Solution ? this.error.Solution : new ErrorSolution();
-    this.slnAttachSrv.get(this.solution.Id).toPromise().then(a => {
+    this.solution = this.error.Solution;
+    if( this.solution != null) {
+      this.slnAttachSrv.get(this.solution.Id).toPromise().then(a => {
       this.attachments.pushAttachments(a);
     });
+    }
   }
 
   addSolutionDialog() {
@@ -54,6 +56,9 @@ export class SolutionComponent implements OnInit {
 
   afterCloseAddSolutionDialog(data: any) {
     if (data) {
+      if(this.solution == null) {
+        this.solution = new ErrorSolution();
+      }
       this.solution.Description = data.solution.Description;
       if (data.attachments) {
         this.attachments.pushAttachments(data.attachments);

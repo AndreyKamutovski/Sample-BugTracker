@@ -1,22 +1,22 @@
+import { Table, TableModule } from 'primeng/table';
+
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {
-  MatDialog,
-  MatPaginator,
-  MatPaginatorIntl,
-  MatSnackBar,
-  MatSort,
-  MatTable,
-  MatTableDataSource,
+    MatDialog, MatPaginator, MatPaginatorIntl, MatSnackBar, MatSort, MatTable, MatTableDataSource
 } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import {
+    WarningDialogComponent
+} from '../../../shared/components/warning-dialog/warning-dialog.component';
 import { AuthService } from '../../../shared/services/auth.service';
-import { Project } from '../../models/project.model';
 import { ProjectService } from '../../../shared/services/project.service';
+import { Project } from '../../models/project.model';
 import { AddProjectFormComponent } from '../add-project-form/add-project-form.component';
+import {
+    ConfirmDeletingProjectComponent
+} from '../confirm-deleting-project/confirm-deleting-project.component';
 import { EditProjectFormComponent } from '../edit-project-form/edit-project-form.component';
-import { ConfirmDeletingProjectComponent } from '../confirm-deleting-project/confirm-deleting-project.component';
-
 
 @Component({
   selector: 'app-project-list',
@@ -51,12 +51,17 @@ export class ProjectListComponent implements OnInit {
 
   ngOnInit() {
     this.projects = this._route.snapshot.data.projectList;
+    console.log(this.projects);
     this.cols = [
       { field: 'Title', header: 'Проект' },
-      { field: 'ErrorStatistics.ProgressPercentage', header: 'Ошибки' },
+      { field: 'ErrorStatistics.ProgressPercentage', header: 'Процент завершения' },
       { field: 'DateStart', header: 'Начало' },
       { field: 'DateEnd', header: 'Окончание' },
     ];
+  }
+
+  formatLabel(value: number | null) {
+    return `${value}%`;
   }
 
   ngAfterViewInit() {
@@ -90,8 +95,8 @@ export class ProjectListComponent implements OnInit {
     }
   }
 
-  openEditProjectDialog(event: Event, project: Project): void {
-    event.stopPropagation();
+  openEditProjectDialog(project: Project): void {
+    // event.stopPropagation();
     let dialogRef = this.dialog.open(EditProjectFormComponent, {
       width: '50%',
       data: { 'editedProject': project }
@@ -112,13 +117,17 @@ export class ProjectListComponent implements OnInit {
     }
   }
 
-   openDeleteProjectDialog(event: Event, delProject: Project): void {
-    event.stopPropagation();    
-    let delDialogRef = this.dialog.open(ConfirmDeletingProjectComponent, {
-      width: '30%',
-      data: { 'projectTitle': delProject.Title }
+   openDeleteProjectDialog(delProject: Project): void {
+    // event.stopPropagation();    
+    // let delDialogRef = this.dialog.open(ConfirmDeletingProjectComponent, {
+    //   width: '30%',
+    //   data: { 'projectTitle': delProject.Title }
+    // });
+    let confirmDeletionDialog = this.dialog.open(WarningDialogComponent, {
+      width: '50%',
+      data: { 'dialogBody': `Вы действительно хотите удалить проект?` }
     });
-    delDialogRef.afterClosed().toPromise().then(userChoice => {
+    confirmDeletionDialog.afterClosed().toPromise().then(userChoice => {
       if (userChoice) {
         this.projects.splice(this.projects.indexOf(delProject), 1);
         this.projectService.deleteProject(delProject.ProjectId).toPromise().then(res => {
@@ -126,5 +135,23 @@ export class ProjectListComponent implements OnInit {
         });
       }
     });
+  }
+
+
+
+
+  // filtering
+  selectedProjectProgressFilterMode: string;
+  showFilterPanelProjectProgress: boolean;
+  @ViewChild("projectsTable") projectsTable: Table;
+  filterModes = [
+    {value: "equals", viewValue: "Равно", checked: true},
+    {value: "gt", viewValue: "Больше", checked: false},
+    {value: "lt", viewValue: "Меньше", checked: false}
+  ];
+
+  runFiltering(value: any, colField: string, mode: string) {
+
+    this.projectsTable.filter(value, colField, mode); 
   }
 }

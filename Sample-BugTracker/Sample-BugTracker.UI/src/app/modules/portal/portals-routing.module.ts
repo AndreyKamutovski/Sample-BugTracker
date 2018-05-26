@@ -10,14 +10,14 @@ const portalsRoutes: Routes = [
   {
     path: '',
     component: PortalListComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     resolve: { portals: PortalListResolverService }
   },
   { path: "tariff-plans", component: TariffPlansComponent },
   {
     path: ":portalName/projects",
     loadChildren: "../projects/projects.module#ProjectsModule",
-    canLoad: [AuthGuard]
+    // canLoad: [AuthGuard]
   }
 ];
 

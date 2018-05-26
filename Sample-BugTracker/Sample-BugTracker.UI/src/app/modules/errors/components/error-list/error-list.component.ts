@@ -2,19 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
+import {
+    WarningDialogComponent
+} from '../../../shared/components/warning-dialog/warning-dialog.component';
 import { AuthService } from '../../../shared/services/auth.service';
 import { MessageService } from '../../../shared/services/message.service';
 import { PermissionService } from '../../../shared/services/permission.service';
+import { StatusList } from '../../enums/status-list.enum';
 import { ErrorBT } from '../../models/error.model';
 import { ErrorListSharedService } from '../../services/error-list-shared.service';
 import { ErrorService } from '../../services/error.service';
-import { ClassificationSelectItems } from '../../services/selection-lists-items/classification-select-items';
+import {
+    ClassificationSelectItems
+} from '../../services/selection-lists-items/classification-select-items';
 import { PrioritySelectItems } from '../../services/selection-lists-items/priority-select-items';
 import { StatusSelectItems } from '../../services/selection-lists-items/status-select-items';
 import { AddErrorFormComponent } from '../add-error-form/add-error-form.component';
-import { SelectedErrorDialogComponent } from '../selected-error-dialog/selected-error-dialog.component';
-import { StatusList } from '../../enums/status-list.enum';
-import { WarningDialogComponent } from '../../../shared/components/warning-dialog/warning-dialog.component';
+import {
+    SelectedErrorDialogComponent
+} from '../selected-error-dialog/selected-error-dialog.component';
 
 @Component({
   selector: 'app-error-list',

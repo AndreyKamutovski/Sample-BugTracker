@@ -6,7 +6,6 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { BUGTRACKER_DATE_FORMATS } from '../../../shared/validators/date-validators';
 import { Project } from '../../models/project.model';
 
-
 @Component({
   selector: 'app-add-project-form',
   templateUrl: './add-project-form.component.html',

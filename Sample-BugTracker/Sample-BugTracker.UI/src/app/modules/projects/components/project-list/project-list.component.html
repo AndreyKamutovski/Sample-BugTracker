@@ -17,20 +17,44 @@
                 <th *ngFor="let col of columns" [pSortableColumn]="col.field">
                     {{col.header}}
                     <p-sortIcon [field]="col.field"></p-sortIcon>
+
                 </th>
-                <th *ngIf="authService.isPortalOwner"></th>
-                <th *ngIf="authService.isPortalOwner"></th>
+                <!-- <th [pSortableColumn]="Title">
+                    Проект
+                    <p-sortIcon [field]="Title"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="ErrorStatistics.ProgressPercentage" rowspan="2">
+                    Ошибки
+                    <p-sortIcon [field]="ErrorStatistics.ProgressPercentage"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="DateStart" rowspan="2">
+                    Начало
+                    <p-sortIcon [field]="DateStart"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="DateEnd" rowspan="2">
+                    Окончание
+                    <p-sortIcon [field]="DateEnd"></p-sortIcon>
+                </th> -->
+                <th *ngIf="authService.isPortalOwner" rowspan="2" style="width: 4vw;"></th>
+                <!-- <th *ngIf="authService.isPortalOwner"></th> -->
             </tr>
             <tr>
                 <th *ngFor="let col of columns" [ngSwitch]="col.field">
-                    <input *ngSwitchCase="'Title'" pInputText type="text" (input)="projectsTable.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'Title'" pInputText type="text" placeholder="Начните вводить название проекта" (input)="projectsTable.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <div *ngSwitchCase="'ErrorStatistics.ProgressPercentage'">
+                        <button mat-icon-button (click)="opFilterProgress.toggle($event)" >
+                            <mat-icon>filter_list</mat-icon>
+                        </button>
+                        <span #projectProgressPlaceholder></span>
+                    </div>
                 </th>
-                <TH *ngIf="authService.isPortalOwner" colspan="2"></TH>
+                <!-- <TH *ngIf="authService.isPortalOwner" colspan="2"></TH> -->
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-project>
             <tr [pSelectableRow]="project">
-                <td>{{ (project.Title.length > 50) ? (project.Title | slice:0:50)+'...' : (project.Title) }}</td>
+                <!-- <td>{{ (project.Title.length > 50) ? (project.Title | slice:0:50)+'...' : (project.Title) }}</td> -->
+                <td class="trancate-text"></td>
                 <td>
                     <div class="error-statistics-container" [matTooltip]="project.ErrorStatistics.ClosedErrorCount + ' решено из ' + project.ErrorStatistics.Total">
                         <span class="error-statistics-progress" [style.width.%]="project.ErrorStatistics.ProgressPercentage">
@@ -45,6 +69,11 @@
                 <td>{{ project.DateStart | date:'longDate' }}</td>
                 <td>{{ project.DateEnd | date:'longDate' }}</td>
                 <td *ngIf="authService.isPortalOwner">
+                    <button mat-icon-button [matMenuTriggerFor]="menuProjOperations" (click)="$event.stopPropagation();" [matMenuTriggerData]="{proj: project}">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </td>
+                <!-- <td *ngIf="authService.isPortalOwner">
                     <button mat-icon-button matTooltip="Редактировать" (click)="openEditProjectDialog($event, project)">
                         <mat-icon>edit</mat-icon>
                     </button>
@@ -53,7 +82,7 @@
                     <button mat-icon-button matTooltip="Удалить" (click)="openDeleteProjectDialog($event, project)">
                         <mat-icon>delete</mat-icon>
                     </button>
-                </td>
+                </td>    -->
             </tr>
         </ng-template>
     </p-table>
@@ -62,3 +91,37 @@
         <mat-icon>add</mat-icon>
     </button>
 </div>
+
+<mat-menu #menuProjOperations="matMenu">
+    <ng-template matMenuContent let-proj="proj">
+        <button mat-menu-item (click)="openEditProjectDialog(proj)">
+            <mat-icon>edit</mat-icon>
+            <span>Редактировать</span>
+        </button>
+        <button mat-menu-item (click)="openDeleteProjectDialog(proj)">
+            <mat-icon>delete</mat-icon>
+            <span>Удалить</span>
+        </button>
+    </ng-template>
+</mat-menu>
+
+<!--  [appendTo]="btnToggleProgressFP" -->
+<p-overlayPanel #opFilterProgress [appendTo]="projectProgressPlaceholder">
+    <mat-slider #progressFilterSlider style="height: 36px;" thumbLabel min="0" tickInterval="100"  max="100" step="1" ></mat-slider>
+    <mat-radio-group [(ngModel)]="selectedProjectProgressFilterMode">
+        <mat-list role="list">
+            <mat-list-item role="listitem" *ngFor="let mode of filterModes">
+                <mat-radio-button [value]="mode.value" [checked]="mode.checked">
+                    {{mode.viewValue}}
+                </mat-radio-button>
+            </mat-list-item>
+        </mat-list>
+    </mat-radio-group>
+    <button mat-icon-button color="primary" matTooltip="Применить" (click)="runFiltering(progressFilterSlider.value, 'ErrorStatistics.ProgressPercentage', selectedProjectProgressFilterMode); opFilterProgress.hide()">
+        <mat-icon>done</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" matTooltip="Отмена" (click)="runFiltering(null, 'ErrorStatistics.ProgressPercentage', selectedProjectProgressFilterMode); opFilterProgress.hide()">
+        <mat-icon>close</mat-icon>
+    </button>
+</p-overlayPanel>
+

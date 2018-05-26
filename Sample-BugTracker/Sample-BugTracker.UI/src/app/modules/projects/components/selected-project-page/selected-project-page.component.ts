@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Project } from '../../models/project.model';
+import { AuthService } from '../../../shared/services/auth.service';
 import { ProjectService } from '../../../shared/services/project.service';
 import { UsersService } from '../../../shared/services/users.service';
-import { AuthService } from '../../../shared/services/auth.service';
-
-
+import { Project } from '../../models/project.model';
 
 interface sidenavNavElement {
   title: string;

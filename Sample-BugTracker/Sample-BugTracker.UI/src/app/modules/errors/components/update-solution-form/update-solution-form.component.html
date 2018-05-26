@@ -8,9 +8,9 @@
     <mat-error *ngIf="description.hasError('required') && description.dirty">
       Обязательно введите описание решения
     </mat-error>
-
+<!-- (onUpload)="onUpload($event)" -->
     <p-fileUpload #fileUploader styleClass="my-fileupload" [showUploadButton]="false" chooseLabel="Прикрепить файлы"
-      cancelLabel="Отменить все" (onUpload)="onUpload($event)" multiple="multiple" maxFileSize="30000000">
+      cancelLabel="Отменить все"  multiple="multiple" maxFileSize="30000000">
       <ng-template let-file let-idx="index" pTemplate="file">
         <mat-card class="file-upload-item">
           <mat-card-header>

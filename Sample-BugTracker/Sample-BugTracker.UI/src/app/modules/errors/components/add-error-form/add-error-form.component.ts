@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 
 import { AuthService } from '../../../shared/services/auth.service';
-import { StatusList } from '../../enums/status-list.enum';
-import { QuillEditorConfigurationService } from '../../../shared/services/quill-editor-configuration.service';
-import { PriorityList } from '../../enums/priority-list.enum';
+import {
+    QuillEditorConfigurationService
+} from '../../../shared/services/quill-editor-configuration.service';
 import { ClassificationList } from '../../enums/classification-list.enum';
-import { ClassificationSelectItems } from '../../services/selection-lists-items/classification-select-items';
+import { PriorityList } from '../../enums/priority-list.enum';
+import { StatusList } from '../../enums/status-list.enum';
+import {
+    ClassificationSelectItems
+} from '../../services/selection-lists-items/classification-select-items';
 import { PrioritySelectItems } from '../../services/selection-lists-items/priority-select-items';
 
 @Component({

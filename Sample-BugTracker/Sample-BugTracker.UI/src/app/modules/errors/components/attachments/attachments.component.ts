@@ -2,12 +2,16 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import {
+    WarningDialogComponent
+} from '../../../shared/components/warning-dialog/warning-dialog.component';
 import { MessageService } from '../../../shared/services/message.service';
 import { AttachmentOperations } from '../../interfaces/attachment-operations';
 import { ErrorAttachment } from '../../models/error-attachment.model';
 import { AttachmentPreviewService } from '../../services/attachment-preview.service';
-import { ConfirmAttachmentDeleteComponent } from '../confirm-attachment-delete/confirm-attachment-delete.component';
-import { WarningDialogComponent } from '../../../shared/components/warning-dialog/warning-dialog.component';
+import {
+    ConfirmAttachmentDeleteComponent
+} from '../confirm-attachment-delete/confirm-attachment-delete.component';
 
 @Component({
   selector: 'app-attachments',

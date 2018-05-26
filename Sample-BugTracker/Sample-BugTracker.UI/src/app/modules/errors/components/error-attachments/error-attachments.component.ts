@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import { FileUpload } from 'primeng/fileupload';
 
-import { Component, Inject, Input, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import { ERROR_ATTACHMENT_URI } from '../../../../app.component';
 import { REST_URI } from '../../../shared/services/httpClient.service';

@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../shared/services/auth.service';
 import { MessageService } from '../../../shared/services/message.service';
 import {
-  QuillEditorConfigurationService
+    QuillEditorConfigurationService
 } from '../../../shared/services/quill-editor-configuration.service';
 import { ErrorAttachment } from '../../models/error-attachment.model';
 import { ErrorSolution } from '../../models/error-solution.model';
@@ -18,8 +18,8 @@ import { ErrorSolutionService } from '../../services/error-solution.service';
 import { ErrorService } from '../../services/error.service';
 import { StatusSelectItems } from '../../services/selection-lists-items/status-select-items';
 import { SolutionAttachmentService } from '../../services/solution-attachment.service';
-import { ErrorSolutionFormComponent } from '../error-solution-form/error-solution-form.component';
 import { AttachmentsComponent } from '../attachments/attachments.component';
+import { ErrorSolutionFormComponent } from '../error-solution-form/error-solution-form.component';
 
 @Component({
   selector: 'app-update-solution-form',

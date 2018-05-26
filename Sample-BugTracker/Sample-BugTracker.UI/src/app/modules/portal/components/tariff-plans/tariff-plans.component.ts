@@ -3,9 +3,9 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../../shared/services/auth.service';
+import { Portal } from '../../models/portal.model';
 import { PortalService } from '../../services/portal.service';
 import { AddPortalFormComponent } from '../add-portal-form/add-portal-form.component';
-import { Portal } from '../../models/portal.model';
 
 @Component({
   selector: 'app-tariff-plans',

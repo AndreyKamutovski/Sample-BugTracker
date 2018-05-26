@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port=4200 --open --locale ru",
-    "build": "ng build --aot",
+    "start": "ng serve --aot --port=4200 --open --locale ru",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

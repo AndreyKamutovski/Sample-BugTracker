@@ -1,26 +1,29 @@
-import { Component, Inject, ViewChild, OnInit } from '@angular/core';
+import { ScrollToService } from 'ng2-scroll-to-el';
+
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatExpansionPanel } from '@angular/material';
 
 import { AuthService } from '../../../shared/services/auth.service';
 import { MessageService } from '../../../shared/services/message.service';
-import { QuillEditorConfigurationService } from '../../../shared/services/quill-editor-configuration.service';
+import {
+    QuillEditorConfigurationService
+} from '../../../shared/services/quill-editor-configuration.service';
 import { ClassificationList } from '../../enums/classification-list.enum';
 import { PriorityList } from '../../enums/priority-list.enum';
 import { StatusList } from '../../enums/status-list.enum';
+import { ErrorAttachment } from '../../models/error-attachment.model';
+import { ErrorSolution } from '../../models/error-solution.model';
 import { ErrorBT } from '../../models/error.model';
+import { ErrorAttachmentService } from '../../services/error-attachment.service';
 import { ErrorListSharedService } from '../../services/error-list-shared.service';
-import { ClassificationSelectItems } from '../../services/selection-lists-items/classification-select-items';
+import { ErrorService } from '../../services/error.service';
+import {
+    ClassificationSelectItems
+} from '../../services/selection-lists-items/classification-select-items';
 import { PrioritySelectItems } from '../../services/selection-lists-items/priority-select-items';
 import { StatusSelectItems } from '../../services/selection-lists-items/status-select-items';
-import { ErrorAttachment } from '../../models/error-attachment.model';
-import { ErrorAttachmentService } from '../../services/error-attachment.service';
 import { ErrorSolutionFormComponent } from '../error-solution-form/error-solution-form.component';
-import { ErrorSolution } from '../../models/error-solution.model';
-import { ErrorService } from '../../services/error.service';
-import { ScrollToService } from 'ng2-scroll-to-el';
-
-
 
 type errorUpdateFunc = (errorId: number, value: string | Date | StatusList | PriorityList | ClassificationList) => void;
 
