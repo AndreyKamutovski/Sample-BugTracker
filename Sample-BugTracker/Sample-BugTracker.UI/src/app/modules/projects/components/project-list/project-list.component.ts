@@ -152,6 +152,7 @@ export class ProjectListComponent implements OnInit {
 
   runFiltering(value: any, colField: string, mode: string) {
 
-    this.projectsTable.filter(value, colField, mode); 
+    // this.projectsTable.filter(value, colField, mode); 
+    alert('пип');
   }
 }

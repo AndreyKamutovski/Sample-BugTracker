@@ -1,14 +1,12 @@
-import { ScrollToModule } from 'ng2-scroll-to-el';
-import { QuillModule } from 'ngx-quill';
-
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ScrollToModule } from 'ng2-scroll-to-el';
+import { QuillModule } from 'ngx-quill';
 
-import {
-    AngularMaterialDesignModule
-} from '../angular-material-design/angular-material-design.module';
+import { AngularMaterialDesignModule } from '../angular-material-design/angular-material-design.module';
+import { WarningDialogComponent } from './components/warning-dialog/warning-dialog.component';
 import { GetClassificationNamePipe } from './pipes/get-classification-name.pipe';
 import { GetPriorityNamePipe } from './pipes/get-priority-name.pipe';
 import { GetStatusNamePipe } from './pipes/get-status-name.pipe';
@@ -24,7 +22,6 @@ import { HttpClientService } from './services/httpClient.service';
 import { MessageService } from './services/message.service';
 import { ProjectService } from './services/project.service';
 import { UsersService } from './services/users.service';
-import { WarningDialogComponent } from './components/warning-dialog/warning-dialog.component';
 
 @NgModule({
   imports: [

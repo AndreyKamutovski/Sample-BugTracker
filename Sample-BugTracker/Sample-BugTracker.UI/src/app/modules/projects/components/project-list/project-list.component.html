@@ -42,7 +42,7 @@
                 <th *ngFor="let col of columns" [ngSwitch]="col.field">
                     <input *ngSwitchCase="'Title'" pInputText type="text" placeholder="Начните вводить название проекта" (input)="projectsTable.filter($event.target.value, col.field, col.filterMatchMode)">
                     <div *ngSwitchCase="'ErrorStatistics.ProgressPercentage'">
-                        <button mat-icon-button (click)="opFilterProgress.toggle($event)" >
+                        <button mat-icon-button (click)="opFilterProgress.toggle($event)">
                             <mat-icon>filter_list</mat-icon>
                         </button>
                         <span #projectProgressPlaceholder></span>
@@ -102,13 +102,12 @@
             <mat-icon>delete</mat-icon>
             <span>Удалить</span>
         </button>
-    </ng-template>
+    </ng-template>      
 </mat-menu>
-
-<!--  [appendTo]="btnToggleProgressFP" -->
-<p-overlayPanel #opFilterProgress [appendTo]="projectProgressPlaceholder">
-    <mat-slider #progressFilterSlider style="height: 36px;" thumbLabel min="0" tickInterval="100"  max="100" step="1" ></mat-slider>
-    <mat-radio-group [(ngModel)]="selectedProjectProgressFilterMode">
+<!-- [appendTo]="projectProgressPlaceholder" -->
+<p-overlayPanel #opFilterProgress >
+    <mat-slider #progressFilterSlider style="height: 36px;" thumbLabel min="0" tickInterval="100" max="100" step="1"></mat-slider>
+    <mat-radio-group [(ngModel)]="selectedProjectProgressFilterMode" name="radioGroupProgress">
         <mat-list role="list">
             <mat-list-item role="listitem" *ngFor="let mode of filterModes">
                 <mat-radio-button [value]="mode.value" [checked]="mode.checked">
@@ -119,9 +118,8 @@
     </mat-radio-group>
     <button mat-icon-button color="primary" matTooltip="Применить" (click)="runFiltering(progressFilterSlider.value, 'ErrorStatistics.ProgressPercentage', selectedProjectProgressFilterMode); opFilterProgress.hide()">
         <mat-icon>done</mat-icon>
-    </button>
+    </button>   
     <button mat-icon-button color="warn" matTooltip="Отмена" (click)="runFiltering(null, 'ErrorStatistics.ProgressPercentage', selectedProjectProgressFilterMode); opFilterProgress.hide()">
         <mat-icon>close</mat-icon>
     </button>
 </p-overlayPanel>
-
