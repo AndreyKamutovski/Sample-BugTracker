@@ -37,4 +37,6 @@ export class UploadUserPhotoFormComponent implements OnInit {
   onRemoved($event) {
     this.isAvatarSelected = false;
   }
+
+  hidePassword: boolean = true;
 }

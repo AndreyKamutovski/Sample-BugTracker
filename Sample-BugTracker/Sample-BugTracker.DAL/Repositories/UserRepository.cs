@@ -62,9 +62,16 @@ namespace Sample_BugTracker.DAL.Repositories
         {
             return _userManager.Users;
         }
+
         public AppUser GetByEmail(string email)
         {
             AppUser user = _userManager.FindByEmail(email);
+            return user;
+        }
+
+        public AppUser GetById(string id)
+        {
+            AppUser user = _userManager.FindById(id);
             return user;
         }
 

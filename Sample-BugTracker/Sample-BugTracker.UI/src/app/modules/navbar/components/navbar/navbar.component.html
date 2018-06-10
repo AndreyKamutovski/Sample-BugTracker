@@ -1,17 +1,22 @@
 <mat-toolbar class="mat-toolbar-single-row mat-elevation-z5 app-navbar" color="primary">
-  <img src="../../assets/bugTracker-white.png" alt="Bug Tracker Logo" height="26" width="50">
+  <img src="../../../../../assets/BugCatcherWhite.svg" alt="Bug Tracker Logo" style="width: 7%; height: 71%;">
+  <!-- height="26" width="50" -->
+  <!-- height="26" width="50" -->
+
+  
+ 
 
   <span style="flex: 1 1 50%; display: flex;  align-items: center; margin-left: 1%;">
 
     <button *ngIf="sidenav != null" mat-icon-button (click)="toggleSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
-    <a mat-button routerLink="#" matTooltip="Главная" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+    <!-- <a class="adaptive-toolbar" mat-button routerLink="#" matTooltip="Главная" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
       true}">
 
       <span class="mat-title">Главная</span>
-    </a>
-    <a mat-button *ngFor="let link of navbarElements" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+    </a> -->
+    <a class="adaptive-toolbar" mat-button *ngFor="let link of navbarElements" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
       true}" [routerLink]="[link.routerLink]" [matTooltip]="link.tooltipTitle">
       <span class="mat-title">{{link.title}}</span>
     </a>

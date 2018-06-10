@@ -22,6 +22,10 @@ export class PortalService {
     return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}`, null, { 'Content-Type': 'application/json' }, portal);
   }
 
+  public createPortalForExistingUser(title: string): Observable<Portal> {
+    return this.HttpClientService.sendRequest(RequestMethod.Post, `${this.routerPrefix}/createForExistingUser`, { 'title': title });
+  }
+
   public IsPortalTitleAvailable(title: string): Observable<boolean> {
     return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}`, { 'title': title });
   }
@@ -29,4 +33,6 @@ export class PortalService {
   public IsPortalOwner(portalId: string): Observable<boolean> {
     return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}`, { 'id': portalId });
   }
+
+
 }

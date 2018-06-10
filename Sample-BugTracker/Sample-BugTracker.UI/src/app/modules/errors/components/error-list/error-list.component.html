@@ -9,55 +9,109 @@
       <input matInput type="text" size="50" placeholder="Глобальный фильтр" (input)="errorsTable.filterGlobal($event.target.value, 'contains')">
     </mat-form-field>
   </div>
-  <p-table #errorsTable [columns]="cols" [(value)]="errorListSharedService.Errors" [paginator]="true" [rows]="5" [responsive]="true"
+  <p-table #errorsTable [columns]="cols"  [loading]="loadingTable" [(value)]="errorListSharedService.Errors" [paginator]="true" [rows]="5" [responsive]="true"
     [scrollable]="true" scrollHeight="500px" [resizableColumns]="true">
+
+    <!-- header -->
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th style="width: 2.5vw;">
+        <th style="width: 2.5vw;" class="ui-p-5">
         </th>
-        <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+        <th *ngFor="let col of cols" [pSortableColumn]="col.field" [class]="col.class">
           {{col.header}}
           <p-sortIcon [field]="col.field"></p-sortIcon>
         </th>
-        <th style="width: 2.5vw;">
-        </th>
+        <!-- <th style="width: 2.5vw;">
+        </th> -->
       </tr>
+
+      <!-- second row -->
       <tr>
-        <th></th>
-        <th *ngFor="let col of columns" [ngSwitch]="col.field">
-          <input *ngSwitchCase="'Title'" pInputText type="text" (input)="errorsTable.filter($event.target.value, col.field, col.filterMatchMode)">
-          <mat-select *ngSwitchCase="'EmailErrorAuthor'" placeholder="Все пользователи" multiple (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
+        <th class="ui-p-5"></th>
+        <th *ngFor="let col of columns" [ngSwitch]="col.field" [class]="col.class">
+          <input *ngSwitchCase="'Title'" style="width: 100%;" pInputText type="text" (input)="errorsTable.filter($event.target.value, col.field, col.filterMatchMode)">
+          <div *ngSwitchCase="'EmailAuthor'" >
+              <button mat-icon-button (click)="opFilterStatus.toggle($event)">
+                <mat-icon>filter_list</mat-icon>
+              </button>
+            </div>
+
+            <div *ngSwitchCase="'DateCreation'">
+                <button mat-icon-button (click)="opFilterStatus.toggle($event)">
+                  <mat-icon>filter_list</mat-icon>
+                </button>
+              </div>
+
+          <div *ngSwitchCase="'EmailErrorAuthor'">
+              <button mat-icon-button (click)="opFilterStatus.toggle($event)">
+                <mat-icon>filter_list</mat-icon>
+              </button>
+            </div>
+
+            <div *ngSwitchCase="'Deadline'">
+                <button mat-icon-button (click)="opFilterStatus.toggle($event)">
+                  <mat-icon>filter_list</mat-icon>
+                </button>
+              </div>
+          <!-- <mat-select *ngSwitchCase="'EmailErrorAuthor'" placeholder="Все пользователи" multiple (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
             <mat-option *ngFor="let user of errorListSharedService.ProjectUsers" [value]="user.Email">
               {{user.Email | getUserNameFromEmail}}
             </mat-option>
-          </mat-select>
-          <mat-select *ngSwitchCase="'EmailAssignee'" placeholder="Все пользователи" multiple (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
+          </mat-select> -->
+          <div *ngSwitchCase="'EmailAssignee'">
+              <button mat-icon-button (click)="opFilterStatus.toggle($event)">
+                <mat-icon>filter_list</mat-icon>
+              </button>
+            </div>
+
+          <!-- <mat-select *ngSwitchCase="'EmailAssignee'" placeholder="Все пользователи" multiple (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
             <mat-option *ngFor="let worker of errorListSharedService.ProjectWorkers" [value]="worker.Email">
               {{worker.Email | getUserNameFromEmail}}
             </mat-option>
-          </mat-select>
-          <mat-select *ngSwitchCase="'Status'" placeholder="Все" multiple (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
+          </mat-select> -->
+          <div *ngSwitchCase="'Status'">
+            <button mat-icon-button (click)="opFilterStatus.toggle($event)">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+          </div>
+          <!-- <mat-select *ngSwitchCase="'Status'" #statusSelect placeholder="Все"  (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
             <mat-option *ngFor="let status of statusSelectItemsService.Statuses" [value]="status.value">
               {{status.viewValue}}
             </mat-option>
-          </mat-select>
-          <mat-select *ngSwitchCase="'Priority'" placeholder="Все" multiple (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
+          </mat-select> -->
+          <div *ngSwitchCase="'Priority'">
+              <button mat-icon-button (click)="opFilterStatus.toggle($event)">
+                <mat-icon>filter_list</mat-icon>
+              </button>
+  
+            </div>
+          <!-- <mat-select *ngSwitchCase="'Priority'" placeholder="Все" multiple (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
             <mat-option *ngFor="let priority of prioritySelectItemsService.Priorities" [value]="priority.value">
               {{priority.viewValue}}
             </mat-option>
-          </mat-select>
-          <mat-select *ngSwitchCase="'Classification'" placeholder="Все" multiple (selectionChange)="errorsTable.filter($event.value, col.field, 'in')">
+          </mat-select> -->
+
+          <div *ngSwitchCase="'Classification'">
+              <button mat-icon-button (click)="opFilterStatus.toggle($event)">
+                <mat-icon>filter_list</mat-icon>
+              </button>
+  
+            </div>
+
+          <!-- <mat-select *ngSwitchCase="'Classification'" placeholder="Все" multiple (selectionChange)="print($event.value); errorsTable.filter($event.value, col.field, 'in')">
             <mat-option *ngFor="let classification of classificationSelectItemsService.Classifications" [value]="classification.value">
               {{classification.viewValue}}
             </mat-option>
-          </mat-select>
+          </mat-select> -->
         </th>
-        <th></th>
+        <!-- <th></th> -->
       </tr>
+
+      <!-- content -->
     </ng-template>
     <ng-template pTemplate="body" let-error>
       <tr [pSelectableRow]="error">
-        <td style="width: 2.5vw;">
+        <td style="width: 2.5vw;" class="ui-p-5">
           <mat-icon *ngIf="error.IsAttachments" style="cursor: pointer;" matTooltip="Вложения" (click)="openEditErrorDialog(error, true)">attach_file</mat-icon>
         </td>
         <td>
@@ -67,8 +121,8 @@
             </div>
           </a>
         </td>
-        <td>{{ error.EmailAuthor | getUserNameFromEmail }}</td>
-        <td>{{ error.DateCreation | date:'longDate' }}</td>
+        <td class="ui-p-3">{{ error.EmailAuthor | getUserNameFromEmail }}</td>
+        <td class="ui-p-3">{{ error.DateCreation | localDateFromUtc:'YYYY-MM-DD' }}</td>
         <td>
           <div [ngSwitch]="permissionService.checkPermission(permissionService.PERMISSION_LIST.EDITING_ASSIGNEE_OF_ERROR) && errorListSharedService.thisTesterIsErrorAuthor(error)">
             <mat-select *ngSwitchCase="true" placeholder="Не назначен" [(value)]="error.EmailAssignee" (selectionChange)="errorListSharedService.updateAssignee(error.ErrorId, $event.value)">
@@ -120,7 +174,7 @@
             </span>
           </div>
         </td>
-        <td>
+        <td class="ui-p-3">
           <div [ngSwitch]="permissionService.checkPermission(permissionService.PERMISSION_LIST.EDITING_CLASSIFICATION_OF_ERROR) && errorListSharedService.thisTesterIsErrorAuthor(error)">
             <mat-select *ngSwitchCase="true" [(value)]="error.Classification" (selectionChange)="errorListSharedService.updateClassification(error.ErrorId, $event.value)">
               <mat-option *ngFor="let classification of classificationSelectItemsService.Classifications" [value]="classification.value">
@@ -132,9 +186,9 @@
             </span>
           </div>
         </td>
-        <td style="width: 2.5vw;">
+        <!-- <td style="width: 2.5vw;">
           <mat-icon style="cursor: pointer;" matTooltip="Удалить" (click)="deleteError(error.ErrorId)">delete</mat-icon>
-        </td>
+        </td> -->
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -148,3 +202,21 @@
     <mat-icon>add</mat-icon>
   </button>
 </div>
+
+
+
+
+<!-- overlay filters panels-->
+<p-overlayPanel #opFilterStatus appendTo='body'>
+  <mat-selection-list #opListCheckboxStatus>
+    <mat-list-option *ngFor="let status of statusSelectItemsService.Statuses" [value]="status.value" checkboxPosition="before">
+      {{status.viewValue}}
+    </mat-list-option>
+  </mat-selection-list>
+  <button mat-icon-button color="primary" matTooltip="Применить" (click)="runFiltering(getCheckboxesFilterValues(opListCheckboxStatus), 'Status', 'in'); opFilterStatus.hide()">
+    <mat-icon>done</mat-icon>
+  </button>
+  <button mat-icon-button color="warn" matTooltip="Отмена" (click)="runFiltering(null, 'Status', 'in'); opFilterStatus.hide(); opListCheckboxStatus.deselectAll()">
+    <mat-icon>close</mat-icon>
+  </button>
+</p-overlayPanel>

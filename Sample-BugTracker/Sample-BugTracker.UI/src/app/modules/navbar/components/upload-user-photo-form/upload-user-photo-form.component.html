@@ -1,7 +1,72 @@
-<h2 mat-dialog-title>Изменить аватар</h2>
-<image-upload [style]="customUploadStyle" [max]="1" buttonCaption="Выбрать аватар" dropBoxMessage="Перетащите Ваш аватар сюда"
-  clearButtonCaption="Очистить" (uploadFinished)="onUploadFinished($event)" (removed)="onRemoved($event)"></image-upload>
-<mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="null">Отмена</button>
-  <button mat-button (click)="uploadAvatar()" [disabled]="!isAvatarSelected">Ок</button>
-</mat-dialog-actions>
+<h2 mat-dialog-title>Персональная информация</h2>
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Изменить аватар
+      </mat-panel-title>
+      <mat-panel-description>
+        Обновите Ваше изображение в системе
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <image-upload [style]="customUploadStyle" [max]="1" buttonCaption="Выбрать аватар" dropBoxMessage="Перетащите Ваш аватар сюда"
+      clearButtonCaption="Очистить" (uploadFinished)="onUploadFinished($event)" (removed)="onRemoved($event)"></image-upload>
+    <mat-action-row>
+      <button mat-button [mat-dialog-close]="null">Отмена</button>
+      <button mat-button (click)="uploadAvatar()" [disabled]="!isAvatarSelected">Ок</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Изменить e-mail
+      </mat-panel-title>
+      <mat-panel-description>
+        Обновите Ваш адрес электронной почты
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="form-field-container">
+      <mat-form-field>
+        <input matInput type="Email" placeholder="Адрес эл. почты" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Ваш текущий пароль" required>
+        <mat-icon matSuffix (click)="hidePassword = !hidePassword" class="pointerCursor">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </mat-form-field>
+    </div>
+    <mat-action-row>
+        <button mat-button [mat-dialog-close]="null">Отмена</button>
+        <button mat-button (click)="uploadAvatar()" [disabled]="!isAvatarSelected">Ок</button>
+      </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Изменить пароль
+      </mat-panel-title>
+      <mat-panel-description>
+        Обновите Ваш пароль
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="form-field-container">
+      <mat-form-field>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Ваш текущий пароль" required>
+        <mat-icon matSuffix (click)="hidePassword = !hidePassword" class="pointerCursor">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Новый пароль" required>
+        <mat-icon matSuffix (click)="hidePassword = !hidePassword" class="pointerCursor">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Подтверждение пароля" required>
+        <mat-icon matSuffix (click)="hidePassword = !hidePassword" class="pointerCursor">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </mat-form-field>
+      </div>
+      <mat-action-row>
+          <button mat-button [mat-dialog-close]="null">Отмена</button>
+          <button mat-button (click)="uploadAvatar()" [disabled]="!isAvatarSelected">Ок</button>
+        </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,3 +1,4 @@
+import { registerLocaleData } from '@angular/common';
 import 'chart.js/dist/Chart.min.js';
 
 import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
@@ -23,6 +24,10 @@ import { QuillEditorConfigurationService } from './modules/shared/services/quill
 import { SharedModule } from './modules/shared/shared.module';
 import { AuthGuardLogoutService } from './modules/users/guards/auth-guard-logout.service';
 
+import localRu from '@angular/common/locales/ru';
+import { ErrorsModule } from './modules/errors/errors.module';
+registerLocaleData(localRu);
+
 @NgModule({
     imports: [
         BrowserAnimationsModule, 
@@ -30,7 +35,9 @@ import { AuthGuardLogoutService } from './modules/users/guards/auth-guard-logout
         HttpModule,
         ReCaptchaModule,
         LoaderModule,
-        AppRoutingModule
+        AppRoutingModule,
+        ErrorsModule,
+        // UsersModule
     ],
     declarations: [
         AppComponent,

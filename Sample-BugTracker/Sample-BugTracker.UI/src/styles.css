@@ -7,6 +7,7 @@
 html, body {
    height: 100%; 
    margin: 0;
+   overflow-y: hidden;
 }
 
 body, .app-background {
@@ -39,6 +40,10 @@ body, .app-background {
 
 .warn-color {
     color: #f44336;
+}
+
+.success-color {
+    color: #9CCC65;
 }
 
 h2.dialog-title-container {
@@ -258,4 +263,6 @@ background: #3cccc6;
     margin: 25px 0; 
     }
 
-
+.pointer-cursor:hover {
+cursor: pointer;
+}

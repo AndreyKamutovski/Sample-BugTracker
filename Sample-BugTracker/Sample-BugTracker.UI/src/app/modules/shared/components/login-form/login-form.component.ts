@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CaptchaComponent } from '../captcha/captcha.component';
 import { AuthService } from '../../services/auth.service';
 import { UsersService } from '../../services/users.service';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
     selector: 'app-login-form',
@@ -21,6 +22,7 @@ export class LoginFormComponent implements OnInit {
         private formBuilder: FormBuilder,
         public authService: AuthService,
         public userService: UsersService,
+        private sharedDataService:SharedDataService,
         public router: Router) {
         this.loginForm = this.formBuilder.group({
             'Email': ['', [Validators.required, Validators.email]],
@@ -44,7 +46,9 @@ export class LoginFormComponent implements OnInit {
                             }
                             if (res.length === 1) {
                                 sessionStorage.setItem('portalID', res[0].PortalId);
-                                this.router.navigate(["portals", res[0].Title, "projects"]);
+                                this.sharedDataService.PortalTitle = res[0].Title;
+                                // this.router.navigate(["portals", res[0].Title, "projects"]);
+                                this.router.navigate(["portals", res[0].Title, "mainPage"]);
                             }
                         });
                     }

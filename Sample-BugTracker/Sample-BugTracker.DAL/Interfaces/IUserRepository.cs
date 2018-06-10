@@ -23,6 +23,8 @@ namespace Sample_BugTracker.DAL.Interfaces
         IEnumerable<AppUser> GetAll();
         AppUser GetByEmail(string email);
 
+        AppUser GetById(string id);
+
         AppUser GetByUserName(string userName);
 
         IdentityResult Add(AppUser user, string password, string roleName);

@@ -8,6 +8,7 @@ import { ConfirmPasswordComponent } from './components/confirm-password/confirm-
 import { EditUserFormComponent } from './components/edit-user-form/edit-user-form.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UsersRoutingModule } from './users-routing.module';
+import { DisactiveUserListService } from './guards/disactive-user-list.service';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { UsersRoutingModule } from './users-routing.module';
     EditUserFormComponent
 ],
 providers: [
+  // DisactiveUserListService
 ]
 })
 export class UsersModule { }

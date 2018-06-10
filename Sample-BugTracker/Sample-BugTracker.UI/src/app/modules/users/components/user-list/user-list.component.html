@@ -3,7 +3,8 @@
 </h1>
 <mat-list>
   <mat-list-item *ngFor="let user of users">
-    <img matListAvatar [src]="(user.Avatar != null) ? uri + user.Avatar : '../../../../../assets/person.png'">
+    <!-- <img matListAvatar [src]="(user.Avatar != null) ? uri + user.Avatar : '../../../../../assets/person.png'"> -->
+    <img matListAvatar [src]="user.AvatarBase64 ? user.AvatarBase64 : notAvatarProxy">
     <strong matLine> {{user.Email}} </strong>
     <span matLine *ngIf="user.RoleName !== 'Admin'"> {{user.RoleName | viewRole }} </span>
     <strong matLine *ngIf="user.RoleName === 'Admin'">

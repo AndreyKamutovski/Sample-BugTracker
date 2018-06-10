@@ -1,42 +1,219 @@
-<h1>
-    {{project.Title}}
-    <h3>Владелец проекта:&nbsp;{{projectOwner.Email}}</h3>
-</h1>
+<div class="ui-g margin-bottom-blocks">
+    <div class="ui-g-12">
+        <h1>
+            {{project.Title}}
+            <h3>Владелец проекта:&nbsp;{{projectOwner.Email}}</h3>
+        </h1>
+    </div>
+</div>
 
-<mat-accordion>
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Описание проекта
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <quill-editor [(ngModel)]="project.Description" [readOnly]="true" [style]="{'height': '300px', 'background-color':'white'}"
-            style="background-color:white" [modules]="{toolbar: false}"></quill-editor>
-    </mat-expansion-panel>
+<div class="ui-g margin-bottom-blocks">
+    <div class="ui-g-12">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Описание проекта
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <quill-editor [(ngModel)]="project.Description" [readOnly]="true" [style]="{'height': '300px', 'background-color':'white'}"
+                    style="background-color:white" [modules]="{toolbar: false}"></quill-editor>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
 
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Состояние ошибок
-            </mat-panel-title>
-            <mat-panel-description>
-                Отслеживайте ошибки, которые влияют на проект
-            </mat-panel-description>
-        </mat-expansion-panel-header>
+<div class="ui-g margin-bottom-blocks">
+    <div class="ui-g-6">
+        <mat-card style="height: 90%;">
+            <mat-card-header>
+                <mat-card-title class="title-card-text">Состояние ошибок</mat-card-title>
+                <mat-card-subtitle class="subtitle-card-text">Отслеживайте ошибки, влияющие на проект</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div [ngSwitch]="diagramType">
+                    <p-chart type="bar" *ngSwitchDefault [data]="dataBarDiagram" [options]="optionsDiagrams" (onDataSelect)="selectChart($event)"></p-chart>
+                    <p-chart type="pie" *ngSwitchCase="diagramTypes.Pie" [data]="dataPieDonutDiagram" [options]="optionsDiagrams" (onDataSelect)="selectChart($event)"></p-chart>
+                    <p-chart type="doughnut" *ngSwitchCase="diagramTypes.Donut" [data]="dataPieDonutDiagram" [options]="optionsDiagrams" (onDataSelect)="selectChart($event)"></p-chart>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-4 numbers-chart-container">
+                        <div class="ui-g-12 aligned-text-center">
+                            Открыто
+                        </div>
+                        <div class="ui-g-12 aligned-text-center" [style.color]="openColor">
+                            {{project.ErrorStatistics.OpenErrorCount}}
+                        </div>
+                    </div>
+                    <div class="ui-g-4 numbers-chart-container">
+                        <div class="ui-g-12 aligned-text-center">
+                            Закрыто
+                        </div>
+                        <div class="ui-g-12 aligned-text-center" [style.color]="closedColor">
+                            {{project.ErrorStatistics.ClosedErrorCount}}
+                        </div>
+                    </div>
+                    <div class="ui-g-4 numbers-chart-container">
+                        <div class="ui-g-12 aligned-text-center">
+                            Всего
+                        </div>
+                        <div class="ui-g-12 aligned-text-center">
+                            {{project.ErrorStatistics.Total}}
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
 
-        <div [ngSwitch]="diagramType">
-            <p-chart type="bar" *ngSwitchDefault [data]="dataDiagram"></p-chart>
-        </div>
-        <mat-action-row>
-            <button mat-icon-button matTooltip="Гистограмма" (click)="diagramType = diagramTypes.Bar">
-                <mat-icon>insert_chart </mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="Круговая диаграмма" (click)="diagramType = diagramTypes.Pie">
-                <mat-icon>pie_chart</mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="Кольцевая диаграмма" (click)="diagramType = diagramTypes.Donut">
-                <mat-icon>pie_chart_outlined</mat-icon>
-            </button>
-        </mat-action-row>
-    </mat-expansion-panel>
-</mat-accordion>
+            <mat-card-actions>
+                <button mat-icon-button matTooltip="Гистограмма" (click)="diagramType = diagramTypes.Bar">
+                    <mat-icon>insert_chart </mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Круговая диаграмма" (click)="diagramType = diagramTypes.Pie">
+                    <mat-icon>pie_chart</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Кольцевая диаграмма" (click)="diagramType = diagramTypes.Donut">
+                    <mat-icon>pie_chart_outlined</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <!-- top-5 -->
+    <div class="ui-g-6">
+        <mat-card style="height: 90%;">
+            <mat-card-header>
+                <mat-card-title class="title-card-text">Top-5 специалистов</mat-card-title>
+                <mat-card-subtitle class="subtitle-card-text">Пользователи с наибольшим количеством закрытых ошибок</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="hor-ver-center">
+                    <mat-spinner *ngIf="isLoadTopUsers"></mat-spinner>
+                </div>
+                <mat-list *ngIf="!isLoadTopUsers && topUsers.length > 0" class="dashboard-list">
+                    <mat-list-item *ngFor="let topUser of topUsers">
+                        <div class="statistics-list-item-flex">
+                            <div class="statistics-list-item-flex-start">
+                                <img matListAvatar [src]="topUser.AvatarBase64 ? topUser.AvatarBase64 : notAvatarProxy" [matTooltip]="topUser.Email" style="margin-right: 10px;">
+                                <span> {{topUser.Email | getUserNameFromEmail}}</span>
+
+                            </div>
+                            <span class="statistics-list-item-span-count">{{topUser.Count}}</span>
+
+                        </div>
+                        <mat-divider></mat-divider>
+                    </mat-list-item>
+
+                </mat-list>
+                <div *ngIf="!isLoadTopUsers && topUsers.length == 0">
+                    Пока нет таких пользователей
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<!-- delay errors -->
+<div class="ui-g margin-bottom-blocks">
+    <div class="ui-g-12">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title class="title-card-text warn-color">Просроченные рабочие элементы</mat-card-title>
+                <mat-card-subtitle class="subtitle-card-text">Отслеживайте ошибки, срок выполнения котрых истек</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="hor-ver-center">
+                    <mat-spinner *ngIf="isLoadDelayErrors"></mat-spinner>
+                </div>
+
+                <mat-list *ngIf="!isLoadDelayErrors && delayErrors.length > 0" [disableRipple]="false" class="dashboard-list">
+                    <mat-list-item *ngFor="let delayError of delayErrors">
+                        <div class="statistics-list-item-flex">
+                            <div class="statistics-list-item-flex-start" style="width:70%;">
+                                <img matListAvatar [src]="delayError.AvatarAssigneeBase64 ? delayError.AvatarAssigneeBase64 : notAvatarProxy" [matTooltip]="delayError.AssigneeEmail"
+                                    style="margin-right: 10px;">
+                                <div class="trancate-text pointer-cursor" (click)="openEditErrorDialog(delayError.Id)" [style.color]="closedColor" [matTooltip]="delayError.Title">
+                                    {{delayError.Title}}
+                                </div>
+                            </div>
+                            <div style="width:30%;" class="statistics-list-item-flex-end">
+                                <mat-icon>bug_report</mat-icon>
+                                <div class="warn-color" style="margin-left:20px;">
+                                    <span *ngIf="delayError.Delay > 0">
+                                        задержка на {{delayError.Delay}} дн.
+                                    </span>
+                                    <span *ngIf="delayError.Delay == 0">
+                                        Сегодня
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <mat-divider></mat-divider>
+                    </mat-list-item>
+
+                </mat-list>
+                <div *ngIf="!isLoadDelayErrors && delayErrors.length == 0">
+                    Пока нет таких ошибок
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<!-- team's state -->
+<div class="ui-g margin-bottom-blocks">
+    <div class="ui-g-12">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title class="title-card-text">Состояние команды</mat-card-title>
+                <mat-card-subtitle class="subtitle-card-text">Здесь отображается общее состояние работ вашей команды</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div *ngIf="isLoadTeamState" class="hor-ver-center">
+                    <mat-spinner></mat-spinner>
+                </div>
+
+                <mat-list *ngIf="!isLoadTeamState">
+                    <mat-list-item>
+                        <div class="ui-g statistics-list-item-flex" style="font-weight: 500;">
+                            <div class="ui-g-6">
+                                Пользователи
+                            </div>
+                            <div class="ui-g-2 warn-color center-text-align">
+                                Просрочено
+                            </div>
+                            <div class="ui-g-2 center-text-align">
+                                Сегодняшние
+                            </div>
+                            <div class="ui-g-2 center-text-align">
+                                Все открытые
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item *ngFor="let teamState of teamStates">
+                        <div class="ui-g statistics-list-item-flex">
+                            <div class="ui-g-6 statistics-list-item-flex-start">
+                                <img matListAvatar [src]="teamState.AvatarBase64 ? teamState.AvatarBase64 : notAvatarProxy" [matTooltip]="teamState.AssigneeEmail"
+                                    style="margin-right: 10px;">
+                                <div class="trancate-text">
+                                    {{teamState.AssigneeEmail | getUserNameFromEmail}}
+                                </div>
+                            </div>
+                            <div class="ui-g-2 warn-color center-text-align">
+                                {{teamState.DelayCount}}
+                            </div>
+                            <div class="ui-g-2 center-text-align">
+                                {{teamState.TodayCount}}
+                            </div>
+                            <div class="ui-g-2 center-text-align">
+                                {{teamState.AllOpenedCount}}
+                            </div>
+                        </div>
+                        <mat-divider></mat-divider>
+                    </mat-list-item>
+
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

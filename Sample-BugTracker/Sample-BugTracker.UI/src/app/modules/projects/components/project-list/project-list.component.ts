@@ -1,4 +1,4 @@
-import { Table, TableModule } from 'primeng/table';
+import { Table, TableModule, ContextMenuRow } from 'primeng/table';
 
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {
@@ -17,6 +17,7 @@ import {
     ConfirmDeletingProjectComponent
 } from '../confirm-deleting-project/confirm-deleting-project.component';
 import { EditProjectFormComponent } from '../edit-project-form/edit-project-form.component';
+import { MenuItem } from 'primeng/components/common/menuitem';
 
 @Component({
   selector: 'app-project-list',
@@ -37,6 +38,8 @@ export class ProjectListComponent implements OnInit {
 
   projects: Project[];
   cols: any[];
+  items: MenuItem[];
+  selectedProject: Project;
 
   constructor(
     public projectService: ProjectService,
@@ -58,6 +61,11 @@ export class ProjectListComponent implements OnInit {
       { field: 'DateStart', header: 'Начало' },
       { field: 'DateEnd', header: 'Окончание' },
     ];
+
+    this.items = [
+      { label: 'Редактировать',  command: (event) => this.openEditProjectDialog(this.selectedProject) },
+      { label: 'Удалить', command: (event) => this.openDeleteProjectDialog(this.selectedProject) }
+  ];
   }
 
   formatLabel(value: number | null) {
@@ -132,7 +140,7 @@ export class ProjectListComponent implements OnInit {
         this.projects.splice(this.projects.indexOf(delProject), 1);
         this.projectService.deleteProject(delProject.ProjectId).toPromise().then(res => {
           this.snackBar.open("Проект успешно удалён", '', { duration: 2000 });
-        });
+        });  
       }
     });
   }
@@ -153,6 +161,6 @@ export class ProjectListComponent implements OnInit {
   runFiltering(value: any, colField: string, mode: string) {
 
     // this.projectsTable.filter(value, colField, mode); 
-    alert('пип');
+    // alert('пип');
   }
 }

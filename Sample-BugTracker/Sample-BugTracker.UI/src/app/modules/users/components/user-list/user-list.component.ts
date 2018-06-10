@@ -10,6 +10,9 @@ import { UsersService } from '../../../shared/services/users.service';
 import { AddUserFormComponent } from '../add-user-form/add-user-form.component';
 import { ConfirmDeletingUserComponent } from '../confirm-deleting-user/confirm-deleting-user.component';
 import { EditUserFormComponent } from '../edit-user-form/edit-user-form.component';
+import { ProjectService } from '../../../shared/services/project.service';
+import { ErrorListSharedService } from '../../../shared/services/error-list-shared.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-user-list',
@@ -17,8 +20,10 @@ import { EditUserFormComponent } from '../edit-user-form/edit-user-form.componen
   styles: [':host mat-list { width: 93%; }']
 })
 export class UserListComponent implements OnInit {
-   users: User[];
+  users: User[];
 
+  notAvatarProxy: string = '../../../../../assets/person.png';
+  
   constructor(
     public userService: UsersService,
     public snackBar: MatSnackBar,
@@ -26,6 +31,9 @@ export class UserListComponent implements OnInit {
     public _route: ActivatedRoute,
     public authService: AuthService,
     @Inject(REST_URI) public uri: string,
+    private projectService: ProjectService,
+    private errorListSharedService: ErrorListSharedService,
+
 
   ) { }
 
@@ -42,7 +50,9 @@ export class UserListComponent implements OnInit {
       if (res) {
         this.users.splice(this.users.indexOf(delUser), 1);
         this.userService.unattachUser(new UnattachUser(delUser.Email, +sessionStorage.getItem('projectID'))).toPromise().then(res => {
-          this.snackBar.open("Пользователь успешно удалён из проекта", '', { duration: 2000 });
+          this.updateProjectWorkers().then(w => {
+            this.snackBar.open("Пользователь успешно удалён из проекта", '', { duration: 2000 });
+          });
         });
       }
     })
@@ -57,7 +67,9 @@ export class UserListComponent implements OnInit {
       if (res) {
         this.users.find(u => u.Email === res.editUser.Email).RoleName = res.editUser.RoleName;
         this.userService.updateAttachedUser(res.editUser).toPromise().then(res => {
-          this.snackBar.open("Пользователь успешно обновлён", '', { duration: 2000 });
+          this.updateProjectWorkers().then(w => {
+            this.snackBar.open("Пользователь успешно обновлён", '', { duration: 2000 });
+          });
         });
       }
     })
@@ -74,12 +86,19 @@ export class UserListComponent implements OnInit {
           this.userService.attachUser(res.userData).toPromise().then(user => {
             if (user) {
               this.users.push(user);
-              this.snackBar.open("Пользователь успешно добавлен к проекту", '', { duration: 2000 });
             }
+            this.updateProjectWorkers().then(w => {
+              this.snackBar.open("Пользователь успешно добавлен к проекту", '', { duration: 2000 });
+            });
           });
         }
       }
     })
   }
 
+  private updateProjectWorkers(): Promise<void> {
+    return this.projectService.getProjectWorkers(+sessionStorage.getItem('projectID')).toPromise().then(workers => {
+      this.errorListSharedService.ProjectWorkers = workers;
+    });
+  }
 }

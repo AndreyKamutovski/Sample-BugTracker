@@ -1,0 +1,31 @@
+<form [formGroup]='addPortalForm' (ngSubmit)="addPortal()" novalidate>
+  <h2 mat-dialog-title>Создать портал и начать работу с Bug Tracker</h2>
+
+  <mat-dialog-content class="form-field-container">
+    <mat-form-field hintLabel="Название портала должно быть уникальным">
+      <input matInput type="text" placeholder="Название портала" required minlength='3' maxlength="100" formControlName='Title'>
+      <mat-error *ngIf="title.hasError('required')">
+        Обязательно введите название портала
+      </mat-error>
+      <mat-error *ngIf="title.hasError('pattern')">
+        Название портала содержит недопустимые символы. Допустимы буквы от А до Я и от A-Z (строчные и прописные), цифры от 0 до 9, знак тире
+        (-), подчёркивания (_) и пробела
+      </mat-error>
+      <mat-error *ngIf="title.hasError('minlength') && !title.hasError('pattern')">
+        Название портала должно быть больше {{ title.errors.minlength.requiredLength }} символов. Вы ввели {{ title.errors.minlength.actualLength
+        }} символа
+      </mat-error>
+      <mat-error *ngIf="title.hasError('maxlength') && !title.hasError('pattern')">
+        Название портала должно быть меньше {{title.errors.maxlength.requiredLength }} символов
+      </mat-error>
+      <mat-error *ngIf="title.hasError('portalTitleNotTaken')">
+        {{title.errors.portalTitleNotTaken}}
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  
+    <mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="null">Отмена</button>
+      <button mat-raised-button color="primary" [disabled]="!addPortalForm.valid" type="submit">Создать портал</button>
+    </mat-dialog-actions>
+  </form>

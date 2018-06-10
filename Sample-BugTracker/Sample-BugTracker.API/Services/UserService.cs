@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
 using Sample_BugTracker.API.DTO;
+using Sample_BugTracker.API.DTO.User;
 using Sample_BugTracker.API.Exceptions;
 using Sample_BugTracker.API.Providers;
 using Sample_BugTracker.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -18,7 +21,12 @@ namespace Sample_BugTracker.API.Services
     public class UserService : BaseService
     {
         private MailService _mailService = new MailService();
+        public readonly string root;
 
+        public UserService()
+        {
+            root = HttpContext.Current.Server.MapPath("~/Content/Avatars");
+        }
 
         public bool IsEmailAvailable(string email)
         {
@@ -41,6 +49,11 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
+        public bool UserHavePortal()
+        {
+            return CurrentUser.Portal != null ? true : false;
+        }
+
         public IEnumerable<UserDTO> GetAll()
         {
             using (UoW)
@@ -51,7 +64,9 @@ namespace Sample_BugTracker.API.Services
 
         public UserDTO GetCurrentUser()
         {
-            return Mapper.Map<UserDTO>(CurrentUser);
+            var userDto = Mapper.Map<UserDTO>(CurrentUser);
+            userDto.AvatarBase64 = GetAvatarBase64(CurrentUser.Avatar);
+            return userDto;
         }
 
         public IEnumerable<UserDTO> GetAttachableUsers(int projectId)
@@ -95,15 +110,15 @@ namespace Sample_BugTracker.API.Services
 
                 // Read the form data
                 await request.Content.ReadAsMultipartAsync(provider);
-                string returningPath = string.Empty;
+                string fileName = string.Empty;
                 using (UoW)
                 {
                     var file = provider.FileData.FirstOrDefault();
                     if (file != null)
                     {
                         AppUser user = UoW.Users.GetByEmail(CurrentUser.Email);
-                        var fileName = file.LocalFileName.Substring(file.LocalFileName.LastIndexOf('\\') + 1);
-                        user.Avatar = returningPath = string.Concat("Avatars/", fileName);
+                        fileName = file.LocalFileName.Substring(file.LocalFileName.LastIndexOf('\\') + 1);
+                        user.Avatar = fileName;
                         UoW.Complete();
                     }
                     else
@@ -111,7 +126,7 @@ namespace Sample_BugTracker.API.Services
                         throw new ApplicationOperationException("For an avatar you need one image", HttpStatusCode.BadRequest);
                     }
                 }
-                return returningPath;
+                return GetAvatarBase64(fileName);
             }
             catch (System.Exception e)
             {
@@ -138,10 +153,10 @@ namespace Sample_BugTracker.API.Services
                     };
                     UoW.AwaitingAttachmentUsers.Add(attachmentUser);
                     UoW.Complete();
-                    var uriBuilder = new UriBuilder("http://localhost:3000/app/confirmUser");
-                    var parameters = HttpUtility.ParseQueryString(string.Empty);
-                    parameters["id"] = guid.ToString();
-                    uriBuilder.Query = parameters.ToString();
+                    var uriBuilder = new UriBuilder(string.Format("http://localhost:4200/confirmUser/{0}", guid));
+                    //var parameters = HttpUtility.ParseQueryString(string.Empty);
+                    //parameters["id"] = guid.ToString();
+                    //uriBuilder.Query = parameters.ToString();
                     Uri finalUrl = uriBuilder.Uri;
 
                     string bodyMsg = string.Format(
@@ -180,11 +195,12 @@ namespace Sample_BugTracker.API.Services
             }
         }
 
-        public void ConfirmAttachmentUser(ConfirmAttachmentUserDTO confirmUserDto)
+        public string ConfirmAttachmentUser(ConfirmAttachmentUserDTO confirmUserDto)
         {
             using (UoW)
             {
                 Guid id;
+                string portalName = "";
                 if (!Guid.TryParse(confirmUserDto.guid, out id))
                 {
                     throw new ApplicationOperationException(string.Format("Guid {0} is invalid", confirmUserDto.guid), HttpStatusCode.BadRequest);
@@ -197,10 +213,12 @@ namespace Sample_BugTracker.API.Services
                 var attachUser = new AttachUserDTO() { Email = awaitAttach.Email, RoleName = awaitAttach.Role.Name, ProjectId = awaitAttach.ProjectId };
                 var user = new AppUser() { Email = attachUser.Email, UserName = attachUser.Email };
                 UoW.Users.Add(user, confirmUserDto.Password, attachUser.RoleName);
+                //portalName = user.Portal.Title;
                 UoW.Complete();
                 AttachUserToProject(attachUser);
                 UoW.AwaitingAttachmentUsers.Remove(awaitAttach);
                 UoW.Complete();
+                return portalName;
             }
         }
 
@@ -262,6 +280,27 @@ namespace Sample_BugTracker.API.Services
                     error.AssigneeId = null;
                 }
                 UoW.Complete();
+            }
+        }
+
+        public string GetAvatarBase64(string avatarFileName)
+        {
+            try
+            {
+                    if (avatarFileName != null)
+                    {
+                        var filePath = Path.Combine(root, avatarFileName);
+                        var mimeType = MimeMapping.GetMimeMapping(avatarFileName);
+                        byte[] imageArray = System.IO.File.ReadAllBytes(filePath);
+                        string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+                        base64ImageRepresentation = string.Format("data:{0};base64,{1}",mimeType, base64ImageRepresentation);
+                        return base64ImageRepresentation;
+                    }
+                    else return null;
+            }
+            catch (System.Exception e)
+            {
+                throw new ApplicationOperationException(e.Message, HttpStatusCode.InternalServerError);
             }
         }
     }

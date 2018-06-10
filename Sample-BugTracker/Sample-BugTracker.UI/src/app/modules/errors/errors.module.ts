@@ -1,35 +1,39 @@
 import { NgModule } from '@angular/core';
+import { FileUploadModule } from 'primeng/fileupload';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableModule } from 'primeng/table';
 
 import { SharedModule } from './../shared/shared.module';
 import { AddErrorFormComponent } from './components/add-error-form/add-error-form.component';
-import { ErrorListComponent } from './components/error-list/error-list.component';
-import { SelectedErrorDialogComponent } from './components/selected-error-dialog/selected-error-dialog.component';
-import { ErrorListResolverService } from './resolvers/error-list-resolver.service';
-import { ErrorListSharedService } from './services/error-list-shared.service';
-import { ErrorService } from './services/error.service';
-import { StatusSelectItems } from './services/selection-lists-items/status-select-items';
-import { PrioritySelectItems } from './services/selection-lists-items/priority-select-items';
-import { ClassificationSelectItems } from './services/selection-lists-items/classification-select-items';
-import {FileUploadModule} from 'primeng/fileupload';
+import { AttachmentsComponent } from './components/attachments/attachments.component';
+import {
+  ConfirmAttachmentDeleteComponent,
+} from './components/confirm-attachment-delete/confirm-attachment-delete.component';
 import { ErrorAttachmentsComponent } from './components/error-attachments/error-attachments.component';
-import { ConfirmAttachmentDeleteComponent } from './components/confirm-attachment-delete/confirm-attachment-delete.component';
-import { ErrorRoutingModule } from './error-routing.module';
+import { ErrorListComponent } from './components/error-list/error-list.component';
 import { ErrorSolutionFormComponent } from './components/error-solution-form/error-solution-form.component';
+import { SelectedErrorDialogComponent } from './components/selected-error-dialog/selected-error-dialog.component';
 import { SolutionComponent } from './components/solution/solution.component';
 import { StatusSelectComponent } from './components/status-select/status-select.component';
-import { ErrorSolutionService } from './services/error-solution.service';
-import { AttachmentsComponent } from './components/attachments/attachments.component';
-import { SolutionAttachmentService } from './services/solution-attachment.service';
-import { AttachmentPreviewService } from './services/attachment-preview.service';
 import { UpdateSolutionFormComponent } from './components/update-solution-form/update-solution-form.component';
+import { ErrorRoutingModule } from './error-routing.module';
+import { ErrorListResolverService } from './resolvers/error-list-resolver.service';
+import { AttachmentPreviewService } from './services/attachment-preview.service';
+import { ErrorSolutionService } from './services/error-solution.service';
+import { ErrorService } from './services/error.service';
+import { ClassificationSelectItems } from './services/selection-lists-items/classification-select-items';
+import { PrioritySelectItems } from './services/selection-lists-items/priority-select-items';
+import { StatusSelectItems } from './services/selection-lists-items/status-select-items';
+import { SolutionAttachmentService } from './services/solution-attachment.service';
 
 @NgModule({
   imports: [
     SharedModule,
     TableModule,
     FileUploadModule,
-    ErrorRoutingModule
+    ErrorRoutingModule,
+    OverlayPanelModule,
+    
   ],
   declarations: [
     ErrorListComponent,
@@ -54,7 +58,7 @@ import { UpdateSolutionFormComponent } from './components/update-solution-form/u
     ErrorService,
     ErrorSolutionService,
     ErrorListResolverService,
-    ErrorListSharedService,
+    // ErrorListSharedService,
     StatusSelectItems,
     PrioritySelectItems,
     ClassificationSelectItems,

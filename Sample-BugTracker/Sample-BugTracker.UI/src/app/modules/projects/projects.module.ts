@@ -1,6 +1,7 @@
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableModule } from 'primeng/table';
-
+import { ContextMenuModule }  from 'primeng/contextmenu'
+import { MenuModule } from 'primeng/menu';
 import { NgModule } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -37,6 +38,8 @@ import { ProjectPermissionResolverService } from './resolvers/project-permission
     SharedModule,
     NavbarModule,   
     TableModule,
+    ContextMenuModule,
+     MenuModule,
     OverlayPanelModule,
     ProjectRoutingModule            
   ],

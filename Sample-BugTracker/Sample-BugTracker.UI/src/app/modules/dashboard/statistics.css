@@ -1,0 +1,91 @@
+.title-card-text {
+    font-size: 18px;
+    font-weight: 500;
+    }
+    
+    .subtitle-card-text {
+        font-size: 14px;
+        
+        }
+    
+        .numbers-chart-container > div {
+            font-size: 18px;
+            
+        } 
+
+        /* .count-errors-text {
+            font-size: 18px;
+        }
+     */
+        .aligned-text-center {
+            text-align: center;
+        }
+    
+        .margin-bottom-blocks {
+            margin-bottom: 15px;
+        }
+    
+        .hor-ver-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        .statistics-list-item-flex, .statistics-list-item-flex-start, .statistics-list-item-flex-end {
+           
+            display: flex;
+            align-items: center;
+        }
+    
+        .statistics-list-item-flex {
+             width: 100%;
+                   justify-content: space-between;
+     
+        }
+    
+        .statistics-list-item-flex-start {
+    
+            justify-content: flex-start;
+            
+        }
+    
+        .statistics-list-item-flex-end {
+    justify-content: flex-end;
+        }
+    
+        .statistics-list-item-flex span {
+    font-size: 16px;
+        }
+    
+        .statistics-list-item-span-count {
+             font-weight: 400;
+             color: #42A5F5;
+        }
+    
+        .center-text-align {
+            text-align: center;
+        }
+
+        
+        .statistics-container {    
+            padding: 0 30px;  
+            overflow-y: auto;
+         }      
+
+         .margin-top-blocks {
+margin-top: 30px;
+         }
+
+         .blue-color {
+            color: #42A5F5;
+         }
+
+
+         /* .margin-bottom-blocks mat-card, .margin-bottom-blocks mat-card mat-card-content{
+             
+         } */
+
+         .margin-bottom-blocks mat-card mat-card-content {
+overflow-y:auto;
+
+        height: 100%; }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RequestMethod } from '@angular/http';
+import { RequestMethod, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { HttpClientService } from './httpClient.service';
@@ -34,6 +34,10 @@ export class UsersService {
     return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/current`);
   }
 
+  userHavePortal(): Observable<boolean> {
+    return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/userHavePortal`);
+  }
+
   getUserPortals(): Observable<Portal[]> {
     return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/portals`);
   }
@@ -57,4 +61,9 @@ export class UsersService {
   updateAttachedUser(updateAttachUser: AttachableUser): Observable<void> {
     return this.HttpClientService.sendRequest(RequestMethod.Put, `${this.routerPrefix}/update`, null, { 'Content-Type': 'application/json' }, updateAttachUser);
   }
+
+  downloadAvatar(id: string): Observable<Response> {
+    return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/${id}/download`, null, null, null, ResponseContentType.Blob, false);
+  }
+
 }

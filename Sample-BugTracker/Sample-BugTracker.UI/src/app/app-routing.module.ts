@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuardLogoutService } from './modules/users/guards/auth-guard-logout.service';
 import { LoginFormComponent } from './modules/shared/components/login-form/login-form.component';
+import { ConfirmPasswordComponent } from './modules/users/components/confirm-password/confirm-password.component';
+import { AuthGuard } from './modules/projects/guards/auth-guard-login.service';
 
 const appRoutes: Routes = [
   {
@@ -10,19 +12,30 @@ const appRoutes: Routes = [
     component: LoginFormComponent,
     canActivate: [AuthGuardLogoutService]
   },
-  // { path: "app/tariff-plans", component: TariffPlansComponent },
   {
     path: "portals",
     loadChildren: "./modules/portal/portal.module#PortalModule"
- }, 
-  // { path: "app/confirmUser", component: ConfirmPasswordComponent },
+  },
   {
-    path: "", 
+    path: "portals/:portalName",
+    loadChildren: "./modules/dashboard/dashboard.module#DashboardModule",
+    canLoad: [AuthGuard]
+  },
+  {
+    path: "confirmUser",
+    loadChildren: "./modules/users/users.module#UsersModule"
+  },
+  {
+    path: "",
     redirectTo: 'login',
     pathMatch: "full"
   },
-  // { path: '**', component: PageNotFoundComponent } 
+  // { path: "confirmUser", component: ConfirmPasswordComponent },
 ];
+
+// { path: '**', component: PageNotFoundComponent } 
+// { path: "app/confirmUser", component: ConfirmPasswordComponent },
+// { path: "app/tariff-plans", component: TariffPlansComponent },
 
 @NgModule({
   imports: [

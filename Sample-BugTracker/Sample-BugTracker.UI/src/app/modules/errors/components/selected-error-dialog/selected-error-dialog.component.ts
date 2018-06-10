@@ -16,7 +16,7 @@ import { ErrorAttachment } from '../../models/error-attachment.model';
 import { ErrorSolution } from '../../models/error-solution.model';
 import { ErrorBT } from '../../models/error.model';
 import { ErrorAttachmentService } from '../../services/error-attachment.service';
-import { ErrorListSharedService } from '../../services/error-list-shared.service';
+import { ErrorListSharedService } from '../../../shared/services/error-list-shared.service';
 import { ErrorService } from '../../services/error.service';
 import {
     ClassificationSelectItems
@@ -55,6 +55,7 @@ export class SelectedErrorDialogComponent {
   isOpenAttachmentExpPanel: boolean;
   @ViewChild("attachmentsExpPanelAnchor") attachmentsExpPanelAnchor: HTMLElement;
 
+  isEditOnListError: boolean;
 
 
   constructor(
@@ -108,7 +109,7 @@ export class SelectedErrorDialogComponent {
     ]);
     this.description = new FormControl(this.error.Description, [Validators.maxLength(5000)]);
     this.dateCreation = new FormControl(this.error.DateCreation);
-    this.deadline = new FormControl(this.error.Deadline, Validators.required);
+    this.deadline = new FormControl(this.error.Deadline);  // , Validators.required
     this.status = new FormControl(this.error.Status, [Validators.required]);
     this.priority = new FormControl(this.error.Priority, [Validators.required]);
     this.classification = new FormControl(this.error.Classification, [Validators.required]);

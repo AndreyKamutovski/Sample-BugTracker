@@ -49,7 +49,9 @@ namespace Sample_BugTracker.API.Services
                     throw new ApplicationOperationException(string.Format("Portal with name {0} already exists", portalDto.Title), HttpStatusCode.Conflict);
                 }
 
-                AppUser user = Mapper.Map<AppUser>(portalDto.Owner);
+                //AppUser user = Mapper.Map<AppUser>(portalDto.Owner);
+                var user = new AppUser() { Email = portalDto.Owner.Email, UserName = portalDto.Owner.Email };
+
                 UoW.Users.Add(user, portalDto.Owner.Password, portalDto.Owner.RoleName);
                 Portal portal = new Portal() { Id = user.Id, Title = portalDto.Title };
                 UoW.Portals.Add(portal);
@@ -76,6 +78,22 @@ namespace Sample_BugTracker.API.Services
                     throw new ApplicationOperationException(string.Format("Portal with id {0} not found", id), HttpStatusCode.NotFound);
                 }
                 return portal.Owner.Id == CurrentUser.Id;
+            }
+        }
+
+
+        public PortalDTO CreatePortalForExistingUser(string title)
+        {
+            using (UoW)
+            {
+                if (CurrentUser.Portal != null)
+                {
+                    throw new ApplicationOperationException(string.Format("For user with email {0} portal already exists", CurrentUser.Email), HttpStatusCode.Conflict);
+                }
+                Portal portal = new Portal() { Id = CurrentUser.Id, Title = title };
+                UoW.Portals.Add(portal);
+                UoW.Complete();
+                return Mapper.Map<PortalDTO>(portal);
             }
         }
     }

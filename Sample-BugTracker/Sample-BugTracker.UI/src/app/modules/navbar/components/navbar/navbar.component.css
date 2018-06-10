@@ -48,3 +48,19 @@
     background-color: #c5cae9;
     color: black;
   }
+
+
+
+
+  @media only all {
+    a.adaptive-toolbar
+ {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 480px) {
+  a.adaptive-toolbar {
+      display: block;
+  }
+}

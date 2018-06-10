@@ -4,6 +4,8 @@ namespace Sample_BugTracker.API.DTO
 {
     public class UserDTO
     {
+        public string Id { get; set; }
+
         [Required(ErrorMessage = "The email address is required")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email address")]
@@ -25,6 +27,6 @@ namespace Sample_BugTracker.API.DTO
         [Compare("Password", ErrorMessage = "The password and its confirmation do not match.")]
         public string ConfirmPassword { get; set; }
 
-        public string Avatar { get; set; }
+        public string AvatarBase64 { get; set; }
     }
 }

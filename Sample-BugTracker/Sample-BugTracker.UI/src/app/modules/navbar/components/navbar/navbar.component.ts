@@ -7,6 +7,8 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { REST_URI } from '../../../shared/services/httpClient.service';
 import { UsersService } from '../../../shared/services/users.service';
 import { UploadUserPhotoFormComponent } from '../upload-user-photo-form/upload-user-photo-form.component';
+import { MessageService } from '../../../shared/services/message.service';
+import { SharedDataService } from '../../../shared/services/shared-data.service';
 
 interface NavbarElement {
   title: string,
@@ -20,13 +22,11 @@ interface NavbarElement {
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  @Input()  titleApp: string;
-  @Input()  sidenav: MatSidenav = null;
+  @Input() titleApp: string;
+  @Input() sidenav: MatSidenav = null;
 
 
-  public navbarElements: NavbarElement[] = [
-    { title: "Проекты", tooltipTitle: "Проекты", routerLink: `/portals/${sessionStorage.getItem('portalTitle')}/projects`}
-  ];
+  public navbarElements: NavbarElement[];
 
 
   constructor(
@@ -36,8 +36,22 @@ export class NavbarComponent implements OnInit {
     private userService: UsersService,
     private _sanitizer: DomSanitizer,
     private router: Router,
+    public messageService: MessageService,
+    private sharedDataService: SharedDataService,
+
+
     @Inject(REST_URI) private uri: string,
-  ) { }
+  ) {
+
+  }
+
+
+  ngOnInit() {
+    this.navbarElements = [
+      { title: "Главная", tooltipTitle: "Главная", routerLink: `/portals/${this.sharedDataService.PortalTitle}/mainPage`},
+      { title: "Проекты", tooltipTitle: "Проекты", routerLink: `/portals/${this.sharedDataService.PortalTitle}/projects` }
+    ];
+  }
 
   private logout(): void {
     this.router.navigateByUrl('/');
@@ -55,9 +69,9 @@ export class NavbarComponent implements OnInit {
   private afterClosedUploadAvatarDialog(avatarContent: any) {
     if (avatarContent != null) {
       this.userService.uploadAvatar(avatarContent).toPromise()
-        .then(newPath => {
-          this.authService.currentUser.Avatar = newPath;
-          this.snackBar.open("Аватар успешно изменён", '', { duration: 2000 });
+        .then(avatarBase64 => {
+          this.authService.currentUser.AvatarBase64 = avatarBase64;
+          this.messageService.showSnackBarMsg("Аватар успешно изменён");
         });
     }
   }
@@ -68,14 +82,11 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  get getUriAvatar(): SafeStyle {
-    let uriAvatar = `url('../../assets/person.png')`;
-    if (this.authService.currentUser.Avatar != null) {
-      uriAvatar = `url('${this.uri}${this.authService.currentUser.Avatar}')`;
+  get getUriAvatar(): string {
+    if (this.authService.currentUser.AvatarBase64 != null) {
+      return `url(${this.authService.currentUser.AvatarBase64})`;
     }
-    return this._sanitizer.bypassSecurityTrustStyle(uriAvatar);
+    else return "url('../../assets/person.png')";
   }
 
-  ngOnInit() {
-  }
 }

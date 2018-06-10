@@ -45,5 +45,12 @@ namespace Sample_BugTracker.API.Controllers
         {
              return _portalService.Create(portalDto);
         }
+
+        [HttpPost]
+        [Route("createForExistingUser")]
+        public PortalDTO CreatePortalForExistingUser([Required] string title)
+        {
+            return _portalService.CreatePortalForExistingUser(title);
+        }
     }
 }

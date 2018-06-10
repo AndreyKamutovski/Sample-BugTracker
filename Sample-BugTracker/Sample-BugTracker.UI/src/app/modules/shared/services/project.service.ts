@@ -10,6 +10,7 @@ import { HttpClientService } from './httpClient.service';
 import { User } from '../../users/models/user.model';
 import { Project } from '../../projects/models/project.model';
 import { ErrorBT } from '../../errors/models/error.model';
+import { SharedDataService } from './shared-data.service';
 
 
 
@@ -19,10 +20,14 @@ export class ProjectService {
     private readonly routerPrefix: string = "api/project";
 
     private get getPortalId(): string {
-        return sessionStorage.getItem('portalID');
+        return this.sharedDataService.PortalId;
     }
 
-    constructor(private HttpClientService: HttpClientService) { }
+    constructor(
+        private HttpClientService: HttpClientService,
+        private sharedDataService:SharedDataService,
+        
+    ) { }
 
     getProjectUsers(projectId: number): Observable<User[]> {
         return this.HttpClientService.sendRequest(RequestMethod.Get, `${this.routerPrefix}/${projectId}/users`)

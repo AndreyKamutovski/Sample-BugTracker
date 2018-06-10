@@ -5,6 +5,7 @@
       <span class="mat-headline" style="margin: 0;">Здравствуйте,
         <strong>{{authService.currentUser.Email}}</strong>
       </span>
+      <a *ngIf="!havePortal" mat-button routerLink="/portals/tariff-plans">Создать свой портал</a>
       <a mat-button routerLink="/">Выход</a>
     </mat-card-title>
     <mat-card-subtitle>
@@ -15,7 +16,7 @@
     <mat-grid-list cols="2" rowHeight="100px" gutterSize="20px">
       <mat-grid-tile *ngFor="let portal of _portals" [colspan]="1" [rowspan]="1" class="mat-elevation-z5 hover-tile" (click)="onClickPortal($event, portal)">
         <div class="img-label">
-          <img src="../../../assets/logo.png" alt="Bug Tracker Logo" class="logo-img">
+          <img src="../../../../../assets/BugCatcher.svg" alt="Bug Tracker Logo" class="logo-img">
           <h2>{{portal.Title}}</h2>
         </div>
       </mat-grid-tile>

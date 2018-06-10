@@ -5,7 +5,7 @@
   <mat-dialog-content class="form-field-container">
     <mat-list>
       <mat-list-item>
-        <img matListAvatar [src]="(data.editUser.Avatar != null) ? uri + data.editUser.Avatar : '../../../../../assets/person.png'">
+        <img matListAvatar [src]="data.editUser.AvatarBase64 ? data.editUser.AvatarBase64 : '../../../../../assets/person.png'">
         <strong matLine> {{data.editUser.Email | getUserNameFromEmail}} </strong>
         <span matLine> {{data.editUser.Email}} </span>
       </mat-list-item>

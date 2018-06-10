@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Sample_BugTracker.DAL.Entities;
-using Sample_BugTracker.DAL.Migrations;
 using System.Data.Entity;
 
 namespace Sample_BugTracker.DAL.EF
@@ -33,6 +32,16 @@ namespace Sample_BugTracker.DAL.EF
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Error>()
+                    .HasRequired(m => m.Author)
+                    .WithMany(t => t.AuthorErrors)
+                    .HasForeignKey(m => m.AuthorId)
+                    .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Error>().HasOptional(m => m.Assignee)
+                        .WithMany(t => t.AssigneeErrors)
+                        .HasForeignKey(m => m.AssigneeId)
+                        .WillCascadeOnDelete(false);
         }
     }
 }

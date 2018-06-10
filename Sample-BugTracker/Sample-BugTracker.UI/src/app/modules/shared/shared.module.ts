@@ -21,7 +21,12 @@ import { AuthService } from './services/auth.service';
 import { HttpClientService } from './services/httpClient.service';
 import { MessageService } from './services/message.service';
 import { ProjectService } from './services/project.service';
+import { StatisticsRoutingService } from './services/statistics-routing.service';
 import { UsersService } from './services/users.service';
+import { SelectedErrorDialogComponent } from '../errors/components/selected-error-dialog/selected-error-dialog.component';
+import { ErrorsModule } from '../errors/errors.module';
+import { ErrorListSharedService } from './services/error-list-shared.service';
+import { SharedDataService } from './services/shared-data.service';
 
 @NgModule({
   imports: [
@@ -31,8 +36,9 @@ import { UsersService } from './services/users.service';
     AngularMaterialDesignModule,
     RouterModule,
     QuillModule,
-    ScrollToModule
-  ],
+    ScrollToModule,
+    
+    ],
   declarations: [
     GetUserNameFromEmailPipe,
     GetStatusNamePipe,
@@ -40,10 +46,10 @@ import { UsersService } from './services/users.service';
     GetClassificationNamePipe,
     ViewRolePipe,
     LocalDateFromUtcPipe,
-    WarningDialogComponent
+    WarningDialogComponent,
   ],
   entryComponents:[
-    WarningDialogComponent
+    WarningDialogComponent,
   ],
   exports: [
     CommonModule,
@@ -68,11 +74,14 @@ export class SharedModule {
         MessageService,
         UsersService,
         ProjectService,
+        StatisticsRoutingService,
+        ErrorListSharedService,
         // resolvers
         ProjectOwnerResolver,
         CurrentProjectResolver,
         ProjectWorkersResolver,
         UserListResolver,
+        SharedDataService
       ]
     };
   }

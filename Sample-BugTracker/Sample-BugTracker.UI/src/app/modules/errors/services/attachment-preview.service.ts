@@ -61,7 +61,7 @@ export class AttachmentPreviewService {
   ];
 
   isImage(fileName: string): boolean {
-    return this._imageFileFormats.includes(this.getFileExtension(fileName));
+    return this._imageFileFormats.indexOf(this.getFileExtension(fileName)) !== -1;
   }
 
   getFileExtension(fileName: string): string {
@@ -70,7 +70,7 @@ export class AttachmentPreviewService {
 
   getFilePreview(fileName: string): string {
     let fileExtension = this.getFileExtension(fileName);
-    if (this._preparedFileTypeIcons.includes(`${fileExtension}.png`)) {
+    if (this._preparedFileTypeIcons.indexOf(`${fileExtension}.png`) !== -1) {
       return `${fileExtension}.png`;
     }
     else {

@@ -22,7 +22,8 @@ export class AppComponent {
     ) { }
 
     ngOnInit() {
-        Date.prototype.toISOString = Date.prototype.toJSON = function () { return moment(this).format("YYYY-MM-DD"); }
+        // .format("YYYY-MM-DD");
+        Date.prototype.toISOString = Date.prototype.toJSON = function () { return moment(this).utc().format() }
         this.router.events.subscribe(e => {
 
             if (e instanceof NavigationStart) {

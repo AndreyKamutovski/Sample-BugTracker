@@ -23,7 +23,7 @@ export class PermissionService {
   }
 
   checkPermission(permission: PermissionList): boolean {
-    return this.Permission.includes(permission);
+    return this.Permission.indexOf(permission) !== -1;
   }
 
 }

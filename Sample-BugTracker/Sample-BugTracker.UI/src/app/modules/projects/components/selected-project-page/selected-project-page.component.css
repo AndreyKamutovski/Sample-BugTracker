@@ -1,10 +1,10 @@
 mat-sidenav-content {
-    padding: 30px;
+    padding: 0 30px;
 }
 
 mat-sidenav-container {
-    height: 100%;
-overflow-y: hidden;    
+    /* height: 100%; */
+/* overflow-y: hidden;     */
 }
 
 .toggle-sidenav-button {
@@ -29,4 +29,17 @@ overflow-y: hidden;
 .sidenav-content-header-text .sidenav-content-header-owner {
     font-size: 13px;
     font-weight: 400;
+}
+
+@media only all {
+    mat-list-item.show-hide-toolbar-links
+ {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    mat-list-item.show-hide-toolbar-links {
+      display: block;
+  }
 }

@@ -1,8 +1,27 @@
 <app-navbar *ngIf="authService.isLoggedIn" [sidenav]="sidenavSelectProject" titleApp="BugTracker"></app-navbar>
 
 <mat-sidenav-container class="app-background">
-  <mat-sidenav #sidenavSelectProject mode="side" opened="true" fixedInViewport="true" fixedTopGap="64">
-    <mat-nav-list>
+
+
+
+  <mat-sidenav #sidenavSelectProject [mode]="mobileQuery.matches ? 'over' : 'side'"
+   opened="true" [fixedInViewport]="mobileQuery.matches"  fixedTopGap="64">
+    <mat-nav-list (click)="mobileQuery.matches ? sidenavSelectProject.close() : sidenavSelectProject.open()">
+
+
+      <mat-list-item class="show-hide-toolbar-links">
+        <a mat-button routerLink="#" matTooltip="Главная" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+              true}">
+          <h3>Главная</h3>
+        </a>
+      </mat-list-item>
+      <mat-list-item class="show-hide-toolbar-links">
+        <a mat-button routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+              true}" [routerLink]="routerLinkProjectsAdaptive" matTooltip="Проекты">
+          <h3>Проекты</h3>
+        </a>
+      </mat-list-item>
+      <mat-divider class="show-hide-toolbar-links"></mat-divider>
       <mat-list-item *ngFor="let element of sidenavNavElements" routerLinkActive="active-sidenav-link">
         <mat-icon matListIcon>{{element.matIcon}}</mat-icon>
         <a matLine [routerLink]="element.link">
@@ -11,8 +30,8 @@
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
-
-  <mat-sidenav-content class="mat-typography">
+  <!--  style="overflow-y: auto; padding: 0 30px;" -->
+  <mat-sidenav-content class="mat-typography" (window:resize)="onResize($event)" [style.height.px]="contentHeight">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

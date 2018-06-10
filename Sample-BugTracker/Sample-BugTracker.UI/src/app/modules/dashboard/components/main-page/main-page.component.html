@@ -1,0 +1,193 @@
+<app-navbar *ngIf="authService.isLoggedIn"></app-navbar>
+<div class="statistics-container" [style.height.px]="statisticsContainerHeight" style="margin-bottom:30px;" (window:resize)="onResize($event)">
+  <div class="ui-g margin-top-blocks margin-bottom-blocks">
+    <div class="ui-g-12 mat-typography">
+      <h1>
+        Добро пожаловать {{authService.currentUser.Email | getUserNameFromEmail}}
+        <h3>Портал:&nbsp;{{portalName}}</h3>
+      </h1>
+    </div>
+  </div>
+
+  <div class="ui-g">
+    <div #divOverview class="ui-lg-6 ui-g-12 margin-bottom-blocks">
+      <mat-card [style.height.px]="divOverview.nativeElement?.offsetHeight">
+        <mat-card-header>
+          <mat-card-title class="title-card-text">Обзор моей работы</mat-card-title>
+          <mat-card-subtitle class="subtitle-card-text">Общее представление об ошибках</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content style="overflow-y:hidden; overflow-x:hidden;">
+          <div class="hor-ver-center">
+            <!-- <mat-spinner *ngIf="isLoadOverviewMyWork"></mat-spinner> -->
+          </div>
+          <div *ngIf="!isEmptyMyWorkOverview()">
+            <p-chart type="pie" [data]="dataMyWorkOverview" [options]="optionsDiagrams"></p-chart>
+            <!-- numbers -->
+            <div class="ui-g">
+              <div class="ui-g-6 numbers-chart-container">
+                <div class="ui-g-12 aligned-text-center">
+                  Открыто
+                </div>
+                <div class="ui-g-12 aligned-text-center" [style.color]="openColor">
+                  {{myWorkOverview.OpenErrorCount}}
+                </div>
+              </div>
+              <div class="ui-g-6 numbers-chart-container">
+                <div class="ui-g-12 aligned-text-center">
+                  Закрыто
+                </div>
+                <div class="ui-g-12 aligned-text-center" [style.color]="closedColor">
+                  {{myWorkOverview.ClosedErrorCount}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="isEmptyMyWorkOverview()">
+            Пока нет данных
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- my errors -->
+    <div class="ui-lg-6 ui-g-12 margin-bottom-blocks">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title class="title-card-text">Мои ошибки</mat-card-title>
+          <mat-card-subtitle class="subtitle-card-text">Ошибки, требующие вашего внимания </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="hor-ver-center">
+            <mat-spinner *ngIf="isLoadMyErrors"></mat-spinner>
+          </div>
+
+          <mat-list *ngIf="!isLoadMyErrors && myErrors.length > 0" [disableRipple]="false" class="dashboard-list">
+            <mat-list-item *ngFor="let myError of myErrors">
+              <div class="statistics-list-item-flex">
+                <div class="statistics-list-item-flex-start" style="width:50%;">
+                  <div class="trancate-text pointer-cursor" (click)="openEditErrorDialog(myError.Id, myError.ProjectName)" [style.color]="closedColor"
+                    [matTooltip]="myError.Title">
+                    {{myError.Title}}
+                  </div>
+                </div>
+                <div style="width:30%; margin-left: 20px;" class="trancate-text" [matTooltip]="myError.ProjectName">
+                  <span>{{myError.ProjectName}}</span>
+                </div>
+                <div style="width:20%;" class="statistics-list-item-flex-end">
+                  <div style="margin-left:20px;">
+                    <span *ngIf="myError.Deadline" [class]="getColorDeadline(myError.Deadline) ">
+                      {{myError.Deadline | localDateFromUtc:"DD-MM-YYYY"}}
+                    </span>
+                    <span *ngIf="!myError.Deadline">
+                      &mdash;
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+
+          </mat-list>
+          <div *ngIf="!isLoadMyErrors && myErrors.length == 0">
+            Пока нет таких ошибок
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- my errors today-->
+  <div class="ui-g">
+
+    <div class="ui-lg-6 ui-g-12 margin-bottom-blocks">
+      <div style="height:100%;">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title class="title-card-text blue-color">Мои ошибки на сегодня</mat-card-title>
+            <mat-card-subtitle class="subtitle-card-text">Узнайте, чем придется заниматься сегодня </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="hor-ver-center">
+              <mat-spinner *ngIf="isLoadMyErrorsToday"></mat-spinner>
+            </div>
+
+            <mat-list *ngIf="!isLoadMyErrorsToday && myErrorsToday.length > 0" [disableRipple]="false" class="dashboard-list">
+              <mat-list-item *ngFor="let myErrorToday of myErrorsToday">
+                <div class="statistics-list-item-flex">
+                  <div class="statistics-list-item-flex-start" style="width:50%;">
+                    <div class="trancate-text pointer-cursor" (click)="openEditErrorDialog(myErrorToday.Id, myErrorToday.ProjectName)" [style.color]="closedColor"
+                      [matTooltip]="myErrorToday.Title">
+                      {{myErrorToday.Title}}
+                    </div>
+                  </div>
+                  <div style="width:30%; margin-left: 20px;" class="trancate-text" [matTooltip]="myErrorToday.ProjectName">
+                    <span>{{myErrorToday.ProjectName}}</span>
+                  </div>
+                  <div style="width:20%;" class="statistics-list-item-flex-end">
+                    <div style="margin-left:20px;">
+                      <span>
+                        {{myErrorToday.Deadline | localDateFromUtc:"DD-MM-YYYY"}}
+                      </span>
+                      <!-- <span *ngIf="!myErrorToday.Deadline">
+                          &mdash;
+                        </span> -->
+                    </div>
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+              </mat-list-item>
+            </mat-list>
+            <div *ngIf="!isLoadMyErrorsToday && myErrorsToday.length == 0">
+              Пока нет таких ошибок
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </div>
+
+
+    <!-- my errors dalay-->
+    <div class="ui-lg-6 ui-g-12 margin-bottom-blocks">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title class="title-card-text warn-color">Мои просроченные ошибки</mat-card-title>
+          <mat-card-subtitle class="subtitle-card-text">Здесь отображаются просроченные ошибки </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="hor-ver-center">
+            <mat-spinner *ngIf="isLoadMyDelayErrors"></mat-spinner>
+          </div>
+
+          <mat-list *ngIf="!isLoadMyDelayErrors && myDelayErrors.length > 0" [disableRipple]="false" class="dashboard-list">
+            <mat-list-item *ngFor="let myDelayError of myDelayErrors">
+              <div class="statistics-list-item-flex">
+                <div class="statistics-list-item-flex-start" style="width:40%;">
+                  <div class="trancate-text pointer-cursor" (click)="openEditErrorDialog(myDelayError.Id, myDelayError.ProjectName)" [style.color]="closedColor"
+                    [matTooltip]="myDelayError.Title">
+                    {{myDelayError.Title}}
+                  </div>
+                </div>
+                <div style="width:18%; margin-left: 20px;" class="trancate-text" [matTooltip]="myDelayError.ProjectName">
+                  <span>{{myDelayError.ProjectName}}</span>
+                </div>
+                <div style="width:41%;" class="statistics-list-item-flex-end">
+                  <div class="warn-color" style="margin-left:20px;">
+                    <span>
+                      задержка на {{myDelayError.Delay}} дн.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+          </mat-list>
+          <div *ngIf="!isLoadMyDelayErrors && myDelayErrors.length == 0">
+            Пока нет таких ошибок
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>

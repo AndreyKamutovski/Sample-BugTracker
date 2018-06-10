@@ -6,7 +6,11 @@ namespace Sample_BugTracker.DAL.Entities
     public class AppUser: IdentityUser
     {
         public virtual ICollection<UserProject> UserProjects { get; set; }
-        public virtual ICollection<Error> Errors { get; set; }
+
+        public virtual ICollection<Error> AuthorErrors { get; set; }
+        public virtual ICollection<Error> AssigneeErrors { get; set; }
+
+
         public virtual ICollection<ErrorSolution> ErrorSolutions { get; set; }
         public virtual ICollection<ErrorAttachment> Attachments { get; set; }
         public virtual Portal Portal { get; set; }
@@ -16,7 +20,9 @@ namespace Sample_BugTracker.DAL.Entities
         public AppUser(): base()
         {
             UserProjects = new List<UserProject>();
-            Errors = new List<Error>();
-        }
+            AuthorErrors = new List<Error>();
+ AssigneeErrors = new List<Error>();
+        }           
+
     }
 }

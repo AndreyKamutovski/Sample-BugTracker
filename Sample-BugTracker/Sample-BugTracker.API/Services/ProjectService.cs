@@ -18,6 +18,8 @@ namespace Sample_BugTracker.API.Services
 
     public class ProjectService : BaseService
     {
+        private StatisticsService _statisticsService = new StatisticsService();
+        private UserService _userService = new UserService();
 
         public ProjectDTO GetById(int id)
         {
@@ -28,7 +30,9 @@ namespace Sample_BugTracker.API.Services
                 {
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
                 }
-                return Mapper.Map<ProjectDTO>(project);
+                var projectDto = Mapper.Map<ProjectDTO>(project);
+                projectDto.ErrorStatistics = _statisticsService.GetProjectErrorReport(project.Id);
+                return projectDto;
             }
         }
 
@@ -54,7 +58,15 @@ namespace Sample_BugTracker.API.Services
                 {
                     throw new ApplicationOperationException(string.Format("Project with id {0} not found", id), HttpStatusCode.NotFound);
                 }
-                return Mapper.Map<List<UserDTO>>(project.UserProjects);
+                var usersProjects = project.UserProjects;
+                var usersDto = new List<UserDTO>();
+                foreach (var userProj in usersProjects)
+                {
+                    var userDto = Mapper.Map<UserDTO>(userProj);
+                    userDto.AvatarBase64 = _userService.GetAvatarBase64(userProj.Worker.Avatar);
+                    usersDto.Add(userDto);
+                }
+                return usersDto;
             }
         }
 
