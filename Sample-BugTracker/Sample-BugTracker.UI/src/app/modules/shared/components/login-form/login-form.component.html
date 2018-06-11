@@ -28,8 +28,8 @@
     </mat-card-content>
 
     <mat-card-actions align="start">
+      <!-- <button mat-raised-button color="primary" [disabled]="!(this.loginForm.valid && this.captcha.isCaptchaChecked)" type="submit">Войти</button> -->
       <button mat-raised-button color="primary" [disabled]="!(this.loginForm.valid)" type="submit">Войти</button>
-      <!--  && this.captcha.isCaptchaChecked -->
       <a mat-button routerLink="/portals/tariff-plans">Создать портал</a>
     </mat-card-actions>
   </mat-card>

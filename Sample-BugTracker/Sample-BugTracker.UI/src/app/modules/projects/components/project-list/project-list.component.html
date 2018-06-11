@@ -1,12 +1,18 @@
 <app-navbar *ngIf="authService.isLoggedIn" titleApp="BugTracker"></app-navbar>
-<div *ngIf="projects.length === 0" style="margin: 10% 0;">
-    <span class="mat-h1">В Ваше портале отсутствуют проекты. Нажмите кнопку для создания первого проекта</span>&nbsp;
+<div *ngIf="projects.length === 0" class="image-not-data mat-typography" style="height: 100%">
+    <img src="../../../../../assets/custom_icons_app/not_project.png" style="height: 50%">
+    <h3>В Ваше портале отсутствуют проекты. Нажмите кнопку для создания первого проекта</h3>
     <button mat-raised-button color="accent" (click)="openAddProjectDialog()">Создать проект</button>
 </div>
+<!-- <div *ngIf="projects.length === 0" style="margin: 10% 0;">
+    
+    <span class="mat-h1">В Ваше портале отсутствуют проекты. Нажмите кнопку для создания первого проекта</span>&nbsp;
+    <button mat-raised-button color="accent" (click)="openAddProjectDialog()">Создать проект</button>
+</div> -->
 <div class="mat-elevation-z5 table-container" [hidden]="!(projects.length > 0)">
 
-    <p-table #projectsTable (onRowSelect)="onRowSelect($event)"   [(contextMenuSelection)]="selectedProject" [contextMenu]="cm" [responsive]="true" [columns]="cols" selectionMode="single" [value]="projects"
-        [paginator]="true" [rows]="10">
+    <p-table #projectsTable (onRowSelect)="onRowSelect($event)" [(contextMenuSelection)]="selectedProject" [contextMenu]="cm"
+        [responsive]="true" [columns]="cols" selectionMode="single" [value]="projects" [paginator]="true" [rows]="10">
         <!-- <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of columns">
@@ -55,11 +61,11 @@
                         <span #projectProgressPlaceholder></span>
                     </div>
                     <div *ngSwitchCase="'DateEnd'">
-                            <button mat-icon-button (click)="opFilterProgress.show($event)">
-                                <mat-icon>filter_list</mat-icon>
-                            </button>
-                            <span #projectProgressPlaceholder></span>
-                        </div>
+                        <button mat-icon-button (click)="opFilterProgress.show($event)">
+                            <mat-icon>filter_list</mat-icon>
+                        </button>
+                        <span #projectProgressPlaceholder></span>
+                    </div>
                 </th>
                 <!-- <TH *ngIf="authService.isPortalOwner" colspan="2"></TH> -->
             </tr>

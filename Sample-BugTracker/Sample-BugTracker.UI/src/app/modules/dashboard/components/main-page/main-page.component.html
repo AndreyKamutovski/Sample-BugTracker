@@ -17,9 +17,9 @@
           <mat-card-subtitle class="subtitle-card-text">Общее представление об ошибках</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content style="overflow-y:hidden; overflow-x:hidden;">
-          <div class="hor-ver-center">
-            <!-- <mat-spinner *ngIf="isLoadOverviewMyWork"></mat-spinner> -->
-          </div>
+          <!-- <div class="hor-ver-center">
+            <mat-spinner *ngIf="isLoadOverviewMyWork"></mat-spinner>
+          </div> -->
           <div *ngIf="!isEmptyMyWorkOverview()">
             <p-chart type="pie" [data]="dataMyWorkOverview" [options]="optionsDiagrams"></p-chart>
             <!-- numbers -->
@@ -42,11 +42,10 @@
               </div>
             </div>
           </div>
-
-          <div *ngIf="isEmptyMyWorkOverview()">
-            Пока нет данных
-          </div>
-
+          <div *ngIf="isEmptyMyWorkOverview()" class="image-not-data mat-typography">
+              <img src="../../../../../assets/custom_icons_app/owerview_work.png">
+              <h3>Пока нет данных для построения диаграммы</h3>
+            </div>
         </mat-card-content>
       </mat-card>
     </div>
@@ -90,8 +89,9 @@
             </mat-list-item>
 
           </mat-list>
-          <div *ngIf="!isLoadMyErrors && myErrors.length == 0">
-            Пока нет таких ошибок
+          <div *ngIf="!isLoadMyErrors && myErrors.length == 0" class="image-not-data mat-typography">
+            <img src="../../../../../assets/custom_icons_app/my_errors.png">
+            <h3>Ошибки для Вас в портале не найдены</h3>
           </div>
         </mat-card-content>
       </mat-card>
@@ -139,8 +139,9 @@
                 <mat-divider></mat-divider>
               </mat-list-item>
             </mat-list>
-            <div *ngIf="!isLoadMyErrorsToday && myErrorsToday.length == 0">
-              Пока нет таких ошибок
+            <div *ngIf="!isLoadMyErrorsToday && myErrorsToday.length == 0" class="image-not-data mat-typography">
+              <img src="../../../../../assets/custom_icons_app/not_work_elements.png">
+              <h3>Нет ошибок на сегодня, Вам не о чем беспокоится</h3>
             </div>
           </mat-card-content>
         </mat-card>
@@ -184,9 +185,11 @@
               <mat-divider></mat-divider>
             </mat-list-item>
           </mat-list>
-          <div *ngIf="!isLoadMyDelayErrors && myDelayErrors.length == 0">
-            Пока нет таких ошибок
-          </div>
+          <div *ngIf="!isLoadMyDelayErrors && myDelayErrors.length == 0" class="image-not-data mat-typography">
+              <img src="../../../../../assets/custom_icons_app/not_delay_elements.png">
+              <h3>У Вас нет просроченных ошибок, Вам не о чем беспокоится</h3>
+            </div>
+          
         </mat-card-content>
       </mat-card>
     </div>

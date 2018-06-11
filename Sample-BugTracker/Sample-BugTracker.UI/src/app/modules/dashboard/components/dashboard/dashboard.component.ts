@@ -33,6 +33,9 @@ export class DashboardComponent implements OnInit {
 
   notAvatarProxy: string = '../../../../../assets/person.png';
 
+  isEmptyErrorState(): boolean {
+    return this.project.ErrorStatistics.OpenErrorCount == 0 && this.project.ErrorStatistics.ClosedErrorCount == 0;
+  }
 
   openColor: string = '#9CCC65';
   closedColor: string = '#42A5F5';
@@ -146,7 +149,7 @@ export class DashboardComponent implements OnInit {
         height: '95%',
         maxHeight: '95%',
         disableClose: true,
-        data: { 'error': e}
+        data: { 'error': e }
       });
     });
   }

@@ -266,3 +266,18 @@ background: #3cccc6;
 .pointer-cursor:hover {
 cursor: pointer;
 }
+
+
+/* // not image data */
+
+.image-not-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.image-not-data>img {
+    height: 30%;
+    width: 30%;
+} 

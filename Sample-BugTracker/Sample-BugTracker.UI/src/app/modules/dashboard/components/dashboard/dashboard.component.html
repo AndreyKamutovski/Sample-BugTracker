@@ -10,7 +10,7 @@
 <div class="ui-g margin-bottom-blocks">
     <div class="ui-g-12">
         <mat-accordion>
-            <mat-expansion-panel>
+            <mat-expansion-panel [expanded]="true">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Описание проекта
@@ -23,48 +23,50 @@
     </div>
 </div>
 
-<div class="ui-g margin-bottom-blocks">
-    <div class="ui-g-6">
-        <mat-card style="height: 90%;">
+<div class="ui-g">
+    <div class="ui-lg-6 ui-g-12 margin-bottom-blocks">
+        <mat-card>
             <mat-card-header>
                 <mat-card-title class="title-card-text">Состояние ошибок</mat-card-title>
                 <mat-card-subtitle class="subtitle-card-text">Отслеживайте ошибки, влияющие на проект</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <div [ngSwitch]="diagramType">
-                    <p-chart type="bar" *ngSwitchDefault [data]="dataBarDiagram" [options]="optionsDiagrams" (onDataSelect)="selectChart($event)"></p-chart>
-                    <p-chart type="pie" *ngSwitchCase="diagramTypes.Pie" [data]="dataPieDonutDiagram" [options]="optionsDiagrams" (onDataSelect)="selectChart($event)"></p-chart>
-                    <p-chart type="doughnut" *ngSwitchCase="diagramTypes.Donut" [data]="dataPieDonutDiagram" [options]="optionsDiagrams" (onDataSelect)="selectChart($event)"></p-chart>
-                </div>
-                <div class="ui-g">
-                    <div class="ui-g-4 numbers-chart-container">
-                        <div class="ui-g-12 aligned-text-center">
-                            Открыто
-                        </div>
-                        <div class="ui-g-12 aligned-text-center" [style.color]="openColor">
-                            {{project.ErrorStatistics.OpenErrorCount}}
-                        </div>
+                <div *ngIf="!isEmptyErrorState()">
+                    <div [ngSwitch]="diagramType">
+                        <p-chart type="bar" *ngSwitchDefault [data]="dataBarDiagram" [options]="optionsDiagrams" (onDataSelect)="selectChart($event)"></p-chart>
+                        <p-chart type="pie" *ngSwitchCase="diagramTypes.Pie" [data]="dataPieDonutDiagram" [options]="optionsDiagrams" (onDataSelect)="selectChart($event)"></p-chart>
+                        <p-chart type="doughnut" *ngSwitchCase="diagramTypes.Donut" [data]="dataPieDonutDiagram" [options]="optionsDiagrams" (onDataSelect)="selectChart($event)"></p-chart>
                     </div>
-                    <div class="ui-g-4 numbers-chart-container">
-                        <div class="ui-g-12 aligned-text-center">
-                            Закрыто
+                    <div class="ui-g">
+                        <div class="ui-g-4 numbers-chart-container">
+                            <div class="ui-g-12 aligned-text-center">
+                                Открыто
+                            </div>
+                            <div class="ui-g-12 aligned-text-center" [style.color]="openColor">
+                                {{project.ErrorStatistics.OpenErrorCount}}
+                            </div>
                         </div>
-                        <div class="ui-g-12 aligned-text-center" [style.color]="closedColor">
-                            {{project.ErrorStatistics.ClosedErrorCount}}
+                        <div class="ui-g-4 numbers-chart-container">
+                            <div class="ui-g-12 aligned-text-center">
+                                Закрыто
+                            </div>
+                            <div class="ui-g-12 aligned-text-center" [style.color]="closedColor">
+                                {{project.ErrorStatistics.ClosedErrorCount}}
+                            </div>
                         </div>
-                    </div>
-                    <div class="ui-g-4 numbers-chart-container">
-                        <div class="ui-g-12 aligned-text-center">
-                            Всего
-                        </div>
-                        <div class="ui-g-12 aligned-text-center">
-                            {{project.ErrorStatistics.Total}}
+                        <div class="ui-g-4 numbers-chart-container">
+                            <div class="ui-g-12 aligned-text-center">
+                                Всего
+                            </div>
+                            <div class="ui-g-12 aligned-text-center">
+                                {{project.ErrorStatistics.Total}}
+                            </div>
                         </div>
                     </div>
                 </div>
             </mat-card-content>
 
-            <mat-card-actions>
+            <mat-card-actions *ngIf="!isEmptyErrorState()">
                 <button mat-icon-button matTooltip="Гистограмма" (click)="diagramType = diagramTypes.Bar">
                     <mat-icon>insert_chart </mat-icon>
                 </button>
@@ -75,12 +77,17 @@
                     <mat-icon>pie_chart_outlined</mat-icon>
                 </button>
             </mat-card-actions>
+
+            <div *ngIf="isEmptyErrorState()" class="image-not-data mat-typography">
+                <img src="../../../../../assets/custom_icons_app/owerview_work.png">
+                <h3>Пока нет данных для построения диаграммы. Добавляйте ошибки.</h3>
+            </div>
         </mat-card>
     </div>
 
     <!-- top-5 -->
-    <div class="ui-g-6">
-        <mat-card style="height: 90%;">
+    <div class="ui-lg-6 ui-g-12 margin-bottom-blocks">
+        <mat-card>
             <mat-card-header>
                 <mat-card-title class="title-card-text">Top-5 специалистов</mat-card-title>
                 <mat-card-subtitle class="subtitle-card-text">Пользователи с наибольшим количеством закрытых ошибок</mat-card-subtitle>
@@ -102,10 +109,10 @@
                         </div>
                         <mat-divider></mat-divider>
                     </mat-list-item>
-
                 </mat-list>
-                <div *ngIf="!isLoadTopUsers && topUsers.length == 0">
-                    Пока нет таких пользователей
+                <div *ngIf="!isLoadTopUsers && topUsers.length == 0" class="image-not-data mat-typography">
+                    <img src="../../../../../assets/custom_icons_app/not_top_5_users.png">
+                    <h3>Пока нет таких сотрудников</h3>
                 </div>
             </mat-card-content>
         </mat-card>
@@ -113,8 +120,8 @@
 </div>
 
 <!-- delay errors -->
-<div class="ui-g margin-bottom-blocks">
-    <div class="ui-g-12">
+<div class="ui-g">
+    <div class="ui-g-12 margin-bottom-blocks">
         <mat-card>
             <mat-card-header>
                 <mat-card-title class="title-card-text warn-color">Просроченные рабочие элементы</mat-card-title>
@@ -150,10 +157,10 @@
                         </div>
                         <mat-divider></mat-divider>
                     </mat-list-item>
-
                 </mat-list>
-                <div *ngIf="!isLoadDelayErrors && delayErrors.length == 0">
-                    Пока нет таких ошибок
+                <div *ngIf="!isLoadDelayErrors && delayErrors.length == 0" class="image-not-data mat-typography">
+                    <img src="../../../../../assets/custom_icons_app/not_delay_elements.png">
+                    <h3>Пока нет просроченных рабочих элементов</h3>
                 </div>
             </mat-card-content>
         </mat-card>
@@ -161,8 +168,8 @@
 </div>
 
 <!-- team's state -->
-<div class="ui-g margin-bottom-blocks">
-    <div class="ui-g-12">
+<div class="ui-g">
+    <div class="ui-g-12 margin-bottom-blocks">
         <mat-card>
             <mat-card-header>
                 <mat-card-title class="title-card-text">Состояние команды</mat-card-title>

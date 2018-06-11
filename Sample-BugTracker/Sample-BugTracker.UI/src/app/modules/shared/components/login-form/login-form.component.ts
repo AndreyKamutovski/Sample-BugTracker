@@ -35,7 +35,8 @@ export class LoginFormComponent implements OnInit {
 
 
     login() {
-        if (this.loginForm.valid) { //  && this.captcha.isCaptchaChecked
+        // if (this.loginForm.valid && this.captcha.isCaptchaChecked) {
+        if (this.loginForm.valid) {
             
             this.authService.login(this.loginForm.value).then(
                 res => {
@@ -47,6 +48,8 @@ export class LoginFormComponent implements OnInit {
                             if (res.length === 1) {
                                 sessionStorage.setItem('portalID', res[0].PortalId);
                                 this.sharedDataService.PortalTitle = res[0].Title;
+                                this.sharedDataService.PortalId = res[0].PortalId;
+
                                 // this.router.navigate(["portals", res[0].Title, "projects"]);
                                 this.router.navigate(["portals", res[0].Title, "mainPage"]);
                             }

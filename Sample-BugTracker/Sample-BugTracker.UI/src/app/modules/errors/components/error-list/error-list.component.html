@@ -1,7 +1,13 @@
-<div *ngIf="errorListSharedService.Errors.length === 0" style="margin: 10% 0;">
+<div *ngIf="errorListSharedService.Errors.length === 0" class="image-not-data mat-typography" style="height: 100%">
+    <img src="../../../../../assets/custom_icons_app/not_error.png" style="height: 50%">
+    <h3>В проекте отсутствуют ошибки. Нажмите кнопку для добавления ошибки</h3>
+    <button mat-raised-button color="accent" (click)="openAddErrorDialog()">Добавить ошибку</button>
+</div>
+
+<!-- <div *ngIf="errorListSharedService.Errors.length === 0" style="margin: 10% 0;">
   <span class="mat-h1">В проекте отсутствуют ошибки. Нажмите кнопку 'Добавить ошибку' для добавления ошибки</span>&nbsp;
   <button mat-raised-button color="accent" (click)="openAddErrorDialog()">Добавить ошибку</button>
-</div>
+</div> -->
 <div class="mat-elevation-z5 table-container" [hidden]="!(errorListSharedService.Errors.length > 0)">
 
   <div class="error-global-filter">
@@ -9,7 +15,7 @@
       <input matInput type="text" size="50" placeholder="Глобальный фильтр" (input)="errorsTable.filterGlobal($event.target.value, 'contains')">
     </mat-form-field>
   </div>
-  <p-table #errorsTable [columns]="cols"  [loading]="loadingTable" [(value)]="errorListSharedService.Errors" [paginator]="true" [rows]="5" [responsive]="true"
+  <p-table #errorsTable [columns]="cols"  [(contextMenuSelection)]="selectedError" [contextMenu]="cm" [loading]="loadingTable" [(value)]="errorListSharedService.Errors" [paginator]="true" [rows]="5" [responsive]="true"
     [scrollable]="true" scrollHeight="500px" [resizableColumns]="true">
 
     <!-- header -->
@@ -110,7 +116,7 @@
       <!-- content -->
     </ng-template>
     <ng-template pTemplate="body" let-error>
-      <tr [pSelectableRow]="error">
+      <tr [pSelectableRow]="error" [pContextMenuRow]="error">
         <td style="width: 2.5vw;" class="ui-p-5">
           <mat-icon *ngIf="error.IsAttachments" style="cursor: pointer;" matTooltip="Вложения" (click)="openEditErrorDialog(error, true)">attach_file</mat-icon>
         </td>
@@ -220,3 +226,7 @@
     <mat-icon>close</mat-icon>
   </button>
 </p-overlayPanel>
+
+
+<!-- [style.display]="authService.isPortalOwner ? 'block' : 'none'" -->
+<p-contextMenu #cm [model]="items"></p-contextMenu>

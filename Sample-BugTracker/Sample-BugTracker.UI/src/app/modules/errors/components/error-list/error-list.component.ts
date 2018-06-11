@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSelect, MatSelectionList } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Table } from 'primeng/table';
+import { Table,  TableModule, ContextMenuRow } from 'primeng/table';
 
 import { WarningDialogComponent } from '../../../shared/components/warning-dialog/warning-dialog.component';
 import { AuthService } from '../../../shared/services/auth.service';
@@ -17,6 +17,7 @@ import { PrioritySelectItems } from '../../services/selection-lists-items/priori
 import { StatusSelectItems } from '../../services/selection-lists-items/status-select-items';
 import { AddErrorFormComponent } from '../add-error-form/add-error-form.component';
 import { SelectedErrorDialogComponent } from '../selected-error-dialog/selected-error-dialog.component';
+import { MenuItem } from 'primeng/components/common/menuitem';
 
 
 @Component({
@@ -25,6 +26,10 @@ import { SelectedErrorDialogComponent } from '../selected-error-dialog/selected-
   styleUrls: ['./error-list.component.css']
 })
 export class ErrorListComponent implements OnInit {
+
+  items: MenuItem[];
+  selectedError: ErrorBT;
+
 
   cols: any[] = [
     { field: 'Title', header: 'Ошибка', class: "" },
@@ -74,6 +79,11 @@ export class ErrorListComponent implements OnInit {
         this.loadingTable = false;
       }, 0);
     }
+
+    this.items = [
+      { label: 'Редактировать',  command: (event) => this.openEditErrorDialog(this.selectedError, false) },
+      { label: 'Удалить', command: (event) => this.deleteError(this.selectedError.ErrorId) }
+  ];
   }
 
   crossErrorTitle(status: StatusList) {

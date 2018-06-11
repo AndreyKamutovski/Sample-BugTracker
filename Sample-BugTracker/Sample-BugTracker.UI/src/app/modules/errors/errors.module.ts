@@ -25,6 +25,7 @@ import { ClassificationSelectItems } from './services/selection-lists-items/clas
 import { PrioritySelectItems } from './services/selection-lists-items/priority-select-items';
 import { StatusSelectItems } from './services/selection-lists-items/status-select-items';
 import { SolutionAttachmentService } from './services/solution-attachment.service';
+import { ContextMenuModule } from 'primeng/components/contextmenu/contextmenu';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { SolutionAttachmentService } from './services/solution-attachment.servic
     FileUploadModule,
     ErrorRoutingModule,
     OverlayPanelModule,
+    ContextMenuModule,
     
   ],
   declarations: [
